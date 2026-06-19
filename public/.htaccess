@@ -3,6 +3,13 @@
 # SG handles HTTPS redirect and compression at the panel layer;
 # this file focuses on URL hygiene + cache headers for static assets.
 
+# Directory index — Apache's default looks for index.html / index.php.
+# Our landing page is named the-good-foundry-index.html (kept the
+# original WBM filename so internal nav doesn't churn), so tell
+# Apache to use it as the directory index for / and any subdirectory
+# request that hits a bare path.
+DirectoryIndex the-good-foundry-index.html index.html index.htm
+
 # Vanity URLs: /business-case → /business-case.html
 # Means we don't have to hard-code .html suffixes in marketing links.
 RewriteEngine On

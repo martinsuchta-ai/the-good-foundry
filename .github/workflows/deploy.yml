@@ -27,13 +27,20 @@ jobs:
         #
         # Mirror source: ./public/  →  /public_html/
         # `-X` flags exclude repo-meta and docs from the upload.
+        #
+        # IMPORTANT: no `|| true` here. lftp's exit code propagates
+        # so the GitHub Action step actually fails when the upload
+        # fails — otherwise a wrong host / bad creds / wrong target
+        # path silently shows green while nothing landed. (The WBM
+        # deploy.yml has `|| true` for a different reason; do not
+        # copy that here.)
         run: |
           lftp -d -e "
             set ftp:ssl-force yes;
             set ftp:ssl-protect-data yes;
             set ssl:verify-certificate no;
             open -u '${{ secrets.SG_USER }}','${{ secrets.SG_PASS }}' ftp://${{ secrets.SG_HOST }};
-            mirror -R --no-perms --delete \
+            mirror -R --no-perms --delete --verbose \
               -X .git/ \
               -X .github/ \
               -X .vscode/ \
@@ -43,5 +50,7 @@ jobs:
               -X CLAUDE.md \
               -X .gitignore \
               ./public/ /public_html/;
+            pwd;
+            cls -la /public_html/;
             bye
-          " || true
+          "
