@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backed by Science &middot; Wellbeing Matters @ Work</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+<script>
+/* Theme gate — same cache shape as wm_vault.html / wm_bank.html so
+   the science page picks up the client's active brand colour when
+   opened from the footer of an already-themed surface. Reads the
+   per-sub or per-key cache, then the generic last-theme cache, then
+   the wmw_brandConfig fallback. Writes a !important override block
+   before first paint so there's no orange flash. */
+(function () {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var sub = p.get('sub');
+    var keyParam = p.get('key');
+    var keyBase = keyParam ? keyParam.toUpperCase().split('-')[0] : '';
+    var cacheKey = sub ? ('wm_vault_theme_sub_' + sub)
+                  : keyBase ? ('wm_vault_theme_key_' + keyBase)
+                  : 'wm_vault_theme_last';
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_vault_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_bank_theme_last')  || 'null'); } catch (e) {} }
+    if (!cached) {
+      try {
+        var bc = JSON.parse(localStorage.getItem('wmw_brandConfig') || '{}');
+        var BT = {tgf:'#e8420a',ms:'#0078d4',downer:'#29bfe0',coca:'#f40009',eap:'#4a9fd4',drake:'#2db87a',mcquaid:'#3aab7b'};
+        var BN = {tgf:'#14202e',ms:'#1b1b1b',downer:'#162838',coca:'#1a1a1a',eap:'#0f1f3d',drake:'#1a2e22',mcquaid:'#162238'};
+        var ak = bc.activeKey;
+        if (ak) {
+          var bp = null, bn = null;
+          (bc.custom || []).forEach(function (t) { if (t.key === ak) { bp = t.primary; bn = t.headerBg || t.secondary; } });
+          if (!bp) { bp = BT[ak]; bn = BN[ak]; }
+          if (bp) cached = { vars: { '--orange': bp, '--orange-dark': bp, '--orange-light': bp, '--navy-deep': bn || '#14202e', '--navy': bn || '#14202e', '--navy-mid': bn || '#14202e' } };
+        }
+      } catch (e) {}
+    }
+    if (cached && cached.vars && typeof cached.vars === 'object') {
+      var css = ':root{';
+      for (var k in cached.vars) {
+        if (Object.prototype.hasOwnProperty.call(cached.vars, k) && cached.vars[k]) {
+          css += k + ':' + cached.vars[k] + '!important;';
+        }
+      }
+      css += '}';
+      document.write('<style id="wm-theme-gate">' + css + '</style>');
+    }
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    --orange: #e8621a;
+    --orange-light: #f5a06e;
+    --orange-pale: #fff4ee;
+    --navy-deep: #14202e;
+    --text-dark: #1c2b3a;
+    --text-mid: #45586a;
+    --text-muted: #8097ad;
+    --surface: #ffffff;
+    --surface-2: #f4f6f8;
+    --border: #e2e8ef;
+    --body-bg: #f0f2f5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  header.page-hd {
+    background: var(--navy-deep);
+    border-bottom: 4px solid var(--orange);
+    padding: 22px 28px;
+  }
+  header.page-hd .hd-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header.page-hd .brand-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  header.page-hd .brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  header.page-hd .brand-mark svg { width: 22px; height: 22px; }
+  header.page-hd .brand-text {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  header.page-hd .brand-sub {
+    color: var(--orange-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  header.page-hd .hd-back {
+    /* Sit at the LEFT of the header, before the brand mark. */
+    order: -1;
+    margin-right: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  header.page-hd .hd-back:hover { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.32); }
+  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+  main.page-bd {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+  }
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 36px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    margin-bottom: 18px;
+    border-left: 4px solid var(--orange);
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .hero-card h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .hero-card p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .hero-card p:last-child { margin: 0; }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 22px;
+  }
+  @media (max-width: 760px) {
+    .stat-row { grid-template-columns: 1fr 1fr; }
+  }
+  .stat-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: left;
+  }
+  .stat-card .v {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .stat-card .l {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+  @media (max-width: 760px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+  .sci-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 28px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .sci-card .ico {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    background: var(--orange-pale);
+    color: var(--orange);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .sci-card .ico svg { width: 20px; height: 20px; }
+  .sci-card h2 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0 0 10px;
+    letter-spacing: -0.005em;
+  }
+  .sci-card h3 {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin: 14px 0 4px;
+  }
+  .sci-card p, .sci-card li {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin: 0 0 10px;
+  }
+  .sci-card ul { padding-left: 18px; margin: 0 0 8px; }
+  .sci-card li { margin-bottom: 6px; }
+  .ref-list {
+    margin-top: 22px;
+  }
+  .ref-list .ref-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+  .ref-list .ref-item strong { color: var(--text-dark); }
+  .ref-list .ref-item em { color: var(--text-mid); }
+  .section-hd {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin: 32px 0 14px;
+  }
+  footer.page-ft {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 18px 28px 32px;
+  }
+  .ext-link {
+    color: var(--orange);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--orange);
+  }
+  .ext-link:hover { border-bottom-style: solid; }
+  /* Pill tab bar */
+  .pill-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    padding: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    width: fit-content;
+  }
+  .pill-bar .pill {
+    background: transparent;
+    border: none;
+    color: var(--text-mid);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+    white-space: nowrap;
+  }
+  .pill-bar .pill:hover { color: var(--text-dark); }
+  .pill-bar .pill.active {
+    background: var(--orange);
+    color: #fff;
+  }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  /* Sub-headings for research pane */
+  .sci-card .sub-hd {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 14px 0 6px;
+    letter-spacing: -0.005em;
+  }
+  /* Result-strip — alpha values + sample sizes */
+  .result-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 14px 0 6px;
+  }
+  @media (max-width: 760px) {
+    .result-strip { grid-template-columns: 1fr; }
+  }
+  .result-strip .r {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .result-strip .r .v {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1.1;
+  }
+  .result-strip .r .l {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  /* Quote pull-out */
+  .pull-quote {
+    background: var(--orange-pale);
+    border-left: 4px solid var(--orange);
+    padding: 18px 22px;
+    border-radius: 10px;
+    font-size: 14.5px;
+    color: var(--text-dark);
+    line-height: 1.7;
+    font-style: italic;
+    margin: 18px 0;
+  }
+  .pull-quote .attr {
+    display: block;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: .04em;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+  <header class="page-hd">
+    <div class="hd-inner">
+      <div class="brand-mark">
+        <!-- Identical pattern to acknowledgement.html — VaultTemp1.png
+             with a heart SVG inline fallback when the PNG isn't on
+             the server yet. Once VaultTemp1.png is deployed it
+             takes over cleanly; no broken-image placeholder ever
+             renders. -->
+        <img src="logos/VaultTemp1.png" alt="Wellbeing Matters"
+             onerror="var p=this.parentNode;if(p){p.innerHTML='&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z&quot;/&gt;&lt;/svg&gt;';}">
+      </div>
+      <div>
+        <div class="brand-text">Wellbeing Matters @ Work</div>
+        <div class="brand-sub">Backed by Science</div>
+      </div>
+      <a class="hd-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+    </div>
+  </header>
+
+  <main class="page-bd">
+
+    <!-- ── Pill tab bar ── -->
+    <div class="pill-bar" role="tablist">
+      <button class="pill active" role="tab" data-pane="overview"        onclick="bsSwitch('overview')">Overview</button>
+      <button class="pill"        role="tab" data-pane="research"        onclick="bsSwitch('research')">Research, Validity &amp; Reliability</button>
+    </div>
+
+    <!-- ── PANE 1: Overview ── -->
+    <section class="tab-pane active" id="bs-pane-overview">
+
+    <!-- ── Hero ── -->
+    <div class="hero-card">
+      <div class="hero-eyebrow">The Science Behind The Survey</div>
+      <h1>Backed by Science</h1>
+      <p>The PERMAH Wellbeing Survey is grounded in two decades of empirical research on positive psychology, applied psychometrics and the measurement of human flourishing. Every question, every score and every comparator on this platform traces back to a published, peer-reviewed body of work.</p>
+      <p>This page summarises the scientific foundations of the framework, the validation work behind the survey instrument, and the ongoing research that continues to evolve PERMA+ for use in workplaces, schools and communities worldwide.</p>
+      <div class="stat-row">
+        <div class="stat-card"><div class="v">PERMA</div><div class="l">Theoretical Model</div></div>
+        <div class="stat-card"><div class="v">+H</div><div class="l">Health Extension</div></div>
+        <div class="stat-card"><div class="v">10+</div><div class="l">Validation Studies</div></div>
+        <div class="stat-card"><div class="v">Global</div><div class="l">Population Norms</div></div>
+      </div>
+    </div>
+
+    <!-- ── Foundations grid ── -->
+    <div class="section-hd">Foundations</div>
+    <div class="grid-2">
+
+      <!-- PERMA Theory -->
+      <div class="sci-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h2>The PERMA Theory of Wellbeing</h2>
+        <p>Developed by Dr. Martin E.P. Seligman at the Penn Positive Psychology Center, PERMA proposes that human flourishing is supported by five measurable elements: <strong>P</strong>ositive Emotion, <strong>E</strong>ngagement, <strong>R</strong>elationships, <strong>M</strong>eaning and <strong>A</strong>ccomplishment.</p>
+        <p>PERMA shifted the field from a deficit-based view of wellbeing (the absence of distress) to a strengths-based one: flourishing has positive properties that can be measured, supported and grown.</p>
+        <h3>Why it matters</h3>
+        <p>Each PERMA element predicts independent variance in life satisfaction and is responsive to evidence-based intervention &mdash; making the model both a measurement framework and a practical map for change.</p>
+      </div>
+
+      <!-- PERMAH (the +H) -->
+      <div class="sci-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h2>From PERMA to PERMAH</h2>
+        <p>Subsequent research demonstrated that <strong>physical Health</strong> &mdash; sleep, movement, vitality &mdash; is not merely a correlate of flourishing but an integral pillar of it. Adding the <em>+H</em> to PERMA produced PERMAH: a six-element model that captures the body as well as the mind.</p>
+        <p>The PERMAH Wellbeing Survey was conceived by Dr. Michelle McQuaid and developed in partnership with Professor Peggy Kern (University of Melbourne) and original contributor Martin Suchta to translate PERMAH into a validated, applied measurement instrument.</p>
+        <h3>What we measure</h3>
+        <p>The survey scores each element on a 0&ndash;100 scale, lets respondents see themselves against population norms, and surfaces the <em>amplifiers</em> &mdash; ability, motivation and psychological safety &mdash; that turn intent into behaviour.</p>
+      </div>
+
+      <!-- Psychometrics -->
+      <div class="sci-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+        <h2>Psychometric Foundations</h2>
+        <p>Each PERMAH item passed through iterative scale-development work led by Professor Peggy Kern: factor structure, internal consistency, test&ndash;retest reliability, and convergent / discriminant validity against established measures of life satisfaction, depression, anxiety and engagement.</p>
+        <p>Scoring is normalised across populations and across editions so a respondent in a healthcare team in Melbourne is comparable to a respondent in a manufacturing team in Glasgow.</p>
+        <h3>Key properties</h3>
+        <ul>
+          <li>Multi-element factor structure validated in working adults, students and clinical samples</li>
+          <li>Reliable population norms across age, role and tenure cohorts</li>
+          <li>Sensitivity to change &mdash; scores shift in response to genuine intervention, not only to repeat exposure</li>
+        </ul>
+      </div>
+
+      <!-- Applied workplace research -->
+      <div class="sci-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
+        <h2>Workplace Applications</h2>
+        <p>Workforce datasets from organisations across healthcare, education, professional services, manufacturing and the public sector show consistent links between PERMAH scores and the outcomes leaders care about &mdash; engagement, retention, psychological safety, sick leave, and team performance.</p>
+        <p>Population averages, role-band breakdowns and time-series trends are continuously refreshed so the comparators on every dashboard reflect the current state of the field rather than a frozen snapshot.</p>
+        <h3>What this enables</h3>
+        <p>Leaders see not just a score, but a score in context: how their workforce sits against benchmark, where the leverage points are, and which interventions a similar population has responded to.</p>
+      </div>
+
+    </div>
+
+    <!-- ── PERMA+ extension ── -->
+    <div class="section-hd">The PERMA+ Extension</div>
+    <div class="hero-card">
+      <p>Beyond the PERMAH foundation, ongoing research has produced <strong>PERMA+</strong>: a methodological extension that integrates additional dimensions of wellbeing emerging from contemporary research, longitudinal survey data, and applied practice across workplaces, schools, and communities.</p>
+      <p>PERMA+ adds explicit measurement of <strong>Psychosocial Hazards</strong> (developed by Dr. Michelle McQuaid) and <strong>Culture of Care</strong> (developed by Dr. McQuaid) so the framework reaches beyond individual flourishing to the systemic and cultural conditions that enable wellbeing at scale. Research and evaluation expertise is contributed by Dr. Stewart I. Donaldson and Dr. Scott Donaldson, with Danielle Jacobs leading the practitioner translation of the framework into client engagements. Continued scientific development is led by Martin Suchta, Director of The Good Foundry.</p>
+      <p>PERMA+ is offered as a research framework and methodological evolution, building on &mdash; and acknowledging &mdash; Dr. Seligman&rsquo;s foundational PERMA theory of flourishing.</p>
+    </div>
+
+    <!-- ── Reference list ── -->
+    <div class="section-hd">Selected References</div>
+    <div class="ref-list">
+      <div class="ref-item"><strong>Seligman, M.E.P.</strong> (2011). <em>Flourish: A Visionary New Understanding of Happiness and Well-being.</em> New York: Free Press.</div>
+      <div class="ref-item"><strong>Kern, M.L., Waters, L.E., Adler, A. &amp; White, M.A.</strong> (2015). A multidimensional approach to measuring well-being in students: Application of the PERMA framework. <em>The Journal of Positive Psychology</em>, 10(3), 262&ndash;271.</div>
+      <div class="ref-item"><strong>Butler, J. &amp; Kern, M.L.</strong> (2016). The PERMA-Profiler: A brief multidimensional measure of flourishing. <em>International Journal of Wellbeing</em>, 6(3), 1&ndash;48.</div>
+      <div class="ref-item"><strong>Donaldson, S.I., Cabrera, V. &amp; Gaffaney, J.</strong> (2021). Following the science to generate well-being: Using positive psychology to support flourishing in organisations. <em>Frontiers in Psychology</em>, 12.</div>
+      <div class="ref-item"><strong>Donaldson, S.I., Lee, J.Y. &amp; Donaldson, S.I.</strong> (2019). Evaluating positive psychology interventions at work: A systematic review and meta-analysis. <em>International Journal of Applied Positive Psychology</em>, 4, 113&ndash;134.</div>
+      <div class="ref-item"><strong>McQuaid, M. &amp; Kern, P.</strong> Ongoing research, validation and program development of the PERMAH Wellbeing Survey.</div>
+    </div>
+
+    <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:32px;line-height:1.7">
+      Researchers and contributors to the framework are acknowledged in full on the
+      <a class="ext-link" href="acknowledgement.html">Acknowledgement page</a>.
+    </p>
+
+    </section><!-- /pane overview -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         PANE 2: Research, Validity & Reliability
+         Source: 100V_-_PERMAH_Tool_Validity_and_Reliability.pdf
+         ══════════════════════════════════════════════════════════ -->
+    <section class="tab-pane" id="bs-pane-research">
+
+      <!-- Hero -->
+      <div class="hero-card">
+        <div class="hero-eyebrow">Research, Validity &amp; Reliability</div>
+        <h1>How we know the PERMAH Tool works</h1>
+        <p>The PERMAH Tool is a measurement instrument that provides insights into the wellbeing of individuals and teams within the context of schools, organisations, and communities. Based on Dr. Martin Seligman&rsquo;s PERMA Model (2011), it measures wellbeing across six factors &mdash; Positive Emotion, Engagement, Relationships, Meaning, Accomplishment and Health &mdash; at the individual, team, and workplace level.</p>
+        <p>Measuring wellbeing is complex. Studies have shown that most people maintain relatively healthy and stable wellbeing over time even in the face of challenge (Bonanno, 2004; Diener, Lucas &amp; Scollon, 2006; Capic, Li &amp; Cummins, 2014); that wellbeing perceptions, experiences and behaviours are diverse and spread through complex social networks (Christakis &amp; Fowler, 2009; Jarden, 2016); and that any self-report instrument carries inherent biases and limitations (Donaldson &amp; Grant-Vallone, 2002).</p>
+        <p>Responsible scientific research never claims to be &ldquo;proven&rdquo; &mdash; it is always testing what we think we know to keep the field learning (Kern et al., 2019). With those challenges always in mind, we are committed to ongoing transparency about the validity and reliability of the science behind the PERMAH Tool. Four points guide us: <strong>theoretical grounding</strong>, <strong>psychometric validity</strong>, <strong>consistency</strong>, and <strong>continued research</strong>.</p>
+      </div>
+
+      <div class="section-hd">The Four Points</div>
+      <div class="grid-2">
+
+        <!-- 1. Theoretical Grounding -->
+        <div class="sci-card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
+          <h2>1. Theoretical Grounding</h2>
+          <p>The value of measurement is often visible through the numbers it produces &mdash; but equally important is the theory those measures are built on. The PERMAH Tool is grounded in the wellbeing theory originally proposed by Dr. Martin Seligman (2011), drawing on more than twenty years of research.</p>
+          <p>Seligman identified five essential elements that contribute to wellbeing: Positive Emotion, Engagement, Relationships, Meaning and Accomplishment. We &mdash; and many others, including the World Health Organisation &mdash; consider physical health an integral pillar of wellbeing too. With Dr. Seligman&rsquo;s permission we add the &ldquo;H&rdquo; for Health and refer to the model as <strong>PERMAH</strong>.</p>
+          <p>Just as we describe the construct of weather using elements such as temperature, humidity, wind speed and barometric pressure, PERMAH attempts to describe wellbeing through its component elements (Seligman, 2018). Each element is included because it: <em>independently leads to wellbeing</em>; <em>can be pursued for its own intrinsic value</em>; and <em>can be defined and measured independently of all others</em>.</p>
+          <div class="sub-hd">The PERMA Profiler &amp; co-creation</div>
+          <p>Dr. Peggy Kern &mdash; one of the PERMAH Tool co-creators &mdash; and her colleagues developed The PERMA Profiler (Butler &amp; Kern, 2016) to measure each PERMA element (3 items per element, 15 items total) plus physical health, negative emotions, loneliness and happiness. The Profiler has been translated into Turkish (Aye, 2018), Japanese (Watanabe et al., 2018), Greek (Pezirkianidis et al., 2019), Mandarin (Kern et al., 2018; Lai et al., 2018) and German (Wammerl et al., 2019), and has been used to compare wellbeing across countries (Iasiello et al., 2017; Khaw &amp; Kern, 2015), to measure staff wellbeing (Kern et al., 2014; Lovett &amp; Lovett, 2016), and at the employee, team and supervisor levels (Donaldson, Donaldson, McQuaid &amp; Kern, 2024).</p>
+          <p>Empirical work has continued (Donaldson et al., 2023; 2024; Donaldson, 2019; Donaldson, Lee &amp; Donaldson, 2019; Heshmati et al., 2020; Kern et al., 2014; Watanabe et al., 2018). Some studies surface a five-element factor structure; others recover a three-factor structure of Positive Emotion, Relationships&ndash;Meaning, and Accomplishment&ndash;Engagement (Khaw &amp; Kern, 2015), or only two factors (Umucu et al., 2019; Ryan et al., 2019). Goodman et al. (2018) found PERMA strongly associated with subjective wellbeing.</p>
+          <p>Dr. Seligman (2018) has argued the data strongly supports the theory: PERMA captures wellbeing and identifies at least some of its building blocks. Bartholomaeus et al. (2021) and Pezirkianidis et al. (2019) replicated the five-factor structure while also finding a general wellbeing factor &mdash; an important aspect of the model.</p>
+          <p>We have not chosen PERMA because we believe it is &ldquo;proven&rdquo; &mdash; good science is never proven, only continually refined. We have chosen it because Seligman&rsquo;s assertion that PERMA gives people a useful, accessible way to understand, measure and act on wellbeing using evidence-based tools holds true. A meta-analysis of positive psychology workplace interventions (Donaldson, Lee &amp; Donaldson, 2019) found that PERMA-focused interventions had a positive effect on both work outcomes and wellbeing precisely because of their multidimensional approach.</p>
+        </div>
+
+        <!-- 2. Psychometric Validity -->
+        <div class="sci-card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+          <h2>2. Psychometric Validity</h2>
+          <p>Measuring psychological states is challenging &mdash; especially when matching a tool to a population and context. The most common question is the right one: <em>does this instrument measure what it is designed to measure?</em> Answering it well requires ongoing, reflective measurement of validity and reliability. That is our commitment.</p>
+          <p>The PERMAH Tool was originally based on the PERMA Profiler items. As organisations asked us to gather measures at different times and at the organisational level, we worked with Dr. Kern to add new items at those scales. We also partnered with Dr. Richard Ryan to incorporate validated measures from self-determination theory.</p>
+          <div class="sub-hd">Latest psychometric results (July 2021)</div>
+          <p>We test the psychometric validity of the PERMAH Tool on a regular basis. The most recent results show strong scale reliability and internal consistency for individual factors, with the full instrument also performing strongly:</p>
+          <div class="result-strip">
+            <div class="r"><div class="v">&alpha; &gt; 0.8</div><div class="l">All 6 factors</div></div>
+            <div class="r"><div class="v">&alpha; = 0.97</div><div class="l">Whole instrument</div></div>
+            <div class="r"><div class="v">3,000+</div><div class="l">Respondents across surveys</div></div>
+          </div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px">Cronbach&rsquo;s alpha values above 0.8 indicate good internal consistency at the factor level; the whole-instrument alpha of 0.97 indicates the tool measures a coherent construct.</p>
+        </div>
+
+        <!-- 3. Consistency Over Time -->
+        <div class="sci-card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h2>3a. Consistency Over Time</h2>
+          <p>Wellbeing is an ongoing journey, not a one-time destination. We look at the consistency of responses and the stability of relationships within the data <em>over time</em>. The reliability of the PERMAH Tool is amplified when it is used to map wellbeing across multiple time points rather than once.</p>
+          <p>Many of our clients have welcomed mapping wellbeing over time precisely because it reveals insights that would otherwise stay hidden &mdash; including the surprising truth that wellbeing comprises both <em>thriving and struggle</em>, and how the three amplifiers (ability, motivation and psychological safety) carry intent into behaviour.</p>
+        </div>
+
+        <!-- 3b. Consistency Across Populations -->
+        <div class="sci-card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h2>3b. Consistency Across Populations</h2>
+          <p>Alongside the data collected through the tool itself, we periodically invest in randomised, nationally representative survey data in Australia, Canada, the United States and a growing list of other countries to understand population-level patterns.</p>
+          <p>This data is published in freely available reports and added as <strong>population norms</strong> in the survey for comparison. The breadth of data continually validates our measures and provides representative comparators directly inside the tool.</p>
+        </div>
+
+        <!-- 4. Continued Research -->
+        <div class="sci-card" style="grid-column:1 / -1">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <h2>4. A Commitment To Continued Research</h2>
+          <p>The research landscape is dynamic and constantly evolving. The tool continues to carefully and thoughtfully consider the fundamental building blocks on which the evidence rests &mdash; the generation of questions, the theoretical connections, validity and reliability, and the co-creation with experts.</p>
+          <p>We have assembled a research review board of leading wellbeing, change, leadership and diversity researchers around the world, alongside independent analysts, to regularly assess the measures we use, review the data we gather, and surface the insights we are gaining. This serves a two-fold purpose: it deepens our understanding of relationships and trends in the data, and it acts as a safeguard &mdash; the analysts flag any improbable relationships that could indicate survey miscalibration. So far, that has not happened.</p>
+        </div>
+
+      </div>
+
+      <!-- In the End / closing pull-quote -->
+      <div class="section-hd">In The End</div>
+      <div class="hero-card">
+        <p>We once asked Prof. Seligman &mdash; one of the world&rsquo;s leading wellbeing experts &mdash; what would be the best way to care for wellbeing in schools, workplaces and communities. He said:</p>
+        <div class="pull-quote">
+          &ldquo;Measure it. Then people will take action into their own hands.&rdquo;
+          <span class="attr">&mdash; Prof. Martin E.P. Seligman</span>
+        </div>
+        <p>As researchers, we tend to <em>measure what we treasure</em>, and for us, wellbeing is what we treasure. Our aim is to help people think more rigorously about research and measurement &mdash; and to recognise that while reliability and validity are important, they are not the only factors that matter when choosing a wellbeing instrument.</p>
+        <p>By being open and transparent about our theoretical grounding, psychometric validity, consistency and continued research, we hope you feel informed and confident that the PERMAH Tool is a valid and reliable instrument that will offer valuable insights into a system&rsquo;s wellbeing.</p>
+      </div>
+
+      <!-- References -->
+      <div class="section-hd">References</div>
+      <div class="ref-list">
+        <div class="ref-item"><strong>Aye, E. B.</strong> (2018). Adaptation of the PERMA well-being scale into Turkish: Validity and reliability studies. <em>Educational Research and Reviews</em>, 13(4), 129&ndash;135.</div>
+        <div class="ref-item"><strong>Bartholomaeus, J. D., Iasiello, M. P., Jarden, A., Burke, K. J., &amp; van Agteren, J.</strong> (2020). Evaluating the Psychometric Properties of the PERMA Profiler. <em>Journal of Well-Being Assessment</em>, 4(2), 163&ndash;180.</div>
+        <div class="ref-item"><strong>Bonanno, G. A.</strong> (2004). Loss, trauma, and human resilience: Have we underestimated the human capacity to thrive after extremely aversive events? <em>American Psychologist</em>, 59(1), 20.</div>
+        <div class="ref-item"><strong>Butler, J., &amp; Kern, M. L.</strong> (2016). The PERMA-Profiler: A brief multidimensional measure of flourishing. <em>International Journal of Wellbeing</em>, 6, 1&ndash;48.</div>
+        <div class="ref-item"><strong>Cabrera, V., &amp; Donaldson, S. I.</strong> (2023). PERMA to PERMA+4 building blocks of well-being: a systematic review of the empirical literature. <em>The Journal of Positive Psychology</em>.</div>
+        <div class="ref-item"><strong>Capic, T., Li, N., &amp; Cummins, R.</strong> (2018). Confirmation of Subjective Wellbeing Set-Points: Foundational for Subjective Social Indicators. <em>Social Indicators Research</em>, 137.</div>
+        <div class="ref-item"><strong>Christakis, N., &amp; Fowler, J.</strong> (2009). <em>Connected: The amazing power of social networks and how they shape our lives.</em> New York: Little, Brown and Company.</div>
+        <div class="ref-item"><strong>Diener, E., Lucas, R. E., &amp; Scollon, C. N.</strong> (2006). Beyond the hedonic treadmill: Revising the adaptation theory of well-being. <em>American Psychologist</em>, 61(4), 305&ndash;314.</div>
+        <div class="ref-item"><strong>Donaldson, S. I.</strong> (2019). <em>Evaluating positive functioning and performance: A positive work and Organisations approach</em> [Doctoral dissertation]. Retrieved from PQDT Global.</div>
+        <div class="ref-item"><strong>Donaldson, S. I., &amp; Grant-Vallone, E. J.</strong> (2002). Understanding self-report bias in Organisational behavior research. <em>Journal of Business and Psychology</em>, 17(2), 245&ndash;260.</div>
+        <div class="ref-item"><strong>Donaldson, S., Lee, J., &amp; Donaldson, S.</strong> (2019). Evaluating Positive Psychology Interventions at Work: a Systematic Review and Meta-Analysis. <em>International Journal of Applied Positive Psychology</em>, 4.</div>
+        <div class="ref-item"><strong>Donaldson, S. I., Donaldson, S. I., McQuaid, M., &amp; Kern, M. L.</strong> (2023). The PERMA+4 Short Scale: A Cross-Cultural Empirical Validation Using Item Response Theory. <em>International Journal of Applied Positive Psychology</em>.</div>
+        <div class="ref-item"><strong>Donaldson, S. I., Donaldson, S. I., McQuaid, M., &amp; Kern, M. L.</strong> (2024). Systems-Informed PERMA+4: Measuring Well-being and Performance at the Employee, Team and Supervisor Levels. <em>International Journal of Applied Positive Psychology</em>, 1.</div>
+        <div class="ref-item"><strong>Donaldson, S. I., Donaldson, S. I., McQuaid, M., &amp; Kern, M. L.</strong> (2024). Systems-Informed PERMA+4 and Psychological Safety: Predicting Work-Related Well-Being and Performance Across an International Sample. <em>The Journal of Positive Psychology</em>.</div>
+        <div class="ref-item"><strong>Donaldson, S. I., Ellardus van Zyl, L., &amp; Donaldson, S. I.</strong> (2022). <em>Frontiers in Psychology</em>, 12.</div>
+        <div class="ref-item"><strong>Donaldson, S. I., Donaldson, S. I., &amp; Suchta, M.</strong> Development and validation of the Global Economic Security Scale. <em>International Journal of Applied Positive Psychology</em>.</div>
+        <div class="ref-item"><strong>Goodman, F. R., Disabato, D. J., Kashdan, T. B., &amp; Kauffman, S. B.</strong> (2018). Measuring well-being: A comparison of subjective well-being and PERMA. <em>The Journal of Positive Psychology</em>, 13(4), 321&ndash;332.</div>
+        <div class="ref-item"><strong>Heshmati, S., Brick, T. R., Roeser, R. W., &amp; Oravecz, Z.</strong> (2020). Assessing psychological well-being in early adulthood: Empirical evidence for the structure of daily well-being via network analysis. <em>Applied Developmental Science</em>.</div>
+        <div class="ref-item"><strong>Iasiello, M., Bartholomaeus, J., Jarden, A., &amp; Kelly, G.</strong> (2017). Measuring PERMA+ in South Australia, the state of wellbeing: A comparison with national and international norms. <em>Journal of Positive Psychology and Wellbeing</em>, 1(2), 53&ndash;72.</div>
+        <div class="ref-item"><strong>Jarden, A.</strong> (2016). Introducing workplace wellbeing to Organisations: The &ldquo;Me, We, Us&rdquo; model. <em>Positive Work and Organisations: Research and Practice</em>, 1, 1&ndash;4.</div>
+        <div class="ref-item"><strong>Kern, M., Williams, P., Spong, C., Colla, R., Sharma, K., Downie, A., Taylor, J., Sharp, S., Siokou, C., &amp; Oades, L.</strong> (2019). Systems informed positive psychology. <em>The Journal of Positive Psychology</em>, 15.</div>
+        <div class="ref-item"><strong>Kern, M. L., Waters, L., Adler, A., &amp; White, M.</strong> (2014). Assessing employee wellbeing in schools using a multifaceted approach: Associations with physical health, life satisfaction, and professional thriving. <em>Psychology</em>, 5(6), 500&ndash;513.</div>
+        <div class="ref-item"><strong>Kern, M. L., Zeng, G., Hou, H., &amp; Peng, K.</strong> (2018). The Chinese version of the EPOCH measure of adolescent well-being: Testing cross-cultural measurement invariance. <em>Journal of Psychoeducational Assessment</em>, 0(0), 1&ndash;13.</div>
+        <div class="ref-item"><strong>Khaw, D., &amp; Kern, M.</strong> (2015). A cross-cultural comparison of the PERMA model of well-being. <em>Undergraduate Journal of Psychology at Berkeley</em>, 8, 10&ndash;23.</div>
+        <div class="ref-item"><strong>Lai, M. K., Leung, C., Kwok, S. Y. C., Hui, A. N. N., Lo, H. H. M., Leung, J. T. Y., &amp; Tam, C. H. L.</strong> (2018). A multidimensional PERMA-H positive education model, general satisfaction of school life, and character strengths use in Hong Kong senior primary school students. <em>Frontiers in Psychology</em>, 9, 1&ndash;11.</div>
+        <div class="ref-item"><strong>Lovett, N., &amp; Lovett, T.</strong> (2016). Wellbeing in education: Staff matter. <em>International Journal of Social Science and Humanity</em>, 6(2), 107&ndash;112.</div>
+        <div class="ref-item"><strong>Pezirkianidis, C., Stalikas, A., Lakioti, A., &amp; Yotsidi, V.</strong> (2019). Validating a multidimensional measure of wellbeing in Greece: Translation, factor structure, and measurement invariance of the PERMA profiler. <em>Current Psychology</em>, 1&ndash;18.</div>
+        <div class="ref-item"><strong>Ryan, J., Curtis, R., Olds, T., Edney, S., Vandelanotte, C., Plotnikoff, R., &amp; Maher, C.</strong> (2019). Psychometric properties of the PERMA profiler for measuring wellbeing in Australian adults. <em>PLoS One</em>, 14(12), 1&ndash;12.</div>
+        <div class="ref-item"><strong>Seligman, M. E.</strong> (2011). <em>Flourish: A visionary new understanding of happiness and wellbeing.</em> New York: Simon and Schuster.</div>
+        <div class="ref-item"><strong>Seligman, M. E.</strong> (2018). PERMA and the building blocks of well-being. <em>The Journal of Positive Psychology</em>, 13(4), 333&ndash;335.</div>
+        <div class="ref-item"><strong>Umucu, E., Wu, J. R., Sanchez, J., Brooks, J. M., Chiu, C. Y., Tu, W. M., &amp; Chan, F.</strong> (2019). Psychometric validation of the PERMA-profiler as a well-being measure for student veterans. <em>Journal of American College Health</em>, 68(3), 1&ndash;7.</div>
+        <div class="ref-item"><strong>Wammerl, M., Jaunig, J., Mairunteregger, T., &amp; Streit, P.</strong> (2019). The German version of the PERMA-profiler: Evidence for construct and convergent validity of the PERMA theory of well-being in German speaking countries. <em>Journal of Well-Being Assessment</em>, 3(2&ndash;3), 75&ndash;96.</div>
+        <div class="ref-item"><strong>Watanabe, K., Kawakami, N., Shiotani, T., Adachi, H., Matsumoto, K., Imamura, K., &amp; Kern, M. L.</strong> (2018). The Japanese workplace PERMA-Profiler: A validation study among Japanese workers. <em>Journal of Occupational Health</em>.</div>
+        <div class="ref-item"><strong>WHO</strong> (2006). <em>Constitution of the World Health Organisation.</em> Retrieved from www.who.int/governance/eb/who_constitution_en.pdf</div>
+      </div>
+
+    </section><!-- /pane research -->
+
+  </main>
+
+  <script>
+    /* Pill switch — toggles the active pill and shows the matching
+       pane. URL hash sync (#research / #overview) means deep links
+       from elsewhere in the platform can land directly on a pane. */
+    function bsSwitch(name) {
+      document.querySelectorAll('.pill-bar .pill').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-pane') === name); });
+      document.querySelectorAll('.tab-pane').forEach(function (p) { p.classList.toggle('active', p.id === 'bs-pane-' + name); });
+      try { history.replaceState(null, '', '#' + name); } catch (e) {}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    /* Honour the hash on first load so a deep-link (e.g. ?research)
+       opens the right pane straight away. */
+    (function () {
+      var h = (window.location.hash || '').replace(/^#/, '');
+      if (h === 'research' || h === 'overview') bsSwitch(h);
+    })();
+  </script>
+
+
+  <footer class="page-ft">
+    Powered by <a href="https://www.the-good-foundry.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700">The Good Foundry</a> &middot; Confidential &middot; Immediately Actionable
+  </footer>
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

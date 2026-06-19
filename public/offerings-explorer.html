@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore the editions · Wellbeing Matters by The Good Foundry</title>
+<meta name="description" content="Pick the edition that matches your audience and see exactly what's measured, which sections come with it, and which add-ons are available — no pricing, no commitment. A guided way to compare Wellbeing Matters editions across Workplace, University, Life, Veterinary, Sport, School (Kids & Youth), In Aging Well, and our Heart Of Change bespoke build.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --twilight: #293890;
+  --arctic:   #1B75BC;
+  --aqua:     #26AAE1;
+  --grape:    #662C90;
+  --orchid:   #91268F;
+  --punch:    #EC008B;
+  --bg:       #FAFBFD;
+  --card:     #ffffff;
+  --text:     #0F1E40;
+  --text-mid: #3D5366;
+  --text-dim: #6A7E94;
+  --border:   #E2E8EF;
+  --border-light: #EEF1F5;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  font-weight: 400;
+  font-size: 15px;
+  min-height: 100vh;
+}
+a { color: var(--arctic); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+.serif-italic { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-weight: 400; }
+.gradient-text {
+  background: linear-gradient(135deg, var(--twilight) 0%, var(--punch) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Top nav ─────────────────────────────────────────────────── */
+.top-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250,251,253,.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+}
+.nav-inner {
+  max-width: 1180px; margin: 0 auto;
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 14px; color: var(--text); }
+.nav-brand .brand-dot { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--twilight), var(--punch)); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 11px; letter-spacing: .04em; }
+.nav-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.nav-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 99px;
+  background: var(--card); color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 12px; font-weight: 600;
+  text-decoration: none; transition: all .15s;
+}
+.nav-pill:hover { border-color: var(--arctic); color: var(--arctic); text-decoration: none; }
+.nav-pill.solid { background: linear-gradient(135deg, var(--twilight), var(--punch)); color: #fff; border-color: transparent; }
+.nav-pill.solid:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(41,56,144,.25); }
+.nav-pill.back-pill {
+  background: transparent;
+  border-color: var(--border-light);
+  color: var(--text-mid);
+  padding: 7px 12px 7px 10px;
+}
+.nav-pill.back-pill:hover { background: var(--card); border-color: var(--arctic); color: var(--arctic); }
+.nav-pill.back-pill svg { stroke: currentColor; }
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero {
+  padding: 56px 28px 30px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 60% 60% at 20% 0%, rgba(38,170,225,.10), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 30%, rgba(236,0,139,.06), transparent 60%);
+}
+.hero-tag {
+  display: inline-block;
+  padding: 5px 14px;
+  background: rgba(38,170,225,.10);
+  color: var(--arctic);
+  border: 1px solid rgba(38,170,225,.30);
+  border-radius: 99px;
+  font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(34px, 5.4vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  margin: 0 0 16px;
+  max-width: 840px; margin-left: auto; margin-right: auto;
+}
+.hero h1 em { font-style: italic; }
+.hero-desc {
+  max-width: 680px; margin: 0 auto;
+  font-size: clamp(15px, 1.4vw, 17px);
+  color: var(--text-mid); line-height: 1.6; font-weight: 400;
+}
+.hero-cta { margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary, .btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px; border-radius: 99px;
+  font-weight: 700; font-size: 13px; letter-spacing: .02em;
+  text-decoration: none; cursor: pointer; border: 0;
+  transition: all .15s;
+  font-family: inherit;
+}
+.btn-primary { background: linear-gradient(135deg, var(--twilight), var(--punch)); color: #fff; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(236,0,139,.32); color: #fff; text-decoration: none; }
+.btn-ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--arctic); color: var(--arctic); text-decoration: none; }
+
+/* ── Layout body ─────────────────────────────────────────────── */
+.layout { max-width: 1180px; margin: 0 auto; padding: 30px 28px 56px; }
+.section-block { margin-bottom: 40px; }
+.section-header { margin-bottom: 18px; }
+.section-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(102,44,144,.08);
+  color: var(--grape);
+  border: 1px solid rgba(102,44,144,.25);
+  border-radius: 99px;
+  font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section-h2 {
+  font-family: 'DM Serif Display', Georgia, serif; font-weight: 400;
+  font-size: clamp(22px, 3vw, 32px);
+  margin: 0 0 6px; line-height: 1.2; letter-spacing: -.01em;
+}
+.section-lede { color: var(--text-mid); font-size: 14px; max-width: 700px; margin: 0; }
+
+/* ── Edition picker — 9-card grid ────────────────────────────── */
+.ed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+.ed-pick {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  cursor: pointer;
+  position: relative;
+  transition: all .18s;
+  text-align: left;
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: inherit;
+  /* Reserve room at the bottom for the "See what's inside →"
+     affordance so it doesn't push the audience line up on hover. */
+  padding-bottom: 50px;
+}
+.ed-pick::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+  border-radius: 14px 14px 0 0;
+  opacity: .55;
+}
+.ed-pick:hover {
+  border-color: var(--arctic);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(22,40,68,.10);
+}
+.ed-pick:hover::before { opacity: 1; }
+.ed-pick:hover .ed-cta {
+  background: var(--arctic);
+  color: #fff;
+  border-color: var(--arctic);
+}
+.ed-pick:hover .ed-cta svg { transform: translateX(3px); }
+.ed-pick.active {
+  border-color: var(--punch);
+  box-shadow: 0 0 0 4px rgba(236,0,139,.10), 0 10px 28px rgba(236,0,139,.12);
+}
+.ed-pick.active::before { opacity: 1; background: linear-gradient(90deg, var(--twilight), var(--punch)); }
+.ed-pick.active .ed-cta {
+  background: var(--punch);
+  color: #fff;
+  border-color: var(--punch);
+}
+.ed-pick.bespoke::before { background: linear-gradient(90deg, var(--grape), var(--punch)); opacity: 1; }
+.ed-pick.bespoke:hover .ed-cta { background: var(--grape); border-color: var(--grape); color: #fff; }
+.ed-pick .ed-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--arctic);
+  padding: 3px 8px;
+  background: rgba(38,170,225,.08);
+  border: 1px solid rgba(38,170,225,.25);
+  border-radius: 99px;
+  align-self: flex-start;
+  margin-bottom: 4px;
+}
+.ed-pick.bespoke .ed-tag {
+  color: var(--grape);
+  background: rgba(102,44,144,.08);
+  border-color: rgba(102,44,144,.28);
+}
+.ed-pick .ed-name {
+  font-size: 15px; font-weight: 700;
+  color: var(--text); line-height: 1.3;
+}
+.ed-pick .ed-audience {
+  font-size: 12px; color: var(--text-mid); line-height: 1.45;
+}
+/* "See what's inside →" — explicit clickability affordance.
+   Anchored to the card's bottom-left so it always sits in the same
+   spot regardless of card height. Picks up an arctic background on
+   card hover so the entire card reads as one click target. */
+.ed-pick .ed-cta {
+  position: absolute;
+  left: 14px; right: 14px; bottom: 12px;
+  display: inline-flex; align-items: center; justify-content: space-between;
+  padding: 7px 12px;
+  background: rgba(38,170,225,.08);
+  border: 1px solid rgba(38,170,225,.25);
+  color: var(--arctic);
+  border-radius: 99px;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  transition: all .15s;
+  pointer-events: none; /* parent button handles the click */
+}
+.ed-pick .ed-cta svg { transition: transform .18s; }
+.ed-pick.bespoke .ed-cta {
+  background: rgba(102,44,144,.08);
+  border-color: rgba(102,44,144,.28);
+  color: var(--grape);
+}
+
+/* ── Detail panel ────────────────────────────────────────────── */
+.detail {
+  display: none;
+  margin-top: 26px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px 32px;
+  box-shadow: 0 4px 24px rgba(22,40,68,.05);
+  scroll-margin-top: 80px;
+}
+.detail.shown { display: block; }
+.detail-header { border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 22px; }
+.detail-header h3 {
+  font-family: 'DM Serif Display', Georgia, serif; font-weight: 400;
+  font-size: clamp(24px, 3vw, 32px);
+  margin: 0 0 6px; letter-spacing: -.01em;
+}
+.detail-header .ed-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; color: var(--punch); font-weight: 700; letter-spacing: .06em; }
+.detail-blurb { color: var(--text-mid); font-size: 14px; line-height: 1.7; margin-top: 10px; }
+.detail-blurb strong { color: var(--text); font-weight: 600; }
+.detail-section { margin-top: 24px; }
+.detail-section h4 {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0 0 10px;
+}
+.detail-section h4 em {
+  font-style: normal;
+  color: var(--punch);
+  font-weight: 800;
+}
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px;
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 99px;
+  font-size: 12px; font-weight: 600;
+  color: var(--text);
+}
+.chip.section { background: rgba(38,170,225,.06); border-color: rgba(38,170,225,.20); color: var(--arctic); }
+.chip.mode    { background: rgba(102,44,144,.06); border-color: rgba(102,44,144,.20); color: var(--grape); }
+.chip.new {
+  background: linear-gradient(135deg, var(--punch), var(--orchid));
+  color: #fff; border-color: transparent;
+}
+.addon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.addon-card {
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.addon-card h5 { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: var(--text); }
+.addon-card p  { margin: 0; font-size: 12px; color: var(--text-mid); line-height: 1.55; }
+.addon-card .pill-new { display: inline-block; margin-left: 6px; padding: 1px 7px; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; background: var(--punch); color: #fff; border-radius: 99px; vertical-align: 2px; }
+.detail-cta-row {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 26px; padding-top: 22px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* ── Empty / hint state ──────────────────────────────────────── */
+.hint-card {
+  background: var(--card);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 26px 28px;
+  text-align: center;
+  margin-top: 22px;
+  color: var(--text-mid);
+  font-size: 14px;
+}
+.hint-card svg { width: 28px; height: 28px; color: var(--arctic); margin-bottom: 8px; }
+
+/* ── Foot ────────────────────────────────────────────────────── */
+.foot {
+  text-align: center; padding: 40px 28px 30px;
+  font-size: 11px; color: var(--text-dim);
+}
+.foot a { color: var(--arctic); }
+
+@media (max-width: 720px) {
+  .nav-inner { padding: 12px 16px; }
+  .layout { padding: 22px 16px 40px; }
+  .detail { padding: 22px 18px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP NAV ───────────────────────────────────────────────── -->
+<nav class="top-nav">
+  <div class="nav-inner">
+    <div style="display:flex;align-items:center;gap:14px">
+      <!-- Back — prefers browser history when there's anywhere
+           to go back to, falls back to the homepage. Sits in the
+           left corner before the brand badge. -->
+      <a class="nav-pill back-pill" href="the-good-foundry-index.html" id="cta-back" aria-label="Back">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Back</span>
+      </a>
+      <a class="nav-brand" href="the-good-foundry-index.html">
+        <span class="brand-dot">TGF</span>
+        <span>The Good Foundry</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a class="nav-pill" href="offerings.html">Full offerings &amp; add-ons</a>
+      <a class="nav-pill solid" href="javascript:void(0)" id="cta-talk">Request an offer &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-tag">Edition Explorer</div>
+  <h1>Pick your audience. <span class="serif-italic">See</span> what's <span class="gradient-text">in the box</span>.</h1>
+  <p class="hero-desc">Tap an edition below to see exactly what's measured, which sections come standard, the delivery modes available, and every add-on you can layer in. No pricing on this page — just the shape of what's possible. When you're ready, request a tailored offer and we'll quote it.</p>
+  <div class="hero-cta">
+    <a class="btn-ghost" href="offerings.html">See the full list</a>
+    <a class="btn-primary" href="javascript:void(0)" id="cta-talk-2">Request an offer &rarr;</a>
+  </div>
+</section>
+
+<main class="layout">
+
+  <!-- ── EDITION PICKER ──────────────────────────────────────── -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-tag">Step 1</div>
+      <h2 class="section-h2">Choose the edition that matches your audience.</h2>
+      <p class="section-lede">Each edition uses the same evidence-based science, tuned for who's taking the survey. You can run more than one in parallel under a single portfolio.</p>
+      <div style="margin:14px 0 4px;display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 12px;background:linear-gradient(135deg,rgba(38,170,225,.08),rgba(236,0,139,.06));border:1px solid rgba(38,170,225,.25);border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text-mid)">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--punch)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>Tap any card below to see its sections, delivery modes &amp; add-ons</span>
+      </div>
+    </div>
+    <div class="ed-grid" id="ed-grid" style="margin-top:8px"><!-- populated by JS --></div>
+  </div>
+
+  <!-- ── DETAIL PANEL ────────────────────────────────────────── -->
+  <div class="detail" id="ed-detail"></div>
+
+  <!-- Empty-state hint when nothing is picked yet -->
+  <div class="hint-card" id="ed-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    <div>Pick an edition above to see its sections, delivery modes and applicable add-ons.</div>
+  </div>
+
+</main>
+
+<!-- ── Floating "Talk to us" FAB hooks into the talk drawer on
+     offerings.html. Easier than duplicating the drawer here —
+     a click on the FAB pre-fills the edition + bounces to the
+     proposal form on offerings.html. ───────────────────────── -->
+
+<div class="foot">
+  Wellbeing Matters &middot; The Good Foundry &middot;
+  <a href="the-good-foundry-index.html">Home</a> &middot;
+  <a href="offerings.html">Full offerings</a>
+</div>
+
+<script>
+/* ────────────────────────────────────────────────────────────
+   Edition + add-on catalogue (offline / no API).
+   Mirrors what the bank + rep portal use; updated by hand to
+   match data/proposal_pricing.json + the existing offerings.html
+   sections. NO pricing — this surface is "what's in the box".
+   ─────────────────────────────────────────────────────────── */
+
+/* Every add-on keyed by short id with a label + 1-line description.
+   `appliesTo` lists the edition codes that can use this add-on. An
+   add-on without `appliesTo` is universal (every edition). */
+var ADDONS = {
+  'coaching-foundry': {
+    label: 'Coaching Foundry',
+    desc: 'Sophie-led coaching library with personalised guidance against every framework section.',
+    appliesTo: null /* universal */
+  },
+  'kids-360': {
+    label: '360 Foundry (Multi-Rater)',
+    desc: 'A 360-degree picture from the people who know the respondent across home, school, work and care contexts. Parents, teachers, mentors, managers, partners, spouses, adult children, nurses, doctors, carers and allied-health raters — edition-appropriate per the cohort.',
+    /* WAW added 2026-05-25 to align with the kids_360_orgs power-up
+       in _PU_DEFINITIONS — the power-up has covered WAW since
+       2026-05-22 (project_360_for_students memory) but this entry
+       was stale. Surfacing aged-care raters in the desc so the WAW
+       audience sees themselves in the offering. */
+    appliesTo: ['WPK','WPY','WPL','WPU','WPA','WAW']
+  },
+  'ai-seeding': {
+    label: 'AI Seeding',
+    desc: 'Pre-seeded explainer + Ask-Sophie content across every section card. No prompt engineering on your side.',
+    appliesTo: null
+  },
+  'coaching-videos': {
+    label: 'Personalised Coaching Videos',
+    desc: 'AI-generated coaching videos per respondent — same friendly avatar, scripted from their own results.',
+    appliesTo: null
+  },
+  'moral-injury': {
+    label: 'Moral Injury Module',
+    desc: 'Adds the Moral Injury section + dashboard for healthcare, defence, justice and other ethical-distress contexts.',
+    appliesTo: ['WPA','WPU','WPV','WPS','WPL']
+  },
+  'quietly-cracking': {
+    label: 'Quietly Cracking',
+    desc: 'A 22-item ME/WE/US check-in for the "high-functioning burnout" pattern — meeting deadlines, running on empty.',
+    appliesTo: ['WPA','WPL','WPU','WPV','WPS'],
+    isNew: true
+  },
+  'digital-wellbeing': {
+    label: 'Digital Wellbeing',
+    desc: 'A 17-item ME/WE/US check-in on how phones, social media, group chats and screen time shape wellbeing. Now contextualised per edition (Kids, Youth, Workplace, Life, University, Veterinary, Sport).',
+    appliesTo: ['WPK','WPY','WPA','WPU','WPV','WPS','WPL'],
+    isNew: true
+  },
+  'spirituality': {
+    label: 'Spirituality Module',
+    desc: 'Adds the Spirituality section + ME/WE/US dashboard for organisations whose wellbeing strategy includes purpose and meaning beyond the self.',
+    appliesTo: ['WPA','WPU','WPV','WPS','WPL']
+  },
+  'leadership-video': {
+    label: 'Leadership Briefing Video',
+    desc: 'AI-narrated cohort briefing for leadership teams — your dashboard, summarised in 90 seconds.',
+    appliesTo: null
+  },
+  'reporting-foundry': {
+    label: 'Reporting Foundry',
+    desc: 'Generated PDF reports — Grand Report, Wellbeing Infographic, Leadership Briefing, Hazards Infographic — plus the new Insights Score Deep Dive analysis inside your bank. Click "How is this calculated?" on any insight card to see the exact formula, source questions and answer options, then drop into the Deep Dive tab to slice per-question distributions by collection period and demographic cohort, compare two cohorts side-by-side, and export anonymised per-respondent values for offline analysis. n ≥ 5 anonymity floor enforced across every cell; no respondent identifiers ever surfaced.',
+    appliesTo: null,
+    isNew: true
+  },
+  'trends-reporting': {
+    label: 'Trends Foundry',
+    desc: 'A My · Industry · Global comparison matrix inside your bank — wellbeing + psychosocial-hazard benchmarks across PERMAH, Civility, Spirituality, Economic Security and Culture of Care, themed to your brand and pre-filtered to your industry. Define Significant Events (restructures, leadership changes, return-to-office mandates) and Collection Rounds; pick one or more on the dashboard to add a window-scoped column alongside the all-time baseline. Click any metric to drill into the response count behind each number.',
+    appliesTo: ['WPA','WPL','WPU','WPS','WPV','WPK','WPY','WAW'],
+    isNew: true
+  },
+  'white-label': {
+    label: 'White-Label Theme',
+    desc: 'Custom palette + logo + wordmark across the bank, vault, eval and emails. Looks like your platform, runs on ours.',
+    appliesTo: null
+  },
+  'sso': {
+    label: 'SSO Integration',
+    desc: 'Google / Microsoft / Apple / LinkedIn sign-in for respondents and admins. Per-client allowlist.',
+    appliesTo: null
+  },
+  'datawarehouse': {
+    label: 'DataWarehouse Export',
+    desc: 'Scheduled exports of response data + dashboards to your S3 / Azure / Snowflake target.',
+    appliesTo: null
+  },
+  'managed-setup': {
+    label: 'Managed Setup',
+    desc: 'We handle the wizard, configure your themes, seed the sections, and run the first round end-to-end.',
+    appliesTo: null
+  },
+  'offline-kiosk': {
+    label: 'Offline Kiosk Mode',
+    desc: 'Card-mode survey that runs offline on a tablet (mining sites, remote clinics, fly-in fly-out crews).',
+    appliesTo: ['WPA','WPS','WPV']
+  },
+  'ikigai': {
+    label: 'Ikigai Module',
+    desc: 'Adds the Ikigai radar to the vault — what you love · what the world needs · what you can be paid for · what you are good at. Layered on top of PERMA+.',
+    appliesTo: ['WPA','WPU','WPV','WPS','WPL']
+  }
+};
+
+/* The editions catalogue. `sections` is the list of measurement
+   blocks that come built-in for that edition; `modes` is the
+   delivery surface set (Section by Section / Card / Chat / etc.);
+   `addons` is the keys from ADDONS that apply (server-of-truth
+   for which add-ons render on this edition's detail panel). */
+var EDITIONS = [
+  {
+    code: 'WPA', tag: 'Workplace',
+    label: 'Wellbeing Matters @ Work',
+    audience: 'Adult workplaces · teams · leaders',
+    blurb: 'The flagship edition. Full PERMA+ measurement across Wellbeing, Psychosocial Hazards, Culture of Care, Civility, Economic Security, Spirituality, AI Revolution, Moral Injury and the new Quietly Cracking lens — surfacing high-functioning burnout before it shows up in turnover.',
+    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
+    sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
+    modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup','offline-kiosk']
+  },
+  {
+    code: 'WPU', tag: 'Higher education',
+    label: 'Wellbeing Matters @ University',
+    audience: 'Faculty · staff · postgraduates',
+    blurb: 'PERMA+ tuned for the rhythm of university life — semesters, research load, student-facing roles, tenure-track demands. Same evidence base as @ Work; academic-context language.',
+    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
+    sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
+    modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup']
+  },
+  {
+    code: 'WPL', tag: 'Personal',
+    label: 'Wellbeing Matters in Life',
+    audience: 'Individuals · coaching clients · community',
+    blurb: 'PERMA+ stripped of the workplace lens. Focused on personal flourishing — wellbeing, self-compassion, hope, optimism, meaning. Used by coaches, therapists and community programs.',
+    sections: ['Wellbeing (PERMA+)', 'Self-Compassion', 'Hope &amp; Optimism', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
+    sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
+    modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','spirituality','moral-injury','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
+  },
+  {
+    code: 'WPV', tag: 'Veterinary',
+    label: 'Wellbeing Matters @ Veterinary Practice',
+    audience: 'Vet clinics · animal hospitals · specialty practice',
+    blurb: 'A profession-specific edition acknowledging the realities of veterinary practice — moral injury, compassion fatigue, exposure to euthanasia decisions, after-hours load. Profession-specific benchmarks.',
+    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Moral Injury', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
+    sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
+    modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
+  },
+  {
+    code: 'WPS', tag: 'Sport',
+    label: 'Wellbeing Matters @ Sport',
+    audience: 'Athletes · coaches · sporting orgs',
+    blurb: 'PERMA+ for elite and community sporting organisations. Sport-specific framing for performance, identity, transition and team dynamics.',
+    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Self-Care', 'Quietly Cracking', 'Digital Wellbeing'],
+    sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
+    modes: ['Section by Section', 'Card', 'Chat', 'At my pace'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
+  },
+  {
+    code: 'WPK', tag: 'Kids',
+    label: 'Wellbeing Matters @ School · Kids',
+    audience: 'Primary-school students',
+    blurb: 'Age-appropriate PERMA+ for children. Visual face-scales, story-led prompts, playful runtime. Cohort insights anonymised by default.',
+    sections: ['Wellbeing (PERMAH)', 'Self-Care', 'Digital Wellbeing'],
+    sectionsNew: ['Digital Wellbeing'],
+    modes: ['Faces', 'Pictures', 'Slider', 'Card'],
+    addons: ['coaching-foundry','ai-seeding','digital-wellbeing','kids-360','reporting-foundry','trends-reporting','white-label','sso','managed-setup']
+  },
+  {
+    code: 'WPY', tag: 'Youth',
+    label: 'Wellbeing Matters @ School · Youth',
+    audience: 'High-school &amp; senior students',
+    blurb: 'PERMA+ for adolescents. Maps friendship, identity, screen time, study load, meaning-making in adolescence.',
+    sections: ['Wellbeing (PERMAH)', 'Self-Care', 'Digital Wellbeing', 'Ikigai (bonus)'],
+    sectionsNew: ['Digital Wellbeing'],
+    modes: ['Section by Section', 'Card', 'Chat', 'Faces', 'At my pace'],
+    addons: ['coaching-foundry','ai-seeding','digital-wellbeing','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
+  },
+  {
+    code: 'WAW', tag: 'Aging Well',
+    label: 'Wellbeing Matters In Aging Well',
+    audience: 'Adults navigating later life · LiveWell residents · aged-care · family &amp; friend supporters',
+    blurb: 'PERMAH+ reframed for aging well. Measures Wellbeing (PERMAH+), nine Amplifiers (Ability · Motivation · Psych Safety · Emotional Resilience · Knowing Me · Inclusion &amp; Belonging · Maintaining Purpose · Learning &amp; Growing · Optimizing Health), Self-Compassion (Self-Talk · Mindfulness · Connection), Life Satisfaction, and State of Wellbeing. Optional <strong>Modifiable Risk Reflection</strong> covers the 14 Lancet-2024 dementia risk factors on a past · current · future matrix.',
+    sections: ['Wellbeing (PERMAH+)', 'Amplifiers (9)', 'Self-Compassion', 'Life Satisfaction', 'State of Wellbeing', 'Modifiable Risk Reflection (optional)'],
+    sectionsNew: ['Amplifiers (9)', 'Modifiable Risk Reflection'],
+    modes: ['Section by Section', 'Card', 'Chat', 'At my pace'],
+    /* kids-360 added 2026-05-25 to align with the kids_360_orgs
+       power-up which covers WAW (aged-care raters: spouse, adult
+       child, nurse, doctor, carer, allied health). */
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','kids-360','reporting-foundry','trends-reporting','white-label','sso','managed-setup']
+  },
+  {
+    code: 'WHC', tag: 'Bespoke · The Change Lab', bespoke: true,
+    label: 'The HEART Of Change Tool',
+    audience: 'Workplaces navigating change · Dr. Michelle McQuaid’s HEART Framework',
+    blurb: 'Our newest bespoke edition. Built with The Change Lab on the HEART Framework: <strong>H</strong>onour Feelings · <strong>E</strong>ngage Purposefully · <strong>A</strong>ppreciate Strengths · <strong>R</strong>each Out · <strong>T</strong>ake Tiny Steps. 7-page survey measures each factor across Individual / Team / Workplace tiers; cohort dashboard surfaces the four-quadrant State of Change.',
+    sections: ['Getting Started', 'Your Individual HEART Factors', 'Your Team HEART Factors', 'Your Workplace HEART Factors', 'The Impacts Of Change', 'Your Change AMPlifiers', 'State of Change &amp; Reflection'],
+    sectionsNew: ['HEART Factors (5)', 'State of Change'],
+    modes: ['Section by Section'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','reporting-foundry','white-label','sso','managed-setup']
+  },
+  {
+    code: 'BESPOKE', tag: 'Bespoke / Custom', bespoke: true,
+    label: 'Bespoke / Custom Implementation',
+    audience: 'When the standard editions don’t fit your context',
+    blurb: 'When a deployment doesn’t fit a standard edition, we author a bespoke variant — language, regulatory framing, dashboards, downstream comms. Worked examples: a Psychosocial Safety variant for a major Australian infrastructure services group, and the HEART Of Change Tool for The Change Lab.',
+    sections: ['Custom sections authored to your spec'],
+    modes: ['Custom — chosen to match the audience'],
+    addons: ['coaching-foundry','ai-seeding','coaching-videos','reporting-foundry','white-label','sso','datawarehouse','managed-setup']
+  }
+];
+
+/* ── Rendering ────────────────────────────────────────────── */
+function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderPickGrid() {
+  var host = document.getElementById('ed-grid');
+  host.innerHTML = EDITIONS.map(function (ed) {
+    /* Every card carries a "See what's inside" CTA pill so the
+       click target reads as a button at a glance — without it the
+       cards look static. The pill is pointer-events:none in CSS so
+       the parent <button> still handles the click. */
+    return '<button type="button" class="ed-pick' + (ed.bespoke ? ' bespoke' : '') + '" data-code="' + esc(ed.code) + '">'
+         +   '<span class="ed-tag">' + esc(ed.tag) + '</span>'
+         +   '<div class="ed-name">' + ed.label + '</div>'
+         +   '<div class="ed-audience">' + ed.audience + '</div>'
+         +   '<span class="ed-cta">'
+         +     '<span>See what&rsquo;s inside</span>'
+         +     '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+         +   '</span>'
+         + '</button>';
+  }).join('');
+  host.querySelectorAll('.ed-pick').forEach(function (b) {
+    b.addEventListener('click', function () { pickEdition(b.dataset.code); });
+  });
+}
+
+function pickEdition(code) {
+  document.querySelectorAll('.ed-pick').forEach(function (b) {
+    b.classList.toggle('active', b.dataset.code === code);
+  });
+  var ed = EDITIONS.find(function (e) { return e.code === code; });
+  if (!ed) return;
+  var newSet = (ed.sectionsNew || []).reduce(function (a, n) { a[n] = 1; return a; }, {});
+  var sectionsHtml = (ed.sections || []).map(function (s) {
+    var isNew = newSet[s] ? ' new' : '';
+    return '<span class="chip section' + isNew + '">' + s + (isNew ? ' <span style="font-size:8px;font-weight:800;letter-spacing:.08em;opacity:.95">NEW</span>' : '') + '</span>';
+  }).join('');
+  var modesHtml = (ed.modes || []).map(function (m) {
+    return '<span class="chip mode">' + esc(m) + '</span>';
+  }).join('');
+  /* Add-ons applicable to this edition. Loop ADDONS keys in the
+     edition's declared order so featured/applicable ones come
+     first naturally. */
+  var addonsHtml = (ed.addons || []).map(function (id) {
+    var a = ADDONS[id];
+    if (!a) return '';
+    if (a.appliesTo && a.appliesTo.indexOf(ed.code) === -1) return '';
+    return '<div class="addon-card">'
+         +   '<h5>' + esc(a.label) + (a.isNew ? '<span class="pill-new">New</span>' : '') + '</h5>'
+         +   '<p>' + a.desc + '</p>'
+         + '</div>';
+  }).join('');
+
+  var detail = document.getElementById('ed-detail');
+  detail.innerHTML = ''
+    + '<div class="detail-header">'
+    +   '<span class="ed-code">' + esc(ed.code) + ' &middot; ' + esc(ed.tag) + '</span>'
+    +   '<h3>' + ed.label + '</h3>'
+    +   '<p class="detail-blurb">' + ed.blurb + '</p>'
+    + '</div>'
+    + '<div class="detail-section">'
+    +   '<h4>What’s <em>measured</em>'
+    +     '<span style="float:right;font-size:11px;font-weight:700;color:var(--text-dim);text-transform:none;letter-spacing:0">' + (ed.sections || []).length + ' section' + ((ed.sections || []).length === 1 ? '' : 's') + '</span>'
+    +   '</h4>'
+    +   '<div class="chip-grid">' + sectionsHtml + '</div>'
+    + '</div>'
+    + '<div class="detail-section">'
+    +   '<h4>Delivery <em>modes</em>'
+    +     '<span style="float:right;font-size:11px;font-weight:700;color:var(--text-dim);text-transform:none;letter-spacing:0">how respondents experience it</span>'
+    +   '</h4>'
+    +   '<div class="chip-grid">' + modesHtml + '</div>'
+    + '</div>'
+    + (addonsHtml ?
+        '<div class="detail-section">'
+      +   '<h4>Available <em>add-ons</em>'
+      +     '<span style="float:right;font-size:11px;font-weight:700;color:var(--text-dim);text-transform:none;letter-spacing:0">layer in what your team actually needs</span>'
+      +   '</h4>'
+      +   '<div class="addon-grid">' + addonsHtml + '</div>'
+      + '</div>'
+      : '')
+    + '<div class="detail-cta-row">'
+    +   '<a class="btn-primary" href="javascript:void(0)" onclick="requestProposal(\'' + esc(ed.code) + '\')">Request a tailored offer &rarr;</a>'
+    +   '<a class="btn-ghost" href="offerings.html#editions">See the full list</a>'
+    + '</div>';
+  detail.classList.add('shown');
+  document.getElementById('ed-hint').style.display = 'none';
+  setTimeout(function () { detail.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+}
+
+/* Bounce to offerings.html with a query param that auto-opens the
+   proposal-talk drawer with the picked edition checkbox pre-ticked.
+   The receiving page (offerings.html) listens for ?intent=proposal&pi=WPA
+   on load — see _wmTalkAutoIntent hook below. */
+function requestProposal(edCode) {
+  var url = 'offerings.html?intent=proposal'
+          + (edCode ? '&pi=' + encodeURIComponent(edCode) : '')
+          + '#proposal';
+  window.location.href = url;
+}
+
+/* Top-nav and hero CTAs — both go to the proposal-talk drawer on
+   offerings.html. No edition is pre-selected (admin still has to
+   tick which ones they want). */
+document.getElementById('cta-talk').addEventListener('click', function () { requestProposal(null); });
+document.getElementById('cta-talk-2').addEventListener('click', function () { requestProposal(null); });
+
+/* Back button — prefer browser history when the user got here from
+   somewhere on this origin (homepage / offerings / wherever).
+   Falls back to the explicit homepage href when the explorer was
+   opened directly (deep-linked email, paste-in-address-bar, new
+   tab from somewhere else). */
+document.getElementById('cta-back').addEventListener('click', function (ev) {
+  try {
+    var ref = (document.referrer || '');
+    if (window.history.length > 1 && ref && ref.indexOf(window.location.origin) === 0) {
+      ev.preventDefault();
+      window.history.back();
+    }
+    /* else — let the href handle it (homepage fallback). */
+  } catch (e) { /* let the href fire on any failure */ }
+});
+
+renderPickGrid();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acknowledgement &middot; Wellbeing Matters @ Work</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+<script>
+/* Theme gate — same cache shape as wm_vault.html / wm_bank.html so
+   the acknowledgement page picks up the client's active brand colour
+   when opened from the footer of an already-themed surface. Reads
+   the per-sub or per-key cache, then the generic last-theme cache,
+   then the wmw_brandConfig fallback for cases where the user has
+   never opened a themed page in this browser. Writes a !important
+   override block before first paint so there's no orange flash. */
+(function () {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var sub = p.get('sub');
+    var keyParam = p.get('key');
+    var keyBase = keyParam ? keyParam.toUpperCase().split('-')[0] : '';
+    var cacheKey = sub ? ('wm_vault_theme_sub_' + sub)
+                  : keyBase ? ('wm_vault_theme_key_' + keyBase)
+                  : 'wm_vault_theme_last';
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_vault_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_bank_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) {
+      try {
+        var bc = JSON.parse(localStorage.getItem('wmw_brandConfig') || '{}');
+        var BT = {tgf:'#e8420a',ms:'#0078d4',downer:'#29bfe0',coca:'#f40009',eap:'#4a9fd4',drake:'#2db87a',mcquaid:'#3aab7b'};
+        var BN = {tgf:'#14202e',ms:'#1b1b1b',downer:'#162838',coca:'#1a1a1a',eap:'#0f1f3d',drake:'#1a2e22',mcquaid:'#162238'};
+        var ak = bc.activeKey;
+        if (ak) {
+          var bp = null, bn = null;
+          (bc.custom || []).forEach(function (t) { if (t.key === ak) { bp = t.primary; bn = t.headerBg || t.secondary; } });
+          if (!bp) { bp = BT[ak]; bn = BN[ak]; }
+          if (bp) cached = { vars: { '--orange': bp, '--orange-dark': bp, '--orange-light': bp, '--navy-deep': bn || '#14202e', '--navy': bn || '#14202e', '--navy-mid': bn || '#14202e' } };
+        }
+      } catch (e) {}
+    }
+    if (cached && cached.vars && typeof cached.vars === 'object') {
+      var css = ':root{';
+      for (var k in cached.vars) {
+        if (Object.prototype.hasOwnProperty.call(cached.vars, k) && cached.vars[k]) {
+          css += k + ':' + cached.vars[k] + '!important;';
+        }
+      }
+      css += '}';
+      document.write('<style id="wm-theme-gate">' + css + '</style>');
+    }
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    --orange: #e8621a;
+    --orange-light: #f5a06e;
+    --orange-pale: #fff4ee;
+    --navy-deep: #14202e;
+    --text-dark: #1c2b3a;
+    --text-mid: #45586a;
+    --text-muted: #8097ad;
+    --surface: #ffffff;
+    --surface-2: #f4f6f8;
+    --border: #e2e8ef;
+    --body-bg: #f0f2f5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  header.page-hd {
+    background: var(--navy-deep);
+    border-bottom: 4px solid var(--orange);
+    padding: 22px 28px;
+  }
+  header.page-hd .hd-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header.page-hd .brand-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  header.page-hd .brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  header.page-hd .brand-mark svg { width: 22px; height: 22px; }
+  header.page-hd .brand-text {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  header.page-hd .brand-sub {
+    color: var(--orange-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  header.page-hd .hd-back {
+    /* Sit at the LEFT of the header, before the brand mark.
+       order:-1 wins regardless of DOM source order so any future
+       header markup tweak still keeps the back button leftmost. */
+    order: -1;
+    margin-right: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  header.page-hd .hd-back:hover { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.32); }
+  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+  main.page-bd {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+  }
+  .ack-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+  @media (max-width: 760px) {
+    .ack-grid { grid-template-columns: 1fr; }
+  }
+  .ack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .ack-card h1 { font-size: 22px; }
+  .ack-card h2 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0 0 6px;
+    letter-spacing: -0.005em;
+  }
+  .person-name {
+    color: var(--orange);
+    font-weight: 800;
+  }
+  .person-portrait {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .person-portrait img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--orange);
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(232, 98, 26, 0.18);
+  }
+  .person-portrait .person-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .person-portrait .person-role {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+  .ack-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0 0 22px;
+    letter-spacing: -0.01em;
+  }
+  p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin: 0 0 18px;
+  }
+  .ack-ref {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .ack-ref strong {
+    color: var(--text-mid);
+    font-style: normal;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .back-row {
+    margin-top: 22px;
+    text-align: center;
+  }
+  .back-row a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .back-row a:hover { color: var(--orange); }
+  footer.page-ft {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 18px 28px 32px;
+  }
+</style>
+</head>
+<body>
+  <header class="page-hd">
+    <div class="hd-inner">
+      <div class="brand-mark">
+        <!-- Fallback to an inline heart SVG when the PNG isn't on the
+             server yet (e.g. before the deploy that ships the new
+             logo lands). The onerror handler swaps the broken <img>
+             for the SVG so the header never renders the missing-
+             image placeholder. Once the PNG is live, it takes over
+             cleanly. -->
+        <img src="logos/VaultTemp1.png" alt="Wellbeing Matters"
+             onerror="var p=this.parentNode;if(p){p.innerHTML='&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z&quot;/&gt;&lt;/svg&gt;';}">
+      </div>
+      <div>
+        <div class="brand-text">Wellbeing Matters @ Work</div>
+        <div class="brand-sub">Acknowledgement</div>
+      </div>
+      <a class="hd-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+    </div>
+  </header>
+
+  <main class="page-bd">
+    <div class="ack-grid">
+
+      <!-- ── Seligman ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/seligman.webp" alt="Dr. Martin E.P. Seligman" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Originator &middot; PERMA</div>
+            <h2><span class="person-name">Dr. Martin E.P. Seligman</span></h2>
+            <div class="person-role">Director, Penn Positive Psychology Center<br>University of Pennsylvania</div>
+          </div>
+        </div>
+        <h1>The PERMA Model of Flourishing</h1>
+        <p>Our Wellbeing Matters program is informed by the PERMA model of flourishing &mdash; a theory of wellbeing developed by Dr. Seligman. PERMA proposes that human flourishing is supported by five measurable elements: Positive Emotion, Engagement, Relationships, Meaning, and Accomplishment.</p>
+        <p>We gratefully acknowledge Dr. Seligman as the originator of this wellbeing theory, which continues to inform the methodology underpinning our work.</p>
+        <div class="ack-ref" style="margin-top:auto">
+          <strong>Reference</strong>
+          Seligman, M.E.P. (2011). <em>Flourish: A Visionary New Understanding of Happiness and Well-being.</em> New York: Free Press.
+        </div>
+      </div>
+
+      <!-- ── McQuaid ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/MichelleMcQuaid.jpg" alt="Dr. Michelle McQuaid" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Conceived the PERMAH Survey</div>
+            <h2><span class="person-name">Dr. Michelle McQuaid</span></h2>
+            <div class="person-role">Wellbeing researcher and practitioner<br>Translator of PERMAH into applied measurement</div>
+          </div>
+        </div>
+        <h1>From PERMA to PERMAH</h1>
+        <p>Dr. McQuaid conceived the PERMAH Wellbeing Survey and led its development as an applied wellbeing measurement tool, including the integration of <strong>Health</strong> as a sixth element extending Dr. Seligman&rsquo;s original PERMA framework.</p>
+        <p>Her work made it possible for organisations, schools and individuals to measure flourishing in a structured, repeatable way.</p>
+      </div>
+
+      <!-- ── Kern ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/PeggyKern.jpg" alt="Professor Peggy Kern" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Foundational Scholarly Contributor</div>
+            <h2><span class="person-name">Professor Peggy Kern</span></h2>
+            <div class="person-role">The University of Melbourne<br>Positive psychology &middot; psychometrics &middot; life-course wellbeing</div>
+          </div>
+        </div>
+        <h1>Acknowledgement of Professor Peggy Kern</h1>
+        <p>Professor Peggy Kern, of The University of Melbourne, is a foundational contributor to the PERMAH Wellbeing Survey and one of the leading scholarly voices in the international science of wellbeing measurement.</p>
+        <p>Professor Kern&rsquo;s research spans positive psychology, life-course wellbeing, applied psychometrics, and the systems-level study of how individuals and communities flourish. Her published work has helped shape the modern measurement of wellbeing and the scientific frameworks used by researchers and practitioners worldwide.</p>
+        <h2 style="font-size:14px;margin-top:14px;margin-bottom:4px">Foundational contribution to PERMAH</h2>
+        <p>In the survey&rsquo;s earliest stages, Professor Kern worked alongside Dr. Michelle McQuaid and Martin Suchta as a foundational contributor to the development of the PERMAH question sets and scoring methodology. She brought scholarly rigour to the translation of the underlying theory into measurable survey items, the design of the scoring approach, and the psychometric properties that determine how the instrument behaves in practice. Her contribution established the scientific foundations on which the survey continues to rest today.</p>
+        <h2 style="font-size:14px;margin-top:14px;margin-bottom:4px">Ongoing scholarly contribution</h2>
+        <p>Beyond the survey&rsquo;s foundational phase, Professor Kern&rsquo;s broader body of research continues to inform the scientific evolution of the framework &mdash; including the development of PERMA+ &mdash; through her contributions to the wider field of wellbeing measurement and applied positive psychology.</p>
+        <p>We gratefully acknowledge Professor Kern&rsquo;s foundational and ongoing contribution to the science, design, and continued development of the framework.</p>
+      </div>
+
+      <!-- ── Danielle Jacobs — co-creation & applied practice ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/DanielleJacobs.jpg" alt="Danielle Jacobs" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Co-creation &amp; Applied Practice</div>
+            <h2><span class="person-name">Danielle Jacobs</span></h2>
+            <div class="person-role">Senior Psychologist, speaker, coach &amp; consultant<br>Board Member, Dying With Dignity Victoria</div>
+          </div>
+        </div>
+        <h1>Co-creation &amp; Applied Practice Leadership</h1>
+        <p>Danielle Jacobs is a co-creator of the PERMA+ framework and serves as the practitioner lead on client engagements.</p>
+        <p>Danielle brings extensive clinical and applied experience to the design and delivery of the framework. Her contribution shapes how the PERMA+ methodology is translated into the realities of practice: how it is communicated to leaders and teams, how it is delivered in coaching and facilitation contexts, and how the measurement of wellbeing is connected to meaningful action and change.</p>
+        <p>Working alongside the research and methodological contributors to the framework, Danielle&rsquo;s role ensures that PERMA+ remains both scientifically grounded and practically useful &mdash; that what is measured is also what genuinely matters in people&rsquo;s working and personal lives.</p>
+        <p>We gratefully acknowledge Danielle&rsquo;s contribution as a co-creator of PERMA+ and as the applied practice voice at the heart of how the framework is delivered.</p>
+      </div>
+
+      <!-- ── Martin Suchta — ongoing research leadership ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/MartinSuchta.jpg" alt="Martin Suchta" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Ongoing Research Leadership</div>
+            <h2><span class="person-name">Martin Suchta</span></h2>
+            <div class="person-role">Director, The Good Foundry Pty Ltd<br>Original contributor &middot; PERMA+ research lead</div>
+          </div>
+        </div>
+        <h1>Acknowledgement of Ongoing Research Leadership</h1>
+        <p>The PERMAH Wellbeing Survey is a living research instrument, and its continued scientific development is led by Martin Suchta, Director of The Good Foundry Pty Ltd.</p>
+        <h2 style="font-size:14px;margin-top:14px;margin-bottom:4px">Original contribution</h2>
+        <p>In the survey&rsquo;s foundational phase, Martin worked alongside Dr. Michelle McQuaid and Dr. Peggy Kern as an original contributor to the development of the PERMAH question sets and scoring methodology. His early work helped shape the structure of the survey items, the scoring approach, and the design choices that have since enabled the instrument to be used at scale.</p>
+        <h2 style="font-size:14px;margin-top:14px;margin-bottom:4px">Ongoing research and the PERMA+ framework</h2>
+        <p>Beyond the survey&rsquo;s initial scope, Martin has led sustained investment in research to extend the methodology and deepen its evidence base. This work has culminated in the development of <strong>PERMA+</strong>, a methodological extension of the original PERMA framework that integrates additional dimensions of wellbeing emerging from contemporary research, longitudinal survey data, and applied practice across workplaces, schools, and communities.</p>
+        <p>PERMA+ is offered as a research framework and methodological evolution, building on &mdash; and acknowledging &mdash; Dr. Martin E.P. Seligman&rsquo;s foundational PERMA theory of flourishing.</p>
+        <p>We acknowledge Martin&rsquo;s foundational and ongoing contribution to the science, design, and continued development of the PERMAH Wellbeing Survey.</p>
+      </div>
+
+      <!-- ── Stewart Donaldson — research & evaluation ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/StewartDonaldson.jpg" alt="Dr. Stewart I. Donaldson" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Research &amp; Evaluation</div>
+            <h2><span class="person-name">Dr. Stewart I. Donaldson</span></h2>
+            <div class="person-role">President, Claremont Flourishing Center &middot; Western Positive Psychology Association<br>Executive Director, Claremont Evaluation Center &middot; The Evaluators&rsquo; Institute (TEI)</div>
+          </div>
+        </div>
+        <h1>Research &amp; Evaluation Contributions</h1>
+        <p>Dr. Stewart I. Donaldson contributes scholarly research and evaluation expertise to the ongoing scientific development of the PERMA+ framework.</p>
+        <p>Dr. Donaldson is one of the most widely recognised voices in the fields of positive psychology and evaluation science, with a sustained body of research on the measurement of wellbeing, the design of evidence-based interventions, and the evaluation of programs that support human flourishing across individual, workplace, and community contexts.</p>
+        <p>Within PERMA+, Dr. Donaldson&rsquo;s contribution supports the scholarly foundations of the framework, the rigour of its measurement properties, and its alignment with contemporary developments in the science of flourishing.</p>
+        <p>We gratefully acknowledge Dr. Donaldson&rsquo;s contribution to the continued scientific development of the framework.</p>
+      </div>
+
+      <!-- ── Donaldson — research, measurement, evaluation ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/ScottDonaldson.jpg" alt="Dr. Scott Donaldson" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">Research, Measurement &amp; Evaluation</div>
+            <h2><span class="person-name">Dr. Scott Donaldson</span></h2>
+            <div class="person-role">Postdoctoral Scholar in Evaluation, Statistics, and Measurement<br>United States</div>
+          </div>
+        </div>
+        <h1>Research, Measurement &amp; Evaluation Contributions</h1>
+        <p>Dr. Scott Donaldson contributes research, measurement, and evaluation expertise to the ongoing scientific development of the PERMA+ framework.</p>
+        <p>A Postdoctoral Scholar in Evaluation, Statistics, and Measurement, Dr. Donaldson&rsquo;s research focuses on the design, measurement, and evaluation of wellbeing interventions at the individual, workplace, and community levels. His work brings rigorous psychometric and evaluative methods to the study of how wellbeing can be measured, supported, and sustained across these different contexts.</p>
+        <p>Within PERMA+, Dr. Donaldson&rsquo;s contribution helps strengthen the measurement properties of the framework, the evaluation of its applied use, and the broader evidence base linking wellbeing measurement to meaningful outcomes for individuals, organisations, and communities.</p>
+        <p>We gratefully acknowledge Dr. Donaldson&rsquo;s scholarly contribution to the ongoing scientific development of the framework.</p>
+      </div>
+
+      <!-- ── McQuaid (second) — Psychosocial Hazards & Culture of Care ── -->
+      <div class="ack-card">
+        <div class="person-portrait">
+          <img src="persona/MichelleMcQuaid.jpg" alt="Dr. Michelle McQuaid" loading="lazy">
+          <div class="person-meta">
+            <div class="ack-eyebrow" style="margin-bottom:2px">PERMA+ &middot; Psychosocial Hazards &amp; Culture of Care</div>
+            <h2><span class="person-name">Dr. Michelle McQuaid</span></h2>
+            <div class="person-role">Founder, The Michelle McQuaid Group<br>Researcher &middot; positive psychology, workplace wellbeing, leadership</div>
+          </div>
+        </div>
+        <h1>Psychosocial Hazards &amp; Culture of Care Components</h1>
+        <p>Two components of the PERMA+ framework &mdash; <strong>Psychosocial Hazards</strong> and <strong>Culture of Care</strong> &mdash; were developed by Dr. Michelle McQuaid, founder of The Michelle McQuaid Group and a leading researcher and practitioner in applied positive psychology, workplace wellbeing, and leadership development.</p>
+        <h2 style="font-size:14px;margin-top:14px;margin-bottom:4px">Psychosocial Hazards</h2>
+        <p>Dr. McQuaid designed this component to bring contemporary research on workplace psychological safety into the PERMA+ measurement framework. Drawing on regulatory developments, occupational health and safety research, and applied work with organisations, this component captures the systemic conditions that influence employee wellbeing &mdash; extending PERMA+ beyond individual flourishing into the organisational environment in which flourishing takes place.</p>
+        <h2 style="font-size:14px;margin-top:14px;margin-bottom:4px">Culture of Care</h2>
+        <p>Dr. McQuaid developed this component to operationalise the relational, ethical, and leadership dimensions of organisational wellbeing. Informed by her research and practice with leaders globally, the Culture of Care component measures the practices, behaviours, and norms that support people to thrive sustainably at work.</p>
+        <p>Together, these two components extend PERMA+ from a primarily individual model of flourishing into a framework that also addresses the systemic and cultural conditions that enable wellbeing at scale. We gratefully acknowledge Dr. McQuaid&rsquo;s contribution in translating these bodies of research into measurable, practical components of the framework.</p>
+      </div>
+
+      <!-- ── Together summary (last) — spans full grid width as a
+           closing finale across both columns. -->
+      <div class="ack-card" style="background:var(--surface-2,#f4f6f8);border-style:dashed;grid-column:1 / -1">
+        <div class="ack-eyebrow">A Foundation We Continue To Build On</div>
+        <h1>Together</h1>
+        <p>Dr. McQuaid and Dr. Kern translated the PERMAH theoretical framework &mdash; itself built on Dr. Seligman&rsquo;s PERMA model &mdash; into a validated, practical instrument that has since been completed by participants worldwide and used to inform wellbeing strategy in workplaces, schools, and communities.</p>
+        <p>We acknowledge their work as the foundation on which the ongoing development of the PERMAH Wellbeing Survey continues to build.</p>
+      </div>
+
+    </div><!-- /.ack-grid -->
+  </main>
+
+  <footer class="page-ft">
+    Powered by <a href="https://www.the-good-foundry.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700">The Good Foundry</a> &middot; Confidential &middot; Immediately Actionable
+  </footer>
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

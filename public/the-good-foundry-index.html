@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Good Foundry · Evidence-based wellbeing measurement</title>
+<meta name="description" content="The Good Foundry builds Wellbeing Matters — evidence-based PERMA+ wellbeing measurement for workplaces, schools, sport, vet practices, universities, individuals, and adults navigating aging well — with 360 Foundry multi-rater wellbeing across five editions (Kids, Students, Life, University, Workplace), plus bespoke editions including the HEART Of Change Tool (built with The Change Lab), LiveWell (built In Partnership with the LiveWell aged-care programme), and a ProQOL extension for first-responder wellbeing research (built with Stat Medical Education LLC and Grand Canyon University).">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ——— BRAND TOKENS (lifted verbatim from TGF/privacy-policy.html) ——— */
+:root {
+  --twilight:   #293890;
+  --arctic:     #1B75BC;
+  --aqua:       #26AAE1;
+  --grape:      #662C90;
+  --orchid:     #91268F;
+  --punch:      #EC008B;
+  --bg:         #F4F6FB;
+  --card:       #FFFFFF;
+  --mid:        #EEF1F8;
+  --border:     rgba(41,56,144,.12);
+  --text:       #161A2E;
+  --text-dim:   rgba(22,26,46,.58);
+  --font:       'Outfit', sans-serif;
+  --serif:      'DM Serif Display', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ——— Soft gradient-mesh background ——————————————————————————————— */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ——— Topbar ——————————————————————————————————————————————————————— */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.brand img.brand-logo {
+  /* TGF wordmark. After the May-2026 brand bump (5× → 180px) the
+     logo was scaled back by 2× to 90px so it reads strong in the
+     corner without dominating the topbar. */
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+.brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+.brand-name em { font-style: italic; color: var(--arctic); font-family: var(--serif); }
+.brand-sep { width: 1px; height: 18px; background: rgba(22,26,46,.15); }
+.brand-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.topbar-right a.nav-link {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: color .15s;
+}
+.topbar-right a.nav-link:hover { color: var(--text); }
+.nav-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  padding: 7px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: opacity .2s;
+  box-shadow: 0 4px 14px rgba(236,0,139,.22);
+}
+.nav-pill:hover { opacity: .9; }
+
+/* ——— Hero ————————————————————————————————————————————————————————— */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 90px 40px 60px;
+  overflow: hidden;
+}
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-lines::before,
+.hero-lines::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(41,56,144,.14);
+}
+.hero-lines::before { width: 700px; height: 700px; right: -200px; top: -250px; }
+.hero-lines::after  { width: 400px; height: 400px; right: -50px; top: -50px; }
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(236,0,139,.08);
+  border: 1px solid rgba(236,0,139,.28);
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--punch);
+  margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--punch);
+}
+.hero h1 {
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  margin-bottom: 18px;
+  color: var(--text);
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero h1 .serif-italic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-desc {
+  font-size: 17px;
+  color: var(--text-dim);
+  font-weight: 300;
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 32px;
+}
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 28px;
+}
+a.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  border-radius: 100px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 18px rgba(236,0,139,.25);
+  transition: transform .18s, box-shadow .18s, opacity .15s;
+}
+a.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(236,0,139,.32);
+  opacity: .95;
+}
+a.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: border-color .15s, color .15s, background .15s;
+}
+a.btn-ghost:hover {
+  border-color: rgba(38,170,225,.45);
+  color: var(--arctic);
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.hero-chip-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  flex-shrink: 0;
+}
+.hero-chip strong { color: var(--text); font-weight: 600; }
+.hero-divider { width: 1px; height: 16px; background: rgba(22,26,46,.15); }
+
+/* ——— Layout ——————————————————————————————————————————————————————— */
+.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+
+/* ——— Intro card ——————————————————————————————————————————————————— */
+.intro-card {
+  background: linear-gradient(135deg, rgba(41,56,144,.06), rgba(102,44,144,.05));
+  border: 1px solid rgba(38,170,225,.18);
+  border-radius: 16px;
+  padding: 26px 30px;
+  margin-bottom: 50px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  position: relative;
+  overflow: hidden;
+  font-weight: 300;
+}
+.intro-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  border-radius: 16px 16px 0 0;
+}
+.intro-card strong { color: var(--arctic); font-weight: 600; }
+
+/* ——— Drucker pull-quote ─────────────────────────────────────────── */
+.drucker-quote {
+  position: relative;
+  margin: -28px auto 50px;
+  max-width: 840px;
+  padding: 28px 36px 26px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid rgba(41,56,144,.10);
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(22,26,46,.06);
+}
+.drucker-quote::before {
+  content: '“';
+  position: absolute;
+  top: -18px; left: 28px;
+  font-family: var(--serif);
+  font-size: 90px; line-height: 1;
+  color: var(--orchid); opacity: .35;
+  pointer-events: none;
+}
+.drucker-quote .dq-attrib {
+  display: block;
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--arctic);
+  margin-bottom: 14px;
+}
+.drucker-quote blockquote {
+  margin: 0;
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.35;
+  letter-spacing: -.012em;
+  color: var(--text);
+}
+.drucker-quote blockquote .hl {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.drucker-quote .dq-byline {
+  display: block;
+  margin-top: 14px;
+  font-size: 12px; font-weight: 500; letter-spacing: .04em;
+  color: var(--text-dim);
+}
+.drucker-quote .dq-byline strong { color: var(--text); font-weight: 700; }
+@media (max-width: 720px) {
+  .drucker-quote { margin: -18px 0 36px; padding: 26px 24px 22px; }
+}
+
+/* ——— ME / WE / US section ───────────────────────────────────────── */
+.mwu-section {
+  margin-bottom: 60px;
+}
+.mwu-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 28px;
+}
+.mwu-header .mwu-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--orchid);
+  margin-bottom: 8px;
+}
+.mwu-header h2 {
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 800; letter-spacing: -.012em;
+  line-height: 1.2; color: var(--text);
+  margin: 0 0 12px;
+}
+.mwu-header h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--arctic); }
+.mwu-header p {
+  font-size: 15.5px; color: var(--text-dim); line-height: 1.75;
+  font-weight: 300;
+}
+.mwu-header p strong { color: var(--text); font-weight: 600; }
+
+.mwu-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.mwu-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 28px 26px;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+  overflow: hidden;
+}
+.mwu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(22,26,46,.10);
+}
+.mwu-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  border-radius: 16px 16px 0 0;
+}
+.mwu-card.mwu-me   { border-color: rgba(236,0,139,.18); }
+.mwu-card.mwu-me::before   { background: linear-gradient(90deg, var(--punch), var(--orchid)); }
+.mwu-card.mwu-we   { border-color: rgba(27,117,188,.18); }
+.mwu-card.mwu-we::before   { background: linear-gradient(90deg, var(--arctic), var(--aqua)); }
+.mwu-card.mwu-us   { border-color: rgba(41,56,144,.18); }
+.mwu-card.mwu-us::before   { background: linear-gradient(90deg, var(--twilight), var(--grape)); }
+
+.mwu-card .mwu-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(22,26,46,.10);
+}
+.mwu-card .mwu-icon svg { width: 28px; height: 28px; }
+.mwu-card.mwu-me .mwu-icon { background: linear-gradient(135deg, var(--punch), var(--orchid)); }
+.mwu-card.mwu-we .mwu-icon { background: linear-gradient(135deg, var(--arctic), var(--aqua)); }
+.mwu-card.mwu-us .mwu-icon { background: linear-gradient(135deg, var(--twilight), var(--grape)); }
+
+.mwu-card .mwu-tier-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.mwu-card.mwu-me .mwu-tier-label { color: var(--punch); }
+.mwu-card.mwu-we .mwu-tier-label { color: var(--arctic); }
+.mwu-card.mwu-us .mwu-tier-label { color: var(--twilight); }
+
+.mwu-card h3 {
+  font-size: 19px; font-weight: 700; color: var(--text);
+  letter-spacing: -.012em; margin: 0 0 4px;
+}
+.mwu-card .mwu-scope {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 14.5px;
+  margin-bottom: 12px;
+}
+.mwu-card.mwu-me .mwu-scope { color: var(--punch); }
+.mwu-card.mwu-we .mwu-scope { color: var(--arctic); }
+.mwu-card.mwu-us .mwu-scope { color: var(--twilight); }
+
+.mwu-card p {
+  font-size: 14.5px; color: var(--text-dim); line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Mode note — the "two modes" disclosure under the cards */
+.mwu-modes {
+  background: linear-gradient(135deg, rgba(41,56,144,.04), rgba(102,44,144,.03));
+  border: 1px solid rgba(41,56,144,.12);
+  border-radius: 14px;
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 720px) {
+  .mwu-modes { grid-template-columns: 1fr; gap: 14px; padding: 20px 22px; }
+}
+.mwu-mode-item .mode-eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.mwu-mode-item .mode-eyebrow .mode-pip {
+  width: 9px; height: 9px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.mwu-mode-item.mode-full .mode-eyebrow      { color: var(--twilight); }
+.mwu-mode-item.mode-full .mode-pip          { background: linear-gradient(135deg, var(--punch), var(--arctic), var(--twilight)); }
+.mwu-mode-item.mode-mewe .mode-eyebrow      { color: var(--arctic); }
+.mwu-mode-item.mode-mewe .mode-pip          { background: linear-gradient(135deg, var(--punch), var(--arctic)); }
+.mwu-mode-item h4 {
+  font-size: 14.5px; font-weight: 700; color: var(--text);
+  margin: 0 0 4px; letter-spacing: -.005em;
+}
+.mwu-mode-item p {
+  font-size: 13px; color: var(--text-dim); line-height: 1.65;
+  margin: 0;
+}
+
+/* ——— Feature showcase: Shift Happens ─────────────────────────────
+   Three-card section announcing the new two-period comparison
+   feature. Visual rhythm matches .mwu-section but with a fresh
+   accent gradient (arctic → grape → punch) so it reads as
+   "what's new" rather than "how we measure". */
+.feature-showcase {
+  position: relative;
+  margin: 0 0 72px;
+  padding: 44px 36px 40px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(27,117,188,.04), rgba(102,44,144,.05) 55%, rgba(236,0,139,.04));
+  border: 1px solid rgba(102,44,144,.14);
+  overflow: hidden;
+}
+.feature-showcase::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--arctic), var(--grape), var(--punch));
+}
+.fs-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 32px;
+}
+.fs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--punch);
+  background: rgba(236,0,139,.08);
+  border: 1px solid rgba(236,0,139,.22);
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin-bottom: 14px;
+}
+/* 2026-06-05 — White variant for badges sitting on a coloured
+   gradient background (e.g. the HEART Of Change feature card uses
+   a teal-to-navy gradient where the default punch-pink text + dot
+   read poorly). Marty: "change New Bespoke · The HEART Of Change
+   Tool to be white". */
+.fs-badge.fs-badge--white { color: #fff; border-color: rgba(255,255,255,.40); }
+.fs-badge.fs-badge--white::before { background: #fff; }
+.fs-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--punch);
+  box-shadow: 0 0 0 4px rgba(236,0,139,.18);
+  animation: fsBadgePulse 2.4s ease-in-out infinite;
+}
+@keyframes fsBadgePulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(236,0,139,.18); }
+  50%      { box-shadow: 0 0 0 7px rgba(236,0,139,.05); }
+}
+.fs-header h2 {
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 800; letter-spacing: -.012em;
+  line-height: 1.2; color: var(--text);
+  margin: 0 0 12px;
+}
+.fs-header h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--grape);
+}
+.fs-header p {
+  font-size: 15.5px; color: var(--text-dim); line-height: 1.75;
+  font-weight: 300;
+}
+.fs-header p strong { color: var(--text); font-weight: 600; }
+
+.fs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.fs-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 24px 22px;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+  overflow: hidden;
+}
+.fs-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(22,26,46,.10);
+}
+.fs-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  border-radius: 14px 14px 0 0;
+}
+.fs-card.fs-card-a { border-color: rgba(27,117,188,.18); }
+.fs-card.fs-card-a::before { background: linear-gradient(90deg, var(--arctic), var(--aqua)); }
+.fs-card.fs-card-b { border-color: rgba(102,44,144,.18); }
+.fs-card.fs-card-b::before { background: linear-gradient(90deg, var(--grape), var(--orchid)); }
+.fs-card.fs-card-c { border-color: rgba(236,0,139,.18); }
+.fs-card.fs-card-c::before { background: linear-gradient(90deg, var(--orchid), var(--punch)); }
+
+.fs-card .fs-card-icon {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(22,26,46,.10);
+}
+.fs-card .fs-card-icon svg { width: 22px; height: 22px; }
+.fs-card.fs-card-a .fs-card-icon { background: linear-gradient(135deg, var(--arctic), var(--aqua)); }
+.fs-card.fs-card-b .fs-card-icon { background: linear-gradient(135deg, var(--grape), var(--orchid)); }
+.fs-card.fs-card-c .fs-card-icon { background: linear-gradient(135deg, var(--orchid), var(--punch)); }
+
+.fs-card .fs-card-eyebrow {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.fs-card.fs-card-a .fs-card-eyebrow { color: var(--arctic); }
+.fs-card.fs-card-b .fs-card-eyebrow { color: var(--grape); }
+.fs-card.fs-card-c .fs-card-eyebrow { color: var(--punch); }
+
+.fs-card h3 {
+  font-size: 18px; font-weight: 700; color: var(--text);
+  letter-spacing: -.012em;
+  margin: 0 0 10px;
+}
+.fs-card p {
+  font-size: 14px; color: var(--text-dim); line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
+}
+.fs-card p strong { color: var(--text); font-weight: 600; }
+
+.fs-rollout {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(102,44,144,.12);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  font-weight: 300;
+}
+.fs-rollout strong { color: var(--text); font-weight: 600; }
+.fs-rollout-pip {
+  flex-shrink: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  background: linear-gradient(135deg, var(--punch), var(--orchid));
+  box-shadow: 0 0 0 3px rgba(236,0,139,.12);
+}
+
+@media (max-width: 720px) {
+  .feature-showcase { padding: 32px 22px 28px; border-radius: 18px; margin-bottom: 56px; }
+  .fs-header { margin-bottom: 22px; }
+  .fs-rollout { flex-direction: column; gap: 8px; padding: 14px 16px; }
+}
+
+/* ——— Three-up section grid ——————————————————————————————————————— */
+/* 2026-06-05 — Marty: "can you better space between the cards here
+   doesn't look right". Gap 18 → 32 desktop; the 28px internal pillar
+   padding was reading as a single block with the previous tight gap.
+   Mobile gap 14 → 18 below for the same reason scaled down. */
+.three-up {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-bottom: 56px;
+}
+.three-up .pillar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 28px 26px;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.three-up .pillar:hover {
+  border-color: rgba(38,170,225,.35);
+  box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 8px 22px rgba(22,26,46,.07);
+  transform: translateY(-2px);
+}
+.pillar .pillar-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 18px;
+  letter-spacing: -.02em;
+  box-shadow: 0 4px 12px rgba(41,56,144,.22);
+}
+.pillar .pillar-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--punch);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pillar .pillar-eyebrow::before {
+  content: '';
+  display: block;
+  width: 14px; height: 2px;
+  background: linear-gradient(90deg, var(--punch), var(--orchid));
+  border-radius: 2px;
+}
+.pillar h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -.015em;
+}
+.pillar p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ——— Acknowledgements callout ——————————————————————————————————— */
+.ack-callout {
+  background: linear-gradient(135deg, rgba(102,44,144,.08), rgba(27,117,188,.05));
+  border: 1px solid rgba(38,170,225,.22);
+  border-radius: 16px;
+  padding: 32px 36px;
+  margin-bottom: 56px;
+  position: relative;
+  overflow: hidden;
+}
+.ack-callout::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid));
+}
+.ack-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--arctic);
+  margin-bottom: 12px;
+}
+.ack-callout h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -.02em;
+}
+.ack-callout h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--arctic);
+}
+.ack-callout p {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  font-weight: 300;
+  margin-bottom: 14px;
+}
+.ack-callout p:last-of-type { margin-bottom: 0; }
+.ack-callout a.elink {
+  color: var(--arctic);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27,117,188,.3);
+  font-weight: 500;
+  transition: border-color .15s, color .15s;
+}
+.ack-callout a.elink:hover {
+  color: var(--twilight);
+  border-color: rgba(41,56,144,.55);
+}
+
+/* ——— Contact / CTA card (matches contact-card on privacy page) ——— */
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 48px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(22,26,46,.06);
+}
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102,44,144,.10) 0%, rgba(27,117,188,.06) 50%, rgba(236,0,139,.06) 100%);
+  pointer-events: none;
+}
+.contact-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+}
+.contact-card-inner { position: relative; z-index: 1; }
+.contact-card h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.02em;
+  margin-bottom: 10px;
+}
+.contact-card p {
+  color: var(--text-dim);
+  font-size: 15px;
+  margin-bottom: 28px;
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 600px;
+}
+.contact-card a.btn-primary { font-size: 13.5px; }
+
+/* ——— Footer ——————————————————————————————————————————————————————— */
+footer.page-ft {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  padding: 36px 28px 44px;
+  line-height: 1.8;
+  border-top: 1px solid var(--border);
+}
+footer.page-ft a {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color .15s;
+}
+footer.page-ft a:hover { color: var(--arctic); }
+footer.page-ft .ft-divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  margin: 0 auto 18px;
+  border-radius: 2px;
+}
+footer.page-ft strong { color: var(--text); font-weight: 600; }
+
+/* Mobile tightening */
+@media (max-width: 720px) {
+  .topbar { padding: 0 18px; }
+  .topbar-right .nav-link { display: none; }
+  .hero { padding: 56px 20px 40px; }
+  .hero h1 { font-size: 36px; }
+  .hero-desc { font-size: 15.5px; }
+  .layout { padding: 0 20px 60px; }
+  .three-up { gap: 18px; }
+  .three-up .pillar { padding: 22px 22px 20px; }
+  .ack-callout { padding: 26px 24px; }
+  .contact-card { padding: 32px 26px; }
+  .contact-card h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a class="brand" href="/">
+      <img class="brand-logo" src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry · Action for Impact">
+    </a>
+    <div class="topbar-right">
+      <a class="nav-link" href="business-case.html">Business case</a>
+      <a class="nav-link" href="backed-by-science.html">Backed by Science</a>
+      <a class="nav-link" href="acknowledgement.html">Acknowledgements</a>
+      <a class="nav-link" href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy</a>
+      <a class="nav-pill" href="offerings-explorer.html">Edition explorer</a>
+      <a class="nav-pill" href="offerings.html">Our offerings &rarr;</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-lines"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">The Good Foundry</div>
+      <h1>We measure <span class="serif-italic">what matters</span> — at work, at school, <span class="gradient-text">in life</span>.</h1>
+      <p class="hero-desc">The Good Foundry is the research-led team behind <strong style="color:var(--text);font-weight:600">Wellbeing Matters</strong> — an evidence-based PERMA+ measurement platform that helps organisations, schools and individuals understand wellbeing in a structured, repeatable way. Built on decades of positive psychology research; used by workplaces, universities, sporting bodies, schools, vet practices and EAPs across Australia and beyond.</p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="offerings.html">View our offerings &rarr;</a>
+        <a class="btn-ghost" href="javascript:void(0)" onclick="wmTalkOpen()">Talk to us</a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-chip"><span class="hero-chip-dot"></span><strong>Ten editions</strong> · Work · Uni · Life · Vet · Sport · Kids · Youth · In Aging Well · Bespoke <span style="margin-left:6px;padding:2px 7px;background:#01b0e2;color:#fff;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.06em">+ HEART OF CHANGE</span><span style="margin-left:4px;padding:2px 7px;background:#4fa3a8;color:#fff;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.06em">+ LIVEWELL</span></div>
+        <div class="hero-divider"></div>
+        <div class="hero-chip"><span class="hero-chip-dot"></span>Built on <strong>PERMA+</strong></div>
+        <div class="hero-divider"></div>
+        <div class="hero-chip"><span class="hero-chip-dot"></span><strong>Hosted in 6 countries</strong> · Australia · Singapore · USA · UK · Germany · Netherlands</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Client logo band (2026-06-05) ─────────────────────────
+       Ported from the Bank Super dashboard `.dash-logo-strip`
+       carousel. Re-themed to the public palette: soft card on the
+       page's --bg with twilight accents (no dark-navy gradient).
+       Static data via api/public_client_logos.php (reads
+       data/public_client_logos.json — curated by hand so a client
+       can never accidentally surface here without an admin edit).
+       Falls back silently when the feed is empty or unreachable. -->
+  <section class="client-logo-band" id="public-logo-band">
+    <div class="clb-inner">
+      <div class="clb-head">We've had the privilege and pleasure of working with</div>
+      <div class="clb-carousel">
+        <button class="clb-arrow" type="button" id="clb-arrow-prev" aria-label="Previous clients">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="clb-viewport" id="clb-viewport">
+          <div class="clb-track" id="clb-track"></div>
+        </div>
+        <button class="clb-arrow" type="button" id="clb-arrow-next" aria-label="Next clients">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+  <style>
+    /* 2026-06-05 v4 — width + padding aligned to `.layout`
+       (max-width:1160px, padding:0 40px) so the band lines up
+       edge-to-edge with the intro-card paragraph below.
+       v5: top padding cut 48 → 14 so the band sits TIGHTER below
+       the editions/PERMA+/countries hero strip. Marty: "move up
+       this scroll bar on index page so the gap is smaller".
+       Bottom padding stays at 48 to keep breathing room before
+       the intro card below. */
+    .client-logo-band {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 14px 40px 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .clb-inner {
+      background: linear-gradient(135deg, rgba(41,56,144,0.04) 0%, rgba(102,44,144,0.05) 100%);
+      border: 1px solid var(--border, rgba(41,56,144,.12));
+      border-radius: 18px;
+      padding: 20px 18px 22px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    /* 2026-06-05 v3 — header text doubled from 10.5px → 21px so the
+       "We've had the privilege and pleasure of working with" line
+       reads as a proper section heading instead of an eyebrow.
+       Marty: "Can you increase this … x2". Letter-spacing relaxed
+       (.16 → .04) since the larger size doesn't need wide tracking
+       to read as a label; opacity removed for full punch. */
+    .clb-head {
+      color: var(--twilight, #293890);
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .clb-carousel { display: flex; align-items: center; gap: 10px; }
+    .clb-arrow {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border, rgba(41,56,144,.12));
+      background: var(--card, #fff);
+      color: var(--twilight, #293890);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s ease, border-color .15s ease, color .15s ease, transform .12s ease;
+      font-family: inherit;
+    }
+    .clb-arrow:hover {
+      background: var(--twilight, #293890);
+      border-color: var(--twilight, #293890);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .clb-viewport { flex: 1; min-width: 0; overflow: hidden; }
+    /* 2026-06-05 v4 — switched from infinite marquee to 4-per-page
+       paged advance, matching the Bank Super dashboard carousel.
+       Marty: "match the scroll behaviour of the carousels on index
+       page and login portfolio to exactly what we use in super
+       bank — ie 4 at a time present rather than scroll. Can the
+       present be smooth in". The custom rAF-driven smooth-scroll
+       helper in the script below uses an ease-in-out cubic over
+       900ms so the page glide is gentle, not snappy. */
+    .clb-track { display: flex; gap: 14px; }
+    /* 2026-06-05 v3 — tile background switched from white to a deep
+       twilight gradient. Marty: "Most of our logos are WHITE /
+       Transparent so they don't show. Can we back each logo with a
+       colour matching theme so they present?". White/transparent
+       logos (designed for dark dashboard headers) now sit clearly
+       on the dark tile. Outer card stays light, so the contrast
+       reads as intentional editorial chrome, not a colour clash. */
+    .clb-logo-tile {
+      flex: 0 0 auto;
+      height: 84px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--twilight, #293890) 0%, #1f2a6e 100%);
+      border: 1px solid rgba(41,56,144,.35);
+      display: flex; align-items: center; justify-content: center;
+      padding: 12px;
+      box-sizing: border-box;
+      transition: border-color .18s ease, box-shadow .18s ease, transform .12s ease;
+    }
+    .clb-logo-tile:hover {
+      border-color: var(--punch, #EC008B);
+      box-shadow: 0 6px 22px rgba(41,56,144,.22);
+      transform: translateY(-1px);
+    }
+    .clb-logo-tile img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      /* Most stored client logos are white-on-transparent. They render
+         as-is. Coloured-on-transparent logos also work on the dark
+         background — colours just need to be readable, which most
+         brand palettes are. */
+    }
+    /* 2026-06-05 — text-only "name plate" mode is the default while
+       the admin uploads real logo files. White text on the dark tile
+       reads cleanly without any extra chrome. */
+    .clb-logo-name {
+      color: #ffffff;
+      font-size: 14.5px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.25;
+      letter-spacing: .01em;
+      padding: 0 4px;
+      white-space: normal;
+    }
+    @media (max-width: 760px) {
+      /* Mobile keeps the symmetric breathing room from the
+         desktop rule, just scaled down. */
+      .client-logo-band { padding: 10px 16px 28px; }
+      .clb-inner { padding: 14px 10px 16px; }
+      .clb-head { font-size: 19px; letter-spacing: .04em; }
+      .clb-logo-tile { height: 64px; }
+      .clb-logo-name { font-size: 12.5px; }
+    }
+  </style>
+  <script>
+  (function () {
+    /* 2026-06-05 v5 — 6-per-page on wide desktop (matches the
+       newly-aligned 1160px / 40px-padded layout). Steps down
+       responsively so phones still see 2. Marty: "the number of
+       logos here would allow more than 4 to be shown. Can you
+       determine optimal number to use and do that". Math: with
+       ~960px viewport at 6-per-page each tile lands at ~150px,
+       which is still readable for both logos and the name-plate
+       fallback. */
+    var CLB_GAP            = 14;
+    var CLB_AUTO_MS        = 5000;
+    var CLB_SMOOTH_MS      = 900;
+    function _perPage() {
+      var w = window.innerWidth;
+      if (w < 600)  return 2;
+      if (w < 880)  return 4;
+      if (w < 1080) return 5;
+      return 6;
+    }
+    var timer = null;
+    var rafTok = null;
+    var paused = false;
+    function _esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function _tileHtml(o) {
+      var nm  = _esc(o.name);
+      var url = (typeof o.logo === 'string' && o.logo.trim() !== '') ? _esc(o.logo) : '';
+      var sub = (typeof o.subtitle === 'string' && o.subtitle.trim() !== '') ? _esc(o.subtitle) : '';
+      var titleAttr = sub ? (nm + ' — ' + sub) : nm;
+      var inner;
+      if (url) {
+        inner = '<img src="' + url + '" alt="' + nm + '" loading="lazy" '
+              + 'onerror="this.parentNode.innerHTML=\'<span class=&quot;clb-logo-name&quot;>' + nm + '</span>\'">';
+      } else {
+        inner = '<span class="clb-logo-name">' + nm + '</span>';
+      }
+      return '<div class="clb-logo-tile" title="' + titleAttr + '">' + inner + '</div>';
+    }
+    /* Size each tile so the responsive _perPage() count fills the
+       viewport exactly. Tile floor at 80px so the math degrades
+       gracefully if the viewport gets implausibly tight. */
+    function _fit() {
+      var vp = document.getElementById('clb-viewport');
+      if (!vp) return;
+      var tiles = vp.querySelectorAll('.clb-logo-tile');
+      if (!tiles.length) return;
+      var perPage = _perPage();
+      var vw = vp.clientWidth;
+      if (vw <= 0) return;
+      var tileW = Math.floor((vw - (perPage - 1) * CLB_GAP) / perPage);
+      if (tileW < 80) tileW = 80;
+      for (var i = 0; i < tiles.length; i++) tiles[i].style.width = tileW + 'px';
+      /* Snap to nearest page after resize. */
+      var pageW = vw + CLB_GAP;
+      vp.scrollLeft = Math.round(vp.scrollLeft / pageW) * pageW;
+    }
+    /* rAF-driven smooth scroll with ease-in-out cubic. Cancels any
+       in-flight scroll so fast clicks don't stack queued animations. */
+    function _smoothScrollTo(vp, target, duration) {
+      if (!vp) return;
+      if (rafTok) { cancelAnimationFrame(rafTok); rafTok = null; }
+      var start = vp.scrollLeft;
+      var delta = target - start;
+      if (Math.abs(delta) < 1) { vp.scrollLeft = target; return; }
+      var startTs = null;
+      function _ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+      function _frame(ts) {
+        if (startTs === null) startTs = ts;
+        var elapsed = ts - startTs;
+        var p = Math.min(1, elapsed / duration);
+        vp.scrollLeft = start + delta * _ease(p);
+        if (p < 1) rafTok = requestAnimationFrame(_frame);
+        else       rafTok = null;
+      }
+      rafTok = requestAnimationFrame(_frame);
+    }
+    function _nudge(dir, wrap) {
+      var vp = document.getElementById('clb-viewport');
+      if (!vp) return;
+      var maxScroll = vp.scrollWidth - vp.clientWidth;
+      if (maxScroll <= 1) return;
+      var step = vp.clientWidth + CLB_GAP;
+      var next = vp.scrollLeft + (dir * step);
+      var wrapping = false;
+      if (next > maxScroll - 2) {
+        if (wrap) { next = 0; wrapping = true; }
+        else      { next = maxScroll; }
+      } else if (next < 0) {
+        if (wrap) { next = Math.ceil(maxScroll / step) * step; wrapping = true; }
+        else      { next = 0; }
+      }
+      /* 2026-06-05 — Marty: "not loving the rewind back to start can
+         you just continue to present from start without rewinding
+         visually". When wrapping, SNAP to the target with no animation
+         so the viewer just sees the next page appear; the long
+         backward glide is gone. */
+      if (wrapping) {
+        if (rafTok) { cancelAnimationFrame(rafTok); rafTok = null; }
+        vp.scrollLeft = next;
+      } else {
+        _smoothScrollTo(vp, next, CLB_SMOOTH_MS);
+      }
+    }
+    function _render(logos) {
+      var band  = document.getElementById('public-logo-band');
+      var track = document.getElementById('clb-track');
+      if (!band || !track) return;
+      if (!logos || !logos.length) { band.style.display = 'none'; return; }
+      track.innerHTML = logos.map(_tileHtml).join('');
+      band.style.display = '';
+      _fit();
+      window.addEventListener('resize', _fit, { passive: true });
+      if (timer) { clearInterval(timer); timer = null; }
+      timer = setInterval(function () {
+        if (!paused) _nudge(1, true);
+      }, CLB_AUTO_MS);
+    }
+    function _wire() {
+      var prev = document.getElementById('clb-arrow-prev');
+      var next = document.getElementById('clb-arrow-next');
+      var vp   = document.getElementById('clb-viewport');
+      if (prev) prev.addEventListener('click', function () { _nudge(-1, true); });
+      if (next) next.addEventListener('click', function () { _nudge(1, true); });
+      if (vp) {
+        vp.addEventListener('mouseenter', function () { paused = true; });
+        vp.addEventListener('mouseleave', function () { paused = false; });
+      }
+    }
+    function _load() {
+      _wire();
+      fetch('https://smart-tools-foundry.com/WBM/api/public_client_logos.php', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || !j.ok) { _render([]); return; }
+          _render(Array.isArray(j.logos) ? j.logos : []);
+        })
+        .catch(function () { _render([]); });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', _load);
+    } else {
+      _load();
+    }
+  })();
+  </script>
+
+  <main class="layout">
+
+    <!-- Intro card -->
+    <div class="intro-card">
+      The Good Foundry Pty Ltd is the team behind <strong>Wellbeing Matters</strong>, a measurement platform built on the PERMA+ framework — a research-validated extension of Dr. Martin Seligman&rsquo;s PERMA model of flourishing, originally translated into measurable form by Dr. Michelle McQuaid and Professor Peggy Kern, and continued by an extended scientific team. Every dashboard, every chart, every recommendation traces back to peer-reviewed research.
+    </div>
+
+    <!-- Drucker pull-quote — sets the rationale for measuring wellbeing -->
+    <aside class="drucker-quote">
+      <span class="dq-attrib">As Peter Drucker famously says</span>
+      <blockquote>“If you can&rsquo;t <span class="hl">measure</span> it, you can&rsquo;t <span class="hl">improve</span> it.”</blockquote>
+      <span class="dq-byline">— <strong>Peter F. Drucker</strong>, the father of modern management</span>
+    </aside>
+
+    <!-- Three pillars -->
+    <div class="three-up">
+
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-eyebrow">What we build</div>
+        <h3>The Wellbeing Matters platform</h3>
+        <p>An end-to-end measurement system covering wellbeing, psychosocial hazards, culture, civility, economic security and meaning. Ten editions tuned to specific audiences — Work, University, Life, Veterinary, Sport, School (Kids and Youth), In Aging Well, and bespoke variants including <strong style="color:var(--text);font-weight:600">LiveWell</strong> (built In Partnership with the LiveWell aged-care programme) and the <strong style="color:var(--text);font-weight:600">HEART Of Change Tool</strong> (built with The Change Lab). Delivered as a SaaS, with admin dashboards, AI-guided coaching, offline-capable surveys for distributed cohorts, and now <strong style="color:var(--text);font-weight:600">360 Foundry &mdash; multi-rater wellbeing</strong> across five editions: Kids, Students, Life, University, and Workplace. Each pulls the people who matter most into the picture &mdash; parents, teachers and clinicians for a child; peers and mentors for a student; partner, family and close friends for an adult; supervisors, colleagues and mentors at work.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-eyebrow">Who it&rsquo;s for</div>
+        <h3>Leaders responsible for people</h3>
+        <p>HR teams running annual wellbeing programs &mdash; with a 360 Foundry option that brings supervisors, colleagues and mentors into each employee&rsquo;s picture. Safety leads measuring psychosocial hazards under the new WHS regulations. School wellbeing coordinators tracking student flourishing, including multi-rater 360 views of individual children and youth with input from parents, teachers, peers and clinicians. University wellbeing teams running cohort-level student welfare with optional 360 input from peers, lecturers and mentors. Sporting organisations supporting athlete welfare. Coaches running individual development. EAPs offering wellbeing assessment &mdash; including 360 Foundry for adults wanting a 360-degree view of their own flourishing across partner, family and close friends. We deploy across Australia and globally.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-eyebrow">Why it works</div>
+        <h3>Evidence over opinion</h3>
+        <p>Built on the PERMA+ framework — a research-validated extension of Dr. Martin Seligman&rsquo;s PERMA model of flourishing, originally translated into measurable form by Dr. Michelle McQuaid and Professor Peggy Kern. Continued scientific development is led by Martin Suchta with contributions from Dr. Stewart I. Donaldson and Dr. Scott Donaldson.</p>
+      </div>
+
+    </div>
+
+    <!-- ── ME / WE / US measurement levels ─────────────────────── -->
+    <section class="mwu-section">
+      <div class="mwu-header">
+        <span class="mwu-eyebrow">How we measure</span>
+        <h2>Wellbeing is measured at <em>three levels</em>.</h2>
+        <p>At the individual (Me), the group (We), and the whole-of (Us) level. <strong>States of wellbeing at each level influence the overall sense of flourishing and doing well — it cannot be measured at the individual level alone.</strong></p>
+      </div>
+
+      <div class="mwu-cards">
+
+        <div class="mwu-card mwu-me">
+          <div class="mwu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+          </div>
+          <div class="mwu-tier-label">Me Level</div>
+          <h3>Intrapersonal</h3>
+          <div class="mwu-scope">— our individual choices.</div>
+          <p>How each person cares for their own wellbeing — the daily choices, mindset, and self-care practices that shape an individual&rsquo;s sense of flourishing.</p>
+        </div>
+
+        <div class="mwu-card mwu-we">
+          <div class="mwu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="mwu-tier-label">We Level</div>
+          <h3>Interpersonal</h3>
+          <div class="mwu-scope">— relationships &amp; teams.</div>
+          <p>Relationships and interactions between leaders and teams — how psychological safety, trust, recognition and connection are experienced day-to-day inside a group.</p>
+        </div>
+
+        <div class="mwu-card mwu-us">
+          <div class="mwu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="mwu-tier-label">Us Level</div>
+          <h3>Systemic</h3>
+          <div class="mwu-scope">— across the organisation.</div>
+          <p>Interactions across the whole organisation — both internal (culture, systems, governance) and external (community, sector, supply chain) — that shape collective flourishing.</p>
+        </div>
+
+      </div>
+
+      <!-- Mode picker note: full vs ME-WE only -->
+      <div class="mwu-modes">
+        <div class="mwu-mode-item mode-full">
+          <div class="mode-eyebrow"><span class="mode-pip"></span>System mode</div>
+          <h4>Full ME &middot; WE &middot; US</h4>
+          <p>Measures all three levels. Recommended for organisation-wide programmes where culture, leadership and systems all need a signal.</p>
+        </div>
+        <div class="mwu-mode-item mode-mewe">
+          <div class="mode-eyebrow"><span class="mode-pip"></span>Focused mode</div>
+          <h4>ME &middot; WE only</h4>
+          <p>Measures the individual and team levels. A lighter survey for coaching engagements, single-team pilots, or programmes where the systemic lens is being measured separately.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Featured capability: Shift Happens ────────────────────
+         Two-period comparison view: pick any two collection rounds
+         (or custom date ranges) and see how every wellbeing score
+         and the State-of-Wellbeing distribution have shifted. In
+         pilot on the Life edition; rolling out across all editions
+         once the pilot signs off. -->
+    <section class="feature-showcase">
+      <div class="fs-header">
+        <span class="fs-badge">New</span>
+        <h2>Shift Happens — wellbeing in <em>motion</em>.</h2>
+        <p>Pick any two collection periods and see exactly how your cohort has moved. Every score the platform tracks &mdash; <strong>PERMA+H Wellbeing, Wellbeing Amplifiers, Wellbeing Nutrients, Self-Compassion, Hope &amp; Optimism</strong>, plus new Life-edition <strong>Confidence, Resilience and Safety</strong> composites &mdash; reappears as a side-by-side T1 &rarr; T2 pair with a percentage-point delta. A dedicated <strong>State of Wellbeing drift view</strong> shows how the cohort&rsquo;s distribution has moved between Thriving, Living Well, Getting By and Struggling &mdash; sideways within Positive States, sideways within Less Positive, and the headline cross-group composition shift.</p>
+      </div>
+
+      <div class="fs-grid">
+
+        <div class="fs-card fs-card-a">
+          <div class="fs-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Two periods, side-by-side</div>
+          <h3>Pick A &middot; Pick B &middot; Compare.</h3>
+          <p>Pick two existing Collection Rounds, or stamp a <strong>custom date range</strong> on either side. Every dashboard score reappears as a T1 &rarr; T2 pair with a delta chip. No spreadsheet stitching, no manual re-runs, no extra survey lift.</p>
+        </div>
+
+        <div class="fs-card fs-card-b">
+          <div class="fs-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Eight measurement lenses</div>
+          <h3>Every score, in motion.</h3>
+          <p>PERMA+H &middot; Wellbeing Amplifiers &middot; Wellbeing Nutrients &middot; Self-Compassion &middot; Hope &amp; Optimism &middot; Life Outcomes (Confidence / Resilience / Safety) &middot; <strong style="color:var(--orange)">Quietly Cracking <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:2px;vertical-align:2px">NEW</span></strong> &middot; <strong style="color:var(--orange)">Digital Wellbeing <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:2px;vertical-align:2px">NEW</span></strong>. Every dimension your team already tracks gets a parallel <strong>Shift card</strong> so the trajectory is legible at a glance.</p>
+        </div>
+
+        <div class="fs-card fs-card-c">
+          <div class="fs-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">State of Wellbeing drift</div>
+          <h3>Where the cohort moved.</h3>
+          <p>How the cohort&rsquo;s wellbeing-state distribution has shifted &mdash; <strong>sideways within Positive States</strong> (Thriving &harr; Living Well), <strong>sideways within Less Positive States</strong> (Getting By &harr; Struggling), and the headline cross-group composition shift. All in percentage points, no traffic-light colours, just the signal.</p>
+        </div>
+
+      </div>
+
+      <div class="fs-rollout">
+        <span class="fs-rollout-pip"></span>
+        <div>
+          <strong>Available on the Life edition first.</strong> Rolling out across <strong>Workplace, University, Sport, Veterinary, Kids and Youth</strong> &mdash; same picker, same visual rhythm, edition-tuned dimensions.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Featured bespoke: In Partnership with LiveWell ──────────
+         2026-06-09. Bespoke aged-care edition built In Partnership
+         with the LiveWell programme. Tailored from our base
+         "Wellbeing Matters In Aging Well" edition (WAW) into a
+         standalone LiveWell variant (WAWL) — replaces the PERMAH+
+         framework wholesale with LiveWell's own six-pillar taxonomy
+         and bolts on the Lancet 2024 Modifiable Risk Reflection
+         (14 evidenced cognitive-decline risk factors). Featured
+         first because it's our newest bespoke partnership. Palette
+         is warm teal (#4fa3a8) to differentiate from HEART's bright
+         cyan (#01b0e2) below, with an aged-care-appropriate warmth. -->
+    <section class="feature-showcase" style="background:linear-gradient(135deg,#ffffff 0%,rgba(79,163,168,.06) 200%);border:1px solid rgba(79,163,168,.22)">
+      <div class="fs-header">
+        <span class="fs-badge fs-badge--white" style="background:linear-gradient(135deg,#4fa3a8,#2c5e62);box-shadow:0 2px 8px rgba(79,163,168,.30)">In Partnership · LiveWell</span>
+        <h2>Built <em>In Partnership</em> with <em>LiveWell</em> &mdash; the <span class="gradient-text" style="background:linear-gradient(135deg,#4fa3a8,#e89971);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">six pillars of ageing well</span>.</h2>
+        <p>Our newest bespoke edition. Tailored from our base <strong>Wellbeing Matters In Aging Well</strong> edition (WAW) and customised into a standalone <strong>LiveWell</strong> variant in partnership with the LiveWell aged-care programme. LiveWell&rsquo;s six-pillar framework replaces PERMAH+ wholesale &mdash; <strong>Building Emotional Resilience &middot; Knowing Me &middot; Cultivating Inclusion &amp; Belonging &middot; Maintaining Purpose &middot; Learning &amp; Growing &middot; Optimizing Health</strong> &mdash; with an additional <strong>Modifiable Risk Reflection</strong> section that surfaces the 14 evidenced cognitive-decline risk factors from the 2024 Lancet Commission so older adults and their care circles can see what is worth tending now.</p>
+      </div>
+
+      <div class="fs-grid">
+
+        <div class="fs-card fs-card-a" style="border-color:rgba(79,163,168,.28)">
+          <div class="fs-card-icon" style="background:rgba(79,163,168,.10);color:#4fa3a8">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Six LiveWell pillars</div>
+          <h3>A bespoke framework, not a relabel.</h3>
+          <p><strong>Building Emotional Resilience</strong> &middot; <strong>Knowing Me</strong> &middot; <strong>Cultivating Inclusion &amp; Belonging</strong> &middot; <strong>Maintaining Purpose</strong> &middot; <strong>Learning &amp; Growing</strong> &middot; <strong>Optimizing Health</strong>. Co-developed with the LiveWell programme to read in aged-care language end-to-end — care circle, GP, peer group, volunteering, legacy &mdash; rather than workplace vocabulary. Every dashboard card explains how the pillar interlocks with the other five so admins can see the SYSTEM, not just individual gauges.</p>
+        </div>
+
+        <div class="fs-card fs-card-b" style="border-color:rgba(79,163,168,.28)">
+          <div class="fs-card-icon" style="background:rgba(79,163,168,.10);color:#4fa3a8">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 18 0 9 9 0 0 1-18 0z"/><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Modifiable Risk Reflection</div>
+          <h3>14 Lancet 2024 dementia &amp; cognitive-ageing risks.</h3>
+          <p>The bespoke addition that sets LiveWell apart from our base In Aging Well edition: a dedicated <strong>Modifiable Risk Reflection</strong> section walking respondents through the <strong>14 evidenced modifiable risk factors</strong> from the 2024 Lancet Commission &mdash; hearing loss, depression, social isolation, physical inactivity, high blood pressure, smoking, alcohol misuse, obesity, diabetes, traumatic brain injury, air pollution, sleep problems, nutrition, and limited early-life education. For each, respondents reflect <em>Have now / Unsure / Confident not</em>. NOT a diagnostic &mdash; a reflective awareness tool that opens GP conversations and maps each risk back to the LiveWell pillar most likely to help.</p>
+        </div>
+
+        <div class="fs-card fs-card-c" style="border-color:rgba(79,163,168,.28)">
+          <div class="fs-card-icon" style="background:rgba(79,163,168,.10);color:#4fa3a8">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M3 12h18M3 7h18"/><circle cx="6" cy="7"  r="0.9" fill="currentColor"/><circle cx="6" cy="12" r="0.9" fill="currentColor"/><circle cx="6" cy="17" r="0.9" fill="currentColor"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Cohort risk profile + dashboards</div>
+          <h3>Risk distribution, histogram, co-occurrence.</h3>
+          <p>The LiveWell bank dashboard surfaces three cohort-level cards built on the Modifiable Risk data: <strong>per-factor risk distribution</strong> (which of the 14 risks the cohort flags most often), <strong>risks-flagged histogram</strong> (how many risks the average respondent carries), and <strong>top co-occurring risks</strong> (which pairs cluster together by Jaccard overlap). Programme leads can design aged-care initiatives around the cohort&rsquo;s ACTUAL risk profile rather than assumed needs. Privacy-clipped at fewer than 5 respondents per cell.</p>
+        </div>
+
+      </div>
+
+      <div class="fs-rollout" style="background:rgba(79,163,168,.07);border-color:rgba(79,163,168,.28)">
+        <span class="fs-rollout-pip" style="background:#4fa3a8"></span>
+        <div>
+          <strong>Available now for the LiveWell programme.</strong> Tailored from our base <strong>Wellbeing Matters In Aging Well</strong> edition into a standalone bespoke LiveWell variant. The same In Partnership approach is available to any aged-care, community-ageing or retirement-living organisation whose context calls for its own framework, terminology and risk lens &mdash; LiveWell ships alongside the <strong>HEART Of Change Tool</strong>, our <strong>Stat Medical Education LLC ProQOL extension</strong> for first-responder research, and our <strong>Downer Psychosocial Safety</strong> variant as our current bespoke partnership stack. <a class="elink" href="offerings.html" style="color:#4fa3a8">See the offering &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bespoke Extension: Stat Medical Education LLC ───────────
+         2026-06-09. ADJUNCT to base Wellbeing Matters @ Work (WPA)
+         rather than a standalone edition replacement (like LiveWell
+         or HEART). Bolts on the ProQOL (Professional Quality of
+         Life Scale) 30-item instrument as a custom section, plus
+         4 sec-start screening CQs (Northwest United States residency,
+         first-responder role, organisation, capacity). Powers Kyle
+         Krebs' Grand Canyon University doctoral thesis on first-
+         responder wellbeing in the Pacific Northwest. Framed visually
+         as "Bespoke Extension" (not "In Partnership") to distinguish
+         from full-framework bespokes. Palette: clinical navy
+         (#2c5282) primary, emergency red (#dc2626) accent — reads
+         as first-responder / clinical context. -->
+    <section class="feature-showcase" style="background:linear-gradient(135deg,#ffffff 0%,rgba(44,82,130,.05) 200%);border:1px solid rgba(44,82,130,.20)">
+      <div class="fs-header">
+        <span class="fs-badge fs-badge--white" style="background:linear-gradient(135deg,#2c5282,#1a365d);box-shadow:0 2px 8px rgba(44,82,130,.30)">Bespoke Extension · Stat Medical Education LLC</span>
+        <h2>Built with <em>Stat Medical Education LLC</em> &mdash; measuring <span class="gradient-text" style="background:linear-gradient(135deg,#2c5282,#dc2626);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">first-responder wellbeing</span>.</h2>
+        <p>An <strong>adjunct extension</strong> to our base <strong>Wellbeing Matters @ Work</strong> edition (not a framework replacement). Built with <strong>Stat Medical Education LLC</strong> and Kyle Krebs at Grand Canyon University to power his doctoral thesis on <em>Wellbeing and Compassion Satisfaction as Predictors of Medical First Responders&rsquo; Secondary Traumatic Stress and Burnout in the Northwest</em>. The extension bolts a research-validated <strong>ProQOL</strong> instrument (Professional Quality of Life Scale by Beth Hudnall Stamm) onto our standard PERMAH+ workplace measurement &mdash; so first-responder organisations get both the broad wellbeing signal AND the focused compassion-fatigue lens in a single sitting, and researchers can import collected data straight into the platform&rsquo;s analytics stack.</p>
+      </div>
+
+      <div class="fs-grid">
+
+        <div class="fs-card fs-card-a" style="border-color:rgba(44,82,130,.28)">
+          <div class="fs-card-icon" style="background:rgba(44,82,130,.10);color:#2c5282">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">ProQOL adjunct</div>
+          <h3>30 items. Three clinical scales.</h3>
+          <p>The full <strong>Professional Quality of Life Scale (ProQOL)</strong> by Beth Hudnall Stamm, bolted onto base Wellbeing Matters @ Work as a dedicated custom section: <strong>Compassion Satisfaction</strong> (the pleasure derived from doing helping work well), <strong>Burnout</strong> (feelings of hopelessness and difficulty doing the job effectively), and <strong>Secondary Traumatic Stress</strong> (work-related exposure to traumatically stressful events). Custom 1&ndash;5 likert scale wired through the survey renderer; scoring helper publishes the three gauges with Stamm&rsquo;s published cut-points (low / average / high bands).</p>
+        </div>
+
+        <div class="fs-card fs-card-b" style="border-color:rgba(44,82,130,.28)">
+          <div class="fs-card-icon" style="background:rgba(44,82,130,.10);color:#2c5282">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/><line x1="9" y1="15" x2="15" y2="15" stroke-width="1.4"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">First-responder screening</div>
+          <h3>Pacific Northwest medical first responders.</h3>
+          <p>Four screening custom questions on the Getting Started page narrow the cohort to the study&rsquo;s population: <strong>Northwest United States residency</strong>, <strong>type of medical first responder</strong> (Firefighter / EMR / EMT / AEMT / Paramedic / Critical Care Paramedic / Flight Paramedic / Flight Nurse), <strong>organisation</strong>, and <strong>working capacity</strong> (Volunteer / Paid / Retired). Krebs / GCU Informed Consent (IRB-aligned) is presented before any item is shown, with consent acceptance time-stamped on every response.</p>
+        </div>
+
+        <div class="fs-card fs-card-c" style="border-color:rgba(44,82,130,.28)">
+          <div class="fs-card-icon" style="background:rgba(44,82,130,.10);color:#2c5282">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 14 11 10 14 13 21 6"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Dashboard + data import</div>
+          <h3>Three gauges, item-by-item distribution.</h3>
+          <p>A bespoke ProQOL panel on the bank dashboard surfaces <strong>three gauges</strong> with Stamm&rsquo;s cut-point bands plus a <strong>30-item distribution grid</strong> so researchers can see the cohort&rsquo;s answer pattern per question. The same surface accepts <strong>imported historical ProQOL collections</strong> &mdash; existing study data sets can be brought into the platform for unified analysis alongside fresh field collection. Export back out as the canonical wellbeing-platform JSON when the study completes.</p>
+        </div>
+
+      </div>
+
+      <div class="fs-rollout" style="background:rgba(44,82,130,.07);border-color:rgba(44,82,130,.28)">
+        <span class="fs-rollout-pip" style="background:#2c5282"></span>
+        <div>
+          <strong>Available now for Stat Medical Education LLC and Grand Canyon University.</strong> The same Bespoke Extension approach is available to any research team, professional body or workforce study that needs to bolt a validated instrument onto our base Wellbeing Matters platform &mdash; the ProQOL extension ships alongside our other bespoke implementations: <strong>LiveWell</strong> (aged-care six-pillar framework with the Lancet 2024 Modifiable Risk Reflection), the <strong>HEART Of Change Tool</strong> (built with The Change Lab on Dr. Michelle McQuaid&rsquo;s framework), and a <strong>Psychosocial Safety</strong> variant for a major Australian infrastructure services group. <a class="elink" href="offerings.html" style="color:#2c5282">See the offering &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Featured bespoke: HEART Of Change ──────────────────────
+         Bespoke edition built with The Change Lab on Dr. Michelle
+         McQuaid's HEART Framework. Featured here on the homepage so
+         visitors land directly on the offerings card. Visual style
+         mirrors the Shift Happens feature block above for rhythm
+         consistency. -->
+    <section class="feature-showcase" style="background:linear-gradient(135deg,#ffffff 0%,rgba(1,176,226,.05) 200%);border:1px solid rgba(1,176,226,.20)">
+      <div class="fs-header">
+        <span class="fs-badge fs-badge--white" style="background:linear-gradient(135deg,#01b0e2,#0f2a3f);box-shadow:0 2px 8px rgba(1,176,226,.30)">New Bespoke · The HEART Of Change Tool</span>
+        <h2>Built with <em>The Change Lab</em> &mdash; the HEART of <span class="gradient-text">navigating change</span>.</h2>
+        <p>Our newest bespoke edition. Built with <strong>The Change Lab</strong> (Dr. Michelle McQuaid&rsquo;s team) on the <strong>HEART Framework</strong> &mdash; five evidence-based factors that help us regulate our nervous systems and create psychological safety during times of uncertainty. The 7-page survey measures each factor across three tiers (Individual, Team, Workplace) and surfaces a four-quadrant <strong>State of Change</strong> result so leaders can see exactly where their people are sitting on the Safety &times; Predictability matrix.</p>
+      </div>
+
+      <div class="fs-grid">
+
+        <div class="fs-card fs-card-a" style="border-color:rgba(1,176,226,.25)">
+          <div class="fs-card-icon" style="background:rgba(1,176,226,.10);color:#01b0e2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Five HEART factors</div>
+          <h3>H &middot; E &middot; A &middot; R &middot; T.</h3>
+          <p><strong>H</strong>onour Feelings &middot; <strong>E</strong>ngage Purposefully &middot; <strong>A</strong>ppreciate Strengths &middot; <strong>R</strong>each Out &middot; <strong>T</strong>ake Tiny Steps. Each factor is measured at three tiers (Individual, Team, Workplace) so leaders can see whether the change-readiness gap sits with the person, the team, or the system around them.</p>
+        </div>
+
+        <div class="fs-card fs-card-b" style="border-color:rgba(1,176,226,.25)">
+          <div class="fs-card-icon" style="background:rgba(1,176,226,.10);color:#01b0e2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">State of Change quadrant</div>
+          <h3>Capable. Challenged. Unsettled. Vulnerable.</h3>
+          <p>Every respondent lands in one of four quadrants on a Safety (vertical) &times; Predictability (horizontal) matrix. The cohort dashboard shows the percentage in each quadrant against a configurable general-population baseline &mdash; so leadership can see at a glance whether their organisation is sitting high in <strong>Capable &amp; Confident</strong> or dropping into <strong>Vulnerable &amp; Uncertain</strong>.</p>
+        </div>
+
+        <div class="fs-card fs-card-c" style="border-color:rgba(1,176,226,.25)">
+          <div class="fs-card-icon" style="background:rgba(1,176,226,.10);color:#01b0e2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="fs-card-eyebrow">Change AMPlifiers + Outcomes</div>
+          <h3>Ability. Motivation. Psych Safety. Self-Compassion.</h3>
+          <p>The dashboard also reports the four Change <strong>AMPlifiers</strong> (Ability / Motivation / Psychological Safety / Self-Compassion) and four Workplace <strong>Outcomes</strong> (Job Satisfaction / Performance / Safety / Wellbeing). Each respondent sees their own profile in the vault; admins see the cohort with PII-redacted free-text reflections.</p>
+        </div>
+
+      </div>
+
+      <div class="fs-rollout" style="background:rgba(1,176,226,.06);border-color:rgba(1,176,226,.25)">
+        <span class="fs-rollout-pip" style="background:#01b0e2"></span>
+        <div>
+          <strong>Available now for The Change Lab clients.</strong> The same approach is available to any client whose context calls for a custom edition &mdash; the HEART Of Change Tool ships alongside our other bespoke implementations: <strong>LiveWell</strong> (In Partnership with the LiveWell aged-care programme, featuring the Lancet 2024 Modifiable Risk Reflection), our <strong>Stat Medical Education LLC ProQOL extension</strong> (built with Kyle Krebs at Grand Canyon University for first-responder research in the Pacific Northwest), and a <strong>Psychosocial Safety</strong> variant for a major Australian infrastructure services group. <a class="elink" href="offerings.html" style="color:#01b0e2">See the offering &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acknowledgements -->
+    <div class="ack-callout">
+      <div class="ack-eyebrow">Acknowledgements</div>
+      <h2>Standing on the shoulders of <em>researchers</em>.</h2>
+      <p>We acknowledge the foundational and ongoing contribution of Dr. Martin Seligman, Dr. Michelle McQuaid, Professor Peggy Kern, Danielle Jacobs, Dr. Stewart I. Donaldson and Dr. Scott Donaldson to the science behind this platform. The PERMAH Wellbeing Survey is a living research instrument, and its continued scientific development sits at the heart of everything we ship.</p>
+      <p><a class="elink" href="acknowledgement.html">Read the full acknowledgements &rarr;</a></p>
+    </div>
+
+    <!-- Contact / CTA -->
+    <div class="contact-card">
+      <div class="contact-card-inner">
+        <h2>Ready to see what fits your team?</h2>
+        <p>Pick an edition, layer in the add-ons that match your goals, choose a plan term — we&rsquo;ll build a tailored offer you can review, edit and accept inline. No pressure, no commitment.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn-primary" href="offerings.html">View offerings</a>
+          <a class="btn-ghost" href="offerings.html#proposal">Request an offer</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="page-ft">
+    <div class="ft-divider"></div>
+    <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+    <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy policy</a> &middot;
+    <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a> &middot;
+    Powered by <a href="offerings.html">Wellbeing Matters</a>
+    <div style="margin-top:14px;font-size:10.5px;opacity:.7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved.</div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       Floating "Talk to us" pill + slide-in drawer
+       (same pattern as offerings.html — public-page version of the
+       wm_bank rep-message FAB. POSTs to send_enquiry.php.) -->
+  <style>
+    #wm-talk-fab {
+      position: fixed;
+      right: 24px; bottom: 24px;
+      z-index: 200;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 18px 10px 12px;
+      background: linear-gradient(135deg, var(--grape), var(--punch));
+      color: #fff; border: none; border-radius: 100px;
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(236,0,139,.32);
+      transition: transform .18s, box-shadow .18s;
+    }
+    #wm-talk-fab:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(236,0,139,.42); }
+    #wm-talk-fab .fab-img {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.18);
+      display: inline-flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    #wm-talk-fab .fab-img svg { width: 18px; height: 18px; }
+    #wm-talk-fab .fab-label { line-height: 1.15; text-align: left; }
+    #wm-talk-fab .fab-hi { display: block; font-size: 10px; font-weight: 600; opacity: .85; letter-spacing: .04em; text-transform: uppercase; }
+    #wm-talk-fab .fab-name { display: block; font-size: 13px; font-weight: 700; }
+
+    #wm-talk-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(22,26,46,.45);
+      backdrop-filter: blur(2px);
+      z-index: 250; display: none;
+    }
+    #wm-talk-backdrop.open { display: block; }
+
+    #wm-talk-drawer {
+      position: fixed;
+      /* Sits below the 110px sticky topbar (bumped 2026-05-15 for
+         the larger TGF wordmark logo) so the page header stays
+         visible above the drawer rather than being covered. */
+      top: 110px; right: 0; bottom: 0;
+      width: 380px; max-width: 92vw;
+      background: var(--card);
+      box-shadow: -12px 0 40px rgba(22,26,46,.18);
+      border-top-left-radius: 14px;
+      z-index: 260;
+      transform: translateX(100%);
+      transition: transform .25s ease;
+      display: flex; flex-direction: column;
+      font-family: var(--font);
+      overflow: hidden;
+    }
+    #wm-talk-drawer.open { transform: translateX(0); }
+    #wm-talk-drawer .talk-header {
+      position: relative;
+      padding: 24px 26px 22px;
+      background: linear-gradient(135deg, var(--twilight) 0%, var(--grape) 75%, var(--punch) 130%);
+      color: #fff;
+    }
+    #wm-talk-drawer .talk-header::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+    }
+    #wm-talk-drawer .talk-header .talk-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.78);
+      margin-bottom: 6px;
+    }
+    #wm-talk-drawer .talk-header h3 {
+      font-size: 22px; font-weight: 700; letter-spacing: -.02em;
+      line-height: 1.2; margin: 0;
+    }
+    #wm-talk-drawer .talk-header h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+    #wm-talk-drawer .talk-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,.14); border: none; border-radius: 50%;
+      color: #fff; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    #wm-talk-drawer .talk-close:hover { background: rgba(255,255,255,.28); }
+    #wm-talk-drawer .talk-body { flex: 1; overflow-y: auto; padding: 22px 26px 26px; }
+    #wm-talk-drawer p.talk-lede { font-size: 13.5px; color: var(--text-dim); line-height: 1.65; margin: 0 0 18px; font-weight: 400; }
+    #wm-talk-drawer label.talk-label {
+      display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--arctic); margin: 14px 0 6px;
+    }
+    #wm-talk-drawer input.talk-input,
+    #wm-talk-drawer textarea.talk-input {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--card); color: var(--text);
+      font-family: var(--font); font-size: 14px; font-weight: 400;
+      transition: border-color .15s, box-shadow .15s; resize: none;
+    }
+    #wm-talk-drawer textarea.talk-input { min-height: 96px; line-height: 1.55; }
+    #wm-talk-drawer input.talk-input:focus,
+    #wm-talk-drawer textarea.talk-input:focus {
+      outline: none; border-color: var(--arctic);
+      box-shadow: 0 0 0 3px rgba(38,170,225,.18);
+    }
+    #wm-talk-drawer .talk-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    #wm-talk-drawer .talk-submit {
+      margin-top: 18px; width: 100%;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, var(--grape), var(--punch));
+      color: #fff; border: none; border-radius: 100px;
+      font-family: var(--font); font-size: 13.5px; font-weight: 600;
+      cursor: pointer; letter-spacing: .02em;
+      box-shadow: 0 4px 18px rgba(236,0,139,.25);
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+    }
+    #wm-talk-drawer .talk-submit:hover:not(:disabled) {
+      transform: translateY(-1px); box-shadow: 0 8px 24px rgba(236,0,139,.32);
+    }
+    #wm-talk-drawer .talk-submit:disabled { opacity: .55; cursor: not-allowed; }
+    #wm-talk-drawer .talk-error,
+    #wm-talk-drawer .talk-help {
+      margin-top: 12px; padding: 10px 14px;
+      border-radius: 10px; font-size: 12px; line-height: 1.55; display: none;
+    }
+    #wm-talk-drawer .talk-error { background: rgba(236,0,139,.07); border: 1px solid rgba(236,0,139,.28); color: var(--punch); }
+    #wm-talk-drawer .talk-help { background: rgba(38,170,225,.07); border: 1px solid rgba(38,170,225,.22); color: var(--text-dim); font-size: 11.5px; }
+    #wm-talk-drawer .talk-help.shown,
+    #wm-talk-drawer .talk-error.shown { display: block; }
+    #wm-talk-drawer .talk-success { display: none; padding: 36px 22px 28px; text-align: center; }
+    #wm-talk-drawer .talk-success.shown { display: block; }
+    #wm-talk-drawer .talk-success .success-icon {
+      width: 64px; height: 64px; margin: 0 auto 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--arctic), var(--orchid));
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(27,117,188,.28);
+    }
+    #wm-talk-drawer .talk-success .success-icon svg { width: 30px; height: 30px; color: #fff; }
+    #wm-talk-drawer .talk-success h4 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -.01em; }
+    #wm-talk-drawer .talk-success p { font-size: 13px; color: var(--text-dim); line-height: 1.65; max-width: 280px; margin: 0 auto 22px; }
+    #wm-talk-drawer .talk-success button {
+      padding: 9px 22px;
+      background: var(--card); border: 1px solid var(--border); color: var(--text);
+      border-radius: 100px;
+      font-family: var(--font); font-size: 12.5px; font-weight: 600;
+      cursor: pointer; transition: border-color .15s, color .15s;
+    }
+    #wm-talk-drawer .talk-success button:hover { border-color: rgba(38,170,225,.45); color: var(--arctic); }
+
+    /* Book-a-call alternative — secondary in-drawer toggle that
+       swaps the form for the Amelia booking iframe. */
+    #wm-talk-drawer .talk-bookcall {
+      display: inline-flex; align-items: center; gap: 8px;
+      width: 100%; justify-content: center;
+      margin-top: 10px; padding: 10px 14px;
+      background: var(--card); color: var(--arctic);
+      border: 1px solid rgba(38,170,225,.30); border-radius: 100px;
+      font-family: var(--font); font-size: 12.5px; font-weight: 600;
+      cursor: pointer; letter-spacing: .02em;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    #wm-talk-drawer .talk-bookcall:hover {
+      background: rgba(38,170,225,.07); color: var(--twilight); border-color: var(--arctic);
+    }
+
+    /* Booking panel — reuses the .talk-header above (its h3 is updated dynamically). One-line message + iframe + tiny foot. */
+    #wm-talk-drawer.booking-mode { width: 520px; }
+    #wm-talk-drawer .talk-booking { display: none; flex: 1; flex-direction: column; background: var(--card); overflow: hidden; }
+    #wm-talk-drawer.booking-mode .talk-booking { display: flex; }
+    #wm-talk-drawer.booking-mode #wm-talk-form-host,
+    #wm-talk-drawer.booking-mode #wm-talk-success { display: none !important; }
+    #wm-talk-drawer .talk-booking-frame { position: relative; flex: 1; overflow: hidden; background: var(--card); }
+    #wm-talk-drawer .talk-booking-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    #wm-talk-drawer .talk-booking-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; color: var(--text-dim); font-size: 13px; text-align: center; pointer-events: none; background: var(--card); transition: opacity .25s; }
+    #wm-talk-drawer .talk-booking-loading.hidden { opacity: 0; }
+    #wm-talk-drawer .talk-booking-loading .spinner { width: 38px; height: 38px; border: 3px solid rgba(38,170,225,.18); border-top-color: var(--arctic); border-radius: 50%; animation: wmTalkSpin .8s linear infinite; }
+    @keyframes wmTalkSpin { to { transform: rotate(360deg); } }
+    #wm-talk-drawer .talk-booking-foot { padding: 10px 18px; border-top: 1px solid var(--border); background: var(--mid); font-size: 11.5px; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    #wm-talk-drawer .talk-booking-foot a, #wm-talk-drawer .talk-booking-foot button { background: none; border: none; padding: 0; cursor: pointer; color: var(--arctic); text-decoration: none; font-weight: 600; font-family: var(--font); font-size: 11.5px; border-bottom: 1px solid rgba(27,117,188,.3); }
+    #wm-talk-drawer .talk-booking-foot a:hover, #wm-talk-drawer .talk-booking-foot button:hover { color: var(--twilight); border-color: rgba(41,56,144,.55); }
+
+    @media (max-width: 480px) {
+      #wm-talk-fab { bottom: 16px; right: 16px; padding: 8px 14px 8px 8px; }
+      #wm-talk-fab .fab-img { width: 28px; height: 28px; }
+      #wm-talk-fab .fab-name { font-size: 12px; }
+    }
+
+    /* Mobile pass (2026-06-04) — Talk drawer specifics.
+       The 380px wide drawer at max-width 92vw fits OK on phones, but
+       the 14px input font-size triggers iOS Safari auto-zoom on
+       focus, and the booking iframe inside the drawer was getting
+       squashed under the 110px sticky topbar offset.
+       This block bumps input font-size to 16px to suppress iOS
+       zoom, drops the top offset, makes the drawer near-fullscreen
+       on phone-width, and bumps tap targets to 44px. */
+    @media (max-width: 720px) {
+      #wm-talk-drawer {
+        top: 0; bottom: 0;
+        width: 100%; max-width: 100%;
+        border-top-left-radius: 0;
+      }
+      #wm-talk-drawer .talk-header { padding: 18px 20px 16px; }
+      #wm-talk-drawer .talk-header h3 { font-size: 20px; }
+      #wm-talk-drawer .talk-body { padding: 18px 20px 24px; }
+      #wm-talk-drawer input.talk-input,
+      #wm-talk-drawer textarea.talk-input {
+        font-size: 16px;
+        padding: 13px 14px;
+      }
+      #wm-talk-drawer .talk-row-2 {
+        grid-template-columns: 1fr;
+      }
+      #wm-talk-drawer .talk-submit { min-height: 48px; font-size: 15px; }
+      #wm-talk-drawer .talk-bookcall { min-height: 44px; font-size: 13.5px; }
+      /* Close button — bigger tap area for thumbs */
+      #wm-talk-drawer .talk-close { width: 40px; height: 40px; top: 12px; right: 12px; }
+    }
+  </style>
+
+  <button id="wm-talk-fab" type="button" onclick="wmTalkOpen()" title="Talk to a Good Foundry representative">
+    <span class="fab-img">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </span>
+    <span class="fab-label">
+      <span class="fab-hi">Have a question?</span>
+      <span class="fab-name">Talk to us</span>
+    </span>
+  </button>
+
+  <div id="wm-talk-backdrop" onclick="wmTalkClose()"></div>
+
+  <aside id="wm-talk-drawer" role="dialog" aria-label="Talk to a representative">
+    <div class="talk-header">
+      <button class="talk-close" onclick="wmTalkClose()" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="talk-eyebrow">The Good Foundry</div>
+      <h3>Talk to <em>us</em>.</h3>
+    </div>
+    <div class="talk-body" id="wm-talk-form-host">
+      <p class="talk-lede">Tell us a little about yourself and what you&rsquo;re looking for. A representative will be in touch within one business day.</p>
+      <div class="talk-row-2">
+        <div>
+          <label class="talk-label" for="wm-talk-first">First name</label>
+          <input class="talk-input" type="text" id="wm-talk-first" autocomplete="given-name" placeholder="Jane">
+        </div>
+        <div>
+          <label class="talk-label" for="wm-talk-last">Last name</label>
+          <input class="talk-input" type="text" id="wm-talk-last" autocomplete="family-name" placeholder="Smith">
+        </div>
+      </div>
+      <label class="talk-label" for="wm-talk-email">Email</label>
+      <input class="talk-input" type="email" id="wm-talk-email" autocomplete="email" placeholder="jane@your-company.com">
+      <!-- 2026-06-19 — Marty: "We have had 2 instances this week
+           where a small typo prevented us from connecting." Confirm-
+           email field with a warm prompt; values must match before
+           the submit handler will fire. -->
+      <div class="talk-confirm-note" style="font-size:12.5px;color:var(--text-dim,#5a6b7c);margin:6px 0 4px;line-height:1.55;font-style:italic">
+        We value your effort to be here &mdash; it would be a shame if an accidental email typo prevented us from connecting. Could you type your email again so we know we have it right?
+      </div>
+      <label class="talk-label" for="wm-talk-email-confirm">Confirm email</label>
+      <input class="talk-input" type="email" id="wm-talk-email-confirm" autocomplete="off" spellcheck="false" placeholder="Type your email again">
+      <label class="talk-label" for="wm-talk-org">Organisation <span style="color:var(--text-dim);font-weight:500;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input class="talk-input" type="text" id="wm-talk-org" autocomplete="organization" placeholder="Your company or school">
+      <label class="talk-label" for="wm-talk-message">Your question</label>
+      <textarea class="talk-input" id="wm-talk-message" rows="4" placeholder="What would you like to know? Editions, add-ons, plans, custom builds, anything."></textarea>
+      <button type="button" class="talk-submit" id="wm-talk-submit" onclick="wmTalkSend()">Send to a representative &rarr;</button>
+      <button type="button" class="talk-bookcall" onclick="wmTalkShowBooking()">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a call instead &rarr;
+      </button>
+      <div class="talk-error" id="wm-talk-error"></div>
+      <div class="talk-help">We&rsquo;ll send you a confirmation email and your message lands in our representative&rsquo;s inbox immediately.</div>
+    </div>
+    <div class="talk-success" id="wm-talk-success">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4>Your message is on its way.</h4>
+      <p>A representative from The Good Foundry will be in touch within one business day. We&rsquo;ve also sent you a confirmation copy.</p>
+      <button type="button" class="talk-bookcall" onclick="wmTalkShowBooking()" style="margin-bottom:14px">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Want to fast-track? Book a call &rarr;
+      </button>
+      <button type="button" onclick="wmTalkReset()">Send another</button>
+    </div>
+
+    <div class="talk-booking" id="wm-talk-booking">
+      <div class="talk-booking-frame">
+        <div class="talk-booking-loading" id="wm-talk-booking-loading">
+          <div class="spinner"></div>
+          <div>Loading the calendar&hellip;</div>
+        </div>
+        <iframe id="wm-talk-booking-iframe" title="Book a call" src="about:blank" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="talk-booking-foot">
+        <button type="button" onclick="wmTalkShowForm()">&larr; Back to form</button>
+        <a href="https://www.coachingfoundry.com/bookcall/" target="_blank" rel="noopener">Open in new tab &rarr;</a>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+  (function () {
+    var TGF_ENQUIRY_URL = 'https://smart-tools-foundry.com/WBM/api/send_enquiry.php';
+    function $(id){ return document.getElementById(id); }
+    function show(el){ el.classList.add('shown'); }
+    function hide(el){ el.classList.remove('shown'); }
+    window.wmTalkOpen = function () {
+      $('wm-talk-drawer').classList.remove('booking-mode');
+      $('wm-talk-backdrop').classList.add('open');
+      $('wm-talk-drawer').classList.add('open');
+      setTimeout(function(){ try { $('wm-talk-first').focus(); } catch(e){} }, 320);
+    };
+    /* Auto-open the booking drawer when arriving via ?bookcall=1 or #bookcall
+       (used by the whitelist-request email's BOOK A CALL link). */
+    function wmTalkMaybeAutoOpenBooking() {
+      try {
+        var hash = (location.hash || '').toLowerCase();
+        var qs   = (location.search || '').toLowerCase();
+        if (hash.indexOf('bookcall') >= 0 || qs.indexOf('bookcall=1') >= 0) {
+          $('wm-talk-backdrop').classList.add('open');
+          $('wm-talk-drawer').classList.add('open');
+          if (typeof window.wmTalkShowBooking === 'function') window.wmTalkShowBooking();
+        }
+      } catch (e) {}
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wmTalkMaybeAutoOpenBooking);
+    } else {
+      setTimeout(wmTalkMaybeAutoOpenBooking, 0);
+    }
+    window.wmTalkClose = function () {
+      $('wm-talk-backdrop').classList.remove('open');
+      $('wm-talk-drawer').classList.remove('open');
+      $('wm-talk-drawer').classList.remove('booking-mode');
+    };
+    window.wmTalkReset = function () {
+      ['wm-talk-first','wm-talk-last','wm-talk-email','wm-talk-email-confirm','wm-talk-org','wm-talk-message'].forEach(function(id){
+        var el = $(id); if (el) { el.value = ''; el.style.borderColor = ''; }
+      });
+      hide($('wm-talk-error'));
+      $('wm-talk-success').classList.remove('shown');
+      $('wm-talk-form-host').style.display = '';
+      $('wm-talk-drawer').classList.remove('booking-mode');
+    };
+    /* Same-origin proxy that masks the WP page chrome via CSS so the iframe shows only the Amelia widget. */
+    var BOOK_URL = 'https://www.coachingfoundry.com/bookcall/';
+    window.wmTalkShowBooking = function () {
+      var heading = document.querySelector('#wm-talk-drawer .talk-header h3');
+      if (heading) heading.innerHTML = 'Book a <em>30-min call</em>.';
+      var f = $('wm-talk-booking-iframe');
+      var l = $('wm-talk-booking-loading');
+      if (l) l.classList.remove('hidden');
+      if (f && (!f.src || f.src === 'about:blank' || f.src.indexOf(BOOK_URL) !== 0)) f.src = BOOK_URL;
+      if (f) f.onload = function () { if (l) l.classList.add('hidden'); };
+      $('wm-talk-drawer').classList.add('booking-mode');
+    };
+    window.wmTalkShowForm = function () {
+      $('wm-talk-drawer').classList.remove('booking-mode');
+      var heading = document.querySelector('#wm-talk-drawer .talk-header h3');
+      if (heading) heading.innerHTML = 'Talk to <em>us</em>.';
+    };
+    /* 2026-06-19 — Block paste on the confirm-email field so the
+       user has to type it from memory. Defeats the most common
+       typo-bypass: paste-and-go. Idempotent guard so repeated
+       Talk-form opens don't stack listeners. */
+    (function _wmTalkBindConfirmGuards() {
+      var confirm = $('wm-talk-email-confirm');
+      if (!confirm || confirm._wmGuarded) return;
+      confirm._wmGuarded = true;
+      confirm.addEventListener('paste', function (ev) {
+        ev.preventDefault();
+        var errEl = $('wm-talk-error');
+        if (errEl) {
+          errEl.textContent = 'Please type your email again instead of pasting — this confirms there is no typo in the first field.';
+          show(errEl);
+        }
+      });
+      /* Live match indicator — tints the confirm border green when
+         the two fields match, red when they don't. Pure UX hint;
+         the real gate is in wmTalkSend. */
+      function _wmTalkPaintMatchState() {
+        var a = ($('wm-talk-email').value || '').trim().toLowerCase();
+        var b = (confirm.value || '').trim().toLowerCase();
+        if (!a || !b) {
+          confirm.style.borderColor = '';
+          return;
+        }
+        confirm.style.borderColor = (a === b) ? '#18a36e' : '#dc2626';
+      }
+      confirm.addEventListener('input', _wmTalkPaintMatchState);
+      var primaryField = $('wm-talk-email');
+      if (primaryField) primaryField.addEventListener('input', _wmTalkPaintMatchState);
+    })();
+
+    window.wmTalkSend = function () {
+      var firstName = ($('wm-talk-first').value || '').trim();
+      var lastName  = ($('wm-talk-last').value  || '').trim();
+      var email     = ($('wm-talk-email').value || '').trim();
+      var emailConfirm = ($('wm-talk-email-confirm').value || '').trim();
+      var organisation = ($('wm-talk-org').value || '').trim();
+      var message   = ($('wm-talk-message').value || '').trim();
+      var errEl = $('wm-talk-error');
+      if (!firstName || !lastName) { errEl.textContent = 'Please enter your first and last name.'; show(errEl); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email address.'; show(errEl); return; }
+      /* 2026-06-19 — Confirm-email match check. Case-insensitive
+         + trimmed so an inadvertent space or capital doesn't
+         block a legitimate match. */
+      if (!emailConfirm) {
+        errEl.textContent = 'Please type your email again in the Confirm Email field — we want to make sure there’s no typo.';
+        show(errEl);
+        return;
+      }
+      if (email.toLowerCase() !== emailConfirm.toLowerCase()) {
+        errEl.textContent = 'The two email addresses don’t match — please check for typos and try again.';
+        show(errEl);
+        var confirmEl = $('wm-talk-email-confirm');
+        if (confirmEl) confirmEl.focus();
+        return;
+      }
+      if (!message) { errEl.textContent = 'Please type your question.'; show(errEl); return; }
+      if (!organisation) organisation = 'Public web enquiry';
+      hide(errEl);
+      var btn = $('wm-talk-submit');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      fetch(TGF_ENQUIRY_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: firstName, lastName: lastName, email: email,
+          organisation: organisation,
+          message: message + '\n\n[Submitted via the-good-foundry.com homepage]'
+        })
+      })
+      .then(function(r){ return r.json().catch(function(){ return { success: r.ok }; }); })
+      .then(function(j){
+        btn.disabled = false; btn.textContent = 'Send to a representative →';
+        if (j && j.success) {
+          $('wm-talk-form-host').style.display = 'none';
+          $('wm-talk-success').classList.add('shown');
+        } else {
+          errEl.textContent = (j && j.error) || 'Could not send right now. Please try again or email info@the-good-foundry.com directly.';
+          show(errEl);
+        }
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'Send to a representative →';
+        errEl.textContent = 'Network error — please email info@the-good-foundry.com directly.';
+        show(errEl);
+      });
+    };
+    document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape') wmTalkClose(); });
+  })();
+  </script>
+
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

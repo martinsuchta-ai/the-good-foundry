@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End User Agreement (Vault) · The Good Foundry</title>
+<meta name="description" content="The Good Foundry's master End User Agreement for Wellbeing Matters @ Series respondents (Vault edition). Working draft for counsel review.">
+<!-- Non-public review copy — not yet wired into the platform footer.
+     Shared via direct link only. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ── Brand tokens — lifted from app/the-good-foundry-index.html.
+     Same palette as app/mutual-confidentiality-agreement.html so the
+     legal pages read as one family. */
+:root {
+  --twilight:   #293890;
+  --arctic:     #1B75BC;
+  --aqua:       #26AAE1;
+  --grape:      #662C90;
+  --orchid:     #91268F;
+  --punch:      #EC008B;
+  --bg:         #F4F6FB;
+  --card:       #FFFFFF;
+  --mid:        #EEF1F8;
+  --border:     rgba(41,56,144,.12);
+  --text:       #161A2E;
+  --text-dim:   rgba(22,26,46,.58);
+  --amber-bg:   #FFF8E1;
+  --amber-bd:   #F0C040;
+  --amber-fg:   #6B5200;
+  --note-bg:    rgba(102,44,144,.06);
+  --note-bd:    rgba(102,44,144,.30);
+  --note-fg:    var(--grape);
+  --font:       'Outfit', sans-serif;
+  --serif:      'DM Serif Display', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: sticky; top: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.brand img { height: 56px; width: auto; object-fit: contain; }
+.brand-name { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
+.brand-name em { font-style: italic; color: var(--arctic); font-family: var(--serif); }
+.brand-sub { font-size: 11px; font-weight: 600; color: var(--text-dim); letter-spacing: .14em; text-transform: uppercase; }
+.topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  border-radius: 100px;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; text-decoration: none;
+  transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn-primary { background: linear-gradient(135deg, var(--grape), var(--punch)); color: #fff; box-shadow: 0 6px 20px rgba(236,0,139,.24); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(236,0,139,.32); }
+.btn-ghost { background: var(--card); color: var(--twilight); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--mid); }
+
+/* ── Hero ── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 48px 32px 24px;
+  max-width: 960px; margin: 0 auto;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  color: var(--punch);
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(236,0,139,.09);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: 42px; font-weight: 400;
+  line-height: 1.15; color: var(--text);
+  margin-bottom: 10px; letter-spacing: -.01em;
+}
+.hero h1 em { font-style: italic; color: var(--grape); }
+.hero .lead {
+  font-size: 16px; color: var(--text-dim);
+  max-width: 720px; line-height: 1.55;
+}
+.meta-strip {
+  margin-top: 22px;
+  display: flex; flex-wrap: wrap;
+  gap: 10px; align-items: center;
+}
+.meta-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  padding: 6px 12px; border-radius: 100px;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text);
+}
+.meta-pill .dot { width: 6px; height: 6px; border-radius: 100px; background: var(--aqua); }
+.meta-pill.v .dot { background: var(--grape); }
+.meta-pill.j .dot { background: var(--arctic); }
+.meta-pill.t .dot { background: var(--punch); }
+
+/* ── Doc body ── */
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 960px; margin: 0 auto;
+  padding: 16px 32px 96px;
+}
+.doc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 48px 56px 56px;
+  box-shadow: 0 12px 48px rgba(41,56,144,.06);
+}
+.doc h2 {
+  font-family: var(--serif);
+  font-size: 26px; font-weight: 400;
+  color: var(--twilight);
+  margin: 38px 0 10px;
+  padding-top: 10px;
+  letter-spacing: -.005em;
+}
+.doc h2:first-of-type { margin-top: 0; }
+.doc h2 .num {
+  display: inline-block;
+  font-family: var(--font);
+  font-size: 13px; font-weight: 700;
+  color: var(--punch);
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-right: 12px; vertical-align: middle;
+}
+.doc h3 {
+  font-family: var(--font);
+  font-size: 14px; font-weight: 700;
+  color: var(--grape);
+  text-transform: uppercase; letter-spacing: .08em;
+  margin: 24px 0 10px;
+}
+.doc h4 {
+  font-family: var(--font);
+  font-size: 13px; font-weight: 700;
+  color: var(--text); margin: 18px 0 6px;
+}
+.doc p { margin: 11px 0; color: var(--text); }
+.doc p.lead-graf { font-size: 16px; font-weight: 500; }
+.doc strong { color: var(--twilight); font-weight: 600; }
+.doc em { font-style: italic; }
+.doc ol, .doc ul { padding-left: 28px; margin: 8px 0 14px; color: var(--text); }
+.doc li { margin: 6px 0; }
+.doc ol.alpha { list-style: lower-alpha; }
+.doc ol.alpha li::marker { color: var(--punch); font-weight: 700; }
+.doc ul li::marker { color: var(--punch); font-weight: 700; }
+.doc a { color: var(--grape); text-decoration: none; font-weight: 600; }
+.doc a:hover { text-decoration: underline; }
+.doc hr { border: 0; border-top: 1px solid var(--border); margin: 36px 0; }
+
+/* ── Definitions table ── */
+.doc table.defs {
+  width: 100%; border-collapse: collapse;
+  margin: 16px 0 22px; font-size: 14px;
+}
+.doc table.defs th,
+.doc table.defs td {
+  border: 1px solid var(--border);
+  padding: 11px 14px;
+  text-align: left; vertical-align: top;
+  color: var(--text);
+}
+.doc table.defs th {
+  background: var(--mid);
+  font-weight: 700; color: var(--twilight);
+  width: 30%;
+  font-family: var(--font);
+}
+.doc table.defs.compact th { font-size: 12px; }
+.doc table.defs.compact td { font-size: 13px; }
+
+/* ── Important / no-medical-advice banner ── */
+.important-banner {
+  background: rgba(236,0,139,.06);
+  border: 1px solid rgba(236,0,139,.25);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 14px 0 16px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+.important-banner strong { color: var(--punch); font-weight: 700; }
+
+/* ── Conditional schedule wrapper ── */
+.schedule {
+  margin-top: 36px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+.schedule .schedule-eyebrow {
+  display: inline-block;
+  font-size: 10px; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--orchid);
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(145,38,143,.08);
+  margin-bottom: 12px;
+}
+.schedule h2 { color: var(--orchid); }
+.schedule h2 .num { color: var(--orchid); }
+.schedule .applies-to {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.schedule .applies-to strong { color: var(--text); }
+.schedule-empty {
+  margin-top: 36px;
+  padding: 18px 22px;
+  background: var(--mid);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ── Footer ── */
+footer.page-ft {
+  max-width: 960px; margin: 0 auto;
+  padding: 30px 32px 64px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 12px; text-align: center;
+  position: relative; z-index: 1;
+}
+footer.page-ft a { color: var(--grape); text-decoration: none; font-weight: 600; }
+footer.page-ft a:hover { text-decoration: underline; }
+
+/* ── Print ── */
+@media print {
+  body::before, .topbar, footer.page-ft, .meta-strip { display: none; }
+  body { background: #fff; }
+  .hero, .wrap { padding: 0; max-width: none; }
+  .doc { background: #fff; border: 0; box-shadow: none; padding: 0; }
+  .doc h2, .doc h3 { color: #000; page-break-after: avoid; }
+  .important-banner { background: #fff; border: 1px solid #999; color: #000; }
+  .schedule { page-break-before: avoid; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .topbar { padding: 12px 18px; flex-wrap: wrap; gap: 10px; }
+  .brand img { height: 44px; }
+  .brand-name { display: none; }
+  .hero { padding: 32px 20px 16px; }
+  .hero h1 { font-size: 30px; }
+  .wrap { padding: 8px 20px 64px; }
+  .doc { padding: 28px 22px; border-radius: 14px; }
+  .doc h2 { font-size: 22px; }
+  .doc table.defs th { width: 38%; font-size: 12px; }
+  .doc table.defs td { font-size: 12.5px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="https://www.the-good-foundry.com/">
+    <img src="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png" alt="The Good Foundry">
+    <div>
+      <div class="brand-name">The <em>Good</em> Foundry</div>
+      <div class="brand-sub">Legal · End User Agreement</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <button class="btn btn-primary" onclick="window.print()">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save as PDF
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="hero-eyebrow">Wellbeing Matters @ Series</span>
+  <h1>End User <em>Agreement</em></h1>
+  <p class="lead">Respondent (&ldquo;Vault&rdquo;) edition. Please read this carefully — it explains what you can expect from the Platform, how your information is handled, and the limits of what the Platform is for.</p>
+  <div class="meta-strip">
+    <span class="meta-pill v"><span class="dot"></span> Version <strong style="margin-left:4px">1.0</strong></span>
+    <span class="meta-pill"><span class="dot"></span> Last updated: <strong style="margin-left:4px">26 May 2026</strong></span>
+    <span class="meta-pill j"><span class="dot"></span> Governing law: <strong style="margin-left:4px" id="meta-jurisdiction">Victoria, Australia</strong></span>
+    <span class="meta-pill t"><span class="dot"></span> Edition: <strong style="margin-left:4px" id="meta-edition">WPA</strong></span>
+  </div>
+</section>
+
+<main class="wrap">
+  <article class="doc">
+
+    <h2 style="margin-top:0;font-family:var(--font);font-size:18px;font-weight:800;color:var(--text);text-transform:uppercase;letter-spacing:.06em">End User Agreement</h2>
+
+    <p class="lead-graf">This End User Agreement (the &ldquo;Agreement&rdquo;) is between you, the person invited to respond using the Platform (&ldquo;you&rdquo;, &ldquo;your&rdquo; or &ldquo;Respondent&rdquo;), and <strong data-token="OWNER_LEGAL">{{OWNER_LEGAL}}</strong> (&ldquo;The Good Foundry&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;). It governs your access to and use of <strong data-token="PLATFORM_NAME">{{PLATFORM_NAME}}</strong> (the &ldquo;Platform&rdquo;), including the personal results area made available to you (your &ldquo;Vault&rdquo;).</p>
+
+    <p>Please read it carefully. It explains what you can expect from the Platform, how your information is handled, and the limits of what the Platform is for. <em>The Platform is a wellbeing self-reflection tool. It is not a medical device, a diagnostic instrument, or a crisis or emergency service (see clause 7).</em></p>
+
+    <!-- ── 1 · Definitions ── -->
+    <h2><span class="num">1</span>Definitions</h2>
+    <p>In this Agreement:</p>
+    <table class="defs">
+      <tbody>
+        <tr>
+          <th>Administrator</th>
+          <td>A person authorised by the Customer to manage its account, invite Respondents, and view de-identified aggregate results.</td>
+        </tr>
+        <tr>
+          <th>Customer</th>
+          <td>The organisation that has procured the Platform and invited you to respond &mdash; usually your employer, school, or program provider &mdash; and which decides why the survey is run.</td>
+        </tr>
+        <tr>
+          <th>Personal Information</th>
+          <td>Information about an identified or identifiable individual, including any equivalent term (&ldquo;personal data&rdquo;) under applicable data-protection law.</td>
+        </tr>
+        <tr>
+          <th>Privacy Policy</th>
+          <td>The Good Foundry&rsquo;s Privacy Policy at <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">https://smart-tools-foundry.com/TGF/privacy-policy.html</a>, as updated from time to time.</td>
+        </tr>
+        <tr>
+          <th>Responses</th>
+          <td>The answers, ratings, and free-text reflections you submit through the Platform.</td>
+        </tr>
+        <tr>
+          <th>Vault</th>
+          <td>Your private results area, where you can view your own results and any guidance generated for you.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ── 2 · Acceptance ── -->
+    <h2><span class="num">2</span>Acceptance of this Agreement</h2>
+    <ol class="alpha">
+      <li>By accessing or using the Platform &mdash; including by following an invitation link, signing in, or submitting any Response &mdash; you confirm that you have read, understood, and agree to be bound by this Agreement and the Privacy Policy.</li>
+      <li>A current copy of this Agreement is linked from the footer of every Platform page so that it is available to you before and at the time you use the Platform. If you do not agree to it, do not access the Platform or submit any Response.</li>
+      <li>You must be of the minimum age required for the edition you have been invited to use. Where you are below the age of majority in your jurisdiction, your use is subject to the consent arrangements in Schedule 1 (if it applies to your edition).</li>
+    </ol>
+
+    <!-- ── 3 · Account ── -->
+    <h2><span class="num">3</span>Your Account and Authentication</h2>
+    <ol class="alpha">
+      <li>Access to the Platform is by invitation from a Customer, using credentials or a single-use sign-in link issued to you. Your access is personal to you.</li>
+      <li>You must keep your sign-in details secure and must not share them or let anyone else respond on your behalf. Tell us promptly at <a href="mailto:privacy@the-good-foundry.com">privacy@the-good-foundry.com</a> if you believe your access has been compromised.</li>
+      <li>You agree that the information you provide about yourself is accurate to the best of your knowledge. You may decline to answer any demographic question by selecting &ldquo;Prefer not to answer&rdquo; where offered.</li>
+    </ol>
+
+    <!-- ── 4 · Acceptable Use ── -->
+    <h2><span class="num">4</span>Acceptable Use</h2>
+    <p>You agree to use the Platform only for its intended purpose &mdash; your own wellbeing self-assessment and reflection &mdash; and you must not:</p>
+    <ul>
+      <li>submit Responses on behalf of, or impersonate, any other person;</li>
+      <li>upload unlawful, harmful, defamatory, or infringing content, or content that identifies or targets another person;</li>
+      <li>attempt to access, disrupt, probe, or reverse-engineer the Platform or any data that is not your own;</li>
+      <li>use the Platform in any way that breaches applicable law or any reasonable instruction the Customer or we give you.</li>
+    </ul>
+    <p>We may suspend or withdraw access where we reasonably believe these rules have been breached or where required to protect the Platform or other users.</p>
+
+    <!-- ── 5 · Information and Privacy ── -->
+    <h2><span class="num">5</span>Your Information and Privacy</h2>
+    <p>How we collect, use, store, and disclose Personal Information is set out in full in the <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>, which forms part of this Agreement. Please read it. In summary, and in respect of your Responses:</p>
+    <ol class="alpha">
+      <li><strong>Roles.</strong> The Customer decides why the survey is run and is the controller of your Responses; The Good Foundry acts as the Customer&rsquo;s processor for those Responses. The Good Foundry is the controller of the limited Personal Information it needs to operate the Platform itself &mdash; namely to authenticate you, send you invitations and reminders, and provide your Vault.</li>
+      <li><strong>Your Vault.</strong> You can see your own individual results in your Vault. Administrators see results in de-identified, aggregated form only, subject to minimum-group-size thresholds; they do not see your individual responses attributed to you.</li>
+      <li><strong>De-identified benchmarking.</strong> We may retain and use de-identified, aggregated data (which cannot reasonably be used to identify you) to generate population scores, benchmarks, and to improve the Platform, as disclosed in the Privacy Policy.</li>
+      <li><strong>Hosting.</strong> Your data is stored in the hosting region closest to your location &mdash; Sydney, Singapore, Iowa, London, Frankfurt, or Eemshaven &mdash; with Personal Information and Response data held separately. Where data leaves its region (for example, for support), recognised cross-border transfer mechanisms apply, as described in the Privacy Policy and the Customer&rsquo;s Data Processing Agreement.</li>
+      <li><strong>Your rights.</strong> Subject to applicable law, you may request access to, correction of, deletion of, or a copy of your Personal Information, or object to or restrict its use, by contacting <a href="mailto:privacy@the-good-foundry.com">privacy@the-good-foundry.com</a>. We facilitate such requests with the Customer where the Customer is the controller.</li>
+      <li><strong>Sensitive information.</strong> Some questions invite sensitive information (for example, about how you are feeling, or demographic details). Where you choose to provide it, you consent to our processing it to provide the Platform; you may decline any such question.</li>
+    </ol>
+
+    <!-- ── 6 · IP ── -->
+    <h2><span class="num">6</span>Intellectual Property</h2>
+    <ol class="alpha">
+      <li>The Platform, its underlying software, the PERMA+ framework as implemented, question banks, dashboards, branding, and all related materials are owned by The Good Foundry or its licensors. Nothing in this Agreement transfers any of those rights to you.</li>
+      <li>You are granted a personal, non-exclusive, non-transferable, revocable right to access and use the Platform and your Vault for the duration of the survey program for which you were invited.</li>
+      <li>You retain ownership of the content of your Responses. You grant The Good Foundry and the Customer the right to use your Responses to provide the Platform and its results, and to use them in de-identified, aggregated form as described in clause 5 and the Privacy Policy.</li>
+      <li>If you send us feedback or suggestions about the Platform, we may use them without restriction or obligation to you.</li>
+    </ol>
+
+    <!-- ── 7 · Wellbeing tool ── -->
+    <h2><span class="num">7</span>Wellbeing Tool &mdash; No Medical Advice or Emergency Service</h2>
+    <div class="important-banner">
+      <strong>Important.</strong> The Platform supports self-reflection on wellbeing. It does not provide medical, psychological, or clinical advice, does not diagnose or treat any condition, and is not a substitute for care from a qualified professional. It is not monitored in real time and is not an emergency or crisis service.
+    </div>
+    <ol class="alpha">
+      <li>Any guidance, score, or content generated for you (including any AI-assisted explainer or coaching content, where your edition includes it) is general in nature and provided for reflection only. Always seek advice from a qualified professional about your individual circumstances.</li>
+      <li>If you are in distress or concerned about your safety or the safety of someone else, do not rely on the Platform. Contact your local emergency services, a qualified health professional, or any employee, student, or member assistance program made available to you.</li>
+      <li>The Platform is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis. To the extent permitted by law, we do not warrant that it will be uninterrupted, error-free, or fit for any particular purpose beyond the wellbeing self-reflection it is designed for.</li>
+    </ol>
+
+    <!-- ── 8 · Liability ── -->
+    <h2><span class="num">8</span>Limitation of Liability</h2>
+    <ol class="alpha">
+      <li>Nothing in this Agreement excludes, restricts, or modifies any consumer guarantee, right, or remedy that you have under the Australian Consumer Law or any other law that cannot lawfully be excluded or limited (including any equivalent rights you may have under UK, EU, or US law). This clause is subject to that protection in all cases.</li>
+      <li>Subject to clause 8(a), and to the maximum extent permitted by law, The Good Foundry is not liable to you for any indirect, incidental, special, or consequential loss, or for any loss of profits, data, or goodwill, arising out of or in connection with your use of the Platform.</li>
+      <li>Subject to clause 8(a), and to the maximum extent permitted by law, The Good Foundry&rsquo;s total liability to you in connection with this Agreement is limited to re-supplying access to the Platform or, where re-supply is not possible, AUD 100.</li>
+    </ol>
+
+    <!-- ── 9 · Responsibility ── -->
+    <h2><span class="num">9</span>Your Responsibility</h2>
+    <p>You are responsible for your own use of the Platform. To the extent permitted by law, and proportionate to your own acts or omissions, you are responsible for loss we suffer that is caused by your breach of clause 4 (Acceptable Use) or your unlawful or wilful misuse of the Platform. This clause does not apply to anything caused by us, and nothing in it requires you to indemnify us for matters outside your reasonable control.</p>
+
+    <!-- ── 10 · Term and Termination ── -->
+    <h2><span class="num">10</span>Term and Termination</h2>
+    <ol class="alpha">
+      <li>This Agreement applies from when you first access the Platform and continues while you have access to it or your Vault.</li>
+      <li>Your access ends when the relevant survey program ends, when the Customer&rsquo;s subscription ends, or if your access is withdrawn under clause 4. We will handle your data on termination in accordance with the Privacy Policy and the Customer&rsquo;s Data Processing Agreement, including irreversible deletion within the period stated there.</li>
+      <li>Clauses 5 (to the extent of accrued rights), 6, 7, 8, 9, 11, and 12 survive termination.</li>
+    </ol>
+
+    <!-- ── 11 · Governing law ── -->
+    <h2><span class="num">11</span>Governing Law and Jurisdiction</h2>
+    <p>This Agreement is governed by the laws of <strong data-token="OWNER_JURISDICTION">{{OWNER_JURISDICTION}}</strong>, and the parties submit to the non-exclusive jurisdiction of the courts of that place. If you are a consumer resident elsewhere, this does not deprive you of the protection of mandatory consumer-protection laws of the country in which you live, and you may have the right to bring proceedings in your local courts.</p>
+
+    <!-- ── 12 · General ── -->
+    <h2><span class="num">12</span>General</h2>
+    <ol class="alpha">
+      <li><strong>Changes.</strong> We may update this Agreement from time to time. The current version is always linked from the Platform footer and shows its review date. Material changes affecting Respondents will be notified through the Platform or by the Customer. Your continued use after a change takes effect means you accept the updated Agreement.</li>
+      <li><strong>Entire agreement.</strong> This Agreement and the Privacy Policy are the entire agreement between you and us about your use of the Platform.</li>
+      <li><strong>Severability.</strong> If any part of this Agreement is found unenforceable, the rest continues to apply.</li>
+      <li><strong>Contact.</strong> Questions about this Agreement or your information can be sent to the Privacy Officer at <a href="mailto:privacy@the-good-foundry.com">privacy@the-good-foundry.com</a>, or to The Good Foundry Pty Ltd, 1/31 Beach Street, VIC 3199, Australia.</li>
+    </ol>
+
+    <!-- ════════════════════════════════════════════════════════════
+         CONDITIONAL SCHEDULES — JS shows/hides based on edition.
+         ════════════════════════════════════════════════════════════ -->
+
+    <h2 id="schedules" style="margin-top:48px;font-family:var(--serif);font-size:30px;color:var(--orchid)">Conditional Schedules</h2>
+    <p style="font-style:italic;color:var(--text-dim);font-size:13.5px">Each Schedule below is included only for the editions named in its trigger and is omitted for all others. Where included, it forms part of this Agreement and prevails over the core body to the extent of any inconsistency on its subject matter.</p>
+
+    <!-- ── Schedule 1 — WPK / WPY (minor consent) ── -->
+    <section class="schedule" id="schedule-1" data-edition-trigger="WPK|WPY">
+      <span class="schedule-eyebrow">Schedule 1 · School editions</span>
+      <h2><span class="num">S1</span>School Editions: Consent for Minors</h2>
+      <p class="applies-to"><strong>Applies to:</strong> Wellbeing Matters @ School &mdash; Kids (WPK) and Youth (WPY).</p>
+      <ol class="alpha">
+        <li>These editions are designed for school students. They are made available through, and at the direction of, the student&rsquo;s school, which is the Customer.</li>
+        <li><strong>Consent.</strong> The school is responsible for obtaining and holding any parental or guardian consent required for a student to participate, in accordance with applicable law and the school&rsquo;s own consent processes. The Good Foundry relies on the school&rsquo;s confirmation that the necessary consent has been obtained, and does not collect that consent directly from parents or guardians.</li>
+        <li><strong>If you are a parent or guardian.</strong> If you do not wish your child to participate, or you wish to withdraw consent or have your child&rsquo;s information deleted, please contact the school in the first instance. You may also contact <a href="mailto:privacy@the-good-foundry.com">privacy@the-good-foundry.com</a>.</li>
+        <li><strong>If you are a student.</strong> Some questions ask how you are feeling. You can skip any question. If anything in the survey worries you, please talk to a trusted adult at your school, a parent or guardian, or contact your local support service &mdash; the survey is not a way to ask for urgent help.</li>
+        <li>Results from school editions are surfaced to the school&rsquo;s wellbeing lead in anonymised, aggregated form by default, subject to minimum-group-size thresholds.</li>
+      </ol>
+    </section>
+
+    <!-- ── Schedule 2 — WPD (WHS framing) ── -->
+    <section class="schedule" id="schedule-2" data-edition-trigger="WPD">
+      <span class="schedule-eyebrow">Schedule 2 · Bespoke variants</span>
+      <h2><span class="num">S2</span>Bespoke Variants: Work Health &amp; Safety</h2>
+      <p class="applies-to"><strong>Applies to:</strong> bespoke variants (WPD).</p>
+      <ol class="alpha">
+        <li>This edition includes a psychosocial-hazard assessment intended to support the Customer&rsquo;s management of psychosocial risks at work. It is provided as a measurement and reflection tool consistent with the approach in the Safe Work Australia model Code of Practice on managing psychosocial hazards at work.</li>
+        <li>The Platform supports, but does not discharge, the Customer&rsquo;s work health and safety duties. Identifying, assessing, and controlling psychosocial hazards, and acting on the results, remains the responsibility of the Customer as the person conducting the business or undertaking.</li>
+        <li>Your participation is voluntary, and your individual responses are not disclosed to your employer in identifiable form. Results are provided to the Customer in de-identified, aggregated form (for example, heat-maps by line of business or contract), subject to minimum-group-size thresholds.</li>
+        <li>If completing the survey raises concerns for you, support is available. Please use any Employee Assistance Program (EAP) or support contact made available to you, or the contacts referred to in clause 7.</li>
+      </ol>
+    </section>
+
+    <!-- ── Schedule 3 — WHC (Change Lab IP) ── -->
+    <section class="schedule" id="schedule-3" data-edition-trigger="WHC">
+      <span class="schedule-eyebrow">Schedule 3 · HEART Of Change</span>
+      <h2><span class="num">S3</span>The HEART Of Change Tool: Licensed Framework</h2>
+      <p class="applies-to"><strong>Applies to:</strong> The HEART Of Change Tool (WHC).</p>
+      <ol class="alpha">
+        <li>This edition implements the HEART Framework developed by Dr Michelle McQuaid and made available through The Change Lab. The HEART Framework, its model, terminology, and associated materials are the intellectual property of The Change Lab and/or its principals, and are used by The Good Foundry under licence.</li>
+        <li>Your right to use this edition is a personal, non-exclusive, non-transferable, revocable licence for the purpose of completing the survey and viewing your own HEART profile in your Vault. Nothing in this Agreement grants you any right in the HEART Framework itself, and you must not reproduce, adapt, or commercialise it.</li>
+        <li>This Schedule is to be read consistently with the licensing arrangement between The Good Foundry and The Change Lab. In the event of any inconsistency between this Schedule and that arrangement as it affects the framework&rsquo;s intellectual property, the latter prevails.</li>
+      </ol>
+    </section>
+
+    <!-- ── Empty-state when no schedule applies ── -->
+    <div class="schedule-empty" id="schedule-empty" style="display:none">
+      No conditional Schedule applies to the current edition.
+    </div>
+
+    <hr>
+    <p style="text-align:center;color:var(--text-dim);font-style:italic;font-size:13px">End of End User Agreement (Vault / Respondent) &mdash; v1.0.</p>
+
+  </article>
+</main>
+
+<footer class="page-ft">
+  <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+  <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy Policy</a> &middot;
+  <a href="mailto:privacy@the-good-foundry.com">privacy@the-good-foundry.com</a>
+  <div style="margin-top:12px;font-size:10.5px;opacity:.7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved. This page is not indexed and is shared via direct link only.</div>
+</footer>
+
+<script>
+/* ────────────────────────────────────────────────────────────────
+   End User Agreement (Vault) — client-side tokeniser + schedule
+   switch.
+
+   Tokens are placeholders with `data-token="<NAME>"` attribute and
+   {{NAME}} text content; they are replaced on initial render based
+   on the ?edition= URL parameter. Conditional Schedules carry
+   `data-edition-trigger="WPK|WPY"` etc; the dispatcher shows/hides
+   each section based on the active edition.
+
+   URL params:
+     ?edition=WPA|WPK|WPY|WPL|WPU|WPV|WPS|WPD|WHC|WAW
+   ──────────────────────────────────────────────────────────────── */
+(function () {
+  var EDITIONS = {
+    WPA: { label: 'Wellbeing Matters @ Work' },
+    WPK: { label: 'Wellbeing Matters @ School — Kids' },
+    WPY: { label: 'Wellbeing Matters @ School — Youth' },
+    WPL: { label: 'Wellbeing Matters in Life' },
+    WPU: { label: 'Wellbeing Matters @ University' },
+    WPV: { label: 'Wellbeing Matters @ Veterinary' },
+    WPS: { label: 'Wellbeing Matters @ Sport' },
+    WPD: { label: 'Wellbeing Matters @ Work' },          /* bespoke variant — renders generically */
+    WHC: { label: 'The HEART Of Change Tool' },
+    WAW: { label: 'Wellbeing Matters In Aging Well' }
+  };
+
+  var CONST_TOKENS = {
+    OWNER_LEGAL:        'The Good Foundry Pty Ltd',
+    OWNER_JURISDICTION: 'Victoria, Australia'
+  };
+
+  function _qs(name) {
+    try { return new URLSearchParams(window.location.search).get(name); }
+    catch (e) { return null; }
+  }
+
+  function _resolveTokens(editionCode) {
+    var ed = EDITIONS[editionCode] || EDITIONS.WPA;
+    return Object.assign({}, CONST_TOKENS, {
+      PLATFORM_NAME: ed.label,
+      EDITION:       editionCode
+    });
+  }
+
+  function _applyTokens(tokens) {
+    var nodes = document.querySelectorAll('[data-token]');
+    for (var i = 0; i < nodes.length; i++) {
+      var k = nodes[i].getAttribute('data-token');
+      if (tokens.hasOwnProperty(k)) nodes[i].textContent = tokens[k];
+    }
+    var mj = document.getElementById('meta-jurisdiction');
+    if (mj) mj.textContent = tokens.OWNER_JURISDICTION;
+    var me = document.getElementById('meta-edition');
+    if (me) me.textContent = tokens.EDITION;
+  }
+
+  function _applySchedules(editionCode) {
+    var schedules = document.querySelectorAll('.schedule[data-edition-trigger]');
+    var anyVisible = false;
+    for (var i = 0; i < schedules.length; i++) {
+      var trigger = String(schedules[i].getAttribute('data-edition-trigger') || '').toUpperCase();
+      var match = trigger.split('|').indexOf(editionCode) !== -1;
+      schedules[i].style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    }
+    var empty = document.getElementById('schedule-empty');
+    if (empty) empty.style.display = anyVisible ? 'none' : '';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var ed = String(_qs('edition') || 'WPA').toUpperCase();
+    if (!EDITIONS[ed]) ed = 'WPA';
+    _applyTokens(_resolveTokens(ed));
+    _applySchedules(ed);
+  });
+})();
+</script>
+
+</body>
+</html>

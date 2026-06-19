@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Business Case for Measuring Wellbeing &middot; Wellbeing Matters @ Work</title>
+<meta name="description" content="Why measuring workplace wellbeing matters — the evidence, the framework, and what the PERMA+ Wellbeing Survey actually delivers.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+<script>
+/* Theme gate — same shape as acknowledgement.html so this page picks
+   up the active client brand colours when opened from a themed
+   surface. Reads per-sub / per-key cache, then last-theme cache,
+   then wmw_brandConfig. Writes !important overrides before paint
+   so there's no orange flash. */
+(function () {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var sub = p.get('sub');
+    var keyParam = p.get('key');
+    var keyBase = keyParam ? keyParam.toUpperCase().split('-')[0] : '';
+    var cacheKey = sub ? ('wm_vault_theme_sub_' + sub)
+                  : keyBase ? ('wm_vault_theme_key_' + keyBase)
+                  : 'wm_vault_theme_last';
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_vault_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_bank_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) {
+      try {
+        var bc = JSON.parse(localStorage.getItem('wmw_brandConfig') || '{}');
+        var BT = {tgf:'#e8420a',ms:'#0078d4',downer:'#29bfe0',coca:'#f40009',eap:'#4a9fd4',drake:'#2db87a',mcquaid:'#3aab7b'};
+        var BN = {tgf:'#14202e',ms:'#1b1b1b',downer:'#162838',coca:'#1a1a1a',eap:'#0f1f3d',drake:'#1a2e22',mcquaid:'#162238'};
+        var ak = bc.activeKey;
+        if (ak) {
+          var bp = null, bn = null;
+          (bc.custom || []).forEach(function (t) { if (t.key === ak) { bp = t.primary; bn = t.headerBg || t.secondary; } });
+          if (!bp) { bp = BT[ak]; bn = BN[ak]; }
+          if (bp) cached = { vars: { '--orange': bp, '--orange-dark': bp, '--orange-light': bp, '--navy-deep': bn || '#14202e', '--navy': bn || '#14202e', '--navy-mid': bn || '#14202e' } };
+        }
+      } catch (e) {}
+    }
+    if (cached && cached.vars && typeof cached.vars === 'object') {
+      var css = ':root{';
+      for (var k in cached.vars) {
+        if (Object.prototype.hasOwnProperty.call(cached.vars, k) && cached.vars[k]) {
+          css += k + ':' + cached.vars[k] + '!important;';
+        }
+      }
+      css += '}';
+      document.write('<style id="wm-theme-gate">' + css + '</style>');
+    }
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    --orange: #e8621a;
+    --orange-light: #f5a06e;
+    --orange-pale: #fff4ee;
+    --navy-deep: #14202e;
+    --text-dark: #1c2b3a;
+    --text-mid: #45586a;
+    --text-muted: #8097ad;
+    --surface: #ffffff;
+    --surface-2: #f4f6f8;
+    --border: #e2e8ef;
+    --body-bg: #f0f2f5;
+    /* PERMAH circle palette — lifted from the brochure spread so the
+       framework explainer ties back visually to the original PDF. */
+    --pm-p: #6c2e9c;
+    --pm-e: #00a3d4;
+    --pm-r: #d11c5b;
+    --pm-m: #2c8a3e;
+    --pm-a: #14202e;
+    --pm-h: #e8621a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  header.page-hd {
+    background: var(--navy-deep);
+    border-bottom: 4px solid var(--orange);
+    padding: 22px 28px;
+  }
+  header.page-hd .hd-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header.page-hd .brand-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  header.page-hd .brand-mark img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  header.page-hd .brand-text {
+    color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em;
+  }
+  header.page-hd .brand-sub {
+    color: var(--orange-light);
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; margin-top: 2px;
+  }
+  header.page-hd .hd-back {
+    /* Sit at the LEFT of the header, before the brand mark. */
+    order: -1;
+    margin-right: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  header.page-hd .hd-back:hover { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.32); }
+  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+  main.page-bd {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .hero-card {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, #1f3045 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 44px 44px 36px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .hero-card::before {
+    content: ''; position: absolute;
+    top: -120px; right: -120px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(232,98,26,.22), transparent 65%);
+    pointer-events: none;
+  }
+  .hero-card .hero-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange-light);
+    margin-bottom: 10px;
+  }
+  .hero-card h1 {
+    font-size: 34px; font-weight: 800; letter-spacing: -.012em;
+    line-height: 1.15; margin: 0 0 14px; color: #fff;
+  }
+  .hero-card h1 em {
+    font-style: italic; color: var(--orange-light); font-weight: 700;
+  }
+  .hero-card .hero-lede {
+    font-size: 16px; color: rgba(255,255,255,.82); max-width: 720px;
+    line-height: 1.7; margin: 0 0 22px;
+  }
+  .hero-card .hero-tagline {
+    border-top: 1px solid rgba(255,255,255,.14);
+    padding-top: 18px; margin-top: 18px;
+    font-size: 14px; font-weight: 600; color: rgba(255,255,255,.92);
+  }
+  .hero-stats {
+    display: flex; flex-wrap: wrap; gap: 22px 36px;
+    margin-top: 16px;
+  }
+  .hero-stat .num {
+    font-size: 22px; font-weight: 800; color: var(--orange-light);
+    letter-spacing: -.01em; line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 11px; color: rgba(255,255,255,.7);
+    text-transform: uppercase; letter-spacing: .08em; font-weight: 600;
+    margin-top: 6px;
+  }
+  @media (max-width: 720px) {
+    .hero-card { padding: 32px 26px 26px; }
+    .hero-card h1 { font-size: 26px; }
+  }
+
+  /* ── Section heading ──────────────────────────────────────────── */
+  .section {
+    margin-top: 36px;
+  }
+  .section-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -.012em; margin: 0 0 8px;
+  }
+  .section-lede {
+    font-size: 15px; color: var(--text-mid); line-height: 1.75;
+    margin: 0 0 22px; max-width: 820px;
+  }
+
+  /* ── Generic ack-card carry-over (matches acknowledgement.html) ── */
+  .ack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+  }
+  .ack-card h2 {
+    font-size: 17px; font-weight: 800; color: var(--text-dark);
+    margin: 0 0 8px; letter-spacing: -.005em;
+  }
+  .ack-card p {
+    font-size: 15px; color: var(--text-mid); line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .ack-card p:last-child { margin-bottom: 0; }
+
+  /* ── Stat tiles (Why Invest) ──────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin: 8px 0 22px;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 18px 18px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(20,32,46,.04);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .stat-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(20,32,46,.08);
+  }
+  .stat-disc {
+    width: 86px; height: 86px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800;
+    font-size: 22px; letter-spacing: -.01em;
+    box-shadow: 0 6px 14px rgba(20,32,46,.12);
+  }
+  .stat-disc.c1 { background: var(--pm-h); }   /* orange */
+  .stat-disc.c2 { background: var(--pm-e); }   /* aqua  */
+  .stat-disc.c3 { background: var(--pm-r); }   /* magenta */
+  .stat-disc.c4 { background: var(--pm-m); }   /* green */
+  .stat-disc.c5 { background: var(--pm-a); }   /* navy  */
+  .stat-disc.c6 { background: var(--pm-p); }   /* purple */
+  .stat-tile .stat-lbl {
+    font-size: 12.5px; color: var(--text-mid); font-weight: 500;
+    line-height: 1.5;
+  }
+  .stat-source {
+    font-size: 11.5px; color: var(--text-muted);
+    font-style: italic; margin-top: 6px;
+  }
+  .sub-lede {
+    font-size: 13.5px; font-weight: 700; color: var(--text-dark);
+    text-transform: uppercase; letter-spacing: .06em;
+    margin: 22px 0 10px;
+  }
+
+  /* ── 3-up pillar cards (Why caring is hard) ──────────────────── */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .pillar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--orange);
+    border-radius: 12px;
+    padding: 24px 26px;
+    display: flex; flex-direction: column;
+  }
+  .pillar-card.c-orange { border-top-color: var(--pm-h); }
+  .pillar-card.c-navy   { border-top-color: var(--pm-a); }
+  .pillar-card.c-aqua   { border-top-color: var(--pm-e); }
+  .pillar-card .pillar-h {
+    font-size: 15px; font-weight: 800; color: var(--text-dark);
+    line-height: 1.4; margin: 0 0 12px; letter-spacing: -.005em;
+    font-style: italic;
+  }
+  .pillar-card .pillar-h.c-orange { color: var(--pm-h); }
+  .pillar-card .pillar-h.c-navy   { color: var(--pm-a); }
+  .pillar-card .pillar-h.c-aqua   { color: var(--pm-e); }
+  .pillar-card p {
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .pillar-q {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; font-style: italic; color: var(--orange);
+    font-weight: 600;
+  }
+
+  /* ── PERMAH framework circles ────────────────────────────────── */
+  .permah-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin: 4px 0 14px;
+  }
+  @media (max-width: 720px) {
+    .permah-row { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  }
+  .permah-cell {
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 10px 16px;
+  }
+  .permah-disc {
+    width: 76px; height: 76px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: 800;
+    font-family: Georgia, "Times New Roman", serif;
+    box-shadow: 0 6px 14px rgba(20,32,46,.14);
+    letter-spacing: -.02em;
+  }
+  .permah-disc.p { background: var(--pm-p); }
+  .permah-disc.e { background: var(--pm-e); }
+  .permah-disc.r { background: var(--pm-r); }
+  .permah-disc.m { background: var(--pm-m); }
+  .permah-disc.a { background: var(--pm-a); }
+  .permah-disc.h { background: var(--pm-h); }
+  .permah-cell .permah-lbl {
+    font-size: 10.5px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .permah-cell .permah-desc {
+    font-size: 11.5px; color: var(--text-mid); line-height: 1.5;
+  }
+
+  /* ── Numbered feature list (How it helps / What it measures) ── */
+  .feat-list {
+    display: grid;
+    gap: 12px;
+  }
+  .feat-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    display: flex; gap: 18px; align-items: flex-start;
+  }
+  .feat-row .feat-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--orange-pale);
+    color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 15px;
+  }
+  .feat-row .feat-body { flex: 1; min-width: 0; }
+  .feat-row .feat-h {
+    font-size: 13px; font-weight: 800; color: var(--text-dark);
+    text-transform: uppercase; letter-spacing: .06em;
+    margin: 0 0 6px;
+  }
+  .feat-row .feat-p {
+    font-size: 14px; color: var(--text-mid); line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── Two-column callout (psychosocial risk + culture of care) ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+  .two-col .ack-card h3 {
+    font-size: 13px; font-weight: 800; color: var(--orange);
+    text-transform: uppercase; letter-spacing: .08em;
+    margin: 0 0 12px;
+  }
+  .two-col .ack-card ul {
+    margin: 0; padding-left: 20px;
+  }
+  .two-col .ack-card ul li {
+    font-size: 14px; color: var(--text-mid); line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .two-col .ack-card ul li strong { color: var(--text-dark); font-weight: 700; }
+
+  /* ── Closing CTA card ────────────────────────────────────────── */
+  .cta-card {
+    margin-top: 36px;
+    background: linear-gradient(135deg, var(--orange) 0%, #d8521a 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 36px 40px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(232,98,26,.25);
+  }
+  .cta-card h2 {
+    font-size: 24px; font-weight: 800; margin: 0 0 10px;
+    letter-spacing: -.01em; color: #fff;
+  }
+  .cta-card p {
+    font-size: 15px; color: rgba(255,255,255,.92); max-width: 640px;
+    margin: 0 auto 22px; line-height: 1.7;
+  }
+  .cta-card .cta-buttons {
+    display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+  .cta-card .cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    background: #fff;
+    color: var(--orange);
+    font-size: 13px; font-weight: 700; letter-spacing: .02em;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+  }
+  .cta-card .cta-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0,0,0,.14);
+  }
+  .cta-card .cta-btn-ghost {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,.65);
+  }
+  .cta-card .cta-btn-ghost:hover {
+    background: rgba(255,255,255,.12);
+    border-color: #fff;
+  }
+
+  /* ── Closing trust strip / partners ──────────────────────────── */
+  .trust-card {
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 10px rgba(20,32,46,.04);
+  }
+  .trust-card h2 {
+    font-size: 20px; font-weight: 800; color: var(--text-dark);
+    margin: 0 0 8px; letter-spacing: -.01em;
+  }
+  .trust-card p {
+    font-size: 14.5px; color: var(--text-mid); line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .trust-card .trust-quote {
+    border-left: 3px solid var(--orange);
+    padding: 6px 0 6px 16px;
+    font-style: italic; color: var(--text-mid);
+    margin: 14px 0;
+    font-size: 14px; line-height: 1.65;
+  }
+  .trust-card .trust-cite {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px dashed var(--border);
+  }
+
+  footer.page-ft {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 18px 28px 32px;
+  }
+  footer.page-ft a { color: inherit; text-decoration: none; font-weight: 700; }
+  footer.page-ft a:hover { color: var(--orange); }
+</style>
+</head>
+<body>
+  <header class="page-hd">
+    <div class="hd-inner">
+      <div class="brand-mark">
+        <img src="logos/VaultTemp1.png" alt="Wellbeing Matters"
+             onerror="var p=this.parentNode;if(p){p.innerHTML='&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z&quot;/&gt;&lt;/svg&gt;';}">
+      </div>
+      <div>
+        <div class="brand-text">Wellbeing Matters @ Work</div>
+        <div class="brand-sub">A Business Case for Measuring Wellbeing</div>
+      </div>
+      <a class="hd-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+    </div>
+  </header>
+
+  <main class="page-bd">
+
+    <!-- ── Hero ── -->
+    <section class="hero-card">
+      <div class="hero-eyebrow">PERMA+ for Workplaces</div>
+      <h1>Supercharging lives. Energising teams. <em>Strengthening workplaces.</em></h1>
+      <p class="hero-lede">Backed by science. Confidential results. Immediately actionable. The PERMA+ Wellbeing Survey turns the latest research on flourishing into a confidential, repeatable measurement that gives leaders the signal &mdash; and the next action &mdash; they need.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">268,986</div><div class="lbl">Evaluations Completed</div></div>
+        <div class="hero-stat"><div class="num">2,196</div><div class="lbl">Workplaces assisted</div></div>
+        <div class="hero-stat"><div class="num">145</div><div class="lbl">Countries</div></div>
+      </div>
+      <div class="hero-tagline">In association with The Wellbeing Lab &middot; The Good Foundry &middot; Action for Impact</div>
+    </section>
+
+    <!-- ── 1. Why invest ── -->
+    <section class="section">
+      <div class="section-eyebrow">01 &middot; The case</div>
+      <h2 class="section-title">Why invest in wellbeing?</h2>
+      <p class="section-lede">In its simplest form, wellbeing is our ability to feel good and function effectively. Studies consistently show that when people experience higher wellbeing, both they and the organisations around them perform measurably better.</p>
+
+      <div class="sub-lede">When people have higher wellbeing they are:</div>
+      <div class="stat-grid">
+        <div class="stat-tile"><div class="stat-disc c1">6&times;</div><div class="stat-lbl">more likely to feel engaged</div></div>
+        <div class="stat-tile"><div class="stat-disc c2">29%</div><div class="stat-lbl">more likely to be productive</div></div>
+        <div class="stat-tile"><div class="stat-disc c3">45%</div><div class="stat-lbl">more likely to be satisfied in their job</div></div>
+        <div class="stat-tile"><div class="stat-disc c4">46%</div><div class="stat-lbl">less likely to experience unhealthy days</div></div>
+        <div class="stat-tile"><div class="stat-disc c5">125%</div><div class="stat-lbl">less likely to burn out</div></div>
+        <div class="stat-tile"><div class="stat-disc c6">32%</div><div class="stat-lbl">less likely to quit</div></div>
+      </div>
+
+      <div class="sub-lede">Workplaces that invest in wellbeing experience, on average:</div>
+      <div class="stat-grid">
+        <div class="stat-tile"><div class="stat-disc c1">70%</div><div class="stat-lbl">fewer safety incidents</div></div>
+        <div class="stat-tile"><div class="stat-disc c2">41%</div><div class="stat-lbl">lower absenteeism</div></div>
+        <div class="stat-tile"><div class="stat-disc c3">24&ndash;59%</div><div class="stat-lbl">lower turnover</div></div>
+        <div class="stat-tile"><div class="stat-disc c4">3.5&times;</div><div class="stat-lbl">more likely to be seen as creative and innovative</div></div>
+        <div class="stat-tile"><div class="stat-disc c5">10%</div><div class="stat-lbl">higher customer ratings</div></div>
+        <div class="stat-tile"><div class="stat-disc c6">10%</div><div class="stat-lbl">higher above-average shareholder return</div></div>
+      </div>
+      <div class="stat-source">Source: The Wellbeing Lab, Australian Workplace Report.</div>
+    </section>
+
+    <!-- ── 2. Why caring is hard ── -->
+    <section class="section">
+      <div class="section-eyebrow">02 &middot; The honest bit</div>
+      <h2 class="section-title">Why caring for wellbeing is hard</h2>
+      <p class="section-lede">Most workplace wellbeing measures and programs won&rsquo;t tell you caring for wellbeing is challenging. We will. Three things that quietly undermine even the most well-intentioned programs:</p>
+
+      <div class="pillar-grid">
+        <div class="pillar-card c-orange">
+          <h3 class="pillar-h c-orange">Chasing perfect scores is unrealistic and unhealthy.</h3>
+          <p>It is healthy for people&rsquo;s levels of wellbeing to ebb and flow as they navigate the inevitable ups and downs of work and life. Rather than chasing ever-higher levels of wellbeing, your goal should be helping your people improve their ability, motivation, and sense of psychological safety to actively and mindfully care for their wellbeing &mdash; even during times of challenge.</p>
+          <div class="pillar-q">How <em>are you measuring success?</em></div>
+        </div>
+        <div class="pillar-card c-navy">
+          <h3 class="pillar-h c-navy">Stress and struggle are not signs people are breaking or broken.</h3>
+          <p>Feelings of struggle and stress don&rsquo;t have to undermine people&rsquo;s performance &mdash; if they know how to respond to these signs as opportunities for learning, growth, and resilience. Normalising struggle frees people to talk more openly and honestly about the wellbeing challenges they&rsquo;re facing, and to improve their ability, motivation, and psychological safety.</p>
+          <div class="pillar-q">What <em>messages are you sending about struggle?</em></div>
+        </div>
+        <div class="pillar-card c-aqua">
+          <h3 class="pillar-h c-aqua">Caring for wellbeing is not a solo adventure.</h3>
+          <p>Wellbeing beliefs, expectations, and behaviours spread through a complicated web of social connections at the &ldquo;me&rdquo;, &ldquo;we&rdquo;, and &ldquo;us&rdquo; levels. Building a thriving workplace or community environment needs informed, diverse, and sustained support to help people take tiny &mdash; but mighty &mdash; daily actions to care for their wellbeing.</p>
+          <div class="pillar-q">Do <em>you have a system to care for wellbeing?</em></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. The science ── -->
+    <section class="section">
+      <div class="section-eyebrow">03 &middot; The framework</div>
+      <h2 class="section-title">What does the science suggest?</h2>
+      <p class="section-lede">We once asked Professor Martin Seligman, one of the world&rsquo;s leading wellbeing experts, what would be the best way to care for wellbeing in workplaces. He said: &ldquo;<em>Measure it</em>. Then people take action into their own hands.&rdquo; But what should we be measuring? Studies show that wellbeing is not a one-dimensional concept. There is not one number you can point at, or workplace dial, several factors together build a reliable picture. One way to understand, measure, and act on evidence-based approaches for caring for wellbeing is by drawing on Professor Seligman&rsquo;s PERMAH Framework, which points to six factors of feeling good and functioning effectively.</p>
+
+      <div class="permah-row">
+        <div class="permah-cell"><div class="permah-disc p">P</div><div class="permah-lbl">Positive Emotions</div><div class="permah-desc">Boost resilience by lowering stress and mindfully navigating emotions, even when overwhelmed.</div></div>
+        <div class="permah-cell"><div class="permah-disc e">E</div><div class="permah-lbl">Engagement</div><div class="permah-desc">Improve confidence and creativity by developing people&rsquo;s neurological strengths, without overplaying them.</div></div>
+        <div class="permah-cell"><div class="permah-disc r">R</div><div class="permah-lbl">Relationships</div><div class="permah-desc">Fuel psychological safety by creating caring &amp; stable connections, even if dealing with difficult people.</div></div>
+        <div class="permah-cell"><div class="permah-disc m">M</div><div class="permah-lbl">Meaning</div><div class="permah-desc">Make a sustainable positive difference for others &mdash; without burning out from painful fatigue.</div></div>
+        <div class="permah-cell"><div class="permah-disc a">A</div><div class="permah-lbl">Accomplishment</div><div class="permah-desc">Build grit and determination to keep starting and growing, so self-doubt doesn&rsquo;t keep you stuck.</div></div>
+        <div class="permah-cell"><div class="permah-disc h">H</div><div class="permah-lbl">Health</div><div class="permah-desc">Maximise energy by eating, moving, and recovering wisely, even when life feels busy.</div></div>
+      </div>
+      <p class="section-lede" style="margin-top:6px">Depending on our values and goals, different numbers and profiles are best for different people. What matters is the ability to easily gather and understand this dashboard of wellbeing data and continue learning and prioritising the next actions.</p>
+    </section>
+
+    <!-- ── 4. How it helps ── -->
+    <section class="section">
+      <div class="section-eyebrow">04 &middot; The instrument</div>
+      <h2 class="section-title">How might the PERMA+ survey help?</h2>
+      <p class="section-lede">We don&rsquo;t just help you measure wellbeing &mdash; that only leads to more survey fatigue. Instead, we&rsquo;ve done the hard work of translating the latest science into an actionable and impactful tool.</p>
+
+      <div class="feat-list">
+        <div class="feat-row">
+          <div class="feat-num">1</div>
+          <div class="feat-body">
+            <div class="feat-h">Confidential, quick, and easy to use</div>
+            <div class="feat-p">It takes less than five minutes to complete the survey, and it can be done on a mobile phone, iPad, laptop, or computer. Most importantly, everyone&rsquo;s data and results are completely confidential and for their eyes only.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">2</div>
+          <div class="feat-body">
+            <div class="feat-h">Naturally delivers actionable wellbeing insights</div>
+            <div class="feat-p">Everyone immediately receives their personal results in an easy-to-read report packed with actionable insights (click here to see an individual report). Each person also receives everything they need to design their own easy-to-action wellbeing plan. No leader degree needed.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">3</div>
+          <div class="feat-body">
+            <div class="feat-h">Does no harm</div>
+            <div class="feat-p">Everything &mdash; questions, results, reports, guides, and additional resources &mdash; has been designed through a strengths lens that normalises struggle and places an evidence-based wellbeing toolbox at people&rsquo;s fingertips. We work with the world&rsquo;s leading wellbeing researchers to continuously test the survey tool to ensure its reliability and validity.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">4</div>
+          <div class="feat-body">
+            <div class="feat-h">Provides a systems lens to wellbeing</div>
+            <div class="feat-p">Done for you reports and aggregated de-identified .csv files assessing wellbeing at the &ldquo;Me&rdquo;, &ldquo;We&rdquo;, and &ldquo;Us&rdquo; levels for teams and workplaces are available as soon as people&rsquo;s data has been gathered. There are no drawn-out delays to analyse the data.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">5</div>
+          <div class="feat-body">
+            <div class="feat-h">Offers additional support if needed</div>
+            <div class="feat-p">Our survey debriefing service helps individuals, leaders, and organisations interpret their results and take action. Our ongoing coaching sessions and wellbeing training programs are available to support positive action.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. What it measures ── -->
+    <section class="section">
+      <div class="section-eyebrow">05 &middot; What it measures</div>
+      <h2 class="section-title">What does the survey actually measure?</h2>
+      <p class="section-lede">Survey data is only as good as the actionable insights it delivers. To provide timely and reliable wellbeing data, the PERMA+ Wellbeing Survey measures:</p>
+
+      <div class="feat-list">
+        <div class="feat-row">
+          <div class="feat-num">A</div>
+          <div class="feat-body">
+            <div class="feat-h">State of workplace wellbeing</div>
+            <div class="feat-p">Understand how and where to prioritise your wellbeing efforts and investments with this simple but powerful snapshot that shows you the levels of thriving and struggle across your teams and workplaces.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">B</div>
+          <div class="feat-body">
+            <div class="feat-h">Workplace outcomes</div>
+            <div class="feat-p">Explore the impact people&rsquo;s levels of wellbeing may be having on engagement, performance, and satisfaction in your workplace.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">C</div>
+          <div class="feat-body">
+            <div class="feat-h">Wellbeing amplifiers</div>
+            <div class="feat-p">Evaluate the effectiveness of your efforts and investments to help care for wellbeing in your workplace, including confidence, willingness, and support.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">D</div>
+          <div class="feat-body">
+            <div class="feat-h">PERMA+ wellbeing factors</div>
+            <div class="feat-p">Understand the strengths of current individual (&ldquo;Me&rdquo;), leader and team (&ldquo;We&rdquo;), and workplace (&ldquo;Us&rdquo;) actions to care for wellbeing and identify the potential risks or gaps that need to be addressed.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">E</div>
+          <div class="feat-body">
+            <div class="feat-h">Workplace wellbeing nutrients</div>
+            <div class="feat-p">Understand the strengths of your workplace culture to support people&rsquo;s psychological needs for belonging, mastery, autonomy, job resources, and meaning &mdash; and identify the potential risks or gaps that need to be addressed. The top three wellbeing struggles being experienced, the biggest barriers to caring for wellbeing, the people we turn to for help, and the most valued forms of workplace wellbeing support are also available to support positive action.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Psychosocial risk + culture of care ── -->
+    <section class="section">
+      <div class="section-eyebrow">06 &middot; Compliance &amp; care</div>
+      <h2 class="section-title">Can the survey assess psychosocial risks?</h2>
+      <p class="section-lede">A growing list of countries are advocating &mdash; and in some cases, such as Australia, regulating &mdash; for workplaces to measure and minimise psychosocial (mental and social) hazards related to people&rsquo;s work. To help we have two optional sets of questions and done-for-you reports that workplaces can add to the PERMA+ Wellbeing Survey if needed.</p>
+
+      <div class="two-col">
+        <div class="ack-card">
+          <h3>Psychosocial risk assessment</h3>
+          <ul>
+            <li><strong>Work design</strong> &mdash; lack of role clarity, unachievable job demands, low job control, inadequate reward and recognition.</li>
+            <li><strong>Social support</strong> &mdash; lack of supervisor support, poor workplace relationships, bullying, harassment.</li>
+            <li><strong>Work experiences</strong> &mdash; poor change management, poor physical environment, isolated and remote work.</li>
+            <li><strong>Work conditions</strong> &mdash; poor organisational justice, violent and aggressive behaviours, traumatic events.</li>
+          </ul>
+          <p style="font-size:13px;color:var(--text-muted);font-style:italic;margin-top:14px">Frequency and effectiveness data is reported back to leaders for the teams for each hazard and the levels of psychological safety in the individual (&ldquo;Me&rdquo;), leader and team (&ldquo;We&rdquo;), and workplace (&ldquo;Us&rdquo;).</p>
+        </div>
+        <div class="ack-card">
+          <h3>Our culture of safety &amp; care</h3>
+          <ul>
+            <li><strong>Connection</strong> &mdash; do people feel they belong here?</li>
+            <li><strong>Inclusion</strong> &mdash; are differences welcomed and respected?</li>
+            <li><strong>Uniqueness</strong> &mdash; are people supported to bring their authentic strengths?</li>
+            <li><strong>Compassion, Appreciation, Responsibility, Emotional wisdom</strong> &mdash; the four practical actions that bring a culture of care to life across &ldquo;Me&rdquo;, &ldquo;We&rdquo;, and &ldquo;Us&rdquo;.</li>
+          </ul>
+          <p style="font-size:13px;color:var(--text-muted);font-style:italic;margin-top:14px">After all, while safety is a workplace requirement, studies continue to find that care is a business imperative.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Coaching support ── -->
+    <section class="section">
+      <div class="section-eyebrow">07 &middot; Going deeper</div>
+      <h2 class="section-title">Do you need coaching support?</h2>
+      <p class="section-lede">The done-for-you individual, team, and workplace reports provided by the PERMA+ Wellbeing Survey are packed with actionable insights and tiny evidence-based practices that can be immediately applied. In addition, our workplace wellbeing coaches are always available to dive a little deeper.</p>
+
+      <div class="feat-list">
+        <div class="feat-row">
+          <div class="feat-num">i</div>
+          <div class="feat-body">
+            <div class="feat-h">Individual wellbeing results debrief</div>
+            <div class="feat-p">Just for yourself, or for anyone in your team or workforce these 30-minute one-on-one coaching conversations go behind the numbers to help people prioritise what will have the most immediate impact when it comes to caring for their wellbeing. A safe space to ask any question or request further resources, this is a simple, affordable way to provide additional support.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">ii</div>
+          <div class="feat-body">
+            <div class="feat-h">Individual coaching series</div>
+            <div class="feat-p">Take accountability to the next level with the series of 4 x 60-minute one-on-one coaching conversations to help set clear wellbeing goals and design tiny wellbeing habits that will be filled into even the busiest of days. Experiment, adjust, and build the confidence and motivation it takes to care for wellbeing as the world around us keeps changing.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">iii</div>
+          <div class="feat-body">
+            <div class="feat-h">Team / workplace wellbeing results debrief</div>
+            <div class="feat-p">Whether it is for the whole team, your whole workplace, or just a leadership group, these 60&ndash;90 minute coaching conversations highlight the wellbeing strengths and challenges to identify the evidence-based wellbeing changes that are likely to have the biggest business impact. Engaging, educational, and energising live premise data has never been this much fun before this session is designed to help you turn insights into action.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">iv</div>
+          <div class="feat-body">
+            <div class="feat-h">Team coaching series</div>
+            <div class="feat-p">Be it for leaders, teams, or wellbeing champions we provide one-on-one, triad, and group coaching to help amplify the ability to care for wellbeing across your workplace. We tailor the duration and number of coaching conversations to your context and provide quotes for you to share across your workplace as part of the coaching process.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. Don't just take our word for it ── -->
+    <section class="section">
+      <div class="section-eyebrow">08 &middot; Trust</div>
+      <h2 class="section-title">Don&rsquo;t just take our word for it&hellip;</h2>
+
+      <div class="trust-card">
+        <p>Our globally renowned team at The Wellbeing Lab does the hard work for you by translating the latest science into practical, easy-to-use tools and everyday actions that can be integrated into existing ways of working and living.</p>
+        <p>We minimise the risks of unintentionally harming people&rsquo;s wellbeing, and maximise psychological safety by helping people, teams, workplaces, schools, and communities to playfully experiment with more effective ways to amplify their ability to thrive and care for their wellbeing &mdash; even when they are struggling.</p>
+
+        <div class="trust-quote">
+          The PERMAH Wellbeing Survey was originally created by Dr. Peggy Kern from the University of Melbourne&rsquo;s Centre for Positive Psychology and Dr. Michelle McQuaid &mdash; both of whom have had the privilege of working with renowned researchers including Professors Martin Seligman, Carol Dweck, Richard Ryan, Amy Edmondson, Angela Duckworth, Kim Cameron, and David Cooperrider, among others.
+        </div>
+
+        <p>Their work has been featured in major publications, and the survey has continued to benefit from the strengths of registered psychologist and licensed Tiny Habits Coach Danielle Jacobs, alongside the technical leadership of Martin Suchta and Dr. Michelle McQuaid.</p>
+
+        <div class="trust-cite">
+          It has been our privilege to work with leaders across global organisations &mdash; from Harvard Business Review and Bloomberg to BHP, Horizon Power, CareSuper, NAB, NSW Health and St Michael&rsquo;s &mdash; and to be featured in publications including Forbes, The Huffington Post, The Wall Street Journal, Psychology Today, Fast Company, The Australian, and The Age.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Closing CTA ── -->
+    <section class="cta-card">
+      <h2>Try it for yourself.</h2>
+      <p>Visit our offerings page to explore editions, add-ons and plans &mdash; or book a 30-minute call with our team to talk through what a measurement program could look like for your workplace.</p>
+      <div class="cta-buttons">
+        <a class="cta-btn" href="offerings.html">View our offerings &rarr;</a>
+        <a class="cta-btn cta-btn-ghost" href="bookcall.html">Book a call</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="page-ft">
+    Powered by <a href="https://www.the-good-foundry.com/" target="_blank" rel="noopener">The Good Foundry</a> &middot; Confidential &middot; Immediately Actionable
+  </footer>
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

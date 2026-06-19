@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wellbeing Matters · Your Offer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <!--
+    Redirect stub — `proposal.html` was renamed to `offer.html` on
+    2026-06-06 as part of the wholesale Proposal → Offer rename
+    ([[project_proposal_to_offer_rename]]). Every in-flight emailed
+    proposal link still works because this file forwards to
+    offer.html with the original query string + hash preserved.
+
+    Backend URL generators in api/proposals.php, api/rep_proposals.php,
+    api/client_proposals.php, api/cron_proposal_ice_reminders.php, etc.
+    still emit `proposal.html?token=…` URLs at the time of
+    this rename. Phase 1 of the rename will update those to emit
+    `offer.html?token=…` directly. Until then, this stub is
+    the load-bearing piece keeping the cutover seamless.
+  -->
+  <link rel="canonical" href="offer.html">
+  <meta http-equiv="refresh" content="0; url=offer.html">
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f9fb;color:#1c2b3a;margin:0;padding:0;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
+    .stub{padding:40px 28px;max-width:420px}
+    .stub h1{font-size:18px;font-weight:700;color:#293890;margin:0 0 8px;letter-spacing:-.01em}
+    .stub p{font-size:13px;color:#475569;margin:0;line-height:1.55}
+    .stub a{color:#662C90;font-weight:600;text-decoration:none}
+    .stub a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="stub">
+    <h1>Taking you to your offer&hellip;</h1>
+    <p>If you aren&rsquo;t redirected automatically, <a id="manual-link" href="offer.html">click here to continue</a>.</p>
+  </div>
+  <script>
+    (function () {
+      /* Preserve the original query string + hash fragment so
+         `?token=…&preview=1` keeps working post-redirect. Sets
+         the manual fallback link too, so a no-JS browser sees a
+         working link with the right token in it. */
+      var dest = 'offer.html' + (window.location.search || '') + (window.location.hash || '');
+      try {
+        var manual = document.getElementById('manual-link');
+        if (manual) manual.href = dest;
+      } catch (e) {}
+      /* `replace` (not `assign`) so the redirect stub doesn't
+         clutter the browser history — back-button goes wherever
+         the prospect came from, not back to this loading screen. */
+      try { window.location.replace(dest); }
+      catch (e) { window.location.href = dest; }
+    })();
+  </script>
+</body>
+</html>

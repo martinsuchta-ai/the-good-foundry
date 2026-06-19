@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commonly Asked Technical Questions &middot; Wellbeing Matters @ Work</title>
+<meta name="description" content="Plain-English answers to the technical and security questions InfoSec, IT and procurement teams ask before approving Wellbeing Matters @ Work.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+<script>
+/* Theme gate — same shape as acknowledgement.html / business-case.html
+   so this page picks up the active client brand colours when opened
+   from a themed surface. */
+(function () {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var sub = p.get('sub');
+    var keyParam = p.get('key');
+    var keyBase = keyParam ? keyParam.toUpperCase().split('-')[0] : '';
+    var cacheKey = sub ? ('wm_vault_theme_sub_' + sub)
+                  : keyBase ? ('wm_vault_theme_key_' + keyBase)
+                  : 'wm_vault_theme_last';
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_vault_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_bank_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) {
+      try {
+        var bc = JSON.parse(localStorage.getItem('wmw_brandConfig') || '{}');
+        var BT = {tgf:'#e8420a',ms:'#0078d4',downer:'#29bfe0',coca:'#f40009',eap:'#4a9fd4',drake:'#2db87a',mcquaid:'#3aab7b'};
+        var BN = {tgf:'#14202e',ms:'#1b1b1b',downer:'#162838',coca:'#1a1a1a',eap:'#0f1f3d',drake:'#1a2e22',mcquaid:'#162238'};
+        var ak = bc.activeKey;
+        if (ak) {
+          var bp = null, bn = null;
+          (bc.custom || []).forEach(function (t) { if (t.key === ak) { bp = t.primary; bn = t.headerBg || t.secondary; } });
+          if (!bp) { bp = BT[ak]; bn = BN[ak]; }
+          if (bp) cached = { vars: { '--orange': bp, '--orange-dark': bp, '--orange-light': bp, '--navy-deep': bn || '#14202e', '--navy': bn || '#14202e', '--navy-mid': bn || '#14202e' } };
+        }
+      } catch (e) {}
+    }
+    if (cached && cached.vars && typeof cached.vars === 'object') {
+      var css = ':root{';
+      for (var k in cached.vars) {
+        if (Object.prototype.hasOwnProperty.call(cached.vars, k) && cached.vars[k]) {
+          css += k + ':' + cached.vars[k] + '!important;';
+        }
+      }
+      css += '}';
+      document.write('<style id="wm-theme-gate">' + css + '</style>');
+    }
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    --orange: #e8621a;
+    --orange-light: #f5a06e;
+    --orange-pale: #fff4ee;
+    --navy-deep: #14202e;
+    --text-dark: #1c2b3a;
+    --text-mid: #45586a;
+    --text-muted: #8097ad;
+    --surface: #ffffff;
+    --surface-2: #f4f6f8;
+    --border: #e2e8ef;
+    --body-bg: #f0f2f5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  header.page-hd {
+    background: var(--navy-deep);
+    border-bottom: 4px solid var(--orange);
+    padding: 22px 28px;
+  }
+  header.page-hd .hd-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header.page-hd .brand-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; overflow: hidden;
+  }
+  header.page-hd .brand-mark img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  header.page-hd .brand-text {
+    color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em;
+  }
+  header.page-hd .brand-sub {
+    color: var(--orange-light);
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; margin-top: 2px;
+  }
+  header.page-hd .hd-back {
+    /* Sits on the LEFT, before the brand mark, matching the back-
+       button placement convention used on other Wellbeing Matters
+       pages. margin-right pushes the brand block to the right. */
+    margin-right: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  header.page-hd .hd-back:hover { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.32); }
+  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+
+  main.page-bd {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+  }
+
+  .intro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    margin-bottom: 30px;
+  }
+  .intro-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .intro-card h1 {
+    font-size: 28px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -.012em; margin: 0 0 12px;
+  }
+  .intro-card p {
+    font-size: 15px; color: var(--text-mid); line-height: 1.75;
+    margin: 0 0 12px;
+  }
+  .intro-card p:last-child { margin-bottom: 0; }
+
+  /* TOC */
+  .toc-card {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, #1f3045 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 30px;
+  }
+  .toc-card .toc-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange-light);
+    margin-bottom: 12px;
+  }
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px 18px;
+  }
+  .toc-list a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .toc-list a:hover { color: #fff; border-color: var(--orange-light); }
+  .toc-list a .toc-num {
+    color: var(--orange-light); font-weight: 700; margin-right: 8px;
+  }
+
+  /* Sections */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 30px 34px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    margin-bottom: 22px;
+    scroll-margin-top: 24px;
+  }
+  .section-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-size: 22px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -.012em; margin: 0 0 18px;
+  }
+
+  .qa {
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    margin-top: 18px;
+  }
+  .qa:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+  .qa-q {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .qa-q .q-marker {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--orange-pale);
+    color: var(--orange);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 12px;
+  }
+  .qa-q h3 {
+    font-size: 16px; font-weight: 800; color: var(--text-dark);
+    line-height: 1.4; margin: 2px 0 0;
+  }
+  .qa-a {
+    margin-left: 34px;
+    font-size: 14.5px; color: var(--text-mid); line-height: 1.75;
+  }
+  .qa-a p { margin: 0 0 12px; }
+  .qa-a p:last-child { margin-bottom: 0; }
+  .qa-a strong { color: var(--text-dark); font-weight: 700; }
+  .qa-a ul { margin: 6px 0 12px; padding-left: 22px; }
+  .qa-a ul li { margin-bottom: 6px; }
+  .qa-a ul li strong { color: var(--text-dark); font-weight: 700; }
+  .qa-a code {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--text-dark);
+  }
+  .qa-a .pill {
+    display: inline-block;
+    background: var(--orange-pale); color: var(--orange);
+    border: 1px solid rgba(232,98,26,.22);
+    font-size: 11.5px; font-weight: 700;
+    letter-spacing: .04em;
+    padding: 2px 9px; border-radius: 100px;
+    margin-right: 4px;
+  }
+
+  .qa-a table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px;
+    font-size: 13px;
+  }
+  .qa-a table th {
+    text-align: left;
+    background: var(--surface-2);
+    color: var(--text-dark);
+    font-weight: 700;
+    padding: 9px 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .qa-a table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-mid);
+    vertical-align: top;
+  }
+  .qa-a table td strong { color: var(--text-dark); }
+
+  .summary-line {
+    background: var(--surface-2);
+    border-left: 3px solid var(--orange);
+    padding: 10px 14px;
+    margin: 8px 0 10px 34px;
+    font-size: 13px; color: var(--text-mid);
+    line-height: 1.65;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+  }
+  .summary-line strong { color: var(--text-dark); font-style: normal; }
+
+  /* Closing CTA */
+  .cta-card {
+    margin-top: 28px;
+    background: linear-gradient(135deg, var(--orange) 0%, #d8521a 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 32px 34px;
+    text-align: center;
+  }
+  .cta-card h2 {
+    font-size: 22px; font-weight: 800; margin: 0 0 8px;
+    letter-spacing: -.01em; color: #fff;
+  }
+  .cta-card p {
+    font-size: 15px; color: rgba(255,255,255,.92); max-width: 640px;
+    margin: 0 auto 18px; line-height: 1.7;
+  }
+  .cta-card .cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    background: #fff; color: var(--orange);
+    font-size: 13px; font-weight: 700; letter-spacing: .02em;
+    text-decoration: none; border-radius: 100px;
+    transition: transform .15s, box-shadow .15s;
+    margin: 0 4px;
+  }
+  .cta-card .cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.14); }
+  .cta-card .cta-btn-ghost {
+    background: transparent; color: #fff;
+    border: 1.5px solid rgba(255,255,255,.65);
+  }
+  .cta-card .cta-btn-ghost:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+
+  footer.page-ft {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 18px 28px 32px;
+  }
+  footer.page-ft a { color: inherit; text-decoration: none; font-weight: 700; }
+  footer.page-ft a:hover { color: var(--orange); }
+
+  @media (max-width: 720px) {
+    .intro-card, .section { padding: 22px 22px; }
+    .qa-a, .summary-line { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+  <header class="page-hd">
+    <div class="hd-inner">
+      <!-- Back button moved to the LEFT to match the placement
+           convention on the rest of the platform's standalone
+           pages. The brand-mark + titles sit immediately after it. -->
+      <a class="hd-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+      <div class="brand-mark">
+        <img src="logos/VaultTemp1.png" alt="Wellbeing Matters"
+             onerror="var p=this.parentNode;if(p){p.innerHTML='&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z&quot;/&gt;&lt;/svg&gt;';}">
+      </div>
+      <div>
+        <div class="brand-text">Wellbeing Matters @ Work</div>
+        <div class="brand-sub">Commonly Asked Technical Questions</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-bd">
+
+    <!-- ── Intro ── -->
+    <div class="intro-card">
+      <div class="intro-eyebrow">For InfoSec, IT and procurement</div>
+      <h1>Plain-English answers to the technical questions teams ask before approving us.</h1>
+      <p>The same questions come up in nearly every onboarding &mdash; how is data hosted, how is it secured, how do users authenticate, what happens during an incident, and who else touches the data. The answers below apply to every edition of <strong>Wellbeing Matters @ Work</strong> (Workplace, University, Life, Veterinary, Sport, School Kids/Youth, In Aging Well, Bespoke). Where a specific edition narrows the scope further, that&rsquo;s called out in your contracted <em>Statement of Service</em> at signing.</p>
+      <p>For deployment-specific questions (data residency override, sub-processor scope changes, contracted MFA / SSO commitments, pen-test scope, etc.) request the deployment-specific questionnaire response from your representative under NDA.</p>
+    </div>
+
+    <!-- ── TOC ── -->
+    <div class="toc-card">
+      <div class="toc-title">Sections</div>
+      <div class="toc-list">
+        <a href="#sec-1"><span class="toc-num">01</span>Data handling &amp; hosting</a>
+        <a href="#sec-2"><span class="toc-num">02</span>Access control &amp; identity</a>
+        <a href="#sec-3"><span class="toc-num">03</span>Security controls &amp; practices</a>
+        <a href="#sec-4"><span class="toc-num">04</span>Incident management &amp; breach notification</a>
+        <a href="#sec-5"><span class="toc-num">05</span>Compliance &amp; assurance</a>
+        <a href="#sec-6"><span class="toc-num">06</span>Vendor access &amp; support</a>
+        <a href="#sec-7"><span class="toc-num">07</span>Sub-processors &amp; third parties</a>
+      </div>
+    </div>
+
+    <!-- ── 1. Data handling & hosting ── -->
+    <section class="section" id="sec-1">
+      <div class="section-eyebrow">01 &middot; Data handling &amp; hosting</div>
+      <h2>What data, where, for how long.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>What types of data does the application store or process?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> respondent identity, response answers, and audit / operational logs &mdash; nothing more. No payment data is ever collected by the application.</div>
+        <div class="qa-a">
+          <p>Across every edition the platform stores and processes the following:</p>
+          <ul>
+            <li><strong>Personal information</strong> &mdash; respondent first name, last name, email address, role responsibility, and the demographic responses your edition has enabled (e.g. gender, age band, work status, year level for school editions). Respondent records are stored under an unguessable response key. <strong>Personal data is held on a separate database table from response answers</strong>, in line with our Privacy Policy.</li>
+            <li><strong>Workplace / organisational context</strong> &mdash; whatever segmentation your contract enables (e.g. line of business, team, contract, location, year level, tenure). Used for cohort cuts in the dashboards and to allow leaders to filter their own group.</li>
+            <li><strong>Survey response data</strong> &mdash; the items active in your edition&rsquo;s configured sections. The evaluation can include any combination of: PERMA+ wellbeing factors, Civility, Culture of Care, Psychosocial Hazards, Economic Security, Spirituality, Moral Injury, Quietly Cracking, Digital Wellbeing (Kids / Youth), Ikigai, Health, Hope, Self-Compassion, Workplace Outcomes, plus optional free-text fields. Free-text fields are never mandatory and remain inside the same JSON payload as the rest of the response.</li>
+            <li><strong>Audit + operational data</strong> &mdash; sign-in events, password reset events, administrator actions, error log entries, activity log entries, generated PDF exports, and any uploaded media (e.g. organisation logo, brand assets supplied for theming).</li>
+            <li><strong>No payment data is collected by the application.</strong> Billing for the subscription is handled outside the application via <code>Zoho Books</code>; the platform never sees credit-card or bank-account details.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">2</span><h3>Where is the data hosted?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> production data is hosted at the SiteGround Tier-1 data centre <strong>closest to your country</strong>, with optional residency lock to a single region.</div>
+        <div class="qa-a">
+          <p>Production hosting is on <strong>SiteGround Hosting Tier-1 data centres</strong>. Your data sits at the location closest to your country &mdash; the available regions are <strong>Sydney (Australia), Singapore, Iowa (USA), London (UK), Frankfurt (Germany), Eemshaven (Netherlands)</strong> &mdash; matching the residency map published in our Privacy Policy.</p>
+          <p>For deployments that require data <strong>not to leave a single jurisdiction</strong> (e.g. an Australian government-adjacent contract or an EU-only public-sector contract), residency can be locked to a single region under your contract. The locked region is documented in your Statement of Service and enforced at provisioning time. Each SiteGround facility provides 24&times;7 human security, biometric access control, and video surveillance.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">3</span><h3>Where are data backups stored?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> backups stay in the same region as production, retained 14 days, web-inaccessible, plus the platform&rsquo;s own snapshot policy on top.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Region:</strong> same region as production &mdash; backups never leave the contracted hosting region.</li>
+            <li><strong>Mechanism:</strong> nightly logical backups (<code>mysqldump</code>) are written to a non-public directory on the production host (<code>data/_backups/</code>), gzipped, retained for <strong>14 days</strong>, and protected from web access via <code>.htaccess</code> deny rules and out-of-webroot placement.</li>
+            <li><strong>Platform snapshots:</strong> SiteGround additionally maintains its own platform-level snapshot policy on each facility.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Access control & identity ── -->
+    <section class="section" id="sec-2">
+      <div class="section-eyebrow">02 &middot; Access control &amp; identity</div>
+      <h2>Authentication, roles, and MFA.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>How do users authenticate to the application?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> administrators sign in with email + password (bcrypt-hashed, never stored in plain text); respondents use a single-use access link delivered by email.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Administrators</strong> (your wellbeing leads, HR / safety / programme owners) authenticate using <strong>email + password</strong>. Passwords are hashed using PHP&rsquo;s <code>password_hash()</code> with bcrypt; plain-text passwords are never stored or logged.</li>
+            <li><strong>Respondents</strong> authenticate via a <strong>single-use access link</strong> delivered by email (32-byte URL-safe random token). Clicking the link resolves the respondent&rsquo;s identity without a password &mdash; the standard pattern for one-shot survey participation, and the only pattern that works for offline / kiosk modes used in the field.</li>
+            <li><strong>Password recovery</strong> is token-based, single-use, and time-limited (60-minute expiry).</li>
+            <li><strong>SSO with Azure AD / Entra ID, Okta, or Google Workspace</strong> is available and can be configured at deployment time &mdash; see 2.2.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">2</span><h3>Does the application support enterprise identity providers (Azure AD / Entra ID, Okta, Google Workspace)?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; SAML 2.0 and OIDC, with group-claim mapping for role assignment.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> SAML 2.0 and OIDC are supported. SSO is configured against your tenant for the <strong>administrator surface</strong> (the dashboard side). Group-claim mapping is supported so security groups in your IdP drive administrator / co-administrator role assignment automatically &mdash; no per-user role provisioning needed.</p>
+          <p>The respondent surface remains link-based by default. Respondents in the field don&rsquo;t always carry corporate credentials on personal devices, and forcing IdP authentication on the survey itself would block the offline-capable Card-mode use case for sites without reliable connectivity. SSO on the respondent side can be enabled if your contract requires it.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">3</span><h3>Is access restricted by role? (admin / standard / read-only)</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> four role tiers, all enforced server-side, every query scoped by tenant and role.</div>
+        <div class="qa-a">
+          <p>Yes. The platform implements four role tiers, all enforced server-side:</p>
+          <ul>
+            <li><strong>Platform super admin</strong> &mdash; The Good Foundry support engineers only. Cross-tenant access for support and incident response. Gated by an explicit allowlist; not visible to or grantable by the client.</li>
+            <li><strong>Administrator</strong> &mdash; full access to your dashboard, configuration, respondent data, and exports. Cannot see any other client&rsquo;s data.</li>
+            <li><strong>Co-administrator</strong> &mdash; same data view as administrator; cannot manage other admins.</li>
+            <li><strong>Respondent</strong> &mdash; sees their own results in the personal vault only. Cannot see any colleague&rsquo;s data, cannot see cohort reports, cannot see any other client&rsquo;s data.</li>
+          </ul>
+          <p>Every data query is scoped server-side by <code>subscription_id</code> / <code>org_id</code> against the role on the active session. Role checks are enforced in the data layer, not just the UI &mdash; hiding a button is never the security boundary.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">4</span><h3>Does the application enforce Multi-Factor Authentication (MFA)?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> TOTP-based MFA is available; if you use SSO, MFA enforcement is delegated to your IdP&rsquo;s policies.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Default email + password sign-in:</strong> MFA is not enforced on the default sign-in path out of the box. Sign-in uses bcrypt-hashed passwords and session tokens.</li>
+            <li><strong>TOTP MFA</strong> (Google Authenticator / Microsoft Authenticator / Authy compatible) can be enabled per-tenant for administrators as part of your deployment configuration. Enforce-or-warn behaviour, grace period, and recovery-code policy are all configurable.</li>
+            <li><strong>SSO deployments:</strong> MFA enforcement is fully delegated to your IdP. Whatever MFA your IdP requires of users to sign in to other corporate apps applies automatically.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Security controls & practices ── -->
+    <section class="section" id="sec-3">
+      <div class="section-eyebrow">03 &middot; Security controls &amp; practices</div>
+      <h2>Encryption, patching, scanning, testing.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>Is data encrypted at rest?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; AES-256 at the file-system level, plus application-level hashing for credentials and tokens.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> Hosting facilities encrypt disk volumes at the file-system level using <strong>AES-256</strong>. Database files, backup archives, and uploaded media all sit on encrypted volumes. Application-level: passwords are bcrypt-hashed; auth + reset tokens are stored as one-way hashes; session tokens are random 32-byte values.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">2</span><h3>Is data encrypted in transit?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; HTTPS only, TLS 1.2 minimum, HTTP redirected at the edge.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> All traffic to and from the application is <strong>HTTPS only with TLS 1.2 minimum</strong>. Plain HTTP requests are 301-redirected to HTTPS at the edge. SSL certificates are managed via Let&rsquo;s Encrypt with auto-renewal. Internal service-to-service traffic (PHP &harr; MySQL, backup write, internal log fan-out) uses the hosting provider&rsquo;s private VLAN inside the contracted region.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">3</span><h3>How frequently are security patches applied?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> application patches deploy continuously; OS / database patches are applied by the hosting provider within 72 hours of vendor publication, faster for critical CVEs.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Application code (PHP / JS / SQL):</strong> patched on the active deployment cycle &mdash; typically multiple times per week during normal operation, immediately for any reported security issue. Critical security patches deploy within <strong>24 hours</strong> of identification. Deployments run via a GitHub Actions pipeline with deploy-version stamping for traceability (every deploy carries a SHA the platform can surface for verification).</li>
+            <li><strong>Operating system, web server, PHP runtime, MySQL:</strong> patched by the hosting provider under their managed-hosting model. High-severity vulnerability patches are applied within <strong>72 hours</strong> of vendor publication, with platform-wide auto-patching for critical CVEs.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">4</span><h3>How frequently do you perform vulnerability scanning?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> continuous static + dependency scanning on every change; quarterly external application scans; ad-hoc after major architectural change.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Static code analysis + dependency vulnerability scanning:</strong> continuous, on every pull request &mdash; GitHub CodeQL plus Dependabot. Alerts trigger immediately on any CVE published against a dependency in use.</li>
+            <li><strong>Hosting layer:</strong> the hosting provider runs continuous platform-level vulnerability scanning across each facility.</li>
+            <li><strong>External application scanning:</strong> <strong>quarterly</strong> against production, plus an ad-hoc scan after any major architectural change.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">5</span><h3>How frequently do you perform penetration testing?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> annual independent third-party pen test, plus an interim spot-test after any major architectural change.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Cadence:</strong> <strong>annually</strong>, with an interim spot-test after any major architectural change to the auth flow, the data schema, or sub-processor scope.</li>
+            <li><strong>Engagement model:</strong> independent third-party testing across OWASP Top 10, broken access control / IDOR, injection, auth + session, and tenant-isolation verticals.</li>
+            <li><strong>Reporting:</strong> a redacted summary letter from the most recent test is available to your InfoSec team under mutual NDA.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Incident management ── -->
+    <section class="section" id="sec-4">
+      <div class="section-eyebrow">04 &middot; Incident management &amp; breach notification</div>
+      <h2>What happens if something goes wrong.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>Do you have a documented security incident response process?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; documented, tested at least annually, covers triage through post-incident review.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> The Good Foundry maintains a documented Security Incident Response Plan covering: triage, severity classification (P1&ndash;P4), containment, evidence preservation, customer notification, root-cause analysis, and post-incident review. The plan is reviewed and tested at least annually.</p>
+          <p>Detection inputs include:</p>
+          <ul>
+            <li>The application&rsquo;s structured <code>error_log</code> table &mdash; every error captures timestamp, level, source, message, context (stack trace + request body), request id, user email, IP, user agent.</li>
+            <li>The <code>activity_log</code> table &mdash; every administrator action against a client record (entity type, action, detail, actor, request id, timestamp).</li>
+            <li>Hosting-provider host-level logs.</li>
+            <li>Per-server access logs ("Log files maintained for each server access" &mdash; per the Privacy Policy).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">2</span><h3>Are customers notified of security incidents or data breaches that may impact their data?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; direct email + phone call to your nominated administrator, with a written incident summary, regardless of mandatory-notification thresholds.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> Where a confirmed security incident or data breach impacts your data, your nominated administrator(s) on record will be notified directly via email and follow-up phone call, with a written incident summary describing scope, root cause, impact, remediation actions taken, and forward-looking changes. Notice is sent regardless of whether the incident reaches the threshold for mandatory notification under the Australian Privacy Act&rsquo;s Notifiable Data Breaches scheme, the GDPR (EU), or your local equivalent.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">3</span><h3>What is your breach notification timeframe?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> initial notice within 72 hours; detailed report within 30 days; weekly updates while an incident is open.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>Initial notice to you:</strong> within <strong>72 hours</strong> of confirmed breach, in line with the Australian Privacy Act&rsquo;s Notifiable Data Breaches scheme (and faster than the GDPR 72-hour rule for EU clients).</li>
+            <li><strong>Detailed report:</strong> within <strong>30 days</strong> of initial notice, including root-cause analysis and remediation summary.</li>
+            <li><strong>Ongoing updates:</strong> at least weekly during an active incident until closure.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Compliance & assurance ── -->
+    <section class="section" id="sec-5">
+      <div class="section-eyebrow">05 &middot; Compliance &amp; assurance</div>
+      <h2>Certifications, attestations, and what we can share.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>Do you hold any recognised security certifications or attestations?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> The Good Foundry operates to ISO 27001-aligned controls; our hosting provider is independently ISO 27001 certified; our billing sub-processor is SOC 2 Type II attested.</div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>The Good Foundry:</strong> operates to ISO 27001-aligned controls. Independent ISO 27001 certification is on the roadmap.</li>
+            <li><strong>Hosting partner (SiteGround):</strong> ISO 27001:2013 certified across the data centres in scope, including the regional facility serving your contract.</li>
+            <li><strong>Billing sub-processor (Zoho):</strong> SOC 2 Type II attested independently.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">2</span><h3>Are you willing to provide security documentation on request?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; under mutual NDA we can supply policies, architecture overview, pen-test summary, sub-processor list, and DPA.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> The following can be supplied to your InfoSec team under mutual NDA:</p>
+          <ul>
+            <li>Privacy Policy (already public): <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none;font-weight:600">smart-tools-foundry.com/TGF/privacy-policy.html</a>.</li>
+            <li>High-level architecture overview (data flow, sub-processor map, encryption boundaries) for your deployment.</li>
+            <li>Penetration test summary letter (most recent).</li>
+            <li>Incident Response Plan summary.</li>
+            <li>Sub-processor list with regions + purposes (see &sect;7).</li>
+            <li>Backup &amp; recovery procedure summary.</li>
+            <li>Standard Data Processing Agreement / DPA for execution alongside the master agreement.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Vendor access & support ── -->
+    <section class="section" id="sec-6">
+      <div class="section-eyebrow">06 &middot; Vendor access &amp; support</div>
+      <h2>When (and only when) we touch your data.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>Do vendor staff have access to customer production data?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> only for support requests you raise, implementation, or active incident response. Never for marketing, analytics, or AI model training.</div>
+        <div class="qa-a">
+          <p>Limited &mdash; only the following circumstances apply:</p>
+          <ul>
+            <li><strong>Customer-initiated support requests</strong> where a TGF support engineer needs to inspect data to diagnose a reported issue. Access is logged, time-bounded, and minimised to the smallest data set required to resolve the request.</li>
+            <li><strong>Implementation engagements</strong> during go-live, where a TGF implementation lead provisions your account, theme, contract list, organisational segmentation, and admin users on your behalf.</li>
+            <li><strong>Critical incident response</strong> where an active incident requires direct database inspection.</li>
+          </ul>
+          <p>In <strong>no other circumstances</strong> does TGF staff access your production data. <strong>Your response data is never used for marketing, analytics, AI model training, or any purpose outside delivering the contracted service.</strong> Your data is never sent to a third-party AI service for training purposes &mdash; if any optional AI add-on is contracted (e.g. AI Seeding, Personalised Coaching Videos), the scope and data flow is documented separately and explicitly opt-in.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">2</span><h3>Is vendor access logged and auditable?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; every action lands in <code>activity_log</code>, every sign-in in <code>auth_sessions</code>, errors in <code>error_log</code>, plus the host-level access log. Retained 12 months minimum.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> Every administrator action against a customer record writes to:</p>
+          <ul>
+            <li><code>activity_log</code> &mdash; structured per-entity audit trail (entity_type, entity_id, action, detail, user_email, request_id, timestamp).</li>
+            <li><code>auth_sessions</code> &mdash; every sign-in event with email, IP, user agent, request id, timestamp.</li>
+            <li><code>error_log</code> &mdash; admin-triggered actions that fail, for forensic reconstruction.</li>
+            <li><strong>Web-server access log</strong> &mdash; every HTTP request, retained per the hosting provider&rsquo;s policy.</li>
+          </ul>
+          <p>Log records are retained for <strong>12 months</strong> minimum and can be exported on request.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">3</span><h3>Can customer data be deleted or returned upon contract termination?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; full export, full deletion, or hybrid, at no cost. Backup-tape rotation completes within 35 days of a deletion request; a deletion certificate is provided.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> On contract termination you may request, at no cost:</p>
+          <ul>
+            <li><strong>Full data return</strong> &mdash; a complete export of your data in machine-readable JSON / CSV (responses, contacts, configurations, logs).</li>
+            <li><strong>Full data deletion</strong> &mdash; irreversible removal of all your data from production databases, backups, and any sub-processor locations storing it. Backup-tape rotation completes within <strong>35 days</strong> of the deletion request, after which deletion is mathematically irreversible. A deletion certificate is provided on completion.</li>
+            <li><strong>Hybrid</strong> &mdash; some data returned, residual data deleted, per your instruction.</li>
+          </ul>
+          <p>The mechanism, timeline, and data-return format are documented in the Master Services Agreement / DPA before contract execution.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Sub-processors ── -->
+    <section class="section" id="sec-7">
+      <div class="section-eyebrow">07 &middot; Sub-processors &amp; third parties</div>
+      <h2>Who else touches your data.</h2>
+
+      <div class="qa">
+        <div class="qa-q"><span class="q-marker">1</span><h3>Do you use third-party sub-processors? Can you provide a list?</h3></div>
+        <div class="summary-line"><strong>Short version:</strong> yes &mdash; a tightly scoped list, all bound by confidentiality + data-processing agreements. Optional AI add-ons are explicitly opt-in and not in the default scope.</div>
+        <div class="qa-a">
+          <p><strong>Yes.</strong> The following sub-processors are engaged for the platform&rsquo;s default deployment. Each is bound by a confidentiality and data-processing agreement (per Privacy Policy: <em>"we sign confidentiality and data processing agreements with all third-party service providers"</em>). Any optional AI or video sub-processor underpinning a contracted add-on (e.g. AI Seeding, Personalised Coaching Videos) is <strong>not</strong> in the default scope &mdash; it is engaged only when that add-on is explicitly contracted, with the third party named and the data flow documented in writing under the contract.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Sub-processor</th>
+                <th>Purpose</th>
+                <th>Region</th>
+                <th>Data accessed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SiteGround Hosting</strong></td>
+                <td>Application hosting, MySQL database, nightly backups, web-server access logs</td>
+                <td>Your contracted region</td>
+                <td>All in-scope data</td>
+              </tr>
+              <tr>
+                <td><strong>Let&rsquo;s Encrypt / ISRG</strong></td>
+                <td>TLS certificate issuance for HTTPS</td>
+                <td>Global certificate authority</td>
+                <td>None &mdash; public-key validation only</td>
+              </tr>
+              <tr>
+                <td><strong>SMTP relay</strong> (hosting provider)</td>
+                <td>Transactional email delivery (respondent invitations, password resets, admin notifications, scheduled reports)</td>
+                <td>Your contracted region</td>
+                <td>Recipient email address + email body</td>
+              </tr>
+              <tr>
+                <td><strong>Zoho Books / Zoho Billing</strong></td>
+                <td>Subscription billing, invoicing</td>
+                <td>Per-tenant Zoho data residency</td>
+                <td>Your billing contact name + email only &mdash; no respondent data, no response data</td>
+              </tr>
+              <tr>
+                <td><strong>Google Workspace</strong> (TGF internal)</td>
+                <td>Internal email, support ticket management for designated client contacts</td>
+                <td>The Good Foundry&rsquo;s own region</td>
+                <td>Names + email addresses of designated client contacts only</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>The canonical, version-pinned sub-processor list (cited as <strong>Schedule A</strong> of our Data Processing Agreement) lives on its own page so the DPA can reference a stable URL:</p>
+          <p style="margin-top:6px"><a href="subprocessors.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--orange-pale);border:1px solid rgba(232,98,26,.25);color:var(--orange);font-weight:700;padding:8px 16px;border-radius:100px;font-size:13px;text-decoration:none">Open the live Sub-Processors list &nbsp;&rarr;</a></p>
+          <p style="margin-top:14px">The table above is a snapshot kept inline for InfoSec teams reading this FAQ end-to-end. For the versioned source-of-truth (with change log + opt-in add-on scope), follow the link.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Closing CTA ── -->
+    <section class="cta-card">
+      <h2>Need a deployment-specific response?</h2>
+      <p>The questions above cover what applies across every edition. If your InfoSec team has a vendor questionnaire, contracted residency requirement, or specific control frameworks they&rsquo;re assessing against (ISO 27001, SOC 2, Essential Eight, IRAP, NIST CSF, GDPR), we&rsquo;ll respond directly against the format they use.</p>
+      <a class="cta-btn" href="bookcall.html">Book a 30-min call</a>
+      <a class="cta-btn cta-btn-ghost" href="https://smart-tools-foundry.com/TGF/privacy-policy.html" target="_blank" rel="noopener">Read the Privacy Policy</a>
+    </section>
+
+  </main>
+
+  <footer class="page-ft">
+    Powered by <a href="https://www.the-good-foundry.com/" target="_blank" rel="noopener">The Good Foundry</a> &middot; Confidential &middot; Immediately Actionable
+  </footer>
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Call · The Good Foundry</title>
+<meta name="description" content="Book a free 30-minute phone or Zoom call with The Good Foundry — creators of the PERMA+ Wellbeing Survey. No obligation, just an honest conversation.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ——— Brand tokens (lifted verbatim from TGF/privacy-policy.html) ——— */
+:root {
+  --twilight: #293890;
+  --arctic:   #1B75BC;
+  --aqua:     #26AAE1;
+  --grape:    #662C90;
+  --orchid:   #91268F;
+  --punch:    #EC008B;
+  --bg:       #F4F6FB;
+  --card:     #FFFFFF;
+  --mid:      #EEF1F8;
+  --border:   rgba(41,56,144,.12);
+  --text:     #161A2E;
+  --text-dim: rgba(22,26,46,.58);
+  --font:     'Outfit', sans-serif;
+  --serif:    'DM Serif Display', serif;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ——— Topbar (matches every other public TGF page) ——————————————— */
+.topbar {
+  position: sticky; top: 0; z-index: 300;
+  min-height: 110px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img.brand-logo { height: 90px; width: auto; object-fit: contain; display: block; }
+.brand-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+.brand-name em { font-style: italic; color: var(--arctic); font-family: var(--serif); }
+.brand-sep { width: 1px; height: 18px; background: rgba(22,26,46,.15); }
+.brand-sub { font-size: 12px; font-weight: 500; color: var(--text-dim); letter-spacing: .06em; text-transform: uppercase; }
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-back { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-dim); text-decoration: none; padding: 6px 12px; border-radius: 100px; background: rgba(41,56,144,.06); border: 1px solid rgba(41,56,144,.10); transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
+.topbar-back:hover { background: rgba(41,56,144,.12); color: var(--text); border-color: rgba(41,56,144,.22); }
+.topbar-back svg { width: 12px; height: 12px; }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-right a.nav-link { font-size: 12.5px; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: .02em; transition: color .15s; }
+.topbar-right a.nav-link:hover { color: var(--text); }
+.nav-pill {
+  font-size: 12px; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  padding: 7px 18px; border-radius: 100px; text-decoration: none;
+  letter-spacing: .02em; transition: opacity .2s;
+  box-shadow: 0 4px 14px rgba(236,0,139,.22);
+}
+.nav-pill:hover { opacity: .9; }
+
+/* ——— Bookcall hero ——————————————————————————————————————————————— */
+.bc-hero {
+  position: relative; z-index: 1;
+  padding: 80px 40px 70px;
+  overflow: hidden;
+}
+.bc-hero::before, .bc-hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(41,56,144,.14);
+  pointer-events: none;
+}
+.bc-hero::before { width: 700px; height: 700px; right: -200px; top: -250px; }
+.bc-hero::after  { width: 400px; height: 400px; right: -50px;  top: -50px; }
+.bc-hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.bc-avatar {
+  width: 168px; height: 168px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 30px rgba(102,44,144,.22));
+}
+.bc-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(236,0,139,.08); border: 1px solid rgba(236,0,139,.28);
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--punch); margin-bottom: 18px;
+}
+.bc-kicker::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--punch); }
+.bc-hero h1 {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800; letter-spacing: -.025em;
+  line-height: 1.08; margin-bottom: 18px; color: var(--text);
+}
+.bc-hero h1 .hl {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.bc-hero h1 .serif-italic { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.bc-hero p {
+  font-size: 17px; color: var(--text-dim); font-weight: 300;
+  max-width: 640px; line-height: 1.75; margin: 0;
+}
+@media (max-width: 720px) {
+  .bc-hero { padding: 56px 22px 48px; }
+  .bc-hero-inner { grid-template-columns: 1fr; gap: 18px; text-align: center; }
+  .bc-avatar { width: 120px; height: 120px; margin: 0 auto; }
+  .bc-hero h1 { font-size: 32px; }
+}
+
+/* ——— Trust strip ————————————————————————————————————————————————— */
+.bc-trust {
+  position: relative; z-index: 1;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 40px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 30px;
+}
+.bc-trust-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text-dim);
+}
+.bc-trust-item::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  display: inline-block; flex-shrink: 0;
+}
+
+/* ——— Body ——————————————————————————————————————————————————————— */
+.bc-body {
+  position: relative; z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 64px 40px 100px;
+}
+.bc-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--arctic);
+  margin-bottom: 8px;
+}
+.bc-title {
+  font-size: 28px; font-weight: 700; color: var(--text);
+  letter-spacing: -.02em; line-height: 1.2;
+  margin-bottom: 28px;
+}
+.bc-title .hl {
+  font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--arctic);
+}
+.bc-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 56px;
+}
+.bc-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 28px;
+  position: relative;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+}
+.bc-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+  border-radius: 14px 14px 0 0; opacity: .65;
+}
+.bc-card:hover {
+  border-color: rgba(38,170,225,.35);
+  box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 8px 22px rgba(22,26,46,.07);
+  transform: translateY(-2px);
+}
+.bc-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(27,117,188,.22);
+}
+.bc-card-title {
+  font-size: 17px; font-weight: 700; color: var(--text);
+  letter-spacing: -.01em; margin-bottom: 8px;
+}
+.bc-card-desc {
+  font-size: 14px; color: var(--text-dim); line-height: 1.7; font-weight: 400;
+  margin: 0;
+}
+
+/* ——— Calendar wrap ——————————————————————————————————————————————— */
+.bc-cal-wrap {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(22,26,46,.06);
+}
+.bc-cal-stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+}
+.bc-cal-inner {
+  padding: 40px 36px;
+  position: relative;
+}
+/* Inline Amelia iframe. Loads /bookcall/ on coachingfoundry.com
+   directly. The WP page does wrap the widget in its own hero, so
+   visitors will see some duplicated chrome inside the iframe — to
+   strip it down to just the Amelia widget, a dedicated WP page
+   (e.g. /bookcall-embed/) needs to exist with only the
+   [ameliastepbooking category=31] shortcode under a blank/canvas
+   template. Until that exists, this is the iframe approach. */
+.bc-cal-embed {
+  position: relative;
+  margin-top: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 760px;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04);
+}
+.bc-cal-embed iframe {
+  width: 100%; min-height: 760px;
+  border: 0; display: block; background: var(--card);
+}
+.bc-cal-loading {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 24px;
+  color: var(--text-dim); font-size: 13px; text-align: center;
+  pointer-events: none;
+  background: var(--card);
+  transition: opacity .25s;
+}
+.bc-cal-loading.hidden { opacity: 0; }
+.bc-cal-loading .spinner {
+  width: 38px; height: 38px;
+  border: 3px solid rgba(38,170,225,.18);
+  border-top-color: var(--arctic);
+  border-radius: 50%;
+  animation: bcSpin .8s linear infinite;
+}
+.bc-cal-fallback {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--mid);
+  font-size: 12px; color: var(--text-dim);
+}
+.bc-cal-fallback a {
+  color: var(--arctic); text-decoration: none; font-weight: 600;
+  border-bottom: 1px solid rgba(27,117,188,.3);
+}
+.bc-cal-fallback a:hover { color: var(--twilight); border-color: rgba(41,56,144,.55); }
+
+/* ——— Privacy note + footer ——————————————————————————————————————— */
+.bc-note {
+  position: relative; z-index: 1;
+  font-size: 12px; color: var(--text-dim);
+  text-align: center; padding: 14px 28px 0;
+  max-width: 720px; margin: 0 auto;
+  line-height: 1.7;
+}
+.bc-note a { color: var(--arctic); text-decoration: none; border-bottom: 1px solid rgba(27,117,188,.3); transition: color .15s, border-color .15s; }
+.bc-note a:hover { color: var(--twilight); border-color: rgba(41,56,144,.55); }
+
+footer.page-ft {
+  position: relative; z-index: 1;
+  text-align: center; color: var(--text-dim);
+  font-size: 12px; padding: 36px 28px 44px;
+  line-height: 1.8; border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+footer.page-ft a { color: var(--text-dim); text-decoration: none; transition: color .15s; }
+footer.page-ft a:hover { color: var(--arctic); }
+footer.page-ft .ft-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  margin: 0 auto 18px; border-radius: 2px;
+}
+footer.page-ft strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .topbar { padding: 0 18px; }
+  .topbar-right .nav-link { display: none; }
+  .bc-trust { padding: 14px 22px; gap: 10px 18px; }
+  .bc-body { padding: 44px 22px 60px; }
+  .bc-cal-inner { padding: 28px 22px; }
+  .bc-cal-embed, .bc-cal-embed iframe { min-height: 620px; }
+}
+
+@keyframes bcSpin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+      <a class="brand" href="https://www.the-good-foundry.com/">
+        <img class="brand-logo" src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry · Action for Impact">
+      </a>
+    </div>
+    <div class="topbar-right">
+      <a class="nav-link" href="offerings.html">Offerings</a>
+      <a class="nav-link" href="explorer.html">Explorer</a>
+      <a class="nav-link" href="business-case.html">Business case</a>
+      <a class="nav-pill" href="offerings.html">Our offerings &rarr;</a>
+    </div>
+  </header>
+
+  <div class="tgf-bc">
+
+    <!-- ── Hero ── -->
+    <section class="bc-hero">
+      <div class="bc-hero-inner">
+        <img class="bc-avatar" src="https://www.coachingfoundry.com/wp-content/uploads/2026/04/Icon-color.png" alt="The Good Foundry" />
+        <div>
+          <div class="bc-kicker">Book a Call</div>
+          <h1>Let&rsquo;s talk<br><span class="hl">Wellbeing &amp; Impact</span></h1>
+          <p>Book a free 30-minute phone or Zoom session with The Good Foundry &mdash; co-founder of The Good Foundry and creator of the PERMA+ Wellbeing Survey. No obligation, just an honest conversation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Trust strip ── -->
+    <div class="bc-trust">
+      <div class="bc-trust-item">30-minute session &mdash; no cost</div>
+      <div class="bc-trust-item">Phone or Zoom &mdash; your choice</div>
+      <div class="bc-trust-item">No obligation, no hard sell</div>
+      <div class="bc-trust-item">Working across 145 countries</div>
+    </div>
+
+    <!-- ── Body ── -->
+    <div class="bc-body">
+
+      <div class="bc-label">What to expect</div>
+      <div class="bc-title">A conversation built around <span class="hl">you</span></div>
+
+      <div class="bc-cards">
+        <div class="bc-card">
+          <div class="bc-card-icon">📊</div>
+          <div class="bc-card-title">Understand your needs</div>
+          <p class="bc-card-desc">We&rsquo;ll listen first. Whether it&rsquo;s workplace wellbeing, education, research, or coaching &mdash; we&rsquo;ll tailor the conversation to where you are.</p>
+        </div>
+        <div class="bc-card">
+          <div class="bc-card-icon">🧠</div>
+          <div class="bc-card-title">Evidence-based guidance</div>
+          <p class="bc-card-desc">We bring over two decades of applied positive psychology, the PERMA+ framework, and real-world implementation experience to every call.</p>
+        </div>
+        <div class="bc-card">
+          <div class="bc-card-icon">🤝</div>
+          <div class="bc-card-title">Clear next steps</div>
+          <p class="bc-card-desc">You&rsquo;ll leave with clarity &mdash; whether that&rsquo;s a product fit, a partnership pathway, or simply knowing more about what&rsquo;s possible.</p>
+        </div>
+      </div>
+
+      <div class="bc-cal-wrap">
+        <div class="bc-cal-stripe"></div>
+        <div class="bc-cal-inner">
+          <div class="bc-label">Select a time</div>
+          <div class="bc-title">Choose what works for <span class="hl">you</span></div>
+          <!-- Inline Amelia iframe. Loads the /bookcall/ page on
+               coachingfoundry.com directly. -->
+          <div class="bc-cal-embed">
+            <div class="bc-cal-loading" id="bcCalLoading">
+              <div class="spinner"></div>
+              <div>Loading the calendar&hellip;</div>
+            </div>
+            <iframe id="bcCalIframe" title="Book a call"
+                    src="https://www.coachingfoundry.com/bookcall/"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    onload="(function(){var l=document.getElementById('bcCalLoading'); if(l) l.classList.add('hidden');})()"></iframe>
+          </div>
+          <div class="bc-cal-fallback">
+            <span>Trouble seeing the calendar?</span>
+            <a href="https://www.coachingfoundry.com/bookcall/" target="_blank" rel="noopener">Open it in a new tab &rarr;</a>
+            <span aria-hidden="true">&middot;</span>
+            <a href="mailto:marty@the-good-foundry.com?subject=Book%20a%20call%20%E2%80%94%20Wellbeing%20Matters">Or email me directly</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="bc-note">🔒 Your details are kept strictly confidential and used only to confirm your booking. We will never share your information with third parties. By booking you agree to our <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy Policy</a>.</p>
+
+    </div>
+  </div>
+
+  <footer class="page-ft">
+    <div class="ft-divider"></div>
+    <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+    <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy policy</a> &middot;
+    <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a> &middot;
+    Powered by <a href="offerings.html">Wellbeing Matters</a>
+    <div style="margin-top:14px;font-size:10.5px;opacity:.7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved.</div>
+  </footer>
+
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

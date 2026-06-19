@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mutual Confidentiality Agreement · The Good Foundry</title>
+<meta name="description" content="The Good Foundry's standard mutual confidentiality agreement (deed of mutual confidentiality) — shared with prospective clients and their data-protection / InfoSec partners under a non-public review link.">
+<!-- Non-public side page: reachable via direct link only, not promoted from public nav. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ——— BRAND TOKENS — lifted verbatim from app/the-good-foundry-index.html
+       (which itself lifts from TGF/privacy-policy.html). Keeping the same
+       token names means a future global brand bump propagates here too. */
+:root {
+  --twilight:   #293890;
+  --arctic:     #1B75BC;
+  --aqua:       #26AAE1;
+  --grape:      #662C90;
+  --orchid:     #91268F;
+  --punch:      #EC008B;
+  --bg:         #F4F6FB;
+  --card:       #FFFFFF;
+  --mid:        #EEF1F8;
+  --border:     rgba(41,56,144,.12);
+  --text:       #161A2E;
+  --text-dim:   rgba(22,26,46,.58);
+  --font:       'Outfit', sans-serif;
+  --serif:      'DM Serif Display', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* Soft gradient-mesh background — same as the marketing site so the page
+   feels like part of the family even though it isn't in the public nav. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ——— Topbar — minimal, no public-nav links. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.brand img { height: 56px; width: auto; object-fit: contain; }
+.brand-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.01em;
+}
+.brand-name em { font-style: italic; color: var(--arctic); font-family: var(--serif); }
+.brand-sep { width: 1px; height: 22px; background: rgba(22,26,46,.15); }
+.brand-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: 100px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(236,0,139,.24);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(236,0,139,.32); }
+.btn-ghost {
+  background: var(--card);
+  color: var(--twilight);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--mid); }
+
+/* ——— Hero band ——————————————————————————————————————————————————— */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 56px 32px 28px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--punch);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(236,0,139,.09);
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -.01em;
+}
+.hero h1 em { font-style: italic; color: var(--grape); }
+.hero .lead {
+  font-size: 17px;
+  color: var(--text-dim);
+  font-weight: 400;
+  max-width: 700px;
+  line-height: 1.55;
+}
+.meta-strip {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.meta-pill .dot {
+  width: 6px; height: 6px;
+  border-radius: 100px;
+  background: var(--aqua);
+}
+.meta-pill.v .dot   { background: var(--grape); }
+.meta-pill.j .dot   { background: var(--arctic); }
+.meta-pill.t .dot   { background: var(--punch); }
+
+/* ——— Document body ——————————————————————————————————————————————— */
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px 32px 96px;
+}
+.doc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 48px 56px 56px;
+  box-shadow: 0 12px 48px rgba(41,56,144,.06);
+}
+.doc h2 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--twilight);
+  margin: 38px 0 10px;
+  padding-top: 10px;
+  letter-spacing: -.005em;
+}
+.doc h2 .num {
+  display: inline-block;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--punch);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+.doc h2:first-of-type { margin-top: 0; }
+.doc h3 {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grape);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin: 22px 0 8px;
+}
+.doc p { margin: 12px 0; color: var(--text); }
+.doc p.lead-graf { font-size: 16.5px; color: var(--text); font-weight: 500; }
+.doc strong { color: var(--twilight); font-weight: 600; }
+.doc em { font-style: italic; }
+.doc ul, .doc ol {
+  padding-left: 26px;
+  margin: 10px 0 14px;
+  color: var(--text);
+}
+.doc li { margin: 6px 0; }
+.doc li::marker { color: var(--punch); font-weight: 700; }
+.doc ol.alpha { list-style: lower-alpha; }
+.doc ol.roman { list-style: lower-roman; }
+.doc dl {
+  margin: 14px 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 18px;
+}
+.doc dl dt {
+  font-weight: 700;
+  color: var(--grape);
+  font-family: var(--font);
+}
+.doc dl dd { color: var(--text); }
+.doc dl.defs dt {
+  color: var(--twilight);
+  white-space: nowrap;
+}
+.doc hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 36px 0;
+}
+.doc blockquote {
+  border-left: 3px solid var(--punch);
+  background: rgba(236,0,139,.05);
+  margin: 16px 0;
+  padding: 14px 22px;
+  border-radius: 0 12px 12px 0;
+  color: var(--text);
+  font-size: 14px;
+}
+.doc table.parties {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 24px;
+  font-size: 14px;
+}
+.doc table.parties th,
+.doc table.parties td {
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--text);
+}
+.doc table.parties th {
+  background: var(--mid);
+  font-weight: 700;
+  color: var(--twilight);
+  width: 28%;
+}
+.doc table.parties td.fill {
+  background: rgba(255, 250, 230, 0.4);
+  font-style: italic;
+  color: var(--text-dim);
+}
+.doc .recital {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 4px 12px;
+  margin: 8px 0;
+}
+.doc .recital .label {
+  font-weight: 700;
+  color: var(--punch);
+}
+.doc .sig-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  margin-top: 28px;
+}
+.doc .sig-block {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  background: var(--mid);
+}
+.doc .sig-block h4 {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--twilight);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.doc .sig-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 6px 14px;
+  align-items: end;
+  margin: 14px 0;
+}
+.doc .sig-row label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.doc .sig-row .line {
+  border-bottom: 1.5px solid var(--text-dim);
+  height: 22px;
+  background: var(--card);
+  border-radius: 4px 4px 0 0;
+}
+
+/* ——— Footer ——————————————————————————————————————————————————————— */
+footer.page-ft {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 32px 64px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 12px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+footer.page-ft a { color: var(--grape); text-decoration: none; font-weight: 600; }
+footer.page-ft a:hover { text-decoration: underline; }
+
+/* ——— Print ———————————————————————————————————————————————————————— */
+@media print {
+  body::before, .topbar, footer.page-ft, .hero-eyebrow { display: none; }
+  body { background: #fff; }
+  .hero, .wrap { padding: 0; max-width: none; }
+  .doc {
+    background: #fff;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+  .doc h2, .doc h3 { color: #000; page-break-after: avoid; }
+  .doc table.parties th, .doc table.parties td,
+  .doc .sig-block { background: #fff; border-color: #999; }
+  .meta-strip { display: none; }
+  .hero h1 { font-size: 28px; color: #000; }
+  .hero .lead { font-size: 12px; color: #333; }
+}
+
+/* ——— Responsive —————————————————————————————————————————————————— */
+@media (max-width: 720px) {
+  .topbar { padding: 12px 18px; }
+  .brand img { height: 44px; }
+  .brand-name { display: none; }
+  .hero { padding: 36px 20px 18px; }
+  .hero h1 { font-size: 30px; }
+  .wrap { padding: 12px 20px 64px; }
+  .doc { padding: 28px 22px; border-radius: 14px; }
+  .doc h2 { font-size: 22px; }
+  .doc dl { grid-template-columns: 1fr; gap: 2px 0; }
+  .doc dl dt { margin-top: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     Topbar — TGF brand, "Download" + "Print" actions, no public nav.
+     ════════════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <a class="brand" href="https://www.the-good-foundry.com/">
+    <img src="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png" alt="The Good Foundry">
+    <div>
+      <div class="brand-name">The <em>Good</em> Foundry</div>
+      <div class="brand-sub">Legal · Confidentiality</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <a class="btn btn-ghost" href="legal/Mutual-Confidentiality-Agreement.doc" download>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Word
+    </a>
+    <button class="btn btn-primary" onclick="window.print()">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save as PDF
+    </button>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════════
+     Hero — title + version pin + meta strip.
+     ════════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <span class="hero-eyebrow">Legal Document · Non-Public Review Copy</span>
+  <h1>Deed of <em>Mutual Confidentiality</em></h1>
+  <p class="lead">The Good Foundry's standard mutual confidentiality agreement. Shared with prospective clients and their data-protection or InfoSec reviewers under a non-public link for review before contract execution.</p>
+  <div class="meta-strip">
+    <span class="meta-pill v"><span class="dot"></span> Version: November 2024</span>
+    <span class="meta-pill j"><span class="dot"></span> Governing law: Victoria, Australia</span>
+    <span class="meta-pill t"><span class="dot"></span> Term: 5 years</span>
+    <span class="meta-pill"><span class="dot"></span> 10 pages · ~2,700 words</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     Document body — verbatim from the canonical Word source at
+     docs/Legal_Artifacts/Mutual Confidentiality Agreement.doc.
+     Section numbering reformatted to a clean 1-16 sequence for
+     readability; legal wording is unchanged.
+     ════════════════════════════════════════════════════════════════ -->
+<main class="wrap">
+  <article class="doc">
+
+    <p class="lead-graf">Deed of mutual confidentiality made on ______________________.</p>
+
+    <h3>Parties</h3>
+    <table class="parties">
+      <tr>
+        <th>The Good Foundry</th>
+        <td>
+          <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372<br>
+          (on its own behalf and on behalf of each member of its Group jointly and severally)<br>
+          1/31 Beach Street, VIC 3199, Australia
+        </td>
+      </tr>
+      <tr>
+        <th>You</th>
+        <td class="fill">
+          Company name: ______________________________________________________<br>
+          Company number: ____________________________________________________<br>
+          Address: ____________________________________________________________<br>
+          (on its own behalf and on behalf of each member of its Group jointly and severally)
+        </td>
+      </tr>
+    </table>
+
+    <h3>Recitals</h3>
+    <div class="recital"><span class="label">A.</span><span>TGF and You have agreed to consider the possibility of a Proposed Transaction.</span></div>
+    <div class="recital"><span class="label">B.</span><span>In order for the parties to make an assessment regarding the Proposed Transaction, each has requested the other to provide confidential information.</span></div>
+    <div class="recital"><span class="label">C.</span><span>In consideration of the undertakings set out below, each of the parties agrees to provide its confidential information to the other as a Disclosing Party and each agrees to receive the confidential information of the other as a Recipient on the terms and conditions of this Deed.</span></div>
+
+    <p><strong>This deed witnesses</strong> as follows.</p>
+
+    <hr>
+
+    <!-- ─── 1 · Definitions and Interpretation ─── -->
+    <h2><span class="num">1</span>Definitions and Interpretation</h2>
+
+    <h3>1.1 Definitions</h3>
+    <p>In this Deed, including the Recitals:</p>
+    <dl class="defs">
+      <dt>"Business Day"</dt>
+      <dd>means a day, other than a Saturday or Sunday, on which all banks are open for business generally in Melbourne;</dd>
+
+      <dt>"Disclosing Party"</dt>
+      <dd>means a party to this Deed by or on behalf of whom (or by or on behalf of whose Group or representatives) Information is supplied or made available to the other party to this Deed or its Group or representatives;</dd>
+
+      <dt>"Disclosing Party's Confidential Information"</dt>
+      <dd>means, in respect of each Disclosing Party, all Information which is supplied or made available, directly or indirectly, at any time (whether prior to or after the execution of this Deed) by that Disclosing Party or its Group or any of its representatives to the Recipient or its Group or any of its representatives in relation to that Disclosing Party or any member of its Group or in relation to the Proposed Transaction or the Transaction Facts;</dd>
+
+      <dt>"Group"</dt>
+      <dd>means, in respect of a party, that party and each Related Body Corporate of that party;</dd>
+
+      <dt>"Information"</dt>
+      <dd>means information, documentation, memoranda, correspondence, material, advice, opinions and any copies or duplicates thereof or any part thereof in any form (whether in writing, in electronic form, or supplied or made available orally or by observation);</dd>
+
+      <dt>"Listing Rules"</dt>
+      <dd>means the official listing rules of Australian Stock Exchange Limited;</dd>
+
+      <dt>"Proposed Transaction"</dt>
+      <dd>means dealings with the party specified in the course, or with the intent of doing business, specifically but not exclusively to licensing, know-how, tool or software implementation including but not limited to design, database and business processes.</dd>
+
+      <dt>"Recipient"</dt>
+      <dd>means: (a) where TGF is the Disclosing Party, You; and (b) where You are the Disclosing Party, TGF.</dd>
+
+      <dt>"Recipient's Notes"</dt>
+      <dd>means, in respect of a Recipient, all working papers, notes, summaries and other material made or derived by or on behalf of that Recipient (or its Group or its representatives) wholly or in part from or from inspection or evaluation of the Disclosing Party's Confidential Information;</dd>
+
+      <dt>"Recipient's Permitted Persons"</dt>
+      <dd>has the meaning given in clause 2.1(b);</dd>
+
+      <dt>"Related Body Corporate"</dt>
+      <dd>has the meaning given to that term in the Corporations Law of Victoria, Australia;</dd>
+
+      <dt>"Representative"</dt>
+      <dd>means, in relation to either of the parties, a director, officer, employee, agent, consultant or professional adviser of or representing the party or any of its Related Bodies Corporate;</dd>
+
+      <dt>"Transaction Facts"</dt>
+      <dd>means: (a) the fact that the parties have expressed an interest in and have agreed to consider the possibility of the Proposed Transaction; (b) any details, provisions or circumstances of the Proposed Transaction including any proposals in respect thereof; and (c) the fact that the Disclosing Party's Confidential Information has been supplied or made available and has been or will be inspected by the Recipient.</dd>
+    </dl>
+
+    <h3>1.2 Interpretation</h3>
+    <p>In this Deed, including the Recitals:</p>
+    <ul>
+      <li>words denoting the singular number include the plural and vice versa;</li>
+      <li>references to persons include a reference to individuals, the estates of individuals, bodies politic and statutory and other authorities and associations (incorporated or unincorporated);</li>
+      <li>words denoting any gender include all genders;</li>
+      <li>references to parties, recitals, clauses, and paragraphs are references to parties, recitals, clauses, and paragraphs of this Deed;</li>
+      <li>references to any document or agreement are deemed to include references to such document or agreement as novated, supplemented, varied or replaced from time to time;</li>
+      <li>references to a party to this Deed include a reference to its successors and permitted assigns;</li>
+      <li>where any word or phrase is given a defined meaning, any other part of speech or grammatical form in respect of such word or phrase has a corresponding meaning;</li>
+      <li>the word "including" in any form is not a word of limitation;</li>
+      <li>headings are for convenience only and do not affect the interpretation of this Deed;</li>
+      <li>for the avoidance of doubt, a reference to "the Disclosing Party" in respect of or in relation to a Recipient means the party to this Deed other than that Recipient; and</li>
+      <li>covenants, agreements and acknowledgements made and indemnities given by each of the Recipients with or to or in favour of "the Disclosing Party" are given by each Recipient severally to the party to this Deed other than that Recipient.</li>
+    </ul>
+
+    <!-- ─── 2 · Confidentiality ─── -->
+    <h2><span class="num">2</span>Confidentiality</h2>
+
+    <h3>2.1 Covenants</h3>
+    <p>Subject to clause 2.2, each Recipient covenants and agrees with the Disclosing Party:</p>
+    <ol class="alpha">
+      <li>to strictly maintain the confidentiality of the Disclosing Party's Confidential Information and the Recipient's Notes on the terms of this Deed;</li>
+      <li>not to disclose the Disclosing Party's Confidential Information or the Recipient's Notes to any person other than members or representatives of its Group for the sole purpose stated in clause 3 where such persons:
+        <ol class="roman">
+          <li>are, by reason of their knowledge, skill or expertise, able to provide assistance to the Recipient in relation to the Proposed Transaction if provided with the Disclosing Party's Confidential Information and the Recipient's Notes;</li>
+          <li>can be reasonably expected to provide such assistance; and</li>
+          <li>have agreed to maintain the confidentiality of the Disclosing Party's Confidential Information and the Recipient's Notes on the terms contained in this Deed,
+          <br><em>(the "Recipient's Permitted Persons")</em>, and to maintain a list of the Recipient's Permitted Persons to whom the Disclosing Party's Confidential Information and the Recipient's Notes have been disclosed and to provide an up-to-date copy of that list to the Disclosing Party at the Disclosing Party's request;</li>
+        </ol>
+      </li>
+      <li>to take all such steps and do all such things as may be necessary, prudent or desirable to maintain and safeguard the confidentiality of the Disclosing Party's Confidential Information and the Recipient's Notes;</li>
+      <li>not to use or allow the use of any portion of the Disclosing Party's Confidential Information or the Recipient's Notes for any purpose other than the sole purpose mentioned in clause 3;</li>
+      <li>except for the purpose of providing copies or extracts of the Disclosing Party's Confidential Information or Recipient's Notes to the Recipient's Permitted Persons, not to make or allow copies of or extracts of the Disclosing Party's Confidential Information without the prior written consent of the Disclosing Party, which the Disclosing Party may withhold in its absolute discretion; and</li>
+      <li>except for the purpose of providing copies or extracts of the Disclosing Party's Confidential Information or Recipient's Notes to the Recipient's Permitted Persons, not to transmit or to permit the transmission by telecommunication or any other means (including facsimile or email) of the Disclosing Party's Confidential Information or Recipient's Notes without the prior written consent of the Disclosing Party.</li>
+    </ol>
+
+    <h3>2.2 Limitations</h3>
+    <p>Clauses 2.1, 3, 7 and 8.1 shall not apply to so much of the Disclosing Party's Confidential Information and the Recipient's Notes which a Recipient establishes:</p>
+    <ol class="alpha">
+      <li>is, or subsequently becomes, information in the public domain (other than as a result of a breach of this Deed by the Recipient or any member of its Group or any of its representatives); or</li>
+      <li>is or becomes known to the Recipient or a member of its Group or its representatives from a person other than the Recipient or the Disclosing Party (or a member of their respective Groups or their respective representatives) provided that the Recipient reasonably believes after reasonable enquiry that the person did not disclose or acquire the information in or by a breach of an obligation of confidentiality owed to the Disclosing Party or a member of its Group or its representatives.</li>
+    </ol>
+
+    <!-- ─── 3 · Purpose of disclosure ─── -->
+    <h2><span class="num">3</span>Purpose of Disclosure and Use of Confidential Information</h2>
+    <p>Each Recipient covenants and agrees with the Disclosing Party that the Disclosing Party's Confidential Information and the Recipient's Notes will be used for the sole purpose of assisting in its independent inquiries into and independent assessment of the Proposed Transaction.</p>
+
+    <!-- ─── 4 · No reliance ─── -->
+    <h2><span class="num">4</span>No Reliance on Confidential Information</h2>
+    <p>Except as may be subsequently agreed in writing between the parties:</p>
+    <ol class="alpha">
+      <li>neither of the Disclosing Parties nor any member of their respective Groups nor any of their respective representatives:
+        <ol class="roman">
+          <li>makes or gives any representation, guarantee or warranty, express or implied, that the Disclosing Party's Confidential Information provided or to be provided to the Recipient is or will be complete or accurate or that it has been or will be audited or independently verified;</li>
+          <li>accepts any responsibility for any inference, interpretation, opinion or conclusion that the Recipient or any member of its Group or its representatives may draw or form from the Disclosing Party's Confidential Information; or</li>
+          <li>is under any obligation to the Recipient or its Group or any of its representatives to provide any further information if they become aware of any inaccuracy in or omission from the Disclosing Party's Confidential Information; and</li>
+        </ol>
+      </li>
+      <li>neither of the Recipients nor any member of their respective Groups nor any of their respective representatives may rely on the Disclosing Party's Confidential Information in any way in assuming any contractual or other obligation or liability, whether in connection with the Proposed Transaction or otherwise.</li>
+    </ol>
+
+    <!-- ─── 5 · Mutual Release ─── -->
+    <h2><span class="num">5</span>Mutual Release</h2>
+    <p>Except as may be subsequently agreed in writing between the parties:</p>
+    <ol class="alpha">
+      <li>each Disclosing Party covenants and agrees with the Recipient that, to the extent permitted by law, no liability (whether in negligence or other tort, by contract or under law or in equity) is accepted by that Disclosing Party, the Group to which it belongs or any of its representatives by reason of or in connection with the provision of the Disclosing Party's Confidential Information or by the purported reliance thereon by the Recipient, its Group or its representatives;</li>
+      <li>each Recipient covenants and agrees with the Disclosing Party:
+        <ol class="roman">
+          <li>to release the Disclosing Party, each member of its Group and its representatives from and against all claims, actions, damages, remedies or other liabilities, whether in negligence or other tort, contract or under law or in equity, arising from or which hereafter may arise from or in connection with the provision of, or any purported reliance on, the Disclosing Party's Confidential Information and covenants that no claim or allegation shall be made against that Disclosing Party, any member of its Group or its representatives in relation thereto; and</li>
+          <li>to expressly waive any right which it may have to rely upon the Disclosing Party's Confidential Information and covenants and agrees that it will not rely upon the Disclosing Party's Confidential Information to sue or to hold that Disclosing Party, any member of its Group or its representatives liable in any respect.</li>
+        </ol>
+      </li>
+    </ol>
+
+    <!-- ─── 6 · Mutual Acknowledgments ─── -->
+    <h2><span class="num">6</span>Mutual Acknowledgments</h2>
+    <p>Each Recipient acknowledges to the Disclosing Party and agrees with the Disclosing Party that:</p>
+    <ol class="alpha">
+      <li>neither the provision of the Disclosing Party's Confidential Information by the Disclosing Party, its Group or its representatives, nor the examination of the Disclosing Party's Confidential Information by the Recipient, its Group or its representatives, creates any legal relationship between the parties except as set out in this Deed;</li>
+      <li>subject to this Deed, the Disclosing Party, its Group and its representatives are free to disclose the Disclosing Party's Confidential Information to any other person; and</li>
+      <li>the Disclosing Party's Confidential Information neither constitutes nor includes a recommendation by the Disclosing Party, its Group or its representatives to enter into the Proposed Transaction.</li>
+    </ol>
+
+    <!-- ─── 7 · Compulsory Disclosure ─── -->
+    <h2><span class="num">7</span>Compulsory Disclosure</h2>
+    <p>In the event that:</p>
+    <ol class="alpha">
+      <li>a Recipient, any member of its Group or any of its representatives is required by law, court order or the ASX Listing Rules to disclose all or any part of the Disclosing Party's Confidential Information or the Recipient's Notes; or</li>
+      <li>a Recipient anticipates or has cause to anticipate that such person may be so required,</li>
+    </ol>
+    <p>then the Recipient must as soon as possible:</p>
+    <ol class="roman">
+      <li>notify the Disclosing Party of such actual or anticipated requirement; and</li>
+      <li>upon the request and at the expense of the Disclosing Party, procure that the relevant person takes all reasonable measures available to oppose or restrict such disclosure, or to make disclosure on terms which are acceptable to the Disclosing Party and which shall as far as possible preserve the confidentiality of the Disclosing Party's Confidential Information and the Recipient's Notes.</li>
+    </ol>
+
+    <!-- ─── 8 · Return or Destruction ─── -->
+    <h2><span class="num">8</span>Return or Destruction of Confidential Information</h2>
+
+    <h3>8.1 Return or destruction</h3>
+    <p>Each Recipient covenants and agrees with the Disclosing Party at the request of the Disclosing Party to:</p>
+    <ol class="alpha">
+      <li>immediately cease using the Disclosing Party's Confidential Information and the Recipient's Notes in its possession;</li>
+      <li>immediately return the Disclosing Party's Confidential Information to the Disclosing Party, destroy the Recipient's Notes and provide satisfactory evidence of such destruction to the Disclosing Party; and</li>
+      <li>do such further things as may be reasonably required by the Disclosing Party to protect the Disclosing Party's right, title and interest in and to the Disclosing Party's Confidential Information.</li>
+    </ol>
+
+    <h3>8.2 No release</h3>
+    <p>Return or destruction of Information pursuant to clause 8.1 does not release the parties from their obligations under this Deed.</p>
+
+    <!-- ─── 9 · Communication with Representatives ─── -->
+    <h2><span class="num">9</span>Communication with Representatives</h2>
+    <p>Each Recipient covenants and agrees with the Disclosing Party that it will not, without the prior written consent of the Disclosing Party, make or attempt to make any enquiries of or hold any discussions with any representatives of the Disclosing Party's Group in connection with the Proposed Transaction, except such representatives as are notified to the Recipient by the Disclosing Party from time to time for that purpose.</p>
+
+    <!-- ─── 10 · Non-Solicitation ─── -->
+    <h2><span class="num">10</span>Non-Solicitation of Personnel</h2>
+    <p>Both TGF and You agree that they will not, during the term of this Agreement and for a period of <strong>6 months</strong> following its termination, attempt to induce or solicit any employee or agent of the other party to leave the employment or agency of the other party, or directly or indirectly employ those employees or agents.</p>
+    <p>If either party breaches this clause, that party will be liable to pay the other party an amount equal to <strong>50% of the employee's or agent's current salary package</strong>.</p>
+
+    <!-- ─── 11 · Consequences of Breach ─── -->
+    <h2><span class="num">11</span>Consequences of Breach</h2>
+
+    <h3>11.1 Indemnity</h3>
+    <p>Each Recipient indemnifies and will keep indemnified the Disclosing Party against all costs, expenses, damage, harm and loss suffered or incurred by the Disclosing Party in connection with or arising as a result of a breach of this Deed by the Recipient or a member of its Group or any of its representatives, and acknowledges that:</p>
+    <ol class="alpha">
+      <li>damages are not an adequate remedy to protect the Disclosing Party in relation to a breach of this Deed; and</li>
+      <li>in addition to any other remedy which may be available to it in law or equity, the Disclosing Party will be entitled to interim, interlocutory and permanent injunctions against the Recipient, members of the Recipient's Group and its representatives to prevent a breach of this Deed and to compel specific performance of this Deed.</li>
+    </ol>
+
+    <h3>11.2 No waiver</h3>
+    <p>The parties acknowledge that no failure or delay by a party in exercising any right, power or privilege under this Deed will operate as a waiver thereof and that no single or partial exercise thereof will preclude any other right, power or privilege under this Deed.</p>
+
+    <!-- ─── 12 · Severability ─── -->
+    <h2><span class="num">12</span>Severability</h2>
+    <p>If any of the provisions of this Deed shall at any time be found to be or become void, voidable or unenforceable, the remaining provisions of this Deed shall nevertheless continue to be of full force and effect.</p>
+
+    <!-- ─── 13 · Governing Law ─── -->
+    <h2><span class="num">13</span>Governing Law</h2>
+    <p>This Deed and the rights and obligations of the parties hereunder shall be governed in all respects by and be construed and interpreted in accordance with the laws of the <strong>State of Victoria</strong>, and each of the parties hereby irrevocably submits to the non-exclusive jurisdiction of the Courts of that State.</p>
+
+    <!-- ─── 14 · Costs ─── -->
+    <h2><span class="num">14</span>Costs</h2>
+    <p>Each Party shall bear its own costs arising out of the preparation of this Deed.</p>
+
+    <!-- ─── 15 · Term ─── -->
+    <h2><span class="num">15</span>Term</h2>
+    <p>The restrictions and obligations contained in this Deed shall continue for a period of <strong>5 years from the date of this Deed</strong>, notwithstanding that this Deed may otherwise have been terminated for breach, unless otherwise agreed by the parties in writing.</p>
+
+    <!-- ─── 16 · Additional Terms ─── -->
+    <h2><span class="num">16</span>Additional Terms</h2>
+    <p>No contracted party shall contact, via any means, The Good Foundry Pty Ltd clients or associates without prior and explicit written permission from the Managing Director or Operations Manager of TGF.</p>
+    <p>No contracted party may cite any work commissioned by TGF as examples of their work/capability (including disclosing this verbally, in writing via email or in a portfolio of work, or via any other means) to any parties without prior and explicit written permission from the Managing Director or Operations Manager of TGF.</p>
+
+    <hr>
+
+    <!-- ─── Execution ─── -->
+    <h2><span class="num">17</span>Execution</h2>
+    <p><strong>Signed sealed and delivered as a deed.</strong></p>
+
+    <div class="sig-grid">
+      <div class="sig-block">
+        <h4>Executed by The Good Foundry Pty Ltd in accordance with the Corporations Law by:</h4>
+        <div class="sig-row"><label>Signature</label><div class="line"></div></div>
+        <div class="sig-row"><label>Name in full</label><div class="line"></div></div>
+        <div class="sig-row"><label>Position</label><div class="line"></div></div>
+        <div class="sig-row"><label>Date</label><div class="line"></div></div>
+      </div>
+      <div class="sig-block">
+        <h4>Executed by You in accordance with the Corporations Law by:</h4>
+        <div class="sig-row"><label>Signature</label><div class="line"></div></div>
+        <div class="sig-row"><label>Name in full</label><div class="line"></div></div>
+        <div class="sig-row"><label>Position</label><div class="line"></div></div>
+        <div class="sig-row"><label>Date</label><div class="line"></div></div>
+      </div>
+    </div>
+
+    <blockquote>
+      <strong>To execute:</strong> download the Word version using the button at the top of this page, complete the "You" party block + signature blocks above, and return a signed PDF to <a href="mailto:legal@the-good-foundry.com">legal@the-good-foundry.com</a>. The Good Foundry will counter-sign and return a fully-executed copy within one business day.
+    </blockquote>
+
+  </article>
+</main>
+
+<footer class="page-ft">
+  <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+  <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy Policy</a>
+  &middot;
+  <a href="mailto:legal@the-good-foundry.com">legal@the-good-foundry.com</a>
+  &middot;
+  Document version: November 2024
+  <div style="margin-top: 12px; font-size: 10.5px; opacity: .7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved. This page is not indexed and is shared via direct link only.</div>
+</footer>
+
+</body>
+</html>

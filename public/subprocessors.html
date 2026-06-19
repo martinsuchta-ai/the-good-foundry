@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sub-Processors · Wellbeing Matters @ Work</title>
+<meta name="description" content="The current list of sub-processors engaged in delivering Wellbeing Matters @ Work. Cited as Schedule A of our Data Processing Agreement.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+<script>
+/* Theme gate — same shape as technical-faq.html / acknowledgement.html
+   so this page picks up an active client brand when opened from a
+   themed surface (and falls back to TGF orange when not). */
+(function () {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var sub = p.get('sub');
+    var keyParam = p.get('key');
+    var keyBase = keyParam ? keyParam.toUpperCase().split('-')[0] : '';
+    var cacheKey = sub ? ('wm_vault_theme_sub_' + sub)
+                  : keyBase ? ('wm_vault_theme_key_' + keyBase)
+                  : 'wm_vault_theme_last';
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_vault_theme_last') || 'null'); } catch (e) {} }
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('wm_bank_theme_last') || 'null'); } catch (e) {} }
+    if (cached && cached.vars && typeof cached.vars === 'object') {
+      var css = ':root{';
+      for (var k in cached.vars) {
+        if (Object.prototype.hasOwnProperty.call(cached.vars, k) && cached.vars[k]) {
+          css += k + ':' + cached.vars[k] + '!important;';
+        }
+      }
+      css += '}';
+      document.write('<style id="wm-theme-gate">' + css + '</style>');
+    }
+  } catch (e) {}
+})();
+</script>
+<style>
+  /* ── Brand tokens — lifted from technical-faq.html so this page
+       reads as part of the same family. ── */
+  :root {
+    --orange: #e8621a;
+    --orange-light: #f5a06e;
+    --orange-pale: #fff4ee;
+    --navy-deep: #14202e;
+    --text-dark: #1c2b3a;
+    --text-mid: #45586a;
+    --text-muted: #8097ad;
+    --surface: #ffffff;
+    --surface-2: #f4f6f8;
+    --border: #e2e8ef;
+    --body-bg: #f0f2f5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  header.page-hd {
+    background: var(--navy-deep);
+    border-bottom: 4px solid var(--orange);
+    padding: 22px 28px;
+  }
+  header.page-hd .hd-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header.page-hd .brand-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; overflow: hidden;
+  }
+  header.page-hd .brand-mark img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  header.page-hd .brand-text {
+    color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em;
+  }
+  header.page-hd .brand-sub {
+    color: var(--orange-light);
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; margin-top: 2px;
+  }
+  header.page-hd .hd-back {
+    margin-right: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  header.page-hd .hd-back:hover {
+    background: rgba(255,255,255,.16); color: #fff;
+    border-color: rgba(255,255,255,.32);
+  }
+  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+
+  main.page-bd {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+  }
+
+  /* ── Intro / hero card ── */
+  .intro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    margin-bottom: 24px;
+  }
+  .intro-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .intro-card h1 {
+    font-size: 28px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -.012em; margin: 0 0 12px;
+  }
+  .intro-card p {
+    font-size: 15px; color: var(--text-mid); line-height: 1.75;
+    margin: 0 0 12px;
+  }
+  .intro-card p:last-child { margin-bottom: 0; }
+
+  /* ── Version meta strip — Last updated / Version / Schedule ── */
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 4px;
+  }
+  .meta-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 100px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+  }
+  .meta-pill .meta-dot {
+    width: 6px; height: 6px; border-radius: 100px;
+    background: var(--orange);
+  }
+  .meta-pill.alt { background: var(--orange-pale); border-color: rgba(232,98,26,.22); color: var(--orange); }
+  .meta-pill.alt .meta-dot { background: var(--orange); }
+
+  /* ── Section card ── */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 30px 34px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+    margin-bottom: 22px;
+    scroll-margin-top: 24px;
+  }
+  .section-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-size: 22px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -.012em; margin: 0 0 14px;
+  }
+  .section h3 {
+    font-size: 15px; font-weight: 800; color: var(--text-dark);
+    margin: 22px 0 10px;
+  }
+  .section p, .section li {
+    font-size: 14.5px; color: var(--text-mid); line-height: 1.75;
+  }
+  .section p { margin: 0 0 12px; }
+  .section p:last-child { margin-bottom: 0; }
+  .section strong { color: var(--text-dark); font-weight: 700; }
+  .section ul { margin: 0 0 12px; padding-left: 22px; }
+  .section ul li { margin-bottom: 6px; }
+  .section a { color: var(--orange); font-weight: 600; text-decoration: none; }
+  .section a:hover { text-decoration: underline; }
+
+  /* ── Sub-processor table ── */
+  table.sp-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 18px;
+    font-size: 13.5px;
+  }
+  table.sp-tbl thead th {
+    text-align: left;
+    background: var(--navy-deep);
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 11px 14px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+  }
+  table.sp-tbl tbody td {
+    padding: 13px 14px;
+    border-top: 1px solid var(--border);
+    color: var(--text-mid);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  table.sp-tbl tbody tr:nth-child(even) td {
+    background: var(--surface-2);
+  }
+  table.sp-tbl tbody td strong { color: var(--text-dark); font-weight: 700; }
+  table.sp-tbl .role-chip {
+    display: inline-block;
+    background: var(--orange-pale);
+    color: var(--orange);
+    border: 1px solid rgba(232,98,26,.22);
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  /* ── Optional add-on callout ── */
+  .addon-callout {
+    background: var(--orange-pale);
+    border: 1px solid rgba(232,98,26,.22);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 18px 0 6px;
+    font-size: 13.5px;
+    color: var(--text-dark);
+    line-height: 1.7;
+  }
+  .addon-callout strong { color: var(--orange); font-weight: 700; }
+
+  /* ── Change log ── */
+  .changelog-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 6px 0 0;
+  }
+  .changelog-table th, .changelog-table td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-mid);
+    vertical-align: top;
+  }
+  .changelog-table thead th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    font-weight: 700;
+    background: var(--surface-2);
+  }
+  .changelog-table tbody td:first-child {
+    color: var(--text-dark);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* ── Closing CTA ── */
+  .cta-card {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, #1f3045 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 28px 32px;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .cta-card h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    color: #fff;
+  }
+  .cta-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,.85);
+    margin: 0 auto 18px;
+    max-width: 580px;
+    line-height: 1.75;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 11px 22px;
+    border-radius: 100px;
+    margin: 0 4px;
+    transition: background .15s, transform .15s;
+  }
+  .cta-btn:hover { background: #d05315; transform: translateY(-1px); }
+  .cta-btn.cta-btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.32);
+    color: rgba(255,255,255,.88);
+  }
+  .cta-btn.cta-btn-ghost:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+  /* ── Footer ── */
+  footer.page-ft {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px 28px 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  footer.page-ft a { color: var(--orange); font-weight: 600; text-decoration: none; }
+  footer.page-ft a:hover { text-decoration: underline; }
+
+  /* ── Print ── */
+  @media print {
+    header.page-hd, .cta-card, footer.page-ft { display: none; }
+    body { background: #fff; }
+    .section, .intro-card { box-shadow: none; border: 0; padding: 0; margin-bottom: 18px; }
+    table.sp-tbl thead th { background: #333; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 720px) {
+    header.page-hd { padding: 16px 20px; }
+    main.page-bd { padding: 28px 20px 48px; }
+    .intro-card, .section { padding: 22px 20px; border-radius: 12px; }
+    .intro-card h1 { font-size: 23px; }
+    .section h2 { font-size: 19px; }
+    table.sp-tbl thead { display: none; }
+    table.sp-tbl tbody tr { display: block; padding: 14px 0; border-top: 1px solid var(--border); }
+    table.sp-tbl tbody tr:nth-child(even) td { background: transparent; }
+    table.sp-tbl tbody td { display: block; padding: 4px 0; border: 0; }
+    table.sp-tbl tbody td::before {
+      content: attr(data-label) ': ';
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      display: block;
+      margin-top: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-hd">
+  <div class="hd-inner">
+    <a class="hd-back" href="technical-faq.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Technical FAQ
+    </a>
+    <div class="brand-mark">
+      <img src="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png" alt="">
+    </div>
+    <div>
+      <div class="brand-text">Wellbeing Matters @ Work</div>
+      <div class="brand-sub">Sub-Processors · Schedule A</div>
+    </div>
+  </div>
+</header>
+
+<main class="page-bd">
+
+  <!-- ── Intro / context ── -->
+  <div class="intro-card">
+    <div class="intro-eyebrow">Public · DPA Schedule A reference</div>
+    <h1>Sub-Processors engaged in delivering Wellbeing Matters @ Work</h1>
+    <p>This page is the canonical, version-pinned list of every third-party we engage to deliver the platform. It is cited as <strong>Schedule A</strong> of our Data Processing Agreement and is the single source of truth for "who else touches your data".</p>
+    <p>Any change to the list — adding a new sub-processor, retiring one, or changing a region — is recorded in the change log at the bottom of this page with a new version stamp.</p>
+    <div class="meta-strip">
+      <span class="meta-pill"><span class="meta-dot"></span> Version <strong style="margin-left:4px">1.0</strong></span>
+      <span class="meta-pill"><span class="meta-dot"></span> Last updated: <strong style="margin-left:4px">26 May 2026</strong></span>
+      <span class="meta-pill alt"><span class="meta-dot"></span> Cited as DPA Schedule A</span>
+    </div>
+  </div>
+
+  <!-- ── Default-scope sub-processors ── -->
+  <section class="section" id="default-scope">
+    <div class="section-eyebrow">01 · Default scope</div>
+    <h2>Sub-processors engaged on every deployment.</h2>
+    <p>The following sub-processors are engaged for the platform's default deployment. Each is bound by a confidentiality and data-processing agreement (per Privacy Policy: <em>"we sign confidentiality and data processing agreements with all third-party service providers"</em>).</p>
+
+    <table class="sp-tbl">
+      <thead>
+        <tr>
+          <th>Sub-processor</th>
+          <th>Purpose</th>
+          <th>Region</th>
+          <th>Data accessed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Sub-processor"><strong>SiteGround Hosting</strong><br><span class="role-chip">Hosting</span></td>
+          <td data-label="Purpose">Application hosting, MySQL database, nightly backups, web-server access logs</td>
+          <td data-label="Region">Your contracted region <em>(Sydney · Singapore · Iowa · London · Frankfurt · Eemshaven)</em></td>
+          <td data-label="Data accessed">All in-scope data</td>
+        </tr>
+        <tr>
+          <td data-label="Sub-processor"><strong>Let&rsquo;s Encrypt / ISRG</strong><br><span class="role-chip">TLS</span></td>
+          <td data-label="Purpose">TLS certificate issuance for HTTPS</td>
+          <td data-label="Region">Global certificate authority</td>
+          <td data-label="Data accessed">None &mdash; public-key validation only</td>
+        </tr>
+        <tr>
+          <td data-label="Sub-processor"><strong>SMTP relay</strong> (hosting provider)<br><span class="role-chip">Email</span></td>
+          <td data-label="Purpose">Transactional email delivery (respondent invitations, password resets, admin notifications, scheduled reports)</td>
+          <td data-label="Region">Your contracted region</td>
+          <td data-label="Data accessed">Recipient email address + email body</td>
+        </tr>
+        <tr>
+          <td data-label="Sub-processor"><strong>Zoho Books / Zoho Billing</strong><br><span class="role-chip">Billing</span></td>
+          <td data-label="Purpose">Subscription billing, invoicing</td>
+          <td data-label="Region">Per-tenant Zoho data residency</td>
+          <td data-label="Data accessed">Your billing contact name + email only &mdash; no respondent data, no response data</td>
+        </tr>
+        <tr>
+          <td data-label="Sub-processor"><strong>Google Workspace</strong> (TGF internal)<br><span class="role-chip">Support</span></td>
+          <td data-label="Purpose">Internal email, support ticket management for designated client contacts</td>
+          <td data-label="Region">The Good Foundry&rsquo;s own region</td>
+          <td data-label="Data accessed">Names + email addresses of designated client contacts only</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Optional add-on sub-processors ── -->
+  <section class="section" id="optional-addons">
+    <div class="section-eyebrow">02 · Optional add-on scope</div>
+    <h2>Engaged only when an add-on is contracted.</h2>
+    <p>Any sub-processor underpinning an optional contracted add-on (e.g. AI Seeding, Personalised Coaching Videos, NotebookLM coaching summaries) is <strong>not</strong> in the default scope. It is engaged only when that add-on is explicitly contracted, with the third party named and the data flow documented in writing under the contract.</p>
+
+    <div class="addon-callout">
+      <strong>Default posture:</strong> a client deployment carries NONE of these sub-processors unless the corresponding add-on appears on the Statement of Service. If you've contracted only the base measurement platform, the Default Scope above is the complete sub-processor list for your deployment.
+    </div>
+
+    <h3>Add-on sub-processors (engaged on opt-in only)</h3>
+    <table class="sp-tbl">
+      <thead>
+        <tr>
+          <th>Sub-processor</th>
+          <th>Add-on it underpins</th>
+          <th>Region</th>
+          <th>Data accessed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Sub-processor"><strong>Anthropic (Claude API)</strong><br><span class="role-chip">AI</span></td>
+          <td data-label="Add-on">AI Seeding (explainer + coaching content generation), Sophie's coaching responses</td>
+          <td data-label="Region">United States</td>
+          <td data-label="Data accessed">Per-card prompt + respondent score; no PII unless explicitly included in a card prompt</td>
+        </tr>
+        <tr>
+          <td data-label="Sub-processor"><strong>HeyGen</strong><br><span class="role-chip">Video</span></td>
+          <td data-label="Add-on">Personalised Coaching Videos (leadership briefing videos, persona-specific debrief videos)</td>
+          <td data-label="Region">United States</td>
+          <td data-label="Data accessed">Persona-level segmented scores + leadership name (where included in the briefing script)</td>
+        </tr>
+        <tr>
+          <td data-label="Sub-processor"><strong>Google (NotebookLM)</strong><br><span class="role-chip">Coaching</span></td>
+          <td data-label="Add-on">NotebookLM Coaching Foundry — generates a deep-dive notebook + audio briefing from aggregate cohort data</td>
+          <td data-label="Region">Per-tenant Google Workspace residency</td>
+          <td data-label="Data accessed">Aggregate cohort outputs (PDF / Markdown); no individual respondent data</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Bindings & guarantees ── -->
+  <section class="section" id="bindings">
+    <div class="section-eyebrow">03 · Bindings &amp; guarantees</div>
+    <h2>How each engagement is bound.</h2>
+    <ul>
+      <li><strong>Confidentiality + DPA on every engagement</strong> — without exception. The standard binding is the sub-processor's own DPA + a TGF-side mirror addendum.</li>
+      <li><strong>No marketing / analytics / AI training reuse</strong> — client data is never reused outside delivering the contracted service.</li>
+      <li><strong>72-hour breach notification</strong> from any sub-processor flows through to you within the same 72-hour window (Australian Privacy Act NDB scheme; GDPR Article 33 equivalent for EU clients).</li>
+      <li><strong>Sub-processor deletion on contract termination</strong> — within 35 days of a written deletion request, your data is removed from every listed location, certified by TGF + each sub-processor.</li>
+      <li><strong>Notice of changes</strong> — material sub-processor changes (new entrant, region change, retirement) are notified to all active clients in writing at least 30 days before activation, with the right to object.</li>
+    </ul>
+  </section>
+
+  <!-- ── Change log ── -->
+  <section class="section" id="changelog">
+    <div class="section-eyebrow">04 · Change log</div>
+    <h2>Version history.</h2>
+    <p>Every published change to the list appears here. The change log is append-only; superseded entries are retained for audit.</p>
+
+    <table class="changelog-table">
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Date</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>v1.0</td>
+          <td>26 May 2026</td>
+          <td>Initial publication. Promoted from <a href="technical-faq.html#sec-7">Technical FAQ §7</a> into a dedicated, versioned page so the DPA can cite a stable URL as Schedule A. Default scope: SiteGround, Let's Encrypt, SMTP relay, Zoho, Google Workspace. Add-on scope: Anthropic, HeyGen, Google NotebookLM (opt-in only).</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Closing CTA ── -->
+  <section class="cta-card">
+    <h2>Need this as part of a vendor review?</h2>
+    <p>Forward this URL to your data-protection or InfoSec partner. For a signed deployment-specific copy with your contracted region and any opt-in add-ons annotated, request it alongside our standard DPA &mdash; both ship together under mutual NDA.</p>
+    <a class="cta-btn" href="mutual-confidentiality-agreement.html">Mutual NDA</a>
+    <a class="cta-btn cta-btn-ghost" href="technical-faq.html">Read the Technical FAQ</a>
+  </section>
+
+</main>
+
+<footer class="page-ft">
+  <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+  <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy Policy</a> &middot;
+  <a href="mutual-confidentiality-agreement.html">Mutual NDA</a> &middot;
+  <a href="technical-faq.html">Technical FAQ</a> &middot;
+  <a href="mailto:legal@the-good-foundry.com">legal@the-good-foundry.com</a>
+  <div style="margin-top: 12px; font-size: 10.5px; opacity: .7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

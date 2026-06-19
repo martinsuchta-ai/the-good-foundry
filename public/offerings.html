@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editions, Add-ons &amp; Plans &middot; The Good Foundry</title>
+<meta name="description" content="The full range of Wellbeing Matters editions, add-ons and subscription plans — what each one is, who it's for, and how it fits together. Now featuring the HEART Of Change Tool, a bespoke edition built with The Change Lab on Dr. Michelle McQuaid's HEART Framework.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ——— BRAND TOKENS (lifted verbatim from TGF/privacy-policy.html) ——— */
+:root {
+  --twilight:   #293890;
+  --arctic:     #1B75BC;
+  --aqua:       #26AAE1;
+  --grape:      #662C90;
+  --orchid:     #91268F;
+  --punch:      #EC008B;
+  --bg:         #F4F6FB;
+  --card:       #FFFFFF;
+  --mid:        #EEF1F8;
+  --border:     rgba(41,56,144,.12);
+  --text:       #161A2E;
+  --text-dim:   rgba(22,26,46,.58);
+  --font:       'Outfit', sans-serif;
+  --serif:      'DM Serif Display', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ——— Soft gradient-mesh background ——————————————————————————————— */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ——— Topbar ——————————————————————————————————————————————————————— */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.brand img.brand-logo {
+  /* TGF wordmark — 90px (was bumped to 180 in May 2026 then scaled
+     back 2× for better visual balance in the topbar). */
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+.brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+.brand-name em {
+  font-style: italic;
+  color: var(--arctic);
+  font-family: var(--serif);
+}
+.brand-sep { width: 1px; height: 18px; background: rgba(22,26,46,.15); }
+.brand-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--text-dim);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(41,56,144,.06);
+  border: 1px solid rgba(41,56,144,.10);
+  transition: background .15s, color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.topbar-back:hover { background: rgba(41,56,144,.12); color: var(--text); border-color: rgba(41,56,144,.22); }
+.topbar-back svg { width: 12px; height: 12px; }
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.topbar-right a.nav-link {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: color .15s;
+}
+.topbar-right a.nav-link:hover { color: var(--text); }
+.nav-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  padding: 7px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: opacity .2s;
+  box-shadow: 0 4px 14px rgba(236,0,139,.22);
+}
+.nav-pill:hover { opacity: .9; }
+
+/* ——— Hero ————————————————————————————————————————————————————————— */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 90px 40px 60px;
+  overflow: hidden;
+}
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-lines::before,
+.hero-lines::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(41,56,144,.14);
+}
+.hero-lines::before { width: 700px; height: 700px; right: -200px; top: -250px; }
+.hero-lines::after  { width: 400px; height: 400px; right: -50px; top: -50px; }
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: left;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(236,0,139,.08);
+  border: 1px solid rgba(236,0,139,.28);
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--punch);
+  margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--punch);
+}
+.hero h1 {
+  font-size: clamp(34px, 4.5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.08;
+  margin-bottom: 18px;
+  color: var(--text);
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero h1 .serif-italic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-desc {
+  font-size: 17px;
+  color: var(--text-dim);
+  font-weight: 300;
+  max-width: 720px;
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.hero-chip-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  flex-shrink: 0;
+}
+.hero-chip strong { color: var(--text); font-weight: 600; }
+.hero-divider { width: 1px; height: 16px; background: rgba(22,26,46,.15); }
+
+/* ——— Layout container ——————————————————————————————————————————— */
+.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+
+/* ——— Section heading block ——————————————————————————————————————— */
+.section-block {
+  margin-bottom: 64px;
+  scroll-margin-top: 80px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.section-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -.02em;
+  box-shadow: 0 4px 12px rgba(41,56,144,.22);
+}
+.section-block h2.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+  margin: 0;
+}
+.section-block h2.section-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--arctic);
+}
+.section-block p.section-lede {
+  color: var(--text-dim);
+  font-size: 15px;
+  font-weight: 300;
+  margin: 0 0 24px 48px;
+  max-width: 760px;
+  line-height: 1.75;
+}
+
+/* ——— Editions grid ——————————————————————————————————————————————— */
+.ed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.ed-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+  position: relative;
+}
+.ed-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+  border-radius: 14px 14px 0 0;
+  opacity: .65;
+}
+.ed-card:hover {
+  border-color: rgba(38,170,225,.35);
+  box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 8px 22px rgba(22,26,46,.07);
+  transform: translateY(-2px);
+}
+.ed-card .ed-key {
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  color: var(--punch);
+  letter-spacing: .06em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ed-card .ed-key::before {
+  content: '';
+  display: block;
+  width: 14px; height: 2px;
+  background: linear-gradient(90deg, var(--punch), var(--orchid));
+  border-radius: 2px;
+}
+.ed-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -.015em;
+}
+.ed-card .ed-tagline {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.ed-card .ed-desc {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.75;
+  margin: 0 0 14px;
+  flex: 1;
+  font-weight: 400;
+}
+.ed-card .ed-audience {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(38,170,225,.10);
+  color: var(--arctic);
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  align-self: flex-start;
+  border: 1px solid rgba(38,170,225,.25);
+}
+.ed-card.bespoke {
+  background: linear-gradient(135deg, var(--card) 0%, rgba(102,44,144,.05) 200%);
+}
+.ed-card.bespoke::before {
+  background: linear-gradient(90deg, var(--grape), var(--punch));
+  opacity: 1;
+}
+.ed-card.bespoke .ed-audience {
+  background: rgba(236,0,139,.08);
+  color: var(--punch);
+  border-color: rgba(236,0,139,.28);
+}
+.ed-card .badge-bespoke {
+  display: inline-block;
+  padding: 3px 8px;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-left: 8px;
+  vertical-align: 2px;
+  box-shadow: 0 2px 8px rgba(236,0,139,.25);
+}
+
+/* ——— Add-ons grid ————————————————————————————————————————————————— */
+.ao-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.ao-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  transition: border-color .2s, box-shadow .2s;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+}
+.ao-card:hover {
+  border-color: rgba(38,170,225,.35);
+  box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 6px 18px rgba(22,26,46,.05);
+}
+.ao-card .ao-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(27,117,188,.22);
+}
+.ao-card .ao-icon svg { width: 18px; height: 18px; }
+.ao-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -.01em;
+}
+.ao-card .ao-desc {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 400;
+}
+.ao-card .ao-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--mid);
+  color: var(--text-dim);
+  border-radius: 100px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+}
+.ao-card .ao-tag.recurring {
+  background: rgba(236,0,139,.08);
+  color: var(--punch);
+  border-color: rgba(236,0,139,.20);
+}
+
+/* ——— Plans table ————————————————————————————————————————————————— */
+.plans-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 4px 16px rgba(22,26,46,.04);
+}
+.plans-card .plans-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.4fr) 1fr 1fr 1.2fr;
+  gap: 16px;
+  padding: 18px 24px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.plans-card .plans-row:last-child { border-bottom: none; }
+.plans-card .plans-row.plans-head {
+  background: linear-gradient(135deg, rgba(41,56,144,.06), rgba(102,44,144,.04));
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--arctic);
+}
+.plans-card .plans-row .plan-term {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.plans-card .plans-row .plan-mode,
+.plans-card .plans-row .plan-when,
+.plans-card .plans-row .plan-fits {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  font-weight: 400;
+  line-height: 1.6;
+}
+@media (max-width: 760px) {
+  .plans-card .plans-row { grid-template-columns: 1fr; gap: 4px; padding: 14px 18px; }
+  .plans-card .plans-row.plans-head { display: none; }
+  .plans-card .plans-row > div::before {
+    content: attr(data-lbl);
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--arctic);
+    margin-bottom: 2px;
+  }
+}
+
+/* ——— "How it fits together" block ————————————————————————————————— */
+.fits-card {
+  background: linear-gradient(135deg, var(--card) 0%, rgba(38,170,225,.04) 200%);
+  border: 1px solid rgba(38,170,225,.18);
+  border-radius: 16px;
+  padding: 32px 36px;
+  margin-top: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.fits-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+}
+.fits-card .fits-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+  align-items: flex-start;
+}
+.fits-card .fits-row:last-child { margin-bottom: 0; }
+.fits-card .fits-row .fits-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(41,56,144,.22);
+}
+.fits-card .fits-row .fits-body h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 4px 0 6px;
+  letter-spacing: -.01em;
+}
+.fits-card .fits-row .fits-body p {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.75;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ——— CTA / contact card ——————————————————————————————————————————— */
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 48px;
+  margin-top: 110px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(22,26,46,.06);
+}
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102,44,144,.10) 0%, rgba(27,117,188,.06) 50%, rgba(236,0,139,.06) 100%);
+  pointer-events: none;
+}
+.contact-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+}
+.contact-card-inner { position: relative; z-index: 1; }
+.contact-card h3 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.02em;
+  margin-bottom: 10px;
+}
+.contact-card h3 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--arctic);
+}
+.contact-card p {
+  color: var(--text-dim);
+  font-size: 15px;
+  margin-bottom: 24px;
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 600px;
+}
+a.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  border-radius: 100px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 18px rgba(236,0,139,.25);
+  transition: transform .18s, box-shadow .18s, opacity .15s;
+}
+a.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(236,0,139,.32);
+  opacity: .95;
+}
+a.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: border-color .15s, color .15s;
+  margin-left: 8px;
+}
+a.btn-ghost:hover {
+  border-color: rgba(38,170,225,.45);
+  color: var(--arctic);
+}
+
+/* ——— Footer ——————————————————————————————————————————————————————— */
+footer.page-ft {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  padding: 36px 28px 44px;
+  line-height: 1.8;
+  border-top: 1px solid var(--border);
+}
+footer.page-ft a {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color .15s;
+}
+footer.page-ft a:hover { color: var(--arctic); }
+footer.page-ft .ft-divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  margin: 0 auto 18px;
+  border-radius: 2px;
+}
+footer.page-ft strong { color: var(--text); font-weight: 600; }
+
+/* ——— Mobile tightening ——————————————————————————————————————————— */
+@media (max-width: 720px) {
+  .topbar { padding: 0 18px; }
+  .topbar-right .nav-link { display: none; }
+  .hero { padding: 56px 22px 36px; }
+  .hero h1 { font-size: 30px; }
+  .hero-desc { font-size: 15.5px; }
+  .layout { padding: 0 22px 60px; }
+  .section-block p.section-lede { margin-left: 0; }
+  .section-block { margin-bottom: 48px; }
+  .ed-card, .ao-card { padding: 20px 22px; }
+  .fits-card { padding: 26px 24px; }
+  .contact-card { padding: 32px 26px; }
+  .contact-card h3 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-back" href="the-good-foundry-index.html" title="Back to The Good Foundry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+      <a class="brand" href="https://www.the-good-foundry.com/">
+        <img class="brand-logo" src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry · Action for Impact">
+      </a>
+    </div>
+    <div class="topbar-right">
+      <a class="nav-link" href="business-case.html">Business case</a>
+      <a class="nav-link" href="backed-by-science.html">Backed by Science</a>
+      <a class="nav-link" href="acknowledgement.html">Acknowledgements</a>
+      <a class="nav-link" href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy</a>
+      <a class="nav-pill" href="offerings-explorer.html">Edition explorer</a>
+      <a class="nav-pill" href="javascript:void(0)" onclick="wmTalkOpen('proposal')">Request an offer &rarr;</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-lines"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">Our offerings</div>
+      <h1>One framework, eight audiences, your choice of <span class="gradient-text">plan</span>.</h1>
+      <p class="hero-desc">Every Wellbeing Matters deployment is built on the same evidence-based PERMA+ framework — but the way we deliver it shifts to suit who&rsquo;s taking the survey, what your data warehouse needs, and how you prefer to pay. Pick the edition that fits your audience, layer the add-ons that match your goals, and we&rsquo;ll handle the rest.</p>
+      <div class="hero-meta">
+        <div class="hero-chip"><span class="hero-chip-dot"></span><strong>Evidence-based</strong></div>
+        <div class="hero-divider"></div>
+        <div class="hero-chip"><span class="hero-chip-dot"></span><strong>PERMA+ Infused</strong></div>
+        <div class="hero-divider"></div>
+        <div class="hero-chip"><span class="hero-chip-dot"></span>Built by <strong>The Good Foundry</strong></div>
+        <div class="hero-divider"></div>
+        <div class="hero-chip"><span class="hero-chip-dot"></span><strong>Scalable</strong> across editions</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="layout">
+
+    <!-- ── EDITIONS ─────────────────────────────────────────────────── -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <h2 class="section-title">Pick the edition that <em>matches</em> your audience.</h2>
+      </div>
+      <p class="section-lede">Each edition uses the same core science but tunes the language, the section set, and the dashboard for the people taking the survey. You can run multiple editions in parallel under a single portfolio.</p>
+
+      <!-- Edition Explorer callout — a quicker / guided way to compare
+           the editions at a glance. Pops a separate page where the
+           prospect picks an edition and sees the sections, modes and
+           applicable add-ons filtered in real time. Linked here so
+           anyone landing on this section sees the option without
+           having to scroll back to the top nav. -->
+      <a href="offerings-explorer.html"
+         class="ee-callout"
+         style="display:flex;align-items:center;gap:16px;margin:18px 0 26px;padding:16px 20px;background:linear-gradient(135deg,rgba(38,170,225,.10) 0%,rgba(102,44,144,.08) 100%);border:1px solid rgba(38,170,225,.30);border-radius:14px;text-decoration:none;color:inherit;transition:all .15s;cursor:pointer">
+        <span style="flex-shrink:0;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--twilight,#293890),var(--punch,#EC008B));display:inline-flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 4px 14px rgba(41,56,144,.25)">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </span>
+        <span style="flex:1;min-width:0">
+          <span style="display:block;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--punch,#EC008B);margin-bottom:3px">A guided way to compare</span>
+          <span style="display:block;font-size:16px;font-weight:700;color:var(--text,#0F1E40);line-height:1.3">Open the <em style="font-style:italic;font-family:'DM Serif Display',Georgia,serif;font-weight:400">Edition Explorer</em></span>
+          <span style="display:block;font-size:13px;color:var(--text-mid,#3D5366);line-height:1.45;margin-top:3px">Tap an edition, see what's measured, the delivery modes available, and every add-on you can layer in — at a glance, no pricing.</span>
+        </span>
+        <span style="flex-shrink:0;padding:9px 18px;border-radius:99px;background:#fff;border:1px solid var(--border,#E2E8EF);font-size:12px;font-weight:700;color:var(--text,#0F1E40);white-space:nowrap;display:inline-flex;align-items:center;gap:6px">Launch explorer
+          <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+      </a>
+      <style>.ee-callout:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(41,56,144,.10); border-color: var(--arctic,#1B75BC) !important; }</style>
+
+      <div class="ed-grid">
+
+        <div class="ed-card">
+          <div class="ed-audience">Workplace</div>
+          <div class="ed-key">WPA · Wellbeing Matters @ Work</div>
+          <h3>Wellbeing Matters @ Work</h3>
+          <div class="ed-tagline">Adult workplaces &middot; teams &middot; leaders</div>
+          <p class="ed-desc">The flagship edition. Full PERMA+ measurement across Wellbeing, Psychosocial Hazards, Culture of Care, Civility, Economic Security, Spirituality, AI Revolution, Moral Injury and the new Quietly Cracking lens — surfacing high-functioning burnout before it shows up in turnover. Designed for organisations running annual or quarterly check-ins on team wellbeing.</p>
+        </div>
+
+        <div class="ed-card">
+          <div class="ed-audience">Higher education</div>
+          <div class="ed-key">WPU · Wellbeing Matters @ University</div>
+          <h3>Wellbeing Matters @ University</h3>
+          <div class="ed-tagline">Faculty &middot; staff &middot; postgraduates</div>
+          <p class="ed-desc">PERMA+ tuned for the rhythm of university life. Same evidence base as @ Work — including the new Quietly Cracking lens for staff running on empty under sustained academic load — but the language reflects academic culture (semesters, research load, student-facing roles, tenure-track demands).</p>
+        </div>
+
+        <div class="ed-card">
+          <div class="ed-audience">Personal</div>
+          <div class="ed-key">WPL · Wellbeing Matters in Life</div>
+          <h3>Wellbeing Matters in Life</h3>
+          <div class="ed-tagline">Individuals &middot; coaching clients &middot; community</div>
+          <p class="ed-desc">PERMA+ stripped of the workplace lens. Focused on personal flourishing — wellbeing, self-compassion, hope, optimism, meaning. Includes the new Quietly Cracking check-in so individuals and coaches can spot the high-functioning burnout pattern early. Used by coaches, therapists and community programs running individual development.</p>
+        </div>
+
+        <div class="ed-card">
+          <div class="ed-audience">Veterinary</div>
+          <div class="ed-key">WPV · Wellbeing Matters @ Veterinary Practice</div>
+          <h3>Wellbeing Matters @ Veterinary Practice</h3>
+          <div class="ed-tagline">Vet clinics &middot; animal hospitals &middot; specialty practice</div>
+          <p class="ed-desc">A profession-specific edition acknowledging the wellbeing realities of veterinary practice — moral injury, compassion fatigue, exposure to euthanasia decisions, after-hours load. Same PERMA+ rigor, profession-specific language and benchmarks.</p>
+        </div>
+
+        <div class="ed-card">
+          <div class="ed-audience">Sport</div>
+          <div class="ed-key">WPS · Wellbeing Matters @ Sport</div>
+          <h3>Wellbeing Matters @ Sport</h3>
+          <div class="ed-tagline">Athletes &middot; coaches &middot; sporting orgs</div>
+          <p class="ed-desc">PERMA+ for elite and community sporting organisations. The full adult section set with sport-specific framing for performance, identity, transition and team dynamics. Cohort dashboards designed for performance directors and player welfare leads.</p>
+        </div>
+
+        <div class="ed-card">
+          <div class="ed-audience">Kids</div>
+          <div class="ed-key">WPK · Wellbeing Matters @ School (Kids)</div>
+          <h3>Wellbeing Matters @ School &middot; Kids</h3>
+          <div class="ed-tagline">Primary-school students</div>
+          <p class="ed-desc">Age-appropriate PERMA+ for children. Visual face-scales, story-led prompts, slider response modes, and a playful runtime that keeps younger respondents engaged. Cohort insights are anonymised by default and surface to the school&rsquo;s wellbeing lead. <strong style="color:var(--text);font-weight:600">Optional 360 add-on</strong> brings parents, teachers and clinicians into the same picture &mdash; see &ldquo;Kids 360 (Multi-Rater)&rdquo; in the add-ons below. <strong style="color:var(--text);font-weight:600">Optional Digital Wellbeing section</strong> captures how phones, social media and screen time are shaping how kids feel about themselves, their friends, and their world.</p>
+        </div>
+
+        <div class="ed-card">
+          <div class="ed-audience">Youth</div>
+          <div class="ed-key">WPY · Wellbeing Matters @ School (Youth)</div>
+          <h3>Wellbeing Matters @ School &middot; Youth</h3>
+          <div class="ed-tagline">High-school &amp; senior students</div>
+          <p class="ed-desc">PERMA+ for adolescents and senior-school students. Maps friendship, identity, screen time, study load, and meaning-making in adolescence. Pairs with the Kids edition for full-school deployments measuring across age bands. <strong style="color:var(--text);font-weight:600">Optional Digital Wellbeing section</strong> captures the impact of social media, phones and online life on student wellbeing &mdash; rewritten in student-appropriate language with a PERMA+ Impact matrix in the bank dashboard so school leadership can see which wellbeing pillars are most affected by digital strain.</p>
+        </div>
+
+        <div class="ed-card" style="background:linear-gradient(135deg,var(--card) 0%,rgba(91,124,140,.06) 200%)">
+          <div class="ed-audience" style="background:rgba(91,124,140,.10);color:#5b7c8c;border-color:rgba(91,124,140,.30)">Aging Well</div>
+          <div class="ed-key">WAW · Wellbeing Matters In Aging Well</div>
+          <h3>Wellbeing Matters In Aging Well<span class="badge-bespoke" style="background:linear-gradient(135deg,#5b7c8c,#1f2d3d);box-shadow:0 2px 8px rgba(91,124,140,.30)">NEW &middot; 2026</span></h3>
+          <div class="ed-tagline">Adults navigating later life &middot; LiveWell residents &middot; aged-care communities &middot; family &amp; friend supporters</div>
+          <p class="ed-desc">PERMAH+ reframed for the realities of aging well. Measures Wellbeing (PERMAH+), the nine <strong style="color:var(--text);font-weight:600">Amplifiers</strong> (Ability &middot; Motivation &middot; Psychological Safety &middot; Emotional Resilience &middot; Knowing Me &middot; Inclusion &amp; Belonging &middot; Maintaining Purpose &middot; Learning &amp; Growing &middot; Optimizing Health), <strong style="color:var(--text);font-weight:600">Self-Compassion</strong> (Self-Talk &middot; Mindfulness &middot; Connection), <strong style="color:var(--text);font-weight:600">Life Satisfaction</strong>, and <strong style="color:var(--text);font-weight:600">State of Wellbeing</strong>. <strong style="color:var(--text);font-weight:600">Optional Modifiable Risk Reflection</strong> captures the 14 Lancet-2024 dementia risk factors (hearing, smoking, hypertension, alcohol, obesity, depression, social isolation, physical inactivity, air pollution, head injury, less education, diabetes, untreated vision loss, untreated cholesterol) across past &middot; current &middot; future on a 14&times;3 matrix &mdash; admins toggle the section on per-subscription. Designed for LiveWell residential programs, aged-care providers, third-age university programs, and family/friend supporter networks.</p>
+        </div>
+
+        <div class="ed-card bespoke">
+          <div class="ed-audience">Bespoke</div>
+          <div class="ed-key">CUSTOM · Tailored to your deployment</div>
+          <h3>Bespoke / Custom Implementation<span class="badge-bespoke">BESPOKE</span></h3>
+          <div class="ed-tagline">When the standard editions don&rsquo;t fit your context</div>
+          <p class="ed-desc">When a client&rsquo;s deployment doesn&rsquo;t fit a standard edition, we&rsquo;ll author a bespoke variant tailored to their language, regulatory framing, dashboards, and downstream comms. We&rsquo;ve shipped two so far: a Psychosocial Safety variant for a major Australian infrastructure services group (hazards-led survey aligned to the new WHS psychosocial-hazard regulations, heat-maps by Line of Business and Contract, EAP-aware respondent comms, offline-capable Card mode for fly-in fly-out workers), and <strong style="color:var(--text);font-weight:600">The HEART Of Change Tool</strong> for The Change Lab (see the dedicated card below). <strong style="color:var(--text);font-weight:600">The same approach is available to any client</strong> whose context calls for a custom edition &mdash; mining, defence, healthcare, education, faith-based, indigenous-community, or any other vertical.</p>
+        </div>
+
+        <div class="ed-card bespoke" style="background:linear-gradient(135deg,var(--card) 0%,rgba(1,176,226,.06) 200%)">
+          <div class="ed-audience" style="background:rgba(1,176,226,.10);color:#01b0e2;border-color:rgba(1,176,226,.30)">Featured Bespoke</div>
+          <div class="ed-key">WHC · The HEART Of Change Tool</div>
+          <h3>The HEART Of Change Tool<span class="badge-bespoke" style="background:linear-gradient(135deg,#01b0e2,#0f2a3f);box-shadow:0 2px 8px rgba(1,176,226,.30)">NEW · 2026</span></h3>
+          <div class="ed-tagline">Built with The Change Lab &middot; Dr. Michelle McQuaid&rsquo;s HEART Framework</div>
+          <p class="ed-desc">A bespoke edition for organisations navigating change. Built on Dr. Michelle McQuaid&rsquo;s <strong style="color:var(--text);font-weight:600">HEART Framework</strong> — five evidence-based factors that help us regulate our nervous systems and create psychological safety during times of uncertainty: <strong style="color:var(--text);font-weight:600">H</strong>onour Feelings &middot; <strong style="color:var(--text);font-weight:600">E</strong>ngage Purposefully &middot; <strong style="color:var(--text);font-weight:600">A</strong>ppreciate Strengths &middot; <strong style="color:var(--text);font-weight:600">R</strong>each Out &middot; <strong style="color:var(--text);font-weight:600">T</strong>ake Tiny Steps. The 7-page survey measures each factor across three tiers (Individual / Team / Workplace), surfaces the four-quadrant <strong style="color:var(--text);font-weight:600">State of Change</strong> (Capable / Challenged / Unsettled / Vulnerable) on a Safety &times; Predictability matrix, and reports Change AMPlifiers (Ability / Motivation / Psych Safety / Self-Compassion) and Workplace Outcomes (Job Sat / Performance / Safety / Wellbeing) alongside a configurable general-population baseline. Individual respondents see their own HEART profile in their vault; admins see the cohort dashboard with State-of-Change distribution, factor-by-quadrant breakdowns, and a verbatim feedback feed with auto-redacted PII.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── ADD-ONS ──────────────────────────────────────────────────── -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <h2 class="section-title">Layer in the capabilities you <em>actually</em> need.</h2>
+      </div>
+      <p class="section-lede">Every edition ships with the core measurement out of the box. Add-ons turn on extra modules, AI-powered explainers, integrations, and white-label branding without rebuilding the platform underneath.</p>
+
+      <div class="ao-grid">
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+          <h4>Coaching Foundry</h4>
+          <p class="ao-desc">A Sophie-led coaching library with personalised guidance against every section of the framework. Respondents get a coach in their pocket; admins get a dashboard of what&rsquo;s resonating.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+          <h4>Kids 360 (Multi-Rater)</h4>
+          <p class="ao-desc">Builds a 360-degree wellbeing picture of a child by inviting the people who know them across home, school and clinical contexts. A trusted person at the school sets up each child as a subject and emails magic-link invitations to <strong style="color:var(--text);font-weight:600">parents, grandparents, teachers, clinicians and coaches</strong>. Each peer answers a short, age-appropriate PERMAH survey rewritten in third-person about the child; the kid optionally completes their own with the playful Sophie-led interface they already know. Results land in a comparative dashboard inside the bank with role-segmented PERMAH bars, gap-analysis (where self and peers diverge), and an item-level heatmap by respondent &mdash; n&ge;3 redaction protects individual rater identity. <strong style="color:var(--text);font-weight:600">Available on the Kids edition</strong>; Youth coming.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+          <h4>AI Seeding</h4>
+          <p class="ao-desc">Pre-seeded Explainer + Ask Sophie content across every section card. Respondents tap a chip to read what an item means in plain English, or ask Sophie a follow-up question. No prompt-engineering on your side.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+          <h4>Personalised Coaching Videos</h4>
+          <p class="ao-desc">Personalised AI-generated coaching videos per respondent — same friendly avatar, scripted from their own results. Used for executive coaching, deep-dive briefs, and post-survey debriefs.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+          <h4>Moral Injury Module</h4>
+          <p class="ao-desc">Adds the Moral Injury section + dashboard tabs for clients in healthcare, defence, justice, and other contexts where ethical-distress measurement matters.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <h4>Quietly Cracking <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></h4>
+          <p class="ao-desc">A 22-item ME/WE/US check-in that surfaces the "high-functioning burnout" pattern — respondents who still meet deadlines and show up day to day, but are running on empty, masking it, and quietly disengaging. Three free-text reflection prompts give people the space to say what the sliders can't. Available across Workplace, Life and University editions.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
+          <h4>Digital Wellbeing <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></h4>
+          <p class="ao-desc">A 15-item ME/WE/US check-in for school-age respondents on how phones, social media, gaming and screen time are shaping wellbeing. ME captures personal habits (sleep impact, scrolling fatigue, ability to put devices down), WE captures peer signals (comparison, cyberbullying, online friendships), and US captures whether the school and adults around them help navigate it well. Seven protective-factor items are reverse-scored so a HIGH score always reads as MORE digital strain. Includes a <strong style="color:var(--text);font-weight:600">PERMA+ Impact matrix</strong> in the bank dashboard — splits the cohort into Low / Mid / High strain tertiles and shows mean PERMA+ per tertile, so leadership can see which wellbeing pillars correlate most strongly with digital strain. Available across the Kids and Youth school editions, with separate question banks tuned to each age group's language.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+          <h4>Spirituality Module</h4>
+          <p class="ao-desc">Adds the Spirituality section + ME/WE/US tier dashboard for clients whose wellbeing strategy includes purpose, meaning and connection beyond the self.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h4>Ikigai Module</h4>
+          <p class="ao-desc">A guided Ikigai discovery flow + sweet-spot dashboard. Helps respondents map what they love, what they&rsquo;re good at, what the world needs and what they can be paid for — and where those overlap.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h4>White-Label Theme</h4>
+          <p class="ao-desc">Custom theme palette, logo, and PDF cover branding so the platform reads as yours. Used by EAPs, large enterprise rollouts, and client-of-client deployments.</p>
+          <span class="ao-tag">One-off</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h4>SSO Integration</h4>
+          <p class="ao-desc">SAML / OIDC sign-on bridge to your Identity Provider. Respondents authenticate against your own directory; we never see passwords.</p>
+          <span class="ao-tag">One-off</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+          <h4>DataWarehouse Export Feed</h4>
+          <p class="ao-desc">Nightly response feed in your warehouse format (Snowflake, BigQuery, Redshift, S3 + Parquet). Joins cleanly to your HRIS or LMS so you can blend wellbeing signals with your other people data.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h4>Managed Setup</h4>
+          <p class="ao-desc">We provision the org, subscription, admin users and first collection round on your behalf — so you go from &ldquo;yes, let&rsquo;s do this&rdquo; to &ldquo;the survey is in respondents&rsquo; inboxes&rdquo; without touching the admin console.</p>
+          <span class="ao-tag">One-off</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/><line x1="3" y1="3" x2="21" y2="21"/></svg></div>
+          <h4>Offline Kiosk Mode</h4>
+          <p class="ao-desc">Respondents install the survey to their phone or tablet on first open, then complete it without a single byte of connectivity — fly-in fly-out, regional sites, in a tunnel, on a plane. Responses sit safely on their device and upload automatically the next time they&rsquo;re online. Card mode runs end-to-end from local storage; the question bank, theme assets and runtime are all pre-cached. Built for distributed cohorts where coordinator-managed kiosks aren&rsquo;t practical.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><rect x="6" y="13" width="3" height="5"/><rect x="11" y="11" width="3" height="7"/><rect x="16" y="9" width="2" height="9"/></svg></div>
+          <h4>Reporting Foundry <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></h4>
+          <p class="ao-desc">One-click <strong style="color:var(--text);font-weight:600">Grand Report</strong>, <strong style="color:var(--text);font-weight:600">Leadership Briefing</strong>, <strong style="color:var(--text);font-weight:600">Wellbeing Infographic</strong> and <strong style="color:var(--text);font-weight:600">Hazards Infographic</strong> generation &mdash; every artefact branded to your theme and auto-deposited into Coaching Foundry &mdash; plus the new <strong style="color:var(--text);font-weight:600">Insights Score Deep Dive</strong> analysis layer. Every insight card on your bank now carries a <em>"How is this calculated?"</em> transparency pill: tap it to see the exact formula, the source questions, the answer options the respondent saw, and a question type chip in plain language. Pick a Collection Period inside the same drawer to render per-question 0&ndash;10 distribution histograms with mean markers, alongside the rolled-up aggregate metric-score chart &mdash; the same chart the dedicated <strong style="color:var(--text);font-weight:600">Deep Dive tab</strong> shows. From the tab, slice by department, tenure, age band or any custom demographic; compare two cohorts side-by-side; export anonymised per-respondent values as CSV. <strong style="color:var(--text);font-weight:600">n &ge; 5 anonymity floor</strong> enforced on every cell; opaque <em>R0001</em>-style IDs in exports; PII denylist on every payload &mdash; respondent identity is structurally invisible to the bank. Available across every workplace, life, education and aging-well edition.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="19 9 13 15 9 11 5 15"/></svg></div>
+          <h4>Trends Foundry <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></h4>
+          <p class="ao-desc">A <strong style="color:var(--text);font-weight:600">My &middot; Industry &middot; Global</strong> comparison matrix inside your bank &mdash; wellbeing and psychosocial-hazard benchmarks across PERMAH, Civility, Spirituality, Economic Security and Culture of Care, themed to your brand and pre-filtered to your industry. Define <strong style="color:var(--text);font-weight:600">Significant Events</strong> &mdash; a restructure, a leadership change, a return-to-office mandate &mdash; and <strong style="color:var(--text);font-weight:600">Collection Rounds</strong>, then pick one or more on the dashboard to add a window-scoped column alongside the all-time baseline so leaders can read &ldquo;did the number move during the event?&rdquo; at a glance. Click any metric to drill into the response count behind each tile. Turns repeated rounds into a trend line leaders can act on. Available across every workplace, life, education and aging-well edition.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── PLANS ────────────────────────────────────────────────────── -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <h2 class="section-title">Flexible terms that match how you <em>actually</em> buy.</h2>
+      </div>
+      <p class="section-lede">We offer three subscription term lengths plus a one-time option for short engagements. All four work alongside any edition and any add-on.</p>
+
+      <div class="plans-card">
+        <div class="plans-row plans-head">
+          <div>Plan</div>
+          <div>Billing mode</div>
+          <div>When recurring billing kicks in</div>
+          <div>Best for</div>
+        </div>
+
+        <div class="plans-row">
+          <div data-lbl="Plan" class="plan-term">3-month plan</div>
+          <div data-lbl="Billing mode" class="plan-mode">Quarterly recurring &middot; or invoice + sub</div>
+          <div data-lbl="When recurring billing kicks in" class="plan-when">Day 1 of cycle 2 (3 months in)</div>
+          <div data-lbl="Best for" class="plan-fits">Pilot programs, executive cohorts, short-form research engagements where you want to evaluate before committing for longer.</div>
+        </div>
+
+        <div class="plans-row">
+          <div data-lbl="Plan" class="plan-term">6-month plan</div>
+          <div data-lbl="Billing mode" class="plan-mode">Half-yearly recurring &middot; or invoice + sub</div>
+          <div data-lbl="When recurring billing kicks in" class="plan-when">Day 1 of cycle 2 (6 months in)</div>
+          <div data-lbl="Best for" class="plan-fits">Half-year wellbeing initiatives, leadership cohorts running in two waves, programs aligned to a half-year fiscal calendar.</div>
+        </div>
+
+        <div class="plans-row">
+          <div data-lbl="Plan" class="plan-term">12-month plan</div>
+          <div data-lbl="Billing mode" class="plan-mode">Annual recurring &middot; or invoice + sub</div>
+          <div data-lbl="When recurring billing kicks in" class="plan-when">Day 1 of year 2</div>
+          <div data-lbl="Best for" class="plan-fits">The default — enterprise rollouts, school-year programs, annual wellbeing strategies. Includes baseline + follow-up collection rounds.</div>
+        </div>
+
+        <div class="plans-row">
+          <div data-lbl="Plan" class="plan-term">One-time</div>
+          <div data-lbl="Billing mode" class="plan-mode">Invoice only &middot; no subscription</div>
+          <div data-lbl="When recurring billing kicks in" class="plan-when">Never &mdash; single engagement</div>
+          <div data-lbl="Best for" class="plan-fits">Conference cohorts, one-off retreats, research samples, investor-day reporting. We deliver, you receive a single invoice, no auto-renewal.</div>
+        </div>
+      </div>
+
+      <div class="fits-card">
+        <div class="fits-row">
+          <div class="fits-num">1</div>
+          <div class="fits-body">
+            <h4>Pick an edition</h4>
+            <p>Match the audience: workplace, university, life, vet, sport, school (kids or youth), in aging well, or a bespoke variant we author for you. The edition decides the language, the section set and the dashboard.</p>
+          </div>
+        </div>
+        <div class="fits-row">
+          <div class="fits-num">2</div>
+          <div class="fits-body">
+            <h4>Layer add-ons that fit your goals</h4>
+            <p>Coaching Foundry for a guided respondent experience. AI Seeding for plain-English explainers. Personalised coaching video. White-label theming for an EAP or enterprise rollout. Mix and match.</p>
+          </div>
+        </div>
+        <div class="fits-row">
+          <div class="fits-num">3</div>
+          <div class="fits-body">
+            <h4>Choose a plan term</h4>
+            <p>3, 6, or 12 months recurring — or one-time for a single engagement. Pay by invoice (we issue once, you pay net 30/60), by subscription (Zoho auto-bills on cycle), or invoice-and-subscription (you prepay the first term, recurring kicks in at renewal).</p>
+          </div>
+        </div>
+        <div class="fits-row">
+          <div class="fits-num">4</div>
+          <div class="fits-body">
+            <h4>We handle setup, you handle launch</h4>
+            <p>Add the Managed Setup add-on and we provision everything. Or self-serve via our admin console if you&rsquo;d rather drive. Either way, the survey is in respondents&rsquo; inboxes within days, not weeks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CTA / contact card ──────────────────────────────────────── -->
+    <div class="contact-card">
+      <div class="contact-card-inner">
+        <h3>Ready to see what <em>fits</em> your team?</h3>
+        <p>Tell us a little about your audience and your timeline — we&rsquo;ll build a tailored offer you can review, edit and accept inline. No pressure, no commitment, no spam.</p>
+        <a class="btn-primary" href="javascript:void(0)" onclick="wmTalkOpen('proposal')">Request an offer</a>
+        <a class="btn-ghost" href="acknowledgement.html">View our research foundations</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="page-ft">
+    <div class="ft-divider"></div>
+    <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+    <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy policy</a> &middot;
+    <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a> &middot;
+    Powered by <strong>Wellbeing Matters</strong>
+    <div style="margin-top:14px;font-size:10.5px;opacity:.7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved.</div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       Floating "Talk to us" pill + slide-in drawer
+       ════════════════════════════════════════════════════════════════
+       Public-page version of the wm_bank rep-message FAB. Because
+       this page has no signed-in user, the drawer asks the visitor
+       for their name + email up front. Submission posts to the
+       existing send_enquiry.php generic-enquiry handler, which
+       sends a branded confirmation email TO the visitor with BCC
+       to info@the-good-foundry.com + support@the-good-foundry.com
+       so a representative is alerted in their inbox immediately.
+       Self-contained — no extra script files, no extra endpoints. -->
+  <style>
+    #wm-talk-fab {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 200;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px 10px 12px;
+      background: linear-gradient(135deg, var(--grape), var(--punch));
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(236,0,139,.32);
+      transition: transform .18s, box-shadow .18s;
+    }
+    #wm-talk-fab:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(236,0,139,.42); }
+    #wm-talk-fab svg { width: 18px; height: 18px; flex-shrink: 0; }
+    #wm-talk-fab .fab-img {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    #wm-talk-fab .fab-label { line-height: 1.15; text-align: left; }
+    #wm-talk-fab .fab-hi { display: block; font-size: 10px; font-weight: 600; opacity: .85; letter-spacing: .04em; text-transform: uppercase; }
+    #wm-talk-fab .fab-name { display: block; font-size: 13px; font-weight: 700; }
+
+    #wm-talk-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(22,26,46,.45);
+      backdrop-filter: blur(2px);
+      z-index: 250;
+      display: none;
+    }
+    #wm-talk-backdrop.open { display: block; }
+
+    #wm-talk-drawer {
+      position: fixed;
+      /* Start below the 110px sticky topbar (bumped 2026-05-15 for
+         the larger TGF wordmark logo) so the page nav stays visible
+         above the drawer instead of being covered by it. */
+      top: 110px; right: 0; bottom: 0;
+      width: 380px;
+      max-width: 92vw;
+      background: var(--card);
+      box-shadow: -12px 0 40px rgba(22,26,46,.18);
+      border-top-left-radius: 14px;
+      z-index: 260;
+      transform: translateX(100%);
+      transition: transform .25s ease;
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font);
+      overflow: hidden;
+    }
+    #wm-talk-drawer.open { transform: translateX(0); }
+
+    #wm-talk-drawer .talk-header {
+      position: relative;
+      padding: 24px 26px 22px;
+      background: linear-gradient(135deg, var(--twilight) 0%, var(--grape) 75%, var(--punch) 130%);
+      color: #fff;
+    }
+    #wm-talk-drawer .talk-header::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+    }
+    #wm-talk-drawer .talk-header .talk-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
+      margin-bottom: 6px;
+    }
+    #wm-talk-drawer .talk-header h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin: 0;
+    }
+    #wm-talk-drawer .talk-header h3 em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+    }
+    #wm-talk-drawer .talk-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,.14);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+    }
+    #wm-talk-drawer .talk-close:hover { background: rgba(255,255,255,.28); }
+
+    #wm-talk-drawer .talk-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 22px 26px 26px;
+    }
+    #wm-talk-drawer .talk-body p.talk-lede {
+      font-size: 13.5px;
+      color: var(--text-dim);
+      line-height: 1.65;
+      margin: 0 0 18px;
+      font-weight: 400;
+    }
+    #wm-talk-drawer label.talk-label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--arctic);
+      margin: 14px 0 6px;
+    }
+    #wm-talk-drawer input.talk-input,
+    #wm-talk-drawer textarea.talk-input,
+    #wm-talk-drawer select.talk-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      transition: border-color .15s, box-shadow .15s;
+      resize: none;
+    }
+    #wm-talk-drawer textarea.talk-input { min-height: 96px; line-height: 1.55; }
+    /* Native select needs explicit appearance reset + custom chevron
+       so it matches the input fields in the same drawer. Chevron is
+       a tiny inline SVG data-uri in the active drawer's --arctic
+       colour. Padding-right makes room for the chevron. */
+    #wm-talk-drawer select.talk-input {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+      padding-right: 36px;
+      background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B75BC' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 14px 14px;
+      line-height: 1.4;
+    }
+    #wm-talk-drawer select.talk-input:hover { border-color: rgba(38,170,225,.45); }
+    /* When a select has a value selected (i.e. not the empty "Not
+       sure" placeholder), nudge the text colour to the strong text
+       colour so it doesn't read as muted/unfilled. */
+    #wm-talk-drawer select.talk-input:not([data-empty="1"]) { color: var(--text); font-weight: 500; }
+    #wm-talk-drawer select.talk-input option {
+      color: var(--text); background: var(--card);
+      font-weight: 400;
+    }
+    #wm-talk-drawer input.talk-input:focus,
+    #wm-talk-drawer textarea.talk-input:focus,
+    #wm-talk-drawer select.talk-input:focus {
+      outline: none;
+      border-color: var(--arctic);
+      box-shadow: 0 0 0 3px rgba(38,170,225,.18);
+    }
+    #wm-talk-drawer .talk-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    #wm-talk-drawer .talk-submit {
+      margin-top: 18px;
+      width: 100%;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, var(--grape), var(--punch));
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: .02em;
+      box-shadow: 0 4px 18px rgba(236,0,139,.25);
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+    }
+    #wm-talk-drawer .talk-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(236,0,139,.32);
+    }
+    #wm-talk-drawer .talk-submit:disabled { opacity: .55; cursor: not-allowed; }
+    #wm-talk-drawer .talk-error,
+    #wm-talk-drawer .talk-help {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.55;
+      display: none;
+    }
+    #wm-talk-drawer .talk-error {
+      background: rgba(236,0,139,.07);
+      border: 1px solid rgba(236,0,139,.28);
+      color: var(--punch);
+    }
+    #wm-talk-drawer .talk-help {
+      background: rgba(38,170,225,.07);
+      border: 1px solid rgba(38,170,225,.22);
+      color: var(--text-dim);
+      font-size: 11.5px;
+    }
+    #wm-talk-drawer .talk-help.shown { display: block; }
+    #wm-talk-drawer .talk-error.shown { display: block; }
+
+    #wm-talk-drawer .talk-success {
+      display: none;
+      padding: 36px 22px 28px;
+      text-align: center;
+    }
+    #wm-talk-drawer .talk-success.shown { display: block; }
+    #wm-talk-drawer .talk-success .success-icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--arctic), var(--orchid));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(27,117,188,.28);
+    }
+    #wm-talk-drawer .talk-success .success-icon svg { width: 30px; height: 30px; color: #fff; }
+    #wm-talk-drawer .talk-success h4 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -.01em;
+    }
+    #wm-talk-drawer .talk-success p {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.65;
+      max-width: 280px;
+      margin: 0 auto 22px;
+    }
+    #wm-talk-drawer .talk-success button {
+      padding: 9px 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    #wm-talk-drawer .talk-success button:hover {
+      border-color: rgba(38,170,225,.45);
+      color: var(--arctic);
+    }
+
+    /* Pill-group — checkbox chips for editions / add-ons inside the
+       proposal-mode drawer. Each label becomes an interactive pill;
+       the underlying checkbox is hidden. */
+    #wm-talk-drawer .pill-group {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 4px;
+    }
+    #wm-talk-drawer .pill-group label {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--card); color: var(--text-dim);
+      font-size: 12.5px; font-weight: 500;
+      cursor: pointer; user-select: none;
+      transition: all .15s;
+    }
+    #wm-talk-drawer .pill-group label:hover {
+      border-color: rgba(38,170,225,.45); color: var(--text);
+    }
+    #wm-talk-drawer .pill-group input[type="checkbox"] {
+      position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;
+    }
+    #wm-talk-drawer .pill-group label:has(input:checked) {
+      border-color: var(--punch);
+      background: rgba(236,0,139,.08);
+      color: var(--punch);
+      font-weight: 600;
+    }
+
+    /* Book-a-call alternative — secondary in-drawer link that
+       swaps the form for the Amelia booking iframe. Sits below the
+       Send button in the form, and again on the success state. */
+    #wm-talk-drawer .talk-bookcall {
+      display: inline-flex; align-items: center; gap: 8px;
+      width: 100%; justify-content: center;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--card);
+      color: var(--arctic);
+      border: 1px solid rgba(38,170,225,.30);
+      border-radius: 100px;
+      font-family: var(--font); font-size: 12.5px; font-weight: 600;
+      text-decoration: none; letter-spacing: .02em;
+      cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    #wm-talk-drawer .talk-bookcall:hover {
+      background: rgba(38,170,225,.07);
+      color: var(--twilight);
+      border-color: var(--arctic);
+    }
+
+    /* Booking panel — reuses the existing .talk-header (dynamically
+       updated to "Book a 30-min call") so there's only ONE title in
+       view. Body = one-line message + iframe + tiny foot. If the
+       iframe fails to fire onload within 5s, JS swaps in an
+       open-in-new-tab fallback. */
+    #wm-talk-drawer.booking-mode { width: 520px; }
+    #wm-talk-drawer .talk-booking { display: none; flex: 1; flex-direction: column; background: var(--card); overflow: hidden; }
+    #wm-talk-drawer.booking-mode .talk-booking { display: flex; }
+    #wm-talk-drawer.booking-mode #wm-talk-form-host,
+    #wm-talk-drawer.booking-mode #wm-talk-success { display: none !important; }
+    #wm-talk-drawer .talk-booking-frame { position: relative; flex: 1; overflow: hidden; background: var(--card); }
+    #wm-talk-drawer .talk-booking-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    #wm-talk-drawer .talk-booking-loading {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      padding: 24px;
+      color: var(--text-dim); font-size: 13px; text-align: center;
+      pointer-events: none; background: var(--card);
+      transition: opacity .25s;
+    }
+    #wm-talk-drawer .talk-booking-loading.hidden { opacity: 0; }
+    #wm-talk-drawer .talk-booking-loading .spinner {
+      width: 38px; height: 38px;
+      border: 3px solid rgba(38,170,225,.18); border-top-color: var(--arctic);
+      border-radius: 50%; animation: wmTalkSpin .8s linear infinite;
+    }
+    @keyframes wmTalkSpin { to { transform: rotate(360deg); } }
+    #wm-talk-drawer .talk-booking-foot {
+      padding: 10px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--mid);
+      font-size: 11.5px; color: var(--text-dim);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    }
+    #wm-talk-drawer .talk-booking-foot a,
+    #wm-talk-drawer .talk-booking-foot button {
+      background: none; border: none; padding: 0; cursor: pointer;
+      color: var(--arctic); text-decoration: none; font-weight: 600;
+      font-family: var(--font); font-size: 11.5px;
+      border-bottom: 1px solid rgba(27,117,188,.3);
+    }
+    #wm-talk-drawer .talk-booking-foot a:hover,
+    #wm-talk-drawer .talk-booking-foot button:hover { color: var(--twilight); border-color: rgba(41,56,144,.55); }
+
+    @media (max-width: 480px) {
+      #wm-talk-fab { bottom: 16px; right: 16px; padding: 8px 14px 8px 8px; }
+      #wm-talk-fab .fab-img { width: 28px; height: 28px; }
+      #wm-talk-fab .fab-name { font-size: 12px; }
+    }
+  </style>
+
+  <button id="wm-talk-fab" type="button" onclick="wmTalkOpen()" title="Talk to a Good Foundry representative">
+    <span class="fab-img">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </span>
+    <span class="fab-label">
+      <span class="fab-hi">Have a question?</span>
+      <span class="fab-name">Talk to us</span>
+    </span>
+  </button>
+
+  <div id="wm-talk-backdrop" onclick="wmTalkClose()"></div>
+
+  <aside id="wm-talk-drawer" role="dialog" aria-label="Talk to a representative">
+    <div class="talk-header">
+      <button class="talk-close" onclick="wmTalkClose()" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="talk-eyebrow" id="wm-talk-eyebrow">The Good Foundry</div>
+      <h3 id="wm-talk-heading">Talk to <em>us</em>.</h3>
+    </div>
+
+    <div class="talk-body" id="wm-talk-form-host">
+      <p class="talk-lede" id="wm-talk-lede">Tell us a little about yourself and what you&rsquo;re looking for. A representative will be in touch within one business day.</p>
+
+      <div class="talk-row-2">
+        <div>
+          <label class="talk-label" for="wm-talk-first">First name</label>
+          <input class="talk-input" type="text" id="wm-talk-first" autocomplete="given-name" placeholder="Jane">
+        </div>
+        <div>
+          <label class="talk-label" for="wm-talk-last">Last name</label>
+          <input class="talk-input" type="text" id="wm-talk-last" autocomplete="family-name" placeholder="Smith">
+        </div>
+      </div>
+
+      <label class="talk-label" for="wm-talk-email">Email</label>
+      <input class="talk-input" type="email" id="wm-talk-email" autocomplete="email" placeholder="jane@your-company.com">
+      <!-- 2026-06-19 — Confirm-email gate (Marty: two recent typos
+           prevented us from connecting). Italic prompt + paste-
+           blocked confirm field + live match colouring on the
+           border; submit handler refuses until they match. -->
+      <div class="talk-confirm-note" style="font-size:12.5px;color:var(--text-dim,#5a6b7c);margin:6px 0 4px;line-height:1.55;font-style:italic">
+        We value your effort to be here &mdash; it would be a shame if an accidental email typo prevented us from connecting. Could you type your email again so we know we have it right?
+      </div>
+      <label class="talk-label" for="wm-talk-email-confirm">Confirm email</label>
+      <input class="talk-input" type="email" id="wm-talk-email-confirm" autocomplete="off" spellcheck="false" placeholder="Type your email again">
+
+      <label class="talk-label" for="wm-talk-org">Organisation <span style="color:var(--text-dim);font-weight:500;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input class="talk-input" type="text" id="wm-talk-org" autocomplete="organization" placeholder="Your company or school">
+
+      <!-- Proposal-only fields: revealed when wmTalkOpen('proposal') is
+           called. Hidden in the default "Talk to us" intent so the
+           drawer stays light for general questions. -->
+      <div id="wm-talk-proposal-block" style="display:none">
+        <label class="talk-label">Editions of interest</label>
+        <div class="pill-group" id="wm-pi-group" data-name="editions">
+          <label><input type="checkbox" data-pi="WPA"> @ Work</label>
+          <label><input type="checkbox" data-pi="WPU"> @ University</label>
+          <label><input type="checkbox" data-pi="WPL"> in Life</label>
+          <label><input type="checkbox" data-pi="WPV"> @ Veterinary Practice</label>
+          <label><input type="checkbox" data-pi="WPS"> @ Sport</label>
+          <label><input type="checkbox" data-pi="WPK"> @ School (Kids)</label>
+          <label><input type="checkbox" data-pi="WPY"> @ School (Youth)</label>
+          <label><input type="checkbox" data-pi="BESPOKE"> Bespoke / Custom</label>
+          <label><input type="checkbox" data-pi="WHC"> HEART Of Change Tool</label>
+          <label><input type="checkbox" data-pi="UNSURE"> Not sure yet</label>
+        </div>
+
+        <label class="talk-label">Add-ons of interest <span style="color:var(--text-dim);font-weight:500;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <div class="pill-group" id="wm-pa-group" data-name="addons">
+          <label><input type="checkbox" data-pa="Coaching Foundry"> Coaching Foundry</label>
+          <label><input type="checkbox" data-pa="AI Seeding"> AI Seeding</label>
+          <label><input type="checkbox" data-pa="Personalised Coaching Videos"> Personalised Coaching Videos</label>
+          <label><input type="checkbox" data-pa="Moral Injury"> Moral Injury</label>
+          <label><input type="checkbox" data-pa="Quietly Cracking"> Quietly Cracking</label>
+          <label><input type="checkbox" data-pa="Digital Wellbeing"> Digital Wellbeing (Kids / Youth)</label>
+          <label><input type="checkbox" data-pa="Spirituality"> Spirituality</label>
+          <label><input type="checkbox" data-pa="Ikigai"> Ikigai</label>
+          <label><input type="checkbox" data-pa="White-Label Theme"> White-Label Theme</label>
+          <label><input type="checkbox" data-pa="SSO Integration"> SSO Integration</label>
+          <label><input type="checkbox" data-pa="DataWarehouse Export"> DataWarehouse Export</label>
+          <label><input type="checkbox" data-pa="Managed Setup"> Managed Setup</label>
+          <label><input type="checkbox" data-pa="Offline Kiosk Mode"> Offline Kiosk Mode</label>
+        </div>
+
+        <div class="talk-row-2">
+          <div>
+            <label class="talk-label" for="wm-talk-term">Plan term</label>
+            <select class="talk-input" id="wm-talk-term">
+              <option value="">Not sure</option>
+              <option value="3-month">3-month</option>
+              <option value="6-month">6-month</option>
+              <option value="12-month">12-month</option>
+              <option value="one-time">One-time</option>
+            </select>
+          </div>
+          <div>
+            <label class="talk-label" for="wm-talk-size">Cohort size</label>
+            <input class="talk-input" type="text" id="wm-talk-size" placeholder="e.g. ~250 staff">
+          </div>
+        </div>
+
+        <label class="talk-label" for="wm-talk-timeline">Timeline</label>
+        <select class="talk-input" id="wm-talk-timeline">
+          <option value="">Not sure</option>
+          <option value="ASAP">ASAP</option>
+          <option value="Within a month">Within a month</option>
+          <option value="Within a quarter">Within a quarter</option>
+          <option value="Just exploring">Just exploring</option>
+        </select>
+      </div>
+
+      <label class="talk-label" for="wm-talk-message" id="wm-talk-message-label">Your question</label>
+      <textarea class="talk-input" id="wm-talk-message" rows="4" placeholder="What would you like to know? Editions, add-ons, plans, custom builds, anything."></textarea>
+
+      <button type="button" class="talk-submit" id="wm-talk-submit" onclick="wmTalkSend()">Send to a representative &rarr;</button>
+
+      <!-- Book-a-call alternative — swaps the form for the Amelia
+           booking iframe inline so the prospect never leaves the
+           page. Some prospects prefer a live call to a form. -->
+      <button type="button" class="talk-bookcall" onclick="wmTalkShowBooking()">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a call instead &rarr;
+      </button>
+
+      <div class="talk-error" id="wm-talk-error"></div>
+      <div class="talk-help">
+        We&rsquo;ll send you a confirmation email and your message lands in our representative&rsquo;s inbox immediately.
+      </div>
+    </div>
+
+    <div class="talk-success" id="wm-talk-success">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4 id="wm-talk-success-h">Your message is on its way.</h4>
+      <p id="wm-talk-success-p">A representative from The Good Foundry will be in touch within one business day. We&rsquo;ve also sent you a confirmation copy.</p>
+      <button type="button" class="talk-bookcall" onclick="wmTalkShowBooking()" style="margin-bottom:14px">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Want to fast-track? Book a call &rarr;
+      </button>
+      <button type="button" onclick="wmTalkReset()">Send another</button>
+    </div>
+
+    <!-- Booking panel — reuses the .talk-header above (its h3 is
+         updated to "Book a 30-min call" via wmTalkShowBooking). Body
+         is a one-line message + iframe + tiny foot. Full context
+         lives on /bookcall.html, linked from the foot. -->
+    <div class="talk-booking" id="wm-talk-booking">
+      <div class="talk-booking-frame">
+        <div class="talk-booking-loading" id="wm-talk-booking-loading">
+          <div class="spinner"></div>
+          <div>Loading the calendar&hellip;</div>
+        </div>
+        <iframe id="wm-talk-booking-iframe" title="Book a call"
+                src="about:blank"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="talk-booking-foot">
+        <button type="button" onclick="wmTalkShowForm()">&larr; Back to form</button>
+        <a href="https://www.coachingfoundry.com/bookcall/" target="_blank" rel="noopener">Open in new tab &rarr;</a>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+  (function () {
+    var TGF_ENQUIRY_URL = 'https://smart-tools-foundry.com/WBM/api/send_enquiry.php';
+    /* Proposal requests route to marty@ directly so the message
+       lands in the right inbox with all the captured context.
+       Generic "Talk to us" enquiries continue to go through the
+       generic-enquiry path which BCCs info@ + support@. */
+    var PROPOSAL_RECIPIENT = 'marty@the-good-foundry.com';
+    var PAGE_TAG = 'offerings page';
+
+    function $(id){ return document.getElementById(id); }
+    function show(el){ el.classList.add('shown'); }
+    function hide(el){ el.classList.remove('shown'); }
+
+    /* Drawer intent: 'talk' (default) or 'proposal'. Drives the
+       header copy, the proposal-only fields visibility, the submit
+       button label, and the routing on send. */
+    var currentIntent = 'talk';
+
+    function applyIntent(intent) {
+      currentIntent = intent === 'proposal' ? 'proposal' : 'talk';
+      var heading = $('wm-talk-heading');
+      var lede    = $('wm-talk-lede');
+      var msgLbl  = $('wm-talk-message-label');
+      var msgEl   = $('wm-talk-message');
+      var submit  = $('wm-talk-submit');
+      var pblock  = $('wm-talk-proposal-block');
+      var sucH    = $('wm-talk-success-h');
+      var sucP    = $('wm-talk-success-p');
+      if (currentIntent === 'proposal') {
+        heading.innerHTML = 'Request an <em>offer</em>.';
+        lede.textContent = 'Tell us a little about your team and what you need — we’ll build a tailored offer you can review, edit and accept inline.';
+        msgLbl.innerHTML = 'Anything else we should know? <span style="color:var(--text-dim);font-weight:500;text-transform:none;letter-spacing:0">(optional)</span>';
+        msgEl.placeholder = 'Specific questions, constraints, decision timeline, anything that helps us tailor the offer.';
+        submit.textContent = 'Request my offer →';
+        pblock.style.display = 'block';
+        sucH.textContent = 'Your offer request is on its way.';
+        sucP.textContent = 'Marty from The Good Foundry will be in touch within one business day with a tailored offer you can review, edit and accept inline. We’ve also sent you a confirmation copy.';
+      } else {
+        heading.innerHTML = 'Talk to <em>us</em>.';
+        lede.textContent = 'Tell us a little about yourself and what you’re looking for. A representative will be in touch within one business day.';
+        msgLbl.innerHTML = 'Your question';
+        msgEl.placeholder = 'What would you like to know? Editions, add-ons, plans, custom builds, anything.';
+        submit.textContent = 'Send to a representative →';
+        pblock.style.display = 'none';
+        sucH.textContent = 'Your message is on its way.';
+        sucP.textContent = 'A representative from The Good Foundry will be in touch within one business day. We’ve also sent you a confirmation copy.';
+      }
+    }
+
+    window.wmTalkOpen = function (intent) {
+      applyIntent(intent);
+      $('wm-talk-drawer').classList.remove('booking-mode');
+      $('wm-talk-backdrop').classList.add('open');
+      $('wm-talk-drawer').classList.add('open');
+      setTimeout(function(){ try { $('wm-talk-first').focus(); } catch(e){} }, 320);
+    };
+
+    /* Pre-tick one edition checkbox by its data-pi code. Used by
+       the explorer page (offerings-explorer.html) — it bounces the
+       prospect here with ?intent=proposal&pi=WPA so the drawer
+       opens with their picked edition already selected. Accepts
+       comma-separated codes for multi-pick links. Idempotent —
+       calling repeatedly with different sets clears prior ticks
+       on the same call. No-op when the pi list is empty. */
+    window.wmTalkPreTick = function (csv) {
+      if (!csv) return;
+      var codes = String(csv).split(',').map(function (s) { return s.trim().toUpperCase(); }).filter(Boolean);
+      if (!codes.length) return;
+      document.querySelectorAll('#wm-talk-drawer .pill-group input[data-pi]').forEach(function (cb) {
+        var k = String(cb.getAttribute('data-pi') || '').toUpperCase();
+        cb.checked = codes.indexOf(k) !== -1;
+      });
+    };
+
+    /* Auto-open + auto-pre-tick on load when the URL carries
+       ?intent=proposal (&pi=<code>). Lets external pages (the
+       explorer, marketing emails, public CTAs) deep-link straight
+       into the drawer with an edition pre-checked. */
+    try {
+      var _params = new URLSearchParams(window.location.search);
+      var _autoIntent = _params.get('intent');
+      var _autoPi     = _params.get('pi');
+      if (_autoIntent === 'proposal') {
+        setTimeout(function () {
+          try {
+            window.wmTalkOpen('proposal');
+            if (_autoPi) window.wmTalkPreTick(_autoPi);
+          } catch (e) {}
+        }, 220);
+      }
+    } catch (_e) { /* URLSearchParams missing in ancient browsers — silent skip */ }
+
+    window.wmTalkClose = function () {
+      $('wm-talk-backdrop').classList.remove('open');
+      $('wm-talk-drawer').classList.remove('open');
+      $('wm-talk-drawer').classList.remove('booking-mode');
+    };
+    window.wmTalkReset = function () {
+      ['wm-talk-first','wm-talk-last','wm-talk-email','wm-talk-email-confirm','wm-talk-org','wm-talk-message','wm-talk-size'].forEach(function(id){
+        var el = $(id); if (el) { el.value = ''; el.style.borderColor = ''; }
+      });
+      ['wm-talk-term','wm-talk-timeline'].forEach(function(id){
+        var el = $(id); if (el) el.selectedIndex = 0;
+      });
+      document.querySelectorAll('#wm-talk-drawer .pill-group input[type="checkbox"]').forEach(function(c){ c.checked = false; });
+      hide($('wm-talk-error'));
+      $('wm-talk-success').classList.remove('shown');
+      $('wm-talk-form-host').style.display = '';
+      $('wm-talk-drawer').classList.remove('booking-mode');
+    };
+
+    /* Switch the drawer body between the form/success view and the
+       in-drawer "Book a call" CTA panel. We deliberately do NOT
+       iframe the booking page — the WP /bookcall/ page wraps the
+       Amelia widget in the same hero this site uses, so embedding
+       it inside an iframe shows the visitor a duplicate of the
+       page they're on. The CTA opens the calendar in a new tab
+       where the calendar is the primary content. */
+    /* Same-origin proxy that fetches /bookcall/ from coachingfoundry.com
+       and injects CSS to hide the WP page chrome — leaves only the
+       Amelia widget visible inside the iframe. Avoids the wrapped-page
+       loop without requiring a stripped page on the WP side. */
+    var BOOK_URL = 'https://www.coachingfoundry.com/bookcall/';
+    function _setBookingHeader() {
+      var heading = $('wm-talk-heading');
+      var lede    = $('wm-talk-eyebrow');
+      if (heading) heading.innerHTML = 'Book a <em>30-min call</em>.';
+      if (lede)    lede.textContent = 'Coaching Foundry calendar';
+    }
+    window.wmTalkShowBooking = function () {
+      _setBookingHeader();
+      var f = $('wm-talk-booking-iframe');
+      var l = $('wm-talk-booking-loading');
+      if (l) l.classList.remove('hidden');
+      if (f && (!f.src || f.src === 'about:blank' || f.src.indexOf(BOOK_URL) !== 0)) f.src = BOOK_URL;
+      if (f) f.onload = function () { if (l) l.classList.add('hidden'); };
+      $('wm-talk-drawer').classList.add('booking-mode');
+    };
+    window.wmTalkShowForm = function () {
+      $('wm-talk-drawer').classList.remove('booking-mode');
+      applyIntent(currentIntent);
+      var lede = $('wm-talk-eyebrow');
+      if (lede) lede.textContent = 'The Good Foundry';
+    };
+
+    /* Collect ticked editions / add-ons as "label" arrays. */
+    function _collectChecks(attr) {
+      var out = [];
+      document.querySelectorAll('#wm-talk-drawer .pill-group input[' + attr + ']:checked').forEach(function(c){
+        var label = c.parentNode.textContent.trim();
+        out.push(label);
+      });
+      return out;
+    }
+
+    /* Build the structured message body for a proposal request so
+       the recipient inbox sees a scannable summary on top + the
+       free-text addendum at the bottom. */
+    function _buildProposalMessage(opts) {
+      var lines = [];
+      lines.push('OFFER REQUEST');
+      lines.push('================');
+      lines.push('');
+      if (opts.editions.length) lines.push('Editions of interest: ' + opts.editions.join(', '));
+      else                      lines.push('Editions of interest: (none ticked)');
+      if (opts.addons.length)   lines.push('Add-ons of interest:  ' + opts.addons.join(', '));
+      lines.push('Plan term:            ' + (opts.term     || 'Not specified'));
+      lines.push('Cohort size:          ' + (opts.size     || 'Not specified'));
+      lines.push('Timeline:             ' + (opts.timeline || 'Not specified'));
+      lines.push('Submitted via:        ' + PAGE_TAG);
+      lines.push('');
+      if (opts.note) {
+        lines.push('Notes from the prospect:');
+        lines.push('------------------------');
+        lines.push(opts.note);
+      } else {
+        lines.push('(No additional notes from the prospect.)');
+      }
+      return lines.join('\n');
+    }
+
+    /* 2026-06-19 — Confirm-email guards (Marty: typo prevention).
+       Block paste on the confirm field + live border colour for the
+       match state. Idempotent guard so the talk-form open/close
+       doesn't stack listeners. */
+    (function _wmTalkBindConfirmGuards() {
+      var confirm = $('wm-talk-email-confirm');
+      if (!confirm || confirm._wmGuarded) return;
+      confirm._wmGuarded = true;
+      confirm.addEventListener('paste', function (ev) {
+        ev.preventDefault();
+        var errEl = $('wm-talk-error');
+        if (errEl) {
+          errEl.textContent = 'Please type your email again instead of pasting — this confirms there is no typo in the first field.';
+          show(errEl);
+        }
+      });
+      function _wmTalkPaintMatchState() {
+        var a = ($('wm-talk-email').value || '').trim().toLowerCase();
+        var b = (confirm.value || '').trim().toLowerCase();
+        if (!a || !b) { confirm.style.borderColor = ''; return; }
+        confirm.style.borderColor = (a === b) ? '#18a36e' : '#dc2626';
+      }
+      confirm.addEventListener('input', _wmTalkPaintMatchState);
+      var primaryField = $('wm-talk-email');
+      if (primaryField) primaryField.addEventListener('input', _wmTalkPaintMatchState);
+    })();
+
+    window.wmTalkSend = function () {
+      var firstName    = ($('wm-talk-first').value || '').trim();
+      var lastName     = ($('wm-talk-last').value  || '').trim();
+      var email        = ($('wm-talk-email').value || '').trim();
+      var emailConfirm = ($('wm-talk-email-confirm').value || '').trim();
+      var organisation = ($('wm-talk-org').value   || '').trim();
+      var note         = ($('wm-talk-message').value || '').trim();
+      var errEl = $('wm-talk-error');
+
+      if (!firstName || !lastName) { errEl.textContent = 'Please enter your first and last name.'; show(errEl); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email address.'; show(errEl); return; }
+      if (!emailConfirm) {
+        errEl.textContent = 'Please type your email again in the Confirm Email field — we want to make sure there’s no typo.';
+        show(errEl); return;
+      }
+      if (email.toLowerCase() !== emailConfirm.toLowerCase()) {
+        errEl.textContent = 'The two email addresses don’t match — please check for typos and try again.';
+        show(errEl);
+        var confirmEl = $('wm-talk-email-confirm');
+        if (confirmEl) confirmEl.focus();
+        return;
+      }
+
+      var url = TGF_ENQUIRY_URL, payload;
+
+      if (currentIntent === 'proposal') {
+        var editions = _collectChecks('data-pi');
+        var addons   = _collectChecks('data-pa');
+        if (!editions.length) { errEl.textContent = 'Please tick at least one edition of interest (or "Not sure yet").'; show(errEl); return; }
+        var term     = ($('wm-talk-term').value     || '').trim();
+        var size     = ($('wm-talk-size').value     || '').trim();
+        var timeline = ($('wm-talk-timeline').value || '').trim();
+        var fullName = (firstName + ' ' + lastName).trim();
+        payload = {
+          type:        'rep_message',
+          to:          PROPOSAL_RECIPIENT,
+          repName:     'Marty',
+          senderName:  fullName,
+          senderEmail: email,
+          orgName:     organisation,
+          notify:      email, /* BCC the sender so they get a copy */
+          message: _buildProposalMessage({
+            editions: editions,
+            addons:   addons,
+            term:     term,
+            size:     size,
+            timeline: timeline,
+            note:     note
+          })
+        };
+      } else {
+        if (!note) { errEl.textContent = 'Please type your question.'; show(errEl); return; }
+        if (!organisation) organisation = 'Public web enquiry';
+        payload = {
+          firstName:    firstName,
+          lastName:     lastName,
+          email:        email,
+          organisation: organisation,
+          message:      note + '\n\n[Submitted via ' + PAGE_TAG + ']'
+        };
+      }
+
+      hide(errEl);
+      var btn = $('wm-talk-submit');
+      var originalLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json().catch(function(){ return { success: r.ok }; }); })
+      .then(function(j){
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+        if (j && j.success) {
+          $('wm-talk-form-host').style.display = 'none';
+          $('wm-talk-success').classList.add('shown');
+        } else {
+          errEl.textContent = (j && j.error) || 'Could not send right now. Please try again or email marty@the-good-foundry.com directly.';
+          show(errEl);
+        }
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+        errEl.textContent = 'Network error — please email marty@the-good-foundry.com directly.';
+        show(errEl);
+      });
+    };
+
+    /* Esc key closes drawer. */
+    document.addEventListener('keydown', function(ev){
+      if (ev.key === 'Escape') wmTalkClose();
+    });
+
+    /* Auto-open the proposal drawer when arriving with #proposal in
+       the URL (e.g. from the index page's "Request a proposal" CTA).
+       The hash is consumed once, then cleared so reload doesn't keep
+       reopening it. */
+    if (window.location.hash === '#proposal') {
+      try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
+      setTimeout(function () { wmTalkOpen('proposal'); }, 100);
+    }
+  })();
+  </script>
+
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

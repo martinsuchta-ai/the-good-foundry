@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Feedback please — Wellbeing Matters @ Work</title>
+<!--
+  wm_feedback_public.html — Wellbeing Matters @ Work
+  Public (no-login) feedback page reached via a feedback-invite link
+  emailed by a Bank Super (api/bank_broadcast_email.php in feedback-
+  request mode). Identity is anchored by the ?token=… query param —
+  the token resolves server-side to a sub_id + recipient email +
+  client theme.
+
+  Submission lands in feedback_submissions with audience='public',
+  visible in Bank Super → Sentiments → User Feedback tab with a
+  "Public link" badge distinguishing it from bank-side admin
+  submissions.
+-->
+<style>
+  :root {
+    --primary: #e8621a;
+    --header-bg: #0f2a3f;
+    --surface: #ffffff;
+    --surface-2: #f4f6fb;
+    --border: #e2e8ef;
+    --text-dark: #14202e;
+    --text-mid: #384358;
+    --text-muted: #6b7280;
+    --error: #b91c1c;
+    --success: #047857;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; min-height: 100%; background: var(--surface-2); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--text-dark); }
+  body { display: flex; flex-direction: column; align-items: center; padding: 24px 16px 60px; }
+
+  .shell { width: 100%; max-width: 640px; background: var(--surface); border-radius: 16px; box-shadow: 0 6px 32px rgba(15,22,34,.08); overflow: hidden; }
+
+  .head { background: var(--header-bg); color: #fff; padding: 26px 32px 22px; display: flex; align-items: center; gap: 16px; }
+  .head .logos { display: flex; align-items: center; gap: 10px; }
+  .head .logo-img { display: block; max-height: 44px; max-width: 120px; background: rgba(255,255,255,.1); border-radius: 6px; padding: 4px; }
+  .head .vault-padlock { width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .head .vault-padlock svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 1.8; }
+  .head .brand { display: flex; flex-direction: column; }
+  .head .wordmark { font-size: 15px; font-weight: 800; letter-spacing: .02em; }
+  .head .subline  { font-size: 11px; font-weight: 500; opacity: .78; margin-top: 2px; }
+
+  .body { padding: 30px 32px 16px; }
+
+  .eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--primary); font-weight: 800; margin-bottom: 6px; }
+  h1 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin: 0 0 8px; line-height: 1.25; }
+  .intro { font-size: 14px; color: var(--text-mid); line-height: 1.6; margin: 0 0 22px; }
+
+  .q-block { margin-bottom: 22px; }
+  .q-label { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; line-height: 1.4; }
+  .q-hint  { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+
+  .rating-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .rating-btn {
+    flex: 1 0 auto; min-width: 32px; max-width: 48px; height: 38px;
+    border: 1px solid var(--border); background: #fff; color: var(--text-dark);
+    font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 8px;
+    transition: all .12s ease;
+  }
+  .rating-btn:hover { border-color: var(--primary); }
+  .rating-btn.is-selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .rating-scale-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+
+  textarea, input[type="text"] {
+    width: 100%; padding: 12px 14px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 13px; font-family: inherit;
+    color: var(--text-dark); resize: vertical; line-height: 1.55;
+  }
+  textarea { min-height: 90px; }
+  textarea:focus, input[type="text"]:focus {
+    outline: none; border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+
+  .consent { display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; }
+  .consent input { accent-color: var(--primary); width: 16px; height: 16px; }
+  .consent span { font-size: 12px; color: var(--text-mid); }
+
+  .footer-row { padding: 18px 32px 28px; border-top: 1px solid var(--border); background: #f9fafb; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .submit-btn { padding: 12px 28px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .12s ease; }
+  .submit-btn:hover { opacity: .92; }
+  .submit-btn:disabled { background: var(--text-muted); cursor: not-allowed; opacity: .6; }
+  .small-print { font-size: 11px; color: var(--text-muted); line-height: 1.5; max-width: 320px; }
+
+  .alert { margin: 16px 32px; padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.55; }
+  .alert.ok  { background: #d1fae5; color: var(--success); border: 1px solid #6ee7b7; }
+  .alert.err { background: #fee2e2; color: var(--error);   border: 1px solid #fca5a5; }
+
+  .landing { padding: 60px 32px; text-align: center; }
+  .landing h2 { font-size: 20px; font-weight: 800; color: var(--text-dark); margin: 0 0 8px; }
+  .landing p  { font-size: 13px; color: var(--text-mid); line-height: 1.65; margin: 0; }
+  .landing .check { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #fff; }
+  .landing .check svg { width: 32px; height: 32px; stroke: #fff; fill: none; stroke-width: 3; }
+
+  /* Mobile pass (2026-06-04) — feedback link is sent via email and
+     usually opened on phone. Form is the main interaction surface. */
+  @media (max-width: 720px) {
+    body { padding: 14px 10px 48px; }
+    .head { padding: 22px 22px 20px; gap: 12px; }
+    h1 { font-size: 19px; }
+    .body { padding: 24px 22px 14px; }
+    .footer-row { padding: 16px 22px 22px; flex-direction: column; align-items: stretch; }
+    .footer-row .small-print { max-width: none; text-align: center; }
+    /* iOS Safari zooms in on inputs with font-size < 16px */
+    textarea, input[type="text"] { font-size: 16px; padding: 13px 14px; }
+    .submit-btn { min-height: 48px; font-size: 15px; padding: 14px 24px; width: 100%; }
+    .alert { margin: 14px 22px; }
+    .landing { padding: 44px 22px; }
+    /* Rating buttons — slightly bigger tap area on phone */
+    .rating-btn { height: 44px; min-width: 36px; font-size: 14px; }
+  }
+
+  @media (max-width: 380px) {
+    .head { padding: 18px 16px 16px; }
+    .body { padding: 20px 16px 12px; }
+    .footer-row { padding: 14px 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell" id="wmFbShell">
+  <div class="head" id="wmFbHead">
+    <div class="logos">
+      <div class="vault-padlock" aria-hidden="true">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <img id="wmFbClientLogo" class="logo-img" alt="" style="display:none"/>
+    </div>
+    <div class="brand">
+      <div class="wordmark" id="wmFbWordmark">Wellbeing Matters @ Work</div>
+      <div class="subline" id="wmFbSubline">PERMA infused</div>
+    </div>
+  </div>
+
+  <div id="wmFbBody">
+    <div style="padding:60px 32px;text-align:center;color:var(--text-muted);font-size:13px">Loading…</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  function _esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* Pull token from URL */
+  var params = new URLSearchParams(window.location.search);
+  var token = (params.get('token') || '').trim();
+  var bodyEl = document.getElementById('wmFbBody');
+
+  if (!token) {
+    bodyEl.innerHTML = '<div class="alert err" style="margin:32px">This feedback link is missing its identifier. Open the original email and click the button again — it should include a <code>?token=</code> parameter.</div>';
+    return;
+  }
+
+  /* Apply server-resolved brand theme to the page chrome. */
+  function _applyTheme(t) {
+    if (!t) return;
+    var root = document.documentElement.style;
+    if (t.primary)   root.setProperty('--primary',    t.primary);
+    if (t.headerBg)  root.setProperty('--header-bg',  t.headerBg);
+    /* Logo. Prefer absolute URL; logoLocal needs base resolution. */
+    var logoEl = document.getElementById('wmFbClientLogo');
+    if (t.logoUrl) {
+      logoEl.src = t.logoUrl;
+      logoEl.style.display = 'inline-block';
+    } else if (t.logoLocal) {
+      logoEl.src = 'https://smart-tools-foundry.com/WBM/app/' + String(t.logoLocal).replace(/^\/+/, '');
+      logoEl.style.display = 'inline-block';
+    }
+  }
+
+  function _applyWordmarkForEdition(edition) {
+    var w = document.getElementById('wmFbWordmark');
+    var s = document.getElementById('wmFbSubline');
+    var ed = String(edition || '').toUpperCase();
+    if (ed === 'WPD') { w.textContent = 'SAFETY MATTERS'; s.textContent = 'Psychosocial safety'; }
+    else if (ed === 'WHC') { w.textContent = 'Wellbeing Matters · Heart Of Change'; s.textContent = 'Navigating change'; }
+    /* default Wellbeing Matters @ Work stays */
+  }
+
+  function _renderAlreadySubmitted(firstName) {
+    var hi = firstName ? (', ' + _esc(firstName)) : '';
+    bodyEl.innerHTML = ''
+      + '<div class="landing">'
+      +   '<div class="check"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+      +   '<h2>Thanks' + hi + ' — your feedback is already in.</h2>'
+      +   '<p>We received your earlier response. If you’d like to add more thoughts, reply to the original email and we’ll capture it manually.</p>'
+      + '</div>';
+  }
+
+  /* Question copy keyed by variant. admin_voice mirrors the bank-side
+     feedback drawer (used by the Bank Super "Request feedback" flow);
+     respondent_voice mirrors the vault feedback drawer (used by the
+     "Penny for your thoughts" batch sent to evaluation participants). */
+  var COPY = {
+    admin_voice: {
+      title:      'Feedback please',
+      intro:      'A 30-second pulse on how you find the Wellbeing Matters platform at <strong>{CLIENT}</strong>. Your answers go straight to The Good Foundry team and help shape what comes next.',
+      q1Label:    'How useful are the insights for your decision-making?',
+      q1Lscale:   ['0 — Not useful', 'Extremely useful — 10'],
+      q2Label:    'How easy was it to set up and run this evaluation?',
+      q2Lscale:   ['0 — Very hard', 'Effortless — 10'],
+      q3Label:    'How likely are you to recommend Wellbeing Matters to a peer?',
+      q3Lscale:   ['0 — Not at all', 'Definitely — 10'],
+      q4Label:    'What change have you made (or plan to make) based on these insights?',
+      q4Placeholder: 'Your thoughts (optional)',
+      q4Consent:  'Happy to share this anonymously as a case-study quote.',
+      q5Label:    'Anything missing from the platform that would help you?',
+      q5Placeholder: 'Feature ideas, friction points, requests… (optional)'
+    },
+    respondent_voice: {
+      title:      'Penny for your thoughts',
+      intro:      'A 30-second pulse on your experience with the Wellbeing Matters evaluation at <strong>{CLIENT}</strong>. Your answers are anonymous and help us make this better for everyone who comes after you.',
+      q1Label:    'Was this evaluation useful to you?',
+      q1Lscale:   ['0 — Not at all', 'Very useful — 10'],
+      q2Label:    'Based on your insights, how likely are you to make small changes?',
+      q2Lscale:   ['0 — Not likely', 'Very likely — 10'],
+      q3Label:    'Would you recommend this evaluation to others?',
+      q3Lscale:   ['0 — Not at all', 'Definitely — 10'],
+      q4Label:    'Anything else you’d like to share?',
+      q4Placeholder: 'Your thoughts (optional)',
+      q4Consent:  'I’m happy for this to be used anonymously as a testimonial.',
+      q5Label:    'Are there any features or resources you’d love to see in the Vault?',
+      q5Placeholder: 'Feature ideas, friction points, requests… (optional)'
+    }
+  };
+
+  function _renderForm(ctx) {
+    var variant = (ctx.variant === 'respondent_voice') ? 'respondent_voice' : 'admin_voice';
+    var c = COPY[variant];
+    var firstHi = ctx.recipient_first_name ? (' ' + _esc(ctx.recipient_first_name)) : '';
+    var clientName = ctx.org_name ? _esc(ctx.org_name) : 'your organisation';
+    var intro = c.intro.replace('{CLIENT}', clientName);
+    bodyEl.innerHTML = ''
+      + '<div class="body">'
+      +   '<div class="eyebrow">Wellbeing Matters · Your Voice</div>'
+      +   '<h1>' + _esc(c.title) + (firstHi ? ',' + firstHi : '') + '</h1>'
+      +   '<p class="intro">' + intro + '</p>'
+
+      /* Q1: useful */
+      +   '<div class="q-block">'
+      +     '<div class="q-label">' + _esc(c.q1Label) + '</div>'
+      +     '<div class="rating-row" id="rate-useful" role="radiogroup" aria-label="Usefulness rating">' + _ratingBtns('useful') + '</div>'
+      +     '<div class="rating-scale-labels"><span>' + _esc(c.q1Lscale[0]) + '</span><span>' + _esc(c.q1Lscale[1]) + '</span></div>'
+      +   '</div>'
+
+      /* Q2: act */
+      +   '<div class="q-block">'
+      +     '<div class="q-label">' + _esc(c.q2Label) + '</div>'
+      +     '<div class="rating-row" id="rate-act" role="radiogroup" aria-label="Action rating">' + _ratingBtns('act') + '</div>'
+      +     '<div class="rating-scale-labels"><span>' + _esc(c.q2Lscale[0]) + '</span><span>' + _esc(c.q2Lscale[1]) + '</span></div>'
+      +   '</div>'
+
+      /* Q3: recommend (NPS) */
+      +   '<div class="q-block">'
+      +     '<div class="q-label">' + _esc(c.q3Label) + '</div>'
+      +     '<div class="rating-row" id="rate-recommend" role="radiogroup" aria-label="Recommend rating">' + _ratingBtns('recommend') + '</div>'
+      +     '<div class="rating-scale-labels"><span>' + _esc(c.q3Lscale[0]) + '</span><span>' + _esc(c.q3Lscale[1]) + '</span></div>'
+      +   '</div>'
+
+      /* Q4: free text + consent */
+      +   '<div class="q-block">'
+      +     '<div class="q-label">' + _esc(c.q4Label) + '</div>'
+      +     '<textarea id="fb-free-text" maxlength="4000" placeholder="' + _esc(c.q4Placeholder) + '"></textarea>'
+      +     '<label class="consent"><input type="checkbox" id="fb-consent"/><span>' + _esc(c.q4Consent) + '</span></label>'
+      +   '</div>'
+
+      /* Q5: wishlist */
+      +   '<div class="q-block">'
+      +     '<div class="q-label">' + _esc(c.q5Label) + '</div>'
+      +     '<textarea id="fb-wishlist" maxlength="4000" placeholder="' + _esc(c.q5Placeholder) + '"></textarea>'
+      +   '</div>'
+
+      +   '<div id="fb-status"></div>'
+
+      + '</div>'
+
+      + '<div class="footer-row">'
+      +   '<div class="small-print">Your response lands in our team’s feedback queue. We read every one.</div>'
+      +   '<button type="button" class="submit-btn" id="fb-submit">Send feedback</button>'
+      + '</div>';
+
+    /* Wire rating buttons */
+    document.querySelectorAll('.rating-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var group = btn.getAttribute('data-group');
+        document.querySelectorAll('.rating-btn[data-group="' + group + '"]').forEach(function (b) {
+          b.classList.remove('is-selected');
+        });
+        btn.classList.add('is-selected');
+      });
+    });
+
+    document.getElementById('fb-submit').addEventListener('click', function () { _submit(ctx); });
+  }
+
+  function _ratingBtns(group) {
+    var out = '';
+    for (var i = 0; i <= 10; i++) {
+      out += '<button type="button" class="rating-btn" data-group="' + group + '" data-value="' + i + '" aria-label="' + i + '">' + i + '</button>';
+    }
+    return out;
+  }
+
+  function _readRating(group) {
+    var sel = document.querySelector('.rating-btn[data-group="' + group + '"].is-selected');
+    return sel ? parseInt(sel.getAttribute('data-value'), 10) : null;
+  }
+
+  function _submit(ctx) {
+    var status = document.getElementById('fb-status');
+    var btn = document.getElementById('fb-submit');
+    var payload = {
+      audience:           'public',
+      feedback_token:     token,
+      sub_id:             ctx.sub_id || '',
+      rating_useful:      _readRating('useful'),
+      rating_act:         _readRating('act'),
+      rating_recommend:   _readRating('recommend'),
+      free_text:          (document.getElementById('fb-free-text').value || '').trim(),
+      testimonial_consent: !!document.getElementById('fb-consent').checked,
+      features_wishlist:  (document.getElementById('fb-wishlist').value || '').trim()
+    };
+    /* Require at least one rating OR one free-text — same rule as
+       feedback_submit.php so we surface the message inline instead
+       of letting the server 400. */
+    var hasRating = payload.rating_useful !== null || payload.rating_act !== null || payload.rating_recommend !== null;
+    var hasText   = !!payload.free_text || !!payload.features_wishlist;
+    if (!hasRating && !hasText) {
+      status.innerHTML = '<div class="alert err">Please answer at least one rating or leave a message before sending.</div>';
+      return;
+    }
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+    status.innerHTML = '';
+    fetch('https://smart-tools-foundry.com/WBM/api/feedback_submit.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json().then(function (j) { return { http: r.status, j: j }; }); })
+      .then(function (res) {
+        var j = res.j || {};
+        if (!j.ok) {
+          status.innerHTML = '<div class="alert err">Could not send: ' + _esc(j.error || ('HTTP ' + res.http)) + '</div>';
+          btn.disabled = false; btn.textContent = 'Send feedback';
+          return;
+        }
+        _renderAlreadySubmitted(ctx.recipient_first_name || '');
+      })
+      .catch(function (e) {
+        status.innerHTML = '<div class="alert err">Network error: ' + _esc(e.message || 'unknown') + '. Please try again.</div>';
+        btn.disabled = false; btn.textContent = 'Send feedback';
+      });
+  }
+
+  /* Boot — validate the token first. */
+  fetch('https://smart-tools-foundry.com/WBM/api/public_feedback_token.php?token=' + encodeURIComponent(token), { cache: 'no-store' })
+    .then(function (r) { return r.json().then(function (j) { return { http: r.status, j: j }; }); })
+    .then(function (res) {
+      var j = res.j || {};
+      if (!j.ok) {
+        var msg = j.error || 'Invitation could not be validated.';
+        bodyEl.innerHTML = '<div class="alert err" style="margin:32px">' + _esc(msg) + ' If you got this link in an email, please reply to it and we’ll send a fresh invitation.</div>';
+        return;
+      }
+      _applyTheme(j.theme);
+      _applyWordmarkForEdition(j.edition);
+      if (j.already_submitted) {
+        _renderAlreadySubmitted(j.recipient_first_name);
+        return;
+      }
+      _renderForm(j);
+    })
+    .catch(function (e) {
+      bodyEl.innerHTML = '<div class="alert err" style="margin:32px">Could not load the feedback form: ' + _esc(e.message || 'network error') + '. Please reload the page or contact the sender.</div>';
+    });
+})();
+</script>
+
+</body>
+</html>

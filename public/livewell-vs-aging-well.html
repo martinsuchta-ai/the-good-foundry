@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiveWell vs In Aging Well — Wellbeing Matters · The Good Foundry</title>
+<meta name="description" content="Two framings of the same evidence-based adult wellbeing survey: In Aging Well (PERMAH+) and LiveWell (six pillars). Same questions, same data, different language. Pick the framing that fits your audience.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --twilight: #293890;
+  --arctic:   #1B75BC;
+  --aqua:     #26AAE1;
+  --grape:    #662C90;
+  --orchid:   #91268F;
+  --punch:    #EC008B;
+  --leaf:     #2E8B57;
+  --bg:       #F4F6FB;
+  --card:     #FFFFFF;
+  --mid:      #EEF1F8;
+  --border:   rgba(41,56,144,.12);
+  --text:     #161A2E;
+  --text-dim: rgba(22,26,46,.58);
+  --font:     'Outfit', sans-serif;
+  --serif:    'DM Serif Display', serif;
+}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--font); background:var(--bg); color:var(--text);
+  line-height:1.65; font-size:15px; overflow-x:hidden; min-height:100vh;
+}
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+}
+
+/* Topbar */
+.topbar {
+  position:relative; z-index:10; padding:18px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(255,255,255,.78); backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.topbar .brand { display:flex; align-items:center; gap:10px; }
+.topbar .brand strong { font-weight:800; font-size:15px; letter-spacing:.01em; }
+.topbar .brand small { color:var(--text-dim); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.16em; display:block; }
+.topbar a { color:var(--twilight); text-decoration:none; font-weight:600; font-size:13px; }
+.topbar a:hover { color:var(--grape); }
+
+/* "ORIGINAL pages" CTA strip — sits right under the topbar so the
+   two replica pages are discoverable at the moment of arrival. */
+.originals-strip {
+  position:relative; z-index:9;
+  background:linear-gradient(135deg, rgba(102,44,144,.06), rgba(41,56,144,.04));
+  border-bottom:1px solid var(--border);
+  padding:14px 32px;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  flex-wrap:wrap;
+}
+.originals-strip .label {
+  font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--grape); margin-right:6px;
+}
+.originals-strip a {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 18px; border-radius:99px;
+  background:#fff; border:1.5px solid var(--grape); color:var(--grape);
+  font-weight:700; font-size:13px; text-decoration:none;
+  transition:background .15s ease, color .15s ease, transform .15s ease;
+}
+.originals-strip a:hover {
+  background:var(--grape); color:#fff; transform:translateY(-1px);
+}
+.originals-strip a.waw { border-color:var(--twilight); color:var(--twilight); }
+.originals-strip a.waw:hover { background:var(--twilight); color:#fff; }
+.originals-strip a svg { width:14px; height:14px; }
+
+/* Wrapper */
+.wrap { position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:64px 32px 80px; }
+
+/* Hero */
+.hero { text-align:center; max-width:780px; margin:0 auto 56px; }
+.hero .eyebrow { display:inline-block; padding:6px 16px; background:rgba(102,44,144,.10); color:var(--grape); border-radius:99px; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px; }
+.hero h1 { font-family:var(--serif); font-size:clamp(36px, 5vw, 56px); line-height:1.1; letter-spacing:-.01em; margin-bottom:18px; }
+.hero h1 em { font-style:italic; color:var(--grape); }
+.hero p { font-size:17px; color:var(--text-dim); line-height:1.7; }
+.hero p strong { color:var(--text); font-weight:700; }
+
+/* Tab strip */
+.tabs {
+  display:inline-flex; padding:5px; background:var(--card); border:1px solid var(--border);
+  border-radius:99px; box-shadow:0 4px 18px rgba(41,56,144,.06); margin:0 auto 40px;
+}
+.tabs .tab {
+  padding:11px 26px; border:none; background:transparent; cursor:pointer;
+  font-family:var(--font); font-size:13.5px; font-weight:700; letter-spacing:.02em;
+  color:var(--text-dim); border-radius:99px; transition:all .2s ease;
+}
+.tabs .tab.active { background:linear-gradient(135deg, var(--twilight), var(--grape)); color:#fff; box-shadow:0 4px 14px rgba(41,56,144,.30); }
+.tabs .tab:not(.active):hover { color:var(--text); background:rgba(102,44,144,.06); }
+
+/* Card row (both visible by default; tabs collapse on small screens) */
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:24px; margin-top:8px; }
+.card {
+  background:var(--card); border:1px solid var(--border); border-radius:18px;
+  padding:36px 32px; position:relative; overflow:hidden; transition:transform .2s ease, box-shadow .2s ease;
+}
+.card:hover { transform:translateY(-3px); box-shadow:0 12px 34px rgba(41,56,144,.10); }
+.card::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; }
+.card.waw::before  { background:linear-gradient(90deg, var(--arctic), var(--aqua)); }
+.card.lw::before   { background:linear-gradient(90deg, var(--orchid), var(--punch)); }
+
+.card .eyebrow { display:inline-block; padding:5px 14px; border-radius:99px; font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; margin-bottom:14px; }
+.card.waw .eyebrow { background:rgba(27,117,188,.10); color:var(--arctic); }
+.card.lw  .eyebrow { background:rgba(145,38,143,.10); color:var(--orchid); }
+
+.card h2 { font-family:var(--serif); font-size:30px; line-height:1.15; margin-bottom:10px; }
+.card .lede { color:var(--text-dim); font-size:14.5px; margin-bottom:24px; line-height:1.65; }
+
+.pillars { list-style:none; padding:0; margin:0 0 28px; }
+.pillars li {
+  display:flex; align-items:flex-start; gap:10px; padding:10px 0;
+  border-top:1px solid var(--border); font-size:14px;
+}
+.pillars li:first-child { border-top:none; }
+.pillars li .dot { flex:0 0 8px; width:8px; height:8px; border-radius:50%; margin-top:8px; }
+.card.waw .pillars li .dot { background:var(--arctic); }
+.card.lw  .pillars li .dot { background:var(--orchid); }
+.pillars li .lbl { font-weight:700; }
+.pillars li .sub { display:block; color:var(--text-dim); font-size:12.5px; font-weight:500; margin-top:1px; }
+
+.cta {
+  display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:99px;
+  font-weight:700; font-size:14px; text-decoration:none; transition:transform .15s ease, box-shadow .2s ease;
+}
+.card.waw .cta { background:linear-gradient(135deg, var(--arctic), var(--twilight)); color:#fff; box-shadow:0 6px 20px rgba(27,117,188,.30); }
+.card.lw  .cta { background:linear-gradient(135deg, var(--orchid), var(--punch));    color:#fff; box-shadow:0 6px 20px rgba(145,38,143,.30); }
+.cta:hover { transform:translateY(-2px); }
+
+/* Mapping note */
+.mapping {
+  margin-top:48px; padding:28px 32px; background:rgba(102,44,144,.04);
+  border:1px solid rgba(102,44,144,.18); border-radius:14px;
+}
+.mapping h3 { font-family:var(--serif); font-size:22px; margin-bottom:10px; color:var(--grape); }
+.mapping p { font-size:14px; color:var(--text); line-height:1.7; }
+.mapping table { width:100%; border-collapse:collapse; margin-top:18px; font-size:13.5px; }
+.mapping th, .mapping td { text-align:left; padding:11px 14px; border-bottom:1px solid rgba(102,44,144,.10); }
+.mapping th { font-weight:800; font-size:11px; letter-spacing:.10em; text-transform:uppercase; color:var(--grape); }
+.mapping td:first-child { color:var(--arctic); font-weight:700; }
+.mapping td:last-child  { color:var(--orchid); font-weight:700; }
+
+/* Filtered states for the tab toggle */
+body.show-waw .card.lw  { display:none; }
+body.show-lw  .card.waw { display:none; }
+
+/* Footer */
+.foot { margin-top:60px; text-align:center; color:var(--text-dim); font-size:12.5px; }
+.foot a { color:var(--twilight); text-decoration:none; font-weight:600; }
+.foot a:hover { color:var(--grape); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div>
+      <small>Wellbeing Matters</small>
+      <strong>The Good Foundry</strong>
+    </div>
+  </div>
+  <a href="/TGF/index.html">← Back to The Good Foundry</a>
+</div>
+
+<!-- ORIGINAL pages strip — links to the two replica briefing pages
+     rebuilt from the perma4plus.com source content + restyled with
+     livewell.org-flavoured branding. Both sit alongside this
+     comparison overview so a visitor can move from "what are these?"
+     into either client-facing page in one click. -->
+<div class="originals-strip">
+  <span class="label">Original pages</span>
+  <a class="waw" href="aging-well-survey.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    In Aging Well briefing
+  </a>
+  <a href="livewell-survey.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    LiveWell briefing
+  </a>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <span class="eyebrow">Two framings · one instrument</span>
+    <h1>The same survey, told <em>two different ways.</em></h1>
+    <p><strong>In Aging Well</strong> uses the PERMAH+ research framework. <strong>LiveWell</strong> reframes the same six pillars in the language of perma4plus.com/LiveWell. The questions, the data, the analytics — all identical. Pick the language that fits your audience.</p>
+  </div>
+
+  <!-- Tab strip -->
+  <div style="text-align:center">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-show="both" onclick="lvSetTab('both')">Both</button>
+      <button class="tab" data-show="waw" onclick="lvSetTab('waw')">In Aging Well</button>
+      <button class="tab" data-show="lw"  onclick="lvSetTab('lw')">LiveWell</button>
+    </div>
+  </div>
+
+  <!-- Two-card comparison -->
+  <div class="cards">
+
+    <!-- In Aging Well card -->
+    <div class="card waw">
+      <span class="eyebrow">PERMAH+ framework</span>
+      <h2>In Aging Well</h2>
+      <p class="lede">Built on Martin Seligman's positive-psychology PERMAH+ model, extended for adult-aging context. The wording follows established wellbeing-science conventions familiar to researchers and clinicians.</p>
+      <ul class="pillars">
+        <li><span class="dot"></span><div><span class="lbl">Positive Emotions</span><span class="sub">Calm, hopeful, energised in everyday life</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Engagement</span><span class="sub">Absorption, flow, knowing your strengths</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Relationships</span><span class="sub">Belonging, support, connection</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Meaning</span><span class="sub">Direction, purpose, what matters</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Accomplishment</span><span class="sub">Growth, capability, momentum</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Health</span><span class="sub">Sleep, movement, energy</span></div></li>
+      </ul>
+      <a href="https://smart-tools-foundry.com/acme-aging-well/wellbeing" class="cta" target="_blank" rel="noopener">Try the In Aging Well form →</a>
+    </div>
+
+    <!-- LiveWell card -->
+    <div class="card lw">
+      <span class="eyebrow">Six LiveWell pillars</span>
+      <h2>LiveWell</h2>
+      <p class="lede">The same six dimensions reframed in the language of perma4plus.com/LiveWell. Action-oriented pillar names emphasise the practice (<em>building</em>, <em>cultivating</em>, <em>maintaining</em>, <em>learning</em>) over the abstract concept.</p>
+      <ul class="pillars">
+        <li><span class="dot"></span><div><span class="lbl">Building Emotional Resilience</span><span class="sub">Steadiness through hard moments</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Knowing Me</span><span class="sub">Self-awareness, strengths, identity</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Cultivating Inclusion &amp; Belonging</span><span class="sub">Showing up for + with others</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Maintaining Purpose</span><span class="sub">Direction and meaning over time</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Learning &amp; Growing</span><span class="sub">Curiosity, skill, momentum</span></div></li>
+        <li><span class="dot"></span><div><span class="lbl">Optimizing Health</span><span class="sub">Physical foundation for wellbeing</span></div></li>
+      </ul>
+      <a href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?sub=SUB-MQ4KQLLF" class="cta" target="_blank" rel="noopener">Try the LiveWell form →</a>
+    </div>
+
+  </div>
+
+  <!-- 1:1 mapping -->
+  <div class="mapping">
+    <h3>Side-by-side mapping</h3>
+    <p>The two framings sit on top of the same 30-or-so items in the question bank. A respondent who completes the In Aging Well form generates the same answer values as a respondent on LiveWell — only the section headers and dashboard labels differ. This lets you serve a single instrument to two audiences without forking the data model.</p>
+    <table>
+      <thead>
+        <tr><th style="width:50%">In Aging Well (PERMAH+)</th><th style="width:50%">LiveWell</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Positive Emotions</td><td>Building Emotional Resilience</td></tr>
+        <tr><td>Engagement</td><td>Knowing Me</td></tr>
+        <tr><td>Relationships</td><td>Cultivating Inclusion &amp; Belonging</td></tr>
+        <tr><td>Meaning</td><td>Maintaining Purpose</td></tr>
+        <tr><td>Accomplishment</td><td>Learning &amp; Growing</td></tr>
+        <tr><td>Health</td><td>Optimizing Health</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    Source for the LiveWell framing: <a href="https://perma4plus.com/LiveWell" target="_blank" rel="noopener">perma4plus.com/LiveWell</a><br>
+    Wellbeing Matters is a product of <a href="/TGF/index.html">The Good Foundry</a>.
+  </div>
+
+</div>
+
+<script>
+function lvSetTab(which) {
+  var body = document.body;
+  body.classList.remove('show-waw', 'show-lw');
+  if (which === 'waw') body.classList.add('show-waw');
+  if (which === 'lw')  body.classList.add('show-lw');
+  /* Update active tab visual */
+  var tabs = document.querySelectorAll('.tabs .tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.toggle('active', tabs[i].getAttribute('data-show') === which);
+  }
+  /* Update URL hash so the choice is shareable. */
+  try { history.replaceState(null, '', '#' + which); } catch (_e) {}
+}
+
+/* Honour initial #waw / #lw / #both from the URL. */
+(function () {
+  var h = (location.hash || '').replace('#', '').toLowerCase();
+  if (h === 'waw' || h === 'lw') lvSetTab(h);
+})();
+</script>
+
+</body>
+</html>

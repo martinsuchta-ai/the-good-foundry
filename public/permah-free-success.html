@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment received · The Good Foundry</title>
+<meta name="description" content="Your PERMA+ Survey payment has been received. Your survey link is on its way.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --twilight: #293890; --arctic: #1B75BC; --aqua: #26AAE1;
+  --grape: #662C90; --orchid: #91268F; --punch: #EC008B;
+  --bg: #F4F6FB; --card: #FFFFFF; --mid: #EEF1F8;
+  --border: rgba(41,56,144,.12); --text: #161A2E;
+  --text-dim: rgba(22,26,46,.58);
+  --font: 'Outfit', sans-serif; --serif: 'DM Serif Display', serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09), transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11), transparent 55%);
+  pointer-events: none;
+}
+.shell { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 80px 28px 60px; text-align: center; }
+.success-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  box-shadow: 0 8px 28px rgba(27,117,188,.28);
+}
+.success-icon svg { width: 38px; height: 38px; }
+.kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(38,170,225,.08); border: 1px solid rgba(27,117,188,.28);
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--arctic); margin-bottom: 18px;
+}
+h1 {
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 14px;
+}
+h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.lede { font-size: 16px; color: var(--text-dim); line-height: 1.7; max-width: 520px; margin: 0 auto 26px; font-weight: 300; }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 28px 30px; margin-top: 18px; text-align: left;
+  box-shadow: 0 6px 22px rgba(22,26,46,.06);
+}
+.card-row {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+}
+.card-row:last-child { border-bottom: 0; }
+.card-row .lbl { color: var(--text-dim); font-weight: 500; }
+.card-row .val { color: var(--text); font-weight: 600; font-family: ui-monospace, Menlo, monospace; }
+.poll {
+  margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 12px;
+  font-size: 13px; color: var(--text-dim);
+}
+.spinner {
+  width: 18px; height: 18px; border: 2.4px solid rgba(38,170,225,.18); border-top-color: var(--arctic);
+  border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.cta-row { margin-top: 28px; display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px;
+  font-family: var(--font); font-size: 13.5px; font-weight: 600;
+  text-decoration: none; border-radius: 100px;
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.cta-primary {
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(236,0,139,.22);
+}
+.cta-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(236,0,139,.32); }
+.cta-secondary {
+  background: var(--card); color: var(--text); border: 1px solid var(--border);
+}
+.cta-secondary:hover { border-color: rgba(38,170,225,.45); color: var(--arctic); }
+.foot { margin-top: 40px; font-size: 12px; color: var(--text-dim); }
+.foot a { color: var(--arctic); text-decoration: none; }
+
+/* Mobile pass (2026-06-04) — success page is a Stripe redirect
+   target, opens in whatever the user paid from (usually phone). */
+@media (max-width: 720px) {
+  .shell { padding: 48px 20px 44px; }
+  .success-icon { width: 64px; height: 64px; margin-bottom: 20px; }
+  .success-icon svg { width: 30px; height: 30px; }
+  .card { padding: 22px 20px; }
+  .card-row { font-size: 13px; gap: 10px; }
+  .cta { min-height: 44px; padding: 13px 22px; font-size: 14px; }
+}
+
+@media (max-width: 380px) {
+  .shell { padding: 36px 14px 32px; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+  <div class="shell">
+
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+
+    <div class="kicker">Payment received</div>
+    <h1>Thanks &mdash; taking you to <em>the survey</em>.</h1>
+    <p class="lede">Your tax invoice from Stripe is already in your inbox. We&rsquo;re forwarding you to the PERMA+ Wellbeing Survey now.</p>
+
+    <div class="card" id="ref-card" style="display:none">
+      <div class="card-row">
+        <span class="lbl">Reference</span>
+        <span class="val" id="ref-val">—</span>
+      </div>
+      <div class="card-row">
+        <span class="lbl">Respondent</span>
+        <span class="val" id="resp-val" style="font-family:var(--font);font-weight:500;color:var(--text-dim)">—</span>
+      </div>
+      <div class="card-row" id="status-row">
+        <span class="lbl">Status</span>
+        <span class="val" id="status-val" style="font-family:var(--font);font-weight:600;color:var(--arctic)">Confirming…</span>
+      </div>
+    </div>
+
+    <div class="poll" id="poll-msg">
+      <div class="spinner"></div>
+      <span>Confirming the payment with our system&hellip;</span>
+    </div>
+
+    <div class="cta-row">
+      <a class="cta cta-primary" href="https://smart-tools-foundry.com/permah-public/permah">Open the survey now &rarr;</a>
+      <a class="cta cta-secondary" href="bookcall.html">Talk to us</a>
+    </div>
+
+    <div class="foot">
+      Need help? Email <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a> with your reference number.<br>
+      <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy policy</a> &middot; <strong style="color:var(--text);font-weight:600">The Good Foundry Pty Ltd</strong>
+    </div>
+
+  </div>
+
+  <script>
+  (function () {
+    /* Pull `ref` from the URL, kick off a status poll for ops/diag
+       reasons (so any failed payment shows up in the UI), AND
+       redirect the visitor to the evaluation after a brief moment.
+       The Stripe redirect itself is the proof of payment — the
+       webhook round-trip is for our DB record, not for gating the
+       evaluation. */
+    var SURVEY_URL = 'https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?sub=SUB-MOQ0UBYQ';
+    var REDIRECT_MS = 4000;
+
+    var params = new URLSearchParams(window.location.search);
+    var ref = params.get('ref') || '';
+    if (!ref) {
+      try {
+        var pending = JSON.parse(sessionStorage.getItem('pf_paid_pending') || '{}');
+        if (pending && pending.ref) ref = pending.ref;
+      } catch (e) {}
+    }
+
+    /* Build the destination URL once so the manual CTA, the
+       countdown copy, and the auto-redirect all use the same string. */
+    function _buildDestUrl() {
+      var url = SURVEY_URL;
+      try {
+        var pending2 = JSON.parse(sessionStorage.getItem('pf_paid_pending') || '{}');
+        var qs = [];
+        if (ref)              qs.push('ref=' + encodeURIComponent(ref));
+        if (pending2.respondent) qs.push('email=' + encodeURIComponent(pending2.respondent));
+        else if (pending2.email) qs.push('email=' + encodeURIComponent(pending2.email));
+        if (pending2.firstName)  qs.push('first_name=' + encodeURIComponent(pending2.firstName));
+        if (pending2.lastName)   qs.push('last_name=' + encodeURIComponent(pending2.lastName));
+        if (qs.length) url += (url.indexOf('?') === -1 ? '?' : '&') + qs.join('&');
+      } catch (e) {}
+      return url;
+    }
+    var DEST_URL = _buildDestUrl();
+
+    /* Wire the visible manual CTA so the visitor can jump
+       immediately if they don't want to wait, and never feels
+       stuck if the auto-redirect is blocked or slow. */
+    var primaryCta = document.querySelector('.cta-primary');
+    if (primaryCta) {
+      primaryCta.setAttribute('href', DEST_URL);
+      primaryCta.textContent = 'Start the evaluation now →';
+    }
+
+    /* Visible countdown so the visitor sees the redirect coming
+       rather than staring at a static "Thanks" screen. Updates
+       every 250ms; falls through to the redirect when 0 hits. */
+    var pollMsgEl = document.getElementById('poll-msg');
+    var endAt = Date.now() + REDIRECT_MS;
+    var redirectTimer = null;
+    function _renderCountdown() {
+      if (!pollMsgEl) return;
+      var remaining = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+      pollMsgEl.innerHTML = '<div class="spinner"></div>'
+        + '<span>Taking you to the evaluation in <strong>' + remaining + 's</strong>&hellip;</span>';
+    }
+    _renderCountdown();
+    var countdownInterval = setInterval(_renderCountdown, 250);
+
+    /* Forward to the evaluation. Stripe wouldn\'t have redirected
+       here unless payment succeeded, so this fires regardless of
+       webhook status. */
+    redirectTimer = setTimeout(function () {
+      clearInterval(countdownInterval);
+      window.location.href = DEST_URL;
+    }, REDIRECT_MS);
+
+    var refCard  = document.getElementById('ref-card');
+    var refVal   = document.getElementById('ref-val');
+    var respVal  = document.getElementById('resp-val');
+    var statusVal= document.getElementById('status-val');
+    var pollMsg  = document.getElementById('poll-msg');
+
+    if (!ref) {
+      pollMsg.innerHTML = '<span>We didn&rsquo;t catch your reference. Check your email for the receipt &mdash; the survey link will follow shortly.</span>';
+      return;
+    }
+
+    refVal.textContent = ref;
+    refCard.style.display = '';
+
+    var attempts = 0;
+    var TICK_MS = 3000;
+    var MAX_ATTEMPTS = 60;
+
+    function tick() {
+      attempts++;
+      fetch('https://smart-tools-foundry.com/WBM/api/public_signup.php?action=status&ref=' + encodeURIComponent(ref) + '&_=' + Date.now(), { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || !j.ok || !j.signup) return null;
+          var s = j.signup;
+          if (s.respondent_email) respVal.textContent = s.respondent_email;
+          else if (s.email) respVal.textContent = s.email;
+
+          if (s.status === 'paid') {
+            statusVal.textContent = 'Confirmed';
+            statusVal.style.color = 'var(--arctic)';
+            pollMsg.innerHTML = '<span style="color:var(--arctic);font-weight:600">✓ Payment confirmed.</span>&nbsp;&nbsp;<span>The survey link will arrive by email shortly.</span>';
+            return 'stop';
+          }
+          if (s.status === 'minted') {
+            statusVal.textContent = 'Survey link sent';
+            statusVal.style.color = 'var(--punch)';
+            pollMsg.innerHTML = '<span style="color:var(--punch);font-weight:600">✓ Survey link sent.</span>&nbsp;&nbsp;<span>Check the respondent&rsquo;s inbox.</span>';
+            return 'stop';
+          }
+          if (s.status === 'failed' || s.status === 'expired') {
+            statusVal.textContent = s.status;
+            statusVal.style.color = 'var(--punch)';
+            pollMsg.innerHTML = '<span>We had trouble confirming the payment. Please email <a href="mailto:info@the-good-foundry.com" style="color:var(--arctic)">info@the-good-foundry.com</a> with reference <strong>' + ref + '</strong>.</span>';
+            return 'stop';
+          }
+          /* Still 'pending' — keep polling. */
+          return null;
+        })
+        .then(function (state) {
+          if (state === 'stop') return;
+          if (attempts >= MAX_ATTEMPTS) {
+            pollMsg.innerHTML = '<span>Still confirming &mdash; the receipt is in your inbox. Your survey link will follow within one business day. Reference <strong>' + ref + '</strong>.</span>';
+            return;
+          }
+          setTimeout(tick, TICK_MS);
+        })
+        .catch(function () {
+          if (attempts >= MAX_ATTEMPTS) return;
+          setTimeout(tick, TICK_MS);
+        });
+    }
+
+    tick();
+  })();
+  </script>
+
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

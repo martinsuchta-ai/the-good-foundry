@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Private share for LiveWell leadership. Not for public indexing. -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Imagining Flourishing Together · A possibility study for LiveWell</title>
+<meta name="description" content="A gentle exploration, prepared for the LiveWell leadership team, of how recognising everyday acts of wellbeing could grow into something meaningful for your people.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --twilight: #293890;
+  --arctic:   #1B75BC;
+  --aqua:     #26AAE1;
+  --grape:    #662C90;
+  --orchid:   #91268F;
+  --punch:    #EC008B;
+  --bg:       #FAFBFD;
+  --card:     #ffffff;
+  --text:     #0F1E40;
+  --text-mid: #3D5366;
+  --text-dim: #6A7E94;
+  --border:   #E2E8EF;
+  --border-light: #EEF1F5;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 400;
+  font-size: 16px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--arctic); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.serif        { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+.serif-italic { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-weight: 400; }
+.gradient-text {
+  background: linear-gradient(135deg, var(--twilight) 0%, var(--punch) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ── Top nav ── */
+.top-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250,251,253,.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+}
+.nav-inner { max-width: 1080px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 14px; color: var(--text); }
+.nav-brand .brand-dot { width: 28px; height: 28px; border-radius: 9px; background: linear-gradient(135deg, var(--twilight), var(--punch)); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 11px; letter-spacing: .04em; }
+.nav-note { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--text-dim); }
+
+/* ── Hero ── */
+.hero {
+  padding: 84px 28px 56px; text-align: center;
+  background:
+    radial-gradient(ellipse 60% 60% at 18% 0%, rgba(38,170,225,.12), transparent 60%),
+    radial-gradient(ellipse 55% 60% at 88% 24%, rgba(236,0,139,.08), transparent 62%);
+}
+.hero-tag {
+  display: inline-block; padding: 6px 16px;
+  background: rgba(38,170,225,.10); color: var(--arctic);
+  border: 1px solid rgba(38,170,225,.30); border-radius: 99px;
+  font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 22px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', Georgia, serif; font-weight: 400;
+  font-size: clamp(40px, 6.2vw, 72px); line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px; max-width: 880px; margin-left: auto; margin-right: auto;
+}
+.hero h1 em { font-style: italic; }
+.hero-desc { max-width: 660px; margin: 0 auto; font-size: clamp(16px, 1.5vw, 19px); color: var(--text-mid); line-height: 1.65; }
+.hero-meta { margin-top: 26px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); }
+
+/* ── Layout ── */
+.layout { max-width: 920px; margin: 0 auto; padding: 20px 28px 40px; }
+.block { margin: 56px 0; }
+.block.tight { margin: 40px 0; }
+.section-tag {
+  display: inline-block; padding: 4px 13px;
+  background: rgba(102,44,144,.08); color: var(--grape);
+  border: 1px solid rgba(102,44,144,.25); border-radius: 99px;
+  font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 14px;
+}
+.h2 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; font-size: clamp(28px, 4vw, 42px); margin: 0 0 14px; line-height: 1.16; letter-spacing: -.01em; }
+.lede { color: var(--text-mid); font-size: clamp(16px, 1.6vw, 18px); line-height: 1.7; max-width: 720px; }
+.lede strong { color: var(--text); font-weight: 600; }
+.prose p { color: var(--text-mid); font-size: 16.5px; line-height: 1.75; margin: 0 0 16px; }
+.prose p strong { color: var(--text); font-weight: 600; }
+
+/* pull-quote */
+.pull {
+  border-left: 3px solid var(--punch); padding: 6px 0 6px 24px; margin: 30px 0;
+  font-family: 'DM Serif Display', Georgia, serif; font-style: italic;
+  font-size: clamp(20px, 2.6vw, 27px); line-height: 1.4; color: var(--text);
+}
+
+/* the loop strip */
+.loop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; }
+.loop-step { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; position: relative; }
+.loop-step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 16px 16px 0 0; background: linear-gradient(90deg, var(--arctic), var(--orchid)); opacity: .6; }
+.loop-num { font-family: 'DM Serif Display', Georgia, serif; font-size: 26px; color: var(--punch); line-height: 1; }
+.loop-step h4 { margin: 10px 0 6px; font-size: 16px; font-weight: 700; color: var(--text); }
+.loop-step p { margin: 0; font-size: 13.5px; color: var(--text-mid); line-height: 1.55; }
+
+/* movement heading */
+.movement { display: flex; align-items: baseline; gap: 14px; margin: 44px 0 6px; }
+.movement .mv-no { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(34px,5vw,52px); line-height: 1; background: linear-gradient(135deg, var(--twilight), var(--punch)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; flex: none; }
+.movement .mv-title { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(22px,3vw,30px); line-height: 1.2; }
+.movement-sub { color: var(--text-mid); font-size: 15px; margin: 0 0 20px 0; max-width: 680px; }
+
+/* idea cards */
+.ideas { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.idea {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 20px 18px; transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.idea:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(22,40,68,.09); border-color: var(--arctic); }
+.idea .ic { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: rgba(38,170,225,.10); margin-bottom: 12px; }
+.idea .ic svg { width: 18px; height: 18px; stroke: var(--arctic); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.idea h4 { margin: 0 0 7px; font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.idea p { margin: 0; font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+/* table */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; margin-top: 22px; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+thead th { background: linear-gradient(135deg, var(--twilight), var(--grape)); color: #fff; font-weight: 700; text-align: left; padding: 14px 18px; font-size: 12.5px; letter-spacing: .02em; }
+tbody td { padding: 14px 18px; border-top: 1px solid var(--border-light); color: var(--text-mid); vertical-align: top; line-height: 1.5; }
+tbody td:first-child { font-weight: 700; color: var(--text); }
+tbody tr:nth-child(even) td { background: #FBF8FD; }
+
+/* principles */
+.principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px; margin-top: 22px; }
+.principle { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.principle h4 { margin: 0 0 7px; font-size: 15.5px; font-weight: 700; color: var(--grape); }
+.principle p { margin: 0; font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+/* phases timeline */
+.phases { margin-top: 24px; }
+.phase { display: flex; gap: 18px; padding: 18px 0; border-top: 1px solid var(--border-light); }
+.phase:first-child { border-top: 0; }
+.phase .ph-badge { flex: none; width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--arctic), var(--orchid)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; }
+.phase h4 { margin: 2px 0 5px; font-size: 17px; font-weight: 700; color: var(--text); }
+.phase p { margin: 0; font-size: 14.5px; color: var(--text-mid); line-height: 1.6; }
+
+/* bank feature band */
+.band {
+  background: linear-gradient(135deg, var(--twilight), var(--grape) 60%, var(--orchid));
+  color: #fff; border-radius: 22px; padding: 46px 40px; margin: 56px 0; text-align: center;
+}
+.band .section-tag { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.3); }
+.band h2 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; font-size: clamp(26px,3.6vw,38px); margin: 0 0 14px; line-height: 1.18; }
+.band p { color: rgba(255,255,255,.9); font-size: 16.5px; line-height: 1.7; max-width: 640px; margin: 0 auto; }
+.band .row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 30px; text-align: left; }
+.band .row .c { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 18px; }
+.band .row .c h5 { margin: 0 0 6px; font-size: 14px; font-weight: 800; color: #fff; }
+.band .row .c p { font-size: 13px; color: rgba(255,255,255,.85); line-height: 1.55; margin: 0; }
+
+/* closing */
+.closing { text-align: center; padding: 60px 28px 30px; }
+.closing .q { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-size: clamp(26px,4vw,40px); line-height: 1.3; max-width: 760px; margin: 0 auto 18px; }
+.closing .sig { color: var(--text-dim); font-size: 13px; letter-spacing: .04em; }
+
+/* foot */
+.foot { text-align: center; padding: 30px 28px 50px; font-size: 11px; color: var(--text-dim); }
+.foot .wordmark { font-weight: 800; color: var(--text-mid); letter-spacing: .02em; }
+
+@media (max-width: 720px) {
+  .nav-inner { padding: 12px 16px; }
+  .layout { padding: 14px 18px 30px; }
+  .loop, .band .row { grid-template-columns: 1fr; }
+  .band { padding: 36px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="top-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="brand-dot">TGF</span>
+      <span>The Good Foundry</span>
+    </div>
+    <span class="nav-note">Prepared privately for LiveWell</span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-tag">A possibility study · for your consideration</div>
+  <h1>Imagining <span class="gradient-text">Flourishing</span> <span class="serif-italic">Together</span></h1>
+  <p class="hero-desc">Flourishing in later life is built from small, repeated moments — a morning class, a walk, a conversation that lifts the day. What if your platform could gently <em>notice</em> those moments, celebrate them, and let them grow into something meaningful for your people?</p>
+  <div class="hero-meta">A gentle exploration for the LiveWell leadership team</div>
+</section>
+
+<main class="layout">
+
+  <!-- OPENING -->
+  <section class="block">
+    <div class="prose">
+      <p>You already do something quietly remarkable. Across your studios, your gym, your quiet rooms and your coaching spaces, people show up for their own wellbeing every single day. Today, much of that effort is marked on paper and gently set aside.</p>
+      <p>This page imagines what <strong>could</strong> be possible if that effort were noticed, valued and celebrated inside the same Wellbeing Matters platform your people already know — and how, with the right partner, it might even return real value to them. Nothing here is a commitment or a quote. It is a set of ideas, offered for your reflection.</p>
+    </div>
+    <div class="pull">When people feel their effort is seen, they keep showing up. And showing up, repeated, is what flourishing is made of.</div>
+  </section>
+
+  <!-- THE FLOURISHING LOOP -->
+  <section class="block">
+    <span class="section-tag">The idea, simply</span>
+    <h2 class="h2">A simple, human loop</h2>
+    <p class="lede">At its heart this is not complicated. Three gentle steps, repeated — each one already close to something your platform does today.</p>
+    <div class="loop">
+      <div class="loop-step">
+        <div class="loop-num">01</div>
+        <h4>Notice the moment</h4>
+        <p>A yoga class, a walk, a coaching conversation, a moment of learning or reflection — quietly recognised, without a clipboard.</p>
+      </div>
+      <div class="loop-step">
+        <div class="loop-num">02</div>
+        <h4>Celebrate it</h4>
+        <p>A warm acknowledgement, a small milestone, a sense of momentum that makes people want to come back tomorrow.</p>
+      </div>
+      <div class="loop-step">
+        <div class="loop-num">03</div>
+        <h4>Let it grow into something meaningful</h4>
+        <p>Recognition that can become wellbeing dollars, a café treat, a gift to a cause — or, with a banking partner, real cash.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIFTEEN POSSIBILITIES -->
+  <section class="block">
+    <span class="section-tag">For your consideration</span>
+    <h2 class="h2">Fifteen possibilities</h2>
+    <p class="lede">Grouped as three movements — <strong>recognising</strong> the moments that matter, <strong>keeping the spark alive</strong>, and <strong>turning participation into something tangible</strong>. Each is offered as a "what if", not a fixed plan.</p>
+
+    <!-- MOVEMENT 1 -->
+    <div class="movement"><span class="mv-no">I</span><span class="mv-title serif">Recognising the moments that matter</span></div>
+    <p class="movement-sub">Quietly capturing the everyday acts of wellbeing your people already do — and retiring the paper sheet.</p>
+    <div class="ideas">
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14"/><path d="M8 8h8M8 12h6"/></svg></span><h4>A living record of participation</h4><p>Every class, walk and conversation gently noticed in one place, so nothing is lost to a misplaced sign-in sheet.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span><h4>A simple tap to be counted</h4><p>A small code at the studio door, or a tap on a phone — checking in becomes effortless and instant.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="4"/></svg></span><h4>Recognition for the whole journey</h4><p>Not only the gym. Learning, reflection, a mood check-in and a coaching session could all be honoured too.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><h4>An easy way for your team to celebrate</h4><p>An instructor or front-desk host could acknowledge a whole class in a single, friendly gesture.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><h4>Recognition that reflects effort</h4><p>Gentle, fair weighting — a longer session or a tougher class can be acknowledged for what it asks of someone.</p></div>
+    </div>
+
+    <!-- MOVEMENT 2 -->
+    <div class="movement"><span class="mv-no">II</span><span class="mv-title serif">Keeping the spark alive</span></div>
+    <p class="movement-sub">The gentle encouragement that turns a one-off visit into a habit, and a habit into a way of living well.</p>
+    <div class="ideas">
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3"/></svg></span><h4>Streaks &amp; gentle milestones</h4><p>Celebrating consistency — a good week, a steady month — because momentum, not pressure, keeps people going.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h4>Seasonal invitations</h4><p>Warm, time-limited campaigns — a spring movement month, a summer wellbeing season — to gather everyone together.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 21c0-3 3-5 7-5s7 2 7 5"/></svg></span><h4>A sense of togetherness</h4><p>Teams or houses celebrating their collective effort — uplifting and social, never singling anyone out.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><h4>A friendly companion</h4><p>Sophie, the platform's gentle guide, could offer encouragement and suggestions — supportive, never nagging.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span><h4>Warm, timely encouragement</h4><p>A quiet "you're nearly there" at just the right moment — a kind reminder, delivered with care.</p></div>
+    </div>
+
+    <!-- MOVEMENT 3 -->
+    <div class="movement"><span class="mv-no">III</span><span class="mv-title serif">Turning participation into something tangible</span></div>
+    <p class="movement-sub">Letting recognition land as real value — in the way each person would find most meaningful.</p>
+    <div class="ideas">
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h3"/></svg></span><h4>A personal rewards wallet</h4><p>One simple place where people choose how recognition lands — wellbeing dollars, a café treat, or cash.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.8 1.8 0 0 1 0 3.6h-3a1.8 1.8 0 0 0 0 3.6h4"/></svg></span><h4>Real cash rewards</h4><p>With a banking partner, points could become genuine cash — a tangible thank-you for looking after themselves.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></span><h4>A partner who invests in your people</h4><p>A bank may fund the rewards in return for offering your team a genuinely good account — value flowing to your people.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2-6.3-4.6L5.7 21 8 13.8 2 9.4h7.6z"/></svg></span><h4>Moments worth marking</h4><p>Milestone bonuses or a matched contribution to celebrate the bigger achievements along the way.</p></div>
+      <div class="idea"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg></span><h4>Giving back</h4><p>For those who'd rather pay it forward, recognition could become a gift to a cause close to their heart.</p></div>
+    </div>
+  </section>
+
+  <!-- HOW IT COULD FEEL -->
+  <section class="block">
+    <span class="section-tag">How it could feel</span>
+    <h2 class="h2">The same platform, a warmer story</h2>
+    <p class="lede">Much of what makes this possible already lives in the platform your people use. Here is how a few of these possibilities might feel — for a team member, and for you as leaders.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>The possibility</th><th>What a team member would experience</th><th>What leadership would see</th></tr></thead>
+        <tbody>
+          <tr><td>Being noticed</td><td>A tap at the door, and the moment is theirs — no paperwork, no fuss.</td><td>A living picture of how many people are taking part, and how often.</td></tr>
+          <tr><td>Encouragement</td><td>A warm nudge and a friendly word from Sophie at just the right time.</td><td>Participation gently rising, without anyone feeling pushed.</td></tr>
+          <tr><td>Togetherness</td><td>Their team's collective effort celebrated — a shared sense of pride.</td><td>Which groups are thriving, always shown as a community, never an individual.</td></tr>
+          <tr><td>Real reward</td><td>Recognition that becomes wellbeing dollars, a café treat, cash or a gift to a cause.</td><td>A clear, well-governed view of what's being offered and what it costs.</td></tr>
+          <tr><td>Flourishing, measured</td><td>A sense that looking after themselves genuinely counts here.</td><td>The same effort reflected in your existing wellbeing insights — purpose, motivation, health and growth.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="block">
+    <span class="section-tag">How we'd hold this</span>
+    <h2 class="h2">Principles we would never bend</h2>
+    <p class="lede">A rewards program touches people's wellbeing, their privacy and their trust. If we explored this together, these are the commitments we'd hold to from the very first day.</p>
+    <div class="principles">
+      <div class="principle"><h4>Dignity &amp; choice</h4><p>Always opt-in. People choose to take part, and choose how their recognition lands. No one is ever made to feel watched.</p></div>
+      <div class="principle"><h4>Privacy first</h4><p>What leaders see is always a community picture — totals and trends — never one person's activity. That line is absolute.</p></div>
+      <div class="principle"><h4>Fairness</h4><p>We celebrate showing up, not outcomes. Recognition is for taking part — never for hitting a number on a scale.</p></div>
+      <div class="principle"><h4>Sustainable &amp; well-governed</h4><p>Gentle limits keep the program kind and affordable, with clear, predictable costs your finance team can rely on.</p></div>
+      <div class="principle"><h4>Beautifully yours</h4><p>Everything would live inside your familiar, branded Wellbeing Matters experience — calm, coherent and unmistakably LiveWell.</p></div>
+      <div class="principle"><h4>Done with care</h4><p>Any reward with financial or health implications would be designed alongside your advisers, never ahead of them.</p></div>
+    </div>
+  </section>
+
+  <!-- BANK BAND -->
+  <section class="band">
+    <span class="section-tag">An idea worth exploring</span>
+    <h2>A banking partner who invests in your people</h2>
+    <p>One of the most exciting possibilities is a partnership with a bank. In return for offering your team a genuinely good account, a partner may help fund the rewards themselves — so recognition could become real cash, at little or no cost to LiveWell.</p>
+    <div class="row">
+      <div class="c"><h5>Your people gain</h5><p>A tangible, spendable thank-you for looking after their own wellbeing.</p></div>
+      <div class="c"><h5>LiveWell gains</h5><p>A flagship wellbeing benefit that may largely fund itself through the partnership.</p></div>
+      <div class="c"><h5>Handled safely</h5><p>All banking sits securely with the partner. Your platform simply opens the door — warmly and on your brand.</p></div>
+    </div>
+  </section>
+
+  <!-- WHERE WE'D BEGIN -->
+  <section class="block">
+    <span class="section-tag">If this resonates</span>
+    <h2 class="h2">Where we would gently begin</h2>
+    <p class="lede">There is no need to do everything at once. The most natural path starts small, proves itself, and grows only as it earns your confidence.</p>
+    <div class="phases">
+      <div class="phase"><div class="ph-badge">1</div><div><h4>Replace the paper, keep what works</h4><p>Bring the sign-in onto the platform with a simple tap, while your existing wellbeing-dollar and café rewards carry on exactly as they do today. Quietly better, from day one.</p></div></div>
+      <div class="phase"><div class="ph-badge">2</div><div><h4>Add the warmth</h4><p>Introduce gentle streaks, seasonal invitations, a friendly companion and a sense of togetherness — and watch participation grow.</p></div></div>
+      <div class="phase"><div class="ph-badge">3</div><div><h4>Open the door to real value</h4><p>When the moment is right, introduce the personal wallet and explore the banking partnership — so recognition can become genuine cash for your people.</p></div></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="q">If looking after yourself could feel <span class="gradient-text serif-italic">seen, celebrated and rewarded</span> — how many more of your people would begin?</div>
+  <div class="sig">Offered for your consideration · The Good Foundry × Wellbeing Matters</div>
+</section>
+
+<div class="foot">
+  <span class="wordmark">Wellbeing Matters · The Good Foundry</span><br>
+  A private exploration prepared for the LiveWell leadership team. Ideas only — not a proposal or quotation.
+</div>
+
+</body>
+</html>

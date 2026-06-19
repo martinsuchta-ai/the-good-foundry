@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thank you · Wellbeing Matters @ Work</title>
+<link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+<meta name="theme-color" content="#e8621a">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:        #1c2b3a;
+  --navy-deep:   #14202e;
+  --orange:      #e8621a;
+  --orange-dark: #c9501a;
+  --orange-pale: #fff4ee;
+  --white:       #ffffff;
+  --body-bg:     #f0f2f5;
+  --card-bg:     #ffffff;
+  --text-dark:   #1c2b3a;
+  --text-mid:    #4a5f72;
+  --text-muted:  #8097ad;
+  --border-light:#e2e8ef;
+  --radius:      14px;
+  --shadow-md:   0 12px 48px rgba(28,43,58,0.08);
+}
+html, body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  color: var(--text-dark);
+  background: var(--body-bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  padding: 32px 20px 60px;
+}
+.k360-shell {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Hero banner — same shape + treatment as kids_360.html so the
+   thanks page reads as the natural completion screen, not a
+   different page. Theme tokens (--navy-deep, --orange,
+   --orange-dark) are overridden via inline style at runtime when
+   theme params arrive on the URL. */
+.k360-header {
+  position: relative;
+  padding: 32px 30px 30px;
+  background:
+    radial-gradient(circle at 92% -10%, rgba(255,255,255,0.10), transparent 55%),
+    radial-gradient(circle at -8% 110%, rgba(255,255,255,0.06), transparent 60%),
+    linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, var(--orange-dark) 140%);
+  border-radius: 14px;
+  margin-bottom: 22px;
+  color: var(--white);
+  overflow: hidden;
+  box-shadow: 0 6px 28px rgba(20, 32, 46, 0.18);
+}
+.k360-header::before {
+  content: '';
+  position: absolute; right: -60px; top: -60px;
+  width: 220px; height: 220px;
+  border: 24px solid rgba(255,255,255,0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.k360-header::after {
+  content: '';
+  position: absolute; right: 30px; bottom: -100px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, var(--orange) 0%, transparent 65%);
+  opacity: 0.35;
+  pointer-events: none;
+  filter: blur(6px);
+}
+.k360-header-row {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 14px;
+}
+.k360-brand-icon {
+  width: 60px; height: 60px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  padding: 6px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.k360-brand-icon svg { width: 30px; height: 30px; stroke: var(--white); fill: none; stroke-width: 2; }
+.k360-brand-icon img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+.k360-brand-text { line-height: 1.3; flex: 1; min-width: 0; }
+.k360-brand-title {
+  font-size: 17px; font-weight: 700; color: var(--white);
+  letter-spacing: -0.01em;
+}
+.k360-brand-sub {
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.72);
+  letter-spacing: 0.5px; text-transform: uppercase;
+  margin-top: 3px;
+}
+.k360-header-pill {
+  position: relative; z-index: 1;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  background: var(--orange);
+  color: var(--white);
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border-radius: 99px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.22);
+}
+
+/* Thanks card sits below the hero so the page reads as a
+   continuation of kids_360.html. Card matches the survey's
+   .k360-section visual treatment (white card, soft border,
+   subtle shadow). */
+.thanks-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 40px 36px 36px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.thanks-icon {
+  margin: 0 auto 22px;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(232, 98, 26, 0.10);
+  display: flex; align-items: center; justify-content: center;
+}
+.thanks-icon svg {
+  width: 36px; height: 36px;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.thanks-card h1 {
+  font-size: 26px; font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.thanks-card p {
+  font-size: 15px; line-height: 1.65; color: var(--text-mid);
+  margin: 0 0 14px;
+}
+.thanks-card p:last-of-type { margin-bottom: 0; }
+.thanks-foot {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border-light);
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.thanks-actions {
+  margin-top: 28px;
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+}
+.thanks-close-btn {
+  background: var(--orange);
+  color: #fff;
+  border: 0;
+  padding: 13px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background .15s, transform .12s;
+  box-shadow: 0 4px 14px rgba(232, 98, 26, 0.25);
+}
+.thanks-close-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.thanks-close-btn:active { transform: translateY(0); }
+.thanks-close-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.thanks-close-hint {
+  display: none;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--orange-pale);
+  border: 1px solid var(--orange);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--orange-dark);
+  line-height: 1.55;
+}
+
+@media (max-width: 540px) {
+  body { padding: 16px 12px 40px; }
+  .k360-header { padding: 22px 18px 20px; }
+  .k360-brand-icon { width: 46px; height: 46px; padding: 6px; }
+  .k360-brand-icon svg { width: 24px; height: 24px; }
+  .k360-brand-title { font-size: 15px; }
+  .thanks-card { padding: 30px 22px 26px; }
+  .thanks-card h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<main class="k360-shell">
+  <header class="k360-header">
+    <div class="k360-header-row">
+      <div class="k360-brand-icon" id="thanks-brand-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-7-5-7-11a7 7 0 0 1 14 0c0 6-7 11-7 11z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </svg>
+      </div>
+      <div class="k360-brand-text">
+        <div class="k360-brand-title" id="thanks-brand-title">Wellbeing Matters @ Work</div>
+        <div class="k360-brand-sub">Kids 360</div>
+      </div>
+      <div class="k360-header-pill">360</div>
+    </div>
+  </header>
+
+  <div class="thanks-card">
+    <div class="thanks-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 12.5l2.5 2.5L16 9.5"/>
+      </svg>
+    </div>
+    <h1>Thank you</h1>
+    <p>Your responses have been received.</p>
+    <p>What you have shared will help the trusted person who invited you build a fuller picture of how this child is doing — across the people who know them best.</p>
+
+    <div class="thanks-actions">
+      <button type="button" class="thanks-close-btn" id="thanks-close-btn">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Close this window
+      </button>
+    </div>
+    <div class="thanks-close-hint" id="thanks-close-hint">
+      This window can be closed manually from your browser tab. Some browsers block scripts from closing tabs they didn't open — that's why this button can't always close it for you.
+    </div>
+
+    <p class="thanks-foot">
+      Your responses are confidential and will be combined with input from other people invited to share their perspective.
+    </p>
+  </div>
+</main>
+
+<script>
+/* Apply client theme passed through as URL params from the
+   redirect inside wm_kids_360_runtime.js.submitFinal. The same
+   token chain (?p, ?hb, ?org, ?logo) the survey page used —
+   keeps visual continuity between the survey, the email, and
+   this thanks page. */
+(function () {
+  'use strict';
+  function param(name) {
+    var m = window.location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+  }
+  function shadeHex(hex, percent) {
+    var m = String(hex || '').match(/^#([0-9a-f]{6})$/i);
+    if (!m) return hex;
+    var num = parseInt(m[1], 16);
+    var r = (num >> 16) & 0xff;
+    var g = (num >>  8) & 0xff;
+    var b = num & 0xff;
+    var t = percent < 0 ? 0 : 255;
+    var p = Math.abs(percent) / 100;
+    r = Math.round((t - r) * p + r);
+    g = Math.round((t - g) * p + g);
+    b = Math.round((t - b) * p + b);
+    return '#' + ('000000' + ((r << 16) | (g << 8) | b).toString(16)).slice(-6);
+  }
+  var primary  = param('p');
+  var headerBg = param('hb');
+  var orgName  = param('org');
+  var logoUrl  = param('logo');
+  var root = document.documentElement;
+  if (primary) {
+    root.style.setProperty('--orange',      primary);
+    root.style.setProperty('--orange-dark', shadeHex(primary, -18));
+    root.style.setProperty('--orange-pale', shadeHex(primary,  86));
+  }
+  if (headerBg) {
+    root.style.setProperty('--navy',      headerBg);
+    root.style.setProperty('--navy-deep', headerBg);
+  }
+  var titleEl = document.getElementById('thanks-brand-title');
+  if (titleEl && orgName) titleEl.textContent = orgName;
+  var iconEl = document.getElementById('thanks-brand-icon');
+  if (iconEl && logoUrl) {
+    iconEl.innerHTML = '<img src="' + logoUrl + '" alt="" onerror="this.style.display=\'none\'"/>';
+  }
+
+  /* Close button — calls window.close(). Browsers only honour
+     close() on tabs/windows opened by JS (window.open). For
+     emailed links, the user opened it manually so close() is
+     blocked silently. We attempt close, then after a short
+     delay show a fallback hint instructing manual close. */
+  var btn = document.getElementById('thanks-close-btn');
+  var hint = document.getElementById('thanks-close-hint');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      try { window.close(); } catch (_e) {}
+      setTimeout(function () {
+        /* If we're still here after 250ms, close was blocked. */
+        if (!document.hidden && hint) hint.style.display = 'block';
+      }, 250);
+    });
+  }
+})();
+</script>
+</body>
+</html>

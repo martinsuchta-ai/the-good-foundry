@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renewal · Wellbeing Matters @ Work</title>
+<style>
+  :root {
+    --primary:#e8420a; --primary-dark:#b8330a; --primary-pale:#fff4ec;
+    --navy:#14202e; --header-bg:#14202e;
+    --text-dark:#1c2b3a; --text-mid:#4a5f72; --text-muted:#8898b0;
+    --border:#e2e8ef; --border-light:#eef2f7; --surface:#ffffff; --surface-2:#f8fafc;
+    --green:#16a34a; --green-pale:#dcfce7; --red:#dc2626;
+    --r:10px;
+    --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  body {
+    margin:0; padding:24px 16px; font-family:Arial,sans-serif; color:var(--text-dark);
+    background:var(--surface-2); min-height:100vh;
+    display:flex; align-items:flex-start; justify-content:center;
+  }
+  .card { max-width:620px; width:100%; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(20,32,46,.08); border:1px solid var(--border); }
+  .hdr { background:var(--header-bg); background:linear-gradient(135deg,var(--primary) 0%,var(--header-bg) 100%); border-bottom:4px solid var(--primary); padding:36px 40px 28px; color:#fff; }
+  .hdr .brand-logos { margin-bottom:14px; }
+  .hdr .brand-logos img { display:block; height:88px; width:auto; max-height:88px; border:0; }
+  .hdr .wordmark { font-family:Georgia,'Times New Roman',serif; font-size:18px; font-weight:700; line-height:1.2; color:#fff; }
+  .hdr .subline  { font-size:10px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:.1em; margin-top:3px; }
+  .hdr .title    { font-family:Georgia,serif; font-size:22px; font-weight:700; margin-top:24px; line-height:1.3; }
+  .hdr .sub      { font-size:14px; line-height:1.6; margin-top:8px; }
+  .body { padding:28px 36px 32px; }
+  .summary { background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r); padding:14px 18px; font-size:12px; color:var(--text-mid); margin-bottom:20px; line-height:1.7; }
+  .summary strong { color:var(--text-dark); }
+  .lbl { font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+  .choices { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+  .choice {
+    cursor:pointer; padding:14px 16px; border:1.5px solid var(--border); border-radius:var(--r);
+    background:#fff; transition:border-color .15s, background .15s;
+    display:block; text-align:left;
+  }
+  .choice:hover { border-color:var(--primary); }
+  .choice input { position:absolute; opacity:0; pointer-events:none; }
+  .choice .ck { display:inline-block; font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+  .choice .txt { font-size:13px; font-weight:700; color:var(--text-dark); line-height:1.4; }
+  .choice.sel  { border-color:var(--primary); background:var(--primary-pale); }
+  .choice.sel .ck { color:var(--primary); }
+  .notes { display:block; width:100%; min-height:96px; padding:10px 12px; border:1.5px solid var(--border); border-radius:var(--r); font-family:inherit; font-size:13px; color:var(--text-dark); resize:vertical; }
+  .notes:focus { outline:none; border-color:var(--primary); }
+  .submit {
+    display:block; width:100%; padding:14px 16px; border:none; border-radius:var(--r);
+    background:var(--primary); color:#fff; font-size:14px; font-weight:700; cursor:pointer;
+    margin-top:16px; transition:background .15s;
+  }
+  .submit:hover:not(:disabled) { background:var(--primary-dark); }
+  .submit:disabled { opacity:.4; cursor:not-allowed; }
+  .msg { padding:14px 16px; border-radius:var(--r); font-size:13px; line-height:1.6; margin-top:14px; }
+  .msg.err { background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; }
+  .msg.ok  { background:var(--green-pale); border:1px solid var(--green); color:#15803d; }
+  .ftr { background:var(--header-bg); color:#fff; padding:20px 36px; font-size:11px; line-height:1.7; }
+  .ftr .ft-wordmark { font-family:Georgia,serif; font-size:13px; font-weight:700; margin-bottom:2px; }
+  .ftr .ft-subline  { font-size:10px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; }
+  .ftr .ft-rule     { height:1px; background:rgba(255,255,255,.1); margin-bottom:14px; }
+  .ftr a { color:var(--primary); text-decoration:none; }
+  @media (max-width:540px) {
+    .hdr, .body, .ftr { padding-left:22px; padding-right:22px; }
+    .choices { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="hdr">
+    <!-- Brand-logos row — populated from the API's brand_header.logos_html
+         so the page matches the renewal email exactly (vault padlock +
+         The Good Foundry mark + client's saved logo). 2026-06-04 client
+         request: header parity across email + page regardless of the
+         A/B/C/D choice the recipient clicked. -->
+    <div class="brand-logos" id="brand-logos"></div>
+    <div>
+      <div class="wordmark" id="wordmark">Wellbeing Matters @ Work</div>
+      <div class="subline" id="subline">PERMA infused</div>
+    </div>
+    <div class="title" id="hdr-title">Confirm your renewal choice</div>
+    <div class="sub" id="hdr-sub">Loading your subscription details…</div>
+  </div>
+  <div class="body">
+    <div id="status-area"></div>
+    <div id="form-area" style="display:none">
+      <div class="summary" id="summary"></div>
+      <div class="lbl">Choose one</div>
+      <div class="choices" id="choices">
+        <label class="choice" data-choice="A">
+          <input type="radio" name="choice" value="A">
+          <span class="ck">Option A</span>
+          <span class="txt">Please renew on the same terms.</span>
+        </label>
+        <label class="choice" data-choice="B">
+          <input type="radio" name="choice" value="B">
+          <span class="ck">Option B</span>
+          <span class="txt">Please renew, but I need changes (power-ups, term, sections).</span>
+        </label>
+        <label class="choice" data-choice="C">
+          <input type="radio" name="choice" value="C">
+          <span class="ck">Option C</span>
+          <span class="txt">I do not intend to renew for another term.</span>
+        </label>
+        <label class="choice" data-choice="D">
+          <input type="radio" name="choice" value="D">
+          <span class="ck">Option D</span>
+          <span class="txt">I'd like to talk it through with someone first.</span>
+        </label>
+      </div>
+      <!-- Option D booking panel — only visible when D is selected.
+           Lets the respondent book a call right here without leaving
+           the page. Completely optional — they can collapse it and
+           still submit Option D, and we'll reach out separately.
+           (2026-06-04 admin request.) -->
+      <div id="d-book" style="display:none;margin-top:14px;border:1.5px solid var(--primary);border-radius:var(--r);background:var(--primary-pale);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--primary);background:#fff">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--primary);margin-bottom:2px">Optional — book your call now</div>
+            <div style="font-size:12.5px;color:var(--text-dark);line-height:1.45">Pick a time that suits you below, or skip this and we'll reach out to you. Your Option D response is recorded either way.</div>
+          </div>
+          <button type="button" id="d-book-collapse" onclick="_dToggleBook()" style="background:none;border:1px solid var(--primary);color:var(--primary);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:6px 10px;border-radius:6px;cursor:pointer;font-family:inherit;flex-shrink:0">Hide</button>
+        </div>
+        <!-- Iframe height bumped 2026-06-04 — the coachingfoundry.com
+             hero takes ~280px of vertical space before the Date & Time
+             picker, so 560px left the calendar pushed below the fold
+             inside its scroll frame. 880px gives the hero room to
+             breathe AND lands the calendar above the user's first scroll
+             without an inner scrollbar. -->
+        <div id="d-book-host" style="position:relative;height:880px;background:#fff">
+          <iframe id="d-book-frame" src="" title="Book a call" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0;width:100%;height:100%;display:block"></iframe>
+        </div>
+        <div style="padding:8px 14px;background:#fff;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);text-align:right">
+          Trouble loading? <a href="https://www.coachingfoundry.com/bookcall/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:700">Open booking page in a new tab &rarr;</a>
+        </div>
+      </div>
+      <div class="lbl" style="margin-top:14px">Anything else we should know <span style="color:var(--text-muted);font-weight:600;text-transform:none;letter-spacing:0">(optional)</span></div>
+      <textarea class="notes" id="notes" placeholder="Add any context, change requests, or questions for us…" maxlength="4000"></textarea>
+      <button class="submit" id="submit" disabled>Send my response</button>
+      <div id="form-msg"></div>
+    </div>
+  </div>
+  <div class="ftr">
+    <div class="ft-wordmark" id="ftr-wordmark">Wellbeing Matters @ Work</div>
+    <div class="ft-subline"  id="ftr-subline">PERMA infused</div>
+    <div class="ft-rule"></div>
+    <div>Powered by <a href="https://the-good-foundry.com" target="_blank">The Good Foundry</a> · Confidential · Backed by Science · Immediately Actionable</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var qs = new URLSearchParams(location.search);
+  var token = qs.get('token') || '';
+  var pickFromUrl = (qs.get('choice') || '').toUpperCase();
+  var validChoices = { A:1, B:1, C:1, D:1 };
+
+  var statusArea = document.getElementById('status-area');
+  var formArea   = document.getElementById('form-area');
+  var summaryEl  = document.getElementById('summary');
+  var choicesEl  = document.getElementById('choices');
+  var notesEl    = document.getElementById('notes');
+  var submitBtn  = document.getElementById('submit');
+  var formMsg    = document.getElementById('form-msg');
+  var hdrSub     = document.getElementById('hdr-sub');
+
+  function showStatus(html, kind) {
+    statusArea.innerHTML = '<div class="msg ' + (kind || 'err') + '">' + html + '</div>';
+  }
+
+  function applyTheme(theme, orgName, brandHeader) {
+    var rootStyle = document.documentElement.style;
+    if (theme.primary)   rootStyle.setProperty('--primary',   theme.primary);
+    if (theme.headerBg)  rootStyle.setProperty('--header-bg', theme.headerBg);
+    if (theme.secondary) rootStyle.setProperty('--navy',      theme.secondary);
+    /* Derive a pale primary for the selected-state hover bg —
+       roughly the primary at 12% over white. Falls back to the
+       default orange-pale when we can't parse the hex. */
+    rootStyle.setProperty('--primary-pale', _hexA(theme.primary, 0.12) || '#fff4ec');
+    rootStyle.setProperty('--primary-dark', _hexShade(theme.primary, -18) || '#b8330a');
+
+    /* Brand header — use the API's edition-aware payload so this
+       page and the renewal email render the same artifact. Falls
+       back to the generic platform copy if the API didn't return a
+       brand_header block (e.g. stale-cached JS hitting an old API
+       build). (2026-06-04) */
+    var bh = brandHeader || {};
+    var wordmark = bh.wordmark || 'Wellbeing Matters @ Work';
+    var subline  = bh.subline  || 'PERMA infused';
+    document.getElementById('wordmark').textContent     = wordmark;
+    document.getElementById('subline').textContent      = subline;
+    document.getElementById('ftr-wordmark').textContent = wordmark;
+    document.getElementById('ftr-subline').textContent  = subline;
+    document.title = 'Renewal · ' + wordmark;
+
+    /* Logos row — vault padlock + TGF mark + client logo, painted as
+       the same HTML the email server-renders. The brand_header.logos_html
+       string is built by wm_email_brand_header() so any future edition
+       additions ripple here automatically. */
+    var logosEl = document.getElementById('brand-logos');
+    if (logosEl && bh.logos_html) logosEl.innerHTML = bh.logos_html;
+  }
+
+  function _hexA(hex, alpha) {
+    if (!hex || hex[0] !== '#' || hex.length !== 7) return '';
+    var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    /* Mix the colour over white at the given alpha — produces a
+       pale version usable as a background tint. */
+    var mix = function(c) { return Math.round(c * alpha + 255 * (1 - alpha)); };
+    var toHex = function(n) { var s = n.toString(16); return s.length === 1 ? '0' + s : s; };
+    return '#' + toHex(mix(r)) + toHex(mix(g)) + toHex(mix(b));
+  }
+  function _hexShade(hex, pct) {
+    if (!hex || hex[0] !== '#' || hex.length !== 7) return '';
+    var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    var shade = function(c) { return Math.max(0, Math.min(255, Math.round(c + (pct / 100) * 255))); };
+    var toHex = function(n) { var s = n.toString(16); return s.length === 1 ? '0' + s : s; };
+    return '#' + toHex(shade(r)) + toHex(shade(g)) + toHex(shade(b));
+  }
+
+  if (!token) {
+    hdrSub.textContent = '';
+    showStatus('This link is missing its token. Please use the link in the email we sent.');
+    return;
+  }
+
+  fetch('https://smart-tools-foundry.com/WBM/api/renewal_response.php?token=' + encodeURIComponent(token), { cache:'no-store' })
+    .then(function(r) { return r.json().then(function(j) { return { ok:r.ok, j:j }; }); })
+    .then(function(x) {
+      if (!x.ok || !x.j || !x.j.ok) {
+        hdrSub.textContent = '';
+        showStatus((x.j && x.j.error) || 'We couldn\'t load this renewal link. It may have expired.');
+        return;
+      }
+      var ctx = x.j;
+      applyTheme(ctx.theme || {}, ctx.org_name, ctx.brand_header || null);
+
+      hdrSub.textContent = ctx.org_name + '\'s subscription expires on ' + ctx.subscription.expiry_fmt + ' — let us know how you\'d like to proceed.';
+      summaryEl.innerHTML = ''
+        + '<div><strong>' + escapeHtml(ctx.org_name) + '</strong></div>'
+        + '<div>Subscription: ' + escapeHtml(ctx.subscription.id) + ' · ' + escapeHtml(ctx.subscription.edition) + ' · ' + escapeHtml(ctx.subscription.term) + '</div>'
+        + '<div>Expires <strong style="color:var(--primary)">' + escapeHtml(ctx.subscription.expiry_fmt) + '</strong></div>';
+
+      if (ctx.already_responded) {
+        formArea.style.display = '';
+        choicesEl.style.pointerEvents = 'none';
+        choicesEl.style.opacity = '.55';
+        notesEl.disabled = true;
+        notesEl.value = ctx.previous_notes || '';
+        if (ctx.previous_choice && validChoices[ctx.previous_choice]) {
+          markSelected(ctx.previous_choice);
+        }
+        submitBtn.style.display = 'none';
+        showStatus('Thanks — this reminder has already been answered. You let us know <strong>Option ' + escapeHtml(ctx.previous_choice || '?') + '</strong>. If you need to update your choice, reply to the email or contact <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a>.', 'ok');
+        return;
+      }
+
+      formArea.style.display = '';
+      /* If the email button included &choice=X, pre-select it but
+         let the user change their mind before submitting. */
+      if (pickFromUrl && validChoices[pickFromUrl]) {
+        markSelected(pickFromUrl);
+        submitBtn.disabled = false;
+      }
+    })
+    .catch(function(e) {
+      hdrSub.textContent = '';
+      showStatus('We couldn\'t load this renewal link: ' + escapeHtml(e.message || 'network error') + '.');
+    });
+
+  function markSelected(letter) {
+    var labels = choicesEl.querySelectorAll('.choice');
+    labels.forEach(function(l) {
+      var pick = l.getAttribute('data-choice') === letter;
+      l.classList.toggle('sel', pick);
+      var radio = l.querySelector('input');
+      radio.checked = pick;
+    });
+    submitBtn.disabled = false;
+    /* Option D — reveal the inline booking panel so the respondent
+       can book a call right here without leaving the page. Iframe
+       src is lazy-set the first time the panel opens so an Option
+       A/B/C path never loads coachingfoundry.com. (2026-06-04.) */
+    _dRevealBook(letter === 'D');
+  }
+  var _dBookSrcSet = false;
+  function _dRevealBook(show) {
+    var panel = document.getElementById('d-book');
+    if (!panel) return;
+    if (show) {
+      if (!_dBookSrcSet) {
+        var frame = document.getElementById('d-book-frame');
+        if (frame) frame.src = 'https://www.coachingfoundry.com/bookcall/';
+        _dBookSrcSet = true;
+      }
+      panel.style.display = '';
+      var btn = document.getElementById('d-book-collapse');
+      if (btn) btn.textContent = 'Hide';
+      var host = document.getElementById('d-book-host');
+      if (host) host.style.display = '';
+    } else {
+      panel.style.display = 'none';
+    }
+  }
+  window._dToggleBook = function () {
+    var host = document.getElementById('d-book-host');
+    var btn  = document.getElementById('d-book-collapse');
+    if (!host) return;
+    var hidden = host.style.display === 'none';
+    host.style.display = hidden ? '' : 'none';
+    if (btn) btn.textContent = hidden ? 'Hide' : 'Show';
+  };
+
+  choicesEl.addEventListener('click', function(e) {
+    var label = e.target.closest('.choice');
+    if (!label) return;
+    var letter = label.getAttribute('data-choice');
+    if (!validChoices[letter]) return;
+    markSelected(letter);
+  });
+
+  submitBtn.addEventListener('click', function() {
+    var picked = (choicesEl.querySelector('input:checked') || {}).value || '';
+    if (!validChoices[picked]) {
+      formMsg.innerHTML = '<div class="msg err">Please choose one of the four options above.</div>';
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    formMsg.innerHTML = '';
+    fetch('https://smart-tools-foundry.com/WBM/api/renewal_response.php', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ token:token, choice:picked, notes:notesEl.value })
+    })
+      .then(function(r) { return r.json().then(function(j) { return { ok:r.ok, j:j }; }); })
+      .then(function(x) {
+        if (!x.ok || !x.j || !x.j.ok) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send my response';
+          formMsg.innerHTML = '<div class="msg err">' + escapeHtml((x.j && x.j.error) || 'Something went wrong.') + '</div>';
+          return;
+        }
+        choicesEl.style.pointerEvents = 'none';
+        choicesEl.style.opacity = '.55';
+        notesEl.disabled = true;
+        submitBtn.style.display = 'none';
+        formMsg.innerHTML = '<div class="msg ok">Thanks — we\'ve recorded your <strong>Option ' + escapeHtml(picked) + '</strong> response. The team will be in touch shortly.</div>';
+      })
+      .catch(function(e) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send my response';
+        formMsg.innerHTML = '<div class="msg err">We couldn\'t send your response: ' + escapeHtml(e.message || 'network error') + '. Please try again.</div>';
+      });
+  });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+})();
+</script>
+</body>
+</html>

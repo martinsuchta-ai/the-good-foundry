@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Take the PERMA+ Evaluation · The Good Foundry</title>
+<meta name="description" content="Take the PERMA+ Wellbeing Evaluation for free for personal use, or pay-per-evaluation for commercial / client-facing use. Confidential, evidence-based, immediately actionable.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ——— Brand tokens (lifted verbatim from TGF/privacy-policy.html) ——— */
+:root {
+  --twilight: #293890;
+  --arctic:   #1B75BC;
+  --aqua:     #26AAE1;
+  --grape:    #662C90;
+  --orchid:   #91268F;
+  --punch:    #EC008B;
+  --bg:       #F4F6FB;
+  --card:     #FFFFFF;
+  --mid:      #EEF1F8;
+  --border:   rgba(41,56,144,.12);
+  --text:     #161A2E;
+  --text-dim: rgba(22,26,46,.58);
+  --font:     'Outfit', sans-serif;
+  --serif:    'DM Serif Display', serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ——— Topbar ——————————————————————————————————————————————————————— */
+.topbar {
+  position: sticky; top: 0; z-index: 300;
+  min-height: 110px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img.brand-logo { height: 90px; width: auto; object-fit: contain; display: block; }
+.brand-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+.brand-name em { font-style: italic; color: var(--arctic); font-family: var(--serif); }
+.brand-sep { width: 1px; height: 18px; background: rgba(22,26,46,.15); }
+.brand-sub { font-size: 12px; font-weight: 500; color: var(--text-dim); letter-spacing: .06em; text-transform: uppercase; }
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-back { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-dim); text-decoration: none; padding: 6px 12px; border-radius: 100px; background: rgba(41,56,144,.06); border: 1px solid rgba(41,56,144,.10); transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
+.topbar-back:hover { background: rgba(41,56,144,.12); color: var(--text); border-color: rgba(41,56,144,.22); }
+.topbar-back svg { width: 12px; height: 12px; }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-right a.nav-link { font-size: 12.5px; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: .02em; transition: color .15s; }
+.topbar-right a.nav-link:hover { color: var(--text); }
+
+/* ——— Hero ———————————————————————————————————————————————————————— */
+.pf-hero { position: relative; z-index: 1; padding: 64px 32px 24px; text-align: center; }
+.pf-hero .kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(236,0,139,.08); border: 1px solid rgba(236,0,139,.28);
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--punch); margin-bottom: 18px;
+}
+.pf-hero .kicker::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--punch); }
+.pf-hero h1 {
+  font-size: clamp(32px, 4.6vw, 48px);
+  font-weight: 800; letter-spacing: -.022em;
+  line-height: 1.1; margin: 0 auto 16px; max-width: 880px;
+}
+.pf-hero h1 .hl {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.pf-hero h1 .serif { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.pf-hero .lede { font-size: 17px; color: var(--text-dim); max-width: 700px; margin: 0 auto 24px; line-height: 1.7; font-weight: 300; }
+
+/* ——— Tile picker ———————————————————————————————————————————————— */
+.tile-grid {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: 0 auto;
+  padding: 24px 28px 56px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+}
+.tile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 30px 28px;
+  position: relative;
+  cursor: pointer;
+  display: flex; flex-direction: column;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  box-shadow: 0 4px 18px rgba(22,26,46,.06);
+}
+.tile::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+}
+.tile.t-paid::before { background: linear-gradient(90deg, var(--grape), var(--punch)); }
+.tile:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(22,26,46,.10); border-color: rgba(38,170,225,.4); }
+.tile.t-paid:hover { border-color: rgba(236,0,139,.4); }
+.tile.active { border-color: var(--arctic); box-shadow: 0 8px 24px rgba(38,170,225,.18); }
+.tile.t-paid.active { border-color: var(--punch); box-shadow: 0 8px 24px rgba(236,0,139,.18); }
+
+.tile .tile-tag {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; margin-bottom: 12px;
+  color: var(--arctic);
+}
+.tile.t-paid .tile-tag { color: var(--punch); }
+.tile h2 {
+  font-size: 24px; font-weight: 800; letter-spacing: -.012em;
+  margin: 0 0 6px; color: var(--text);
+}
+.tile h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.tile .price {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  margin: 6px 0 14px;
+  font-family: var(--serif); color: var(--text);
+}
+.tile .price .num { font-size: 36px; font-weight: 400; letter-spacing: -.02em; }
+.tile .price .unit { font-size: 13px; color: var(--text-dim); font-family: var(--font); font-weight: 500; }
+.tile .free-stamp {
+  display: inline-block;
+  font-family: var(--serif); font-size: 30px; color: var(--arctic);
+  margin: 6px 0 14px;
+}
+/* Scope chip — calls out which tier the public evaluation actually
+   measures (Me-only) so visitors aren't confused when results don't
+   include team / org dimensions. Sits between the price/free-stamp
+   and the description body. */
+.tile .scope-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(27,117,188,.08);
+  border: 1px solid rgba(27,117,188,.20);
+  font-size: 11.5px; font-weight: 600; letter-spacing: .02em;
+  color: var(--arctic);
+  margin-bottom: 14px;
+}
+.tile .scope-chip strong { font-weight: 700; }
+.tile .scope-chip .scope-pip {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--punch), var(--orchid));
+  flex-shrink: 0;
+}
+.tile .scope-chip .scope-suffix { color: var(--text-dim); font-weight: 500; }
+.tile.t-paid .scope-chip {
+  background: rgba(236,0,139,.06);
+  border-color: rgba(236,0,139,.20);
+  color: var(--punch);
+}
+
+/* Full-version callout — sits below the two tiles. Frames the
+   subscription/full path with a clear ME · WE · US scope and CTA
+   that opens the Request-a-proposal drawer on offerings.html. */
+.full-callout {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: -24px auto 36px;
+  padding: 0 28px 0;
+}
+.full-callout-inner {
+  position: relative;
+  background: linear-gradient(135deg, var(--card), rgba(27,117,188,.04));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  box-shadow: 0 6px 22px rgba(22,26,46,.06);
+  overflow: hidden;
+}
+.full-callout-inner::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+}
+.full-callout-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--twilight);
+  margin-bottom: 8px;
+}
+.full-callout-eyebrow .pip-row { display: inline-flex; gap: 4px; }
+.full-callout-eyebrow .pip-row span { width: 8px; height: 8px; border-radius: 50%; }
+.full-callout-eyebrow .pip-row .pip-me { background: linear-gradient(135deg, var(--punch), var(--orchid)); }
+.full-callout-eyebrow .pip-row .pip-we { background: linear-gradient(135deg, var(--arctic), var(--aqua)); }
+.full-callout-eyebrow .pip-row .pip-us { background: linear-gradient(135deg, var(--twilight), var(--grape)); }
+.full-callout-inner h3 {
+  font-size: 22px; font-weight: 800; color: var(--text);
+  letter-spacing: -.012em; line-height: 1.25; margin: 0 0 8px;
+}
+.full-callout-inner h3 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.full-callout-inner p {
+  font-size: 14px; color: var(--text-dim); line-height: 1.7; font-weight: 300;
+  margin: 0; max-width: 560px;
+}
+.full-callout-inner p strong { color: var(--text); font-weight: 600; }
+.full-callout-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 24px;
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  color: #fff; text-decoration: none;
+  font-family: var(--font); font-size: 13.5px; font-weight: 600; letter-spacing: .02em;
+  border-radius: 100px;
+  box-shadow: 0 4px 18px rgba(41,56,144,.25);
+  transition: transform .15s, box-shadow .15s;
+  white-space: nowrap;
+}
+.full-callout-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(41,56,144,.35); }
+.full-callout-cta svg { width: 14px; height: 14px; }
+@media (max-width: 720px) {
+  .full-callout-inner { grid-template-columns: 1fr; padding: 24px 22px; }
+  .full-callout-inner h3 { font-size: 19px; }
+}
+.tile .desc { font-size: 14.5px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
+.tile ul.tile-checks { list-style: none; padding: 0; margin: 0 0 18px; }
+.tile ul.tile-checks li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13.5px; color: var(--text-dim); padding: 5px 0;
+  line-height: 1.55;
+}
+.tile ul.tile-checks li::before {
+  content: ''; flex-shrink: 0; margin-top: 5px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  background-image:
+    url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--arctic), var(--orchid));
+  background-size: 10px 10px, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+}
+.tile.t-paid ul.tile-checks li::before {
+  background:
+    url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--grape), var(--punch));
+  background-size: 10px 10px, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+}
+.tile-cta {
+  margin-top: auto;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 20px;
+  font-family: var(--font); font-size: 13.5px; font-weight: 600; letter-spacing: .02em;
+  text-decoration: none; border-radius: 100px;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  color: #fff; border: none; cursor: pointer;
+  box-shadow: 0 4px 18px rgba(27,117,188,.22);
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.tile-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,117,188,.32); }
+.tile.t-paid .tile-cta { background: linear-gradient(135deg, var(--grape), var(--punch)); box-shadow: 0 4px 18px rgba(236,0,139,.22); }
+.tile.t-paid .tile-cta:hover { box-shadow: 0 8px 24px rgba(236,0,139,.32); }
+
+/* ——— Form panels ——————————————————————————————————————————————— */
+.form-shell {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto;
+  padding: 0 28px 80px;
+}
+.form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 36px 28px;
+  box-shadow: 0 8px 30px rgba(22,26,46,.08);
+  display: none;
+}
+.form-card.open { display: block; }
+.form-card .fc-eyebrow {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--arctic); margin-bottom: 6px;
+}
+.form-card.fc-paid .fc-eyebrow { color: var(--punch); }
+.form-card h3 { font-size: 22px; font-weight: 800; letter-spacing: -.012em; margin: 0 0 6px; }
+.form-card h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.form-card p.fc-lede { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin: 0 0 20px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 540px) { .row-2 { grid-template-columns: 1fr; } }
+.fld { margin-bottom: 14px; }
+.fld label {
+  display: block;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--arctic);
+  margin-bottom: 6px;
+}
+.form-card.fc-paid .fld label { color: var(--grape); }
+.fld input, .fld select, .fld textarea {
+  width: 100%; padding: 10px 13px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--card); color: var(--text);
+  font-family: var(--font); font-size: 14px; font-weight: 400;
+  transition: border-color .15s, box-shadow .15s;
+}
+.fld textarea { resize: vertical; min-height: 80px; line-height: 1.55; }
+.fld select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  cursor: pointer; padding-right: 36px;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B75BC' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 14px;
+}
+.fld input:focus, .fld select:focus, .fld textarea:focus {
+  outline: none; border-color: var(--arctic);
+  box-shadow: 0 0 0 3px rgba(38,170,225,.18);
+}
+
+.warrant {
+  margin: 18px 0;
+  padding: 16px 18px;
+  background: rgba(27,117,188,.05);
+  border: 1px solid rgba(27,117,188,.22);
+  border-radius: 12px;
+}
+
+/* ——— Marketing opt-in (subscription interest) ————————————————————— */
+.optin {
+  margin: 18px 0 6px;
+  padding: 16px 18px;
+  background: rgba(102,44,144,.04);
+  border: 1px solid rgba(102,44,144,.18);
+  border-radius: 12px;
+}
+.optin .optin-q {
+  font-size: 13.5px; color: var(--text); font-weight: 600;
+  line-height: 1.55; margin-bottom: 12px;
+}
+.form-card.fc-paid .optin { background: rgba(236,0,139,.04); border-color: rgba(236,0,139,.18); }
+.optin-choices { display: flex; gap: 10px; flex-wrap: wrap; }
+.optin-choice {
+  flex: 1 1 220px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px; color: var(--text-dim);
+  cursor: pointer;
+  transition: border-color .15s, background .15s, color .15s;
+  user-select: none;
+}
+.optin-choice input[type="radio"] {
+  width: 16px; height: 16px;
+  accent-color: var(--grape);
+  margin: 0;
+  flex-shrink: 0;
+}
+.form-card.fc-paid .optin-choice input[type="radio"] { accent-color: var(--punch); }
+.optin-choice:hover { border-color: rgba(102,44,144,.4); color: var(--text); }
+.form-card.fc-paid .optin-choice:hover { border-color: rgba(236,0,139,.4); }
+.optin-choice:has(input:checked) {
+  border-color: var(--grape);
+  background: rgba(102,44,144,.06);
+  color: var(--text);
+  font-weight: 600;
+}
+.form-card.fc-paid .optin-choice:has(input:checked) {
+  border-color: var(--punch);
+  background: rgba(236,0,139,.06);
+}
+.warrant-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  cursor: pointer;
+}
+.warrant-row input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: var(--arctic);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.warrant-row .warrant-text {
+  font-size: 13px; color: var(--text); line-height: 1.65;
+}
+.warrant-row .warrant-text strong { color: var(--text); font-weight: 700; }
+
+.fc-submit {
+  width: 100%; margin-top: 8px;
+  padding: 13px 22px;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  color: #fff; border: none; border-radius: 100px;
+  font-family: var(--font); font-size: 14px; font-weight: 600; letter-spacing: .02em;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(27,117,188,.22);
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.fc-submit:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,117,188,.32); }
+.fc-submit:disabled { opacity: .55; cursor: not-allowed; }
+.form-card.fc-paid .fc-submit {
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  box-shadow: 0 4px 18px rgba(236,0,139,.25);
+}
+.form-card.fc-paid .fc-submit:hover:not(:disabled) { box-shadow: 0 8px 24px rgba(236,0,139,.32); }
+
+.fc-error,
+.fc-success {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.fc-error { background: rgba(236,0,139,.07); border: 1px solid rgba(236,0,139,.28); color: var(--punch); }
+.fc-error.shown { display: block; }
+.fc-success { background: rgba(38,170,225,.06); border: 1px solid rgba(38,170,225,.22); color: var(--text); }
+.fc-success.shown { display: block; }
+.fc-success strong { color: var(--arctic); }
+
+.fc-foot {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 11.5px; color: var(--text-dim); line-height: 1.6;
+  text-align: center;
+}
+.fc-foot a { color: var(--arctic); text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(27,117,188,.3); }
+
+/* ——— Warm invitation back to the index ————————————————————————— */
+.back-invite {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: 0 auto;
+  padding: 12px 28px 64px;
+}
+.back-invite-inner {
+  background: linear-gradient(135deg, rgba(41,56,144,.04), rgba(102,44,144,.03));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 36px 38px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.back-invite-inner::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+  border-radius: 18px 18px 0 0;
+}
+.back-invite-eyebrow {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--arctic);
+  margin-bottom: 10px;
+}
+.back-invite-inner h3 {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 800; letter-spacing: -.012em; line-height: 1.2;
+  max-width: 700px; margin: 0 auto 12px; color: var(--text);
+}
+.back-invite-inner h3 .hl-serif {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.back-invite-inner p {
+  font-size: 14.5px; color: var(--text-dim); line-height: 1.7; max-width: 640px;
+  margin: 0 auto 22px; font-weight: 300;
+}
+.back-invite-buttons {
+  display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+.back-invite-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px;
+  font-family: var(--font); font-size: 13.5px; font-weight: 600;
+  text-decoration: none; letter-spacing: .02em;
+  border-radius: 100px;
+  transition: transform .15s, box-shadow .15s, opacity .15s, border-color .15s, color .15s;
+}
+.back-invite-btn-primary {
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(41,56,144,.22);
+}
+.back-invite-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(41,56,144,.32); }
+.back-invite-btn-secondary {
+  background: var(--card); color: var(--text); border: 1px solid var(--border);
+}
+.back-invite-btn-secondary:hover { border-color: rgba(38,170,225,.45); color: var(--arctic); }
+
+/* ——— Footer ———————————————————————————————————————————————————— */
+footer.page-ft {
+  position: relative; z-index: 1;
+  text-align: center; color: var(--text-dim);
+  font-size: 12px; padding: 28px 28px 36px;
+  line-height: 1.8; border-top: 1px solid var(--border);
+}
+footer.page-ft a { color: var(--text-dim); text-decoration: none; transition: color .15s; }
+footer.page-ft a:hover { color: var(--arctic); }
+footer.page-ft .ft-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  margin: 0 auto 14px; border-radius: 2px;
+}
+
+@media (max-width: 720px) {
+  .topbar { padding: 0 18px; }
+  .topbar-right .nav-link { display: none; }
+  .pf-hero { padding: 44px 22px 18px; }
+  .form-card { padding: 26px 22px 22px; }
+  /* iOS Safari zooms in on any input with font-size < 16px — bump
+     every form field to 16px on mobile to suppress the auto-zoom
+     that lost the form layout. (2026-06-04 mobile pass.) */
+  .fld input, .fld select, .fld textarea { font-size: 16px; padding: 13px 14px; }
+  /* Tap targets — submit + CTA buttons get the 44px floor */
+  .fc-submit { min-height: 48px; padding: 14px 22px; font-size: 15px; }
+  .tile-cta { min-height: 44px; padding: 13px 22px; font-size: 14px; }
+  .back-invite-btn { min-height: 44px; padding: 13px 22px; font-size: 14px; }
+  .form-shell { padding: 0 18px 64px; }
+  .back-invite { padding: 12px 18px 56px; }
+  .back-invite-inner { padding: 26px 22px; }
+  footer.page-ft { padding: 28px 18px 36px; }
+}
+
+@media (max-width: 380px) {
+  .pf-hero { padding: 32px 14px 14px; }
+  .form-card { padding: 20px 16px 18px; }
+  .form-shell { padding: 0 14px 56px; }
+  .back-invite-buttons { flex-direction: column; align-items: stretch; }
+  .back-invite-btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-back" href="the-good-foundry-index.html" title="Back to The Good Foundry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+      <a class="brand" href="https://www.the-good-foundry.com/">
+        <img class="brand-logo" src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry · Action for Impact">
+      </a>
+    </div>
+    <div class="topbar-right">
+      <a class="nav-link" href="business-case.html">Business case</a>
+      <a class="nav-link" href="backed-by-science.html">Backed by Science</a>
+      <a class="nav-link" href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy</a>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="pf-hero">
+    <div class="kicker">PERMA+ Workplace Wellbeing Evaluation</div>
+    <h1>Take the evaluation for <span class="hl">free</span> &mdash; or <span class="serif">pay-per-use</span> for client work.</h1>
+    <p class="lede">Five minutes. Confidential. Evidence-based. You&rsquo;ll see your personal PERMA+ profile and a tailored set of next actions the moment you finish &mdash; no waiting, no hidden upsell.</p>
+  </section>
+
+  <!-- ── Tile picker ── -->
+  <div class="tile-grid">
+    <!-- Free tile -->
+    <div class="tile" id="tile-free" onclick="pfPickTile('free')">
+      <div class="tile-tag">Personal use</div>
+      <h2>Free for <em>you</em></h2>
+      <div class="free-stamp">A$0</div>
+      <div class="scope-chip scope-me"><span class="scope-pip"></span><strong>Me</strong> level only <span class="scope-suffix">(Employee)</span></div>
+      <p class="desc">For personal reflection, individual coaching, study, or your own development. We mean it &mdash; no card, no trial, no lock-in.</p>
+      <ul class="tile-checks">
+        <li>Full PERMA+ Wellbeing Evaluation (5 minutes)</li>
+        <li>Personal results report &amp; explainers</li>
+        <li>Tailored next-action wellbeing plan</li>
+        <li>Re-take anytime (one personal account per email)</li>
+      </ul>
+      <button type="button" class="tile-cta" onclick="event.stopPropagation();pfPickTile('free')">
+        Take it free &rarr;
+      </button>
+    </div>
+
+    <!-- Paid tile -->
+    <div class="tile t-paid" id="tile-paid" onclick="pfPickTile('paid')">
+      <div class="tile-tag">Commercial / client-facing</div>
+      <h2>Pay <em>per evaluation</em></h2>
+      <div class="price"><span class="num">A$19.97</span><span class="unit">/ response (incl. GST)</span></div>
+      <div class="scope-chip scope-me"><span class="scope-pip"></span><strong>Me</strong> level only <span class="scope-suffix">(Employee)</span></div>
+      <p class="desc">For coaches, consultants, EAPs, HR practitioners, OD teams &mdash; anyone using the evaluation with paying clients or as part of a paid service.</p>
+      <ul class="tile-checks">
+        <li>Single full PERMA+ response &mdash; commercial-use licence</li>
+        <li>Branded delivery to your client&rsquo;s inbox</li>
+        <li>Personal results report for the respondent</li>
+        <li>Receipt + tax invoice issued automatically</li>
+        <li>Volume needed? <a href="offerings.html#proposal" style="color:var(--punch);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(236,0,139,.4)">request a tailored offer</a></li>
+      </ul>
+      <button type="button" class="tile-cta" onclick="event.stopPropagation();pfPickTile('paid')">
+        Pay &amp; take it &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Full ME · WE · US callout ─────────────────────────────── -->
+  <div class="full-callout">
+    <div class="full-callout-inner">
+      <div>
+        <div class="full-callout-eyebrow">
+          Full version
+          <span class="pip-row" aria-hidden="true">
+            <span class="pip-me" title="Me"></span>
+            <span class="pip-we" title="We"></span>
+            <span class="pip-us" title="Us"></span>
+          </span>
+        </div>
+        <h3>Need <em>Me &middot; We &middot; Us</em> across your organisation?</h3>
+        <p>The free + per-evaluation versions measure the <strong>Me (Employee)</strong> level only. Our subscription version measures all three levels &mdash; <strong>Me</strong> (Employee), <strong>We</strong> (Teams / Groups / Divisions), and <strong>Us</strong> (Organisational) &mdash; with team and leader dashboards, custom rounds, and bespoke configuration. Talk to us about a tailored offer for your people.</p>
+      </div>
+      <a class="full-callout-cta" href="offerings.html#proposal" target="_blank" rel="noopener">
+        Contact us for the full version
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Form shell ── -->
+  <div class="form-shell">
+
+    <!-- FREE form -->
+    <div class="form-card" id="fc-free">
+      <div class="fc-eyebrow">Personal use &middot; free</div>
+      <h3>A few details and you&rsquo;re <em>in</em>.</h3>
+      <p class="fc-lede">The evaluation takes about five minutes. Your responses and results are private to you. We&rsquo;ll also email you a copy of your results once you finish.</p>
+
+      <div class="row-2">
+        <div class="fld">
+          <label for="ff-first">First name</label>
+          <input type="text" id="ff-first" autocomplete="given-name" placeholder="Jane">
+        </div>
+        <div class="fld">
+          <label for="ff-last">Last name</label>
+          <input type="text" id="ff-last" autocomplete="family-name" placeholder="Smith">
+        </div>
+      </div>
+      <div class="fld">
+        <label for="ff-email">Email address</label>
+        <input type="email" id="ff-email" autocomplete="email" placeholder="jane@example.com">
+      </div>
+      <!-- 2026-06-19 — Confirm-email gate (Marty: typo prevention). -->
+      <div class="fld">
+        <div style="font-size:12.5px;color:#5a6b7c;margin-bottom:6px;line-height:1.55;font-style:italic">
+          We value your effort to be here &mdash; it would be a shame if an accidental email typo prevented us from connecting. Could you type your email again so we know we have it right?
+        </div>
+        <label for="ff-email-confirm">Confirm email</label>
+        <input type="email" id="ff-email-confirm" autocomplete="off" spellcheck="false" placeholder="Type your email again">
+      </div>
+      <div class="fld">
+        <label for="ff-source">How did you hear about us?</label>
+        <select id="ff-source">
+          <option value="">Pick one…</option>
+          <option>LinkedIn</option>
+          <option>Search (Google / Bing)</option>
+          <option>Referred by a colleague or friend</option>
+          <option>Coaching Foundry</option>
+          <option>A coach or therapist directed me here</option>
+          <option>Podcast or interview</option>
+          <option>Conference or event</option>
+          <option>Press / article / publication</option>
+          <option>Returning visitor</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fld" id="ff-source-other-fld" style="display:none">
+        <label for="ff-source-other">Tell us a little more</label>
+        <input type="text" id="ff-source-other" placeholder="Where exactly did you find us?">
+      </div>
+
+      <div class="warrant">
+        <label class="warrant-row">
+          <input type="checkbox" id="ff-warrant">
+          <span class="warrant-text">
+            <strong>I confirm I&rsquo;m taking this evaluation for personal use only.</strong>
+            I&rsquo;m not using the responses or my results for commercial gain, I&rsquo;m not delivering the evaluation to clients I charge for services, and I haven&rsquo;t been directed here by a paid service provider, coach, consultant, or training course. If my use is or becomes commercial, I&rsquo;ll switch to the per-evaluation paid option.
+          </span>
+        </label>
+      </div>
+
+      <div class="optin">
+        <div class="optin-q">Are you interested in receiving information about our subscription version for use with your people, teams and organisation?</div>
+        <div class="optin-choices">
+          <label class="optin-choice">
+            <input type="radio" name="ff-optin" value="yes">
+            <span>Yes &mdash; please send me information</span>
+          </label>
+          <label class="optin-choice">
+            <input type="radio" name="ff-optin" value="no">
+            <span>No &mdash; not at this time</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="button" class="fc-submit" id="ff-submit" onclick="pfFreeSubmit()">Take the evaluation now &rarr;</button>
+      <div class="fc-error" id="ff-error"></div>
+      <div class="fc-success" id="ff-success">
+        <strong>Done.</strong> Your private evaluation link is on its way. Check your inbox in the next minute or two.
+      </div>
+
+      <div class="fc-foot">
+        Your details stay confidential. We never share, sell, or use your results for advertising. Read our <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+      </div>
+    </div>
+
+    <!-- PAID form -->
+    <div class="form-card fc-paid" id="fc-paid">
+      <div class="fc-eyebrow">Commercial use &middot; A$19.97 per response</div>
+      <h3>Pay once, run a evaluation for your <em>client</em>.</h3>
+      <p class="fc-lede">Tell us who&rsquo;s taking it and we&rsquo;ll email them the evaluation link as soon as your payment lands. A receipt + tax invoice are issued automatically.</p>
+
+      <div class="row-2">
+        <div class="fld">
+          <label for="fp-first">Your first name</label>
+          <input type="text" id="fp-first" autocomplete="given-name" placeholder="Jane">
+        </div>
+        <div class="fld">
+          <label for="fp-last">Your last name</label>
+          <input type="text" id="fp-last" autocomplete="family-name" placeholder="Smith">
+        </div>
+      </div>
+      <div class="fld">
+        <label for="fp-email">Your email address (for receipt)</label>
+        <input type="email" id="fp-email" autocomplete="email" placeholder="jane@your-business.com">
+      </div>
+      <div class="fld">
+        <label for="fp-org">Your business / practice name</label>
+        <input type="text" id="fp-org" autocomplete="organization" placeholder="e.g. Smith Coaching Pty Ltd">
+      </div>
+      <div class="fld">
+        <label for="fp-respondent-email">Respondent&rsquo;s email <span style="color:var(--text-dim);font-weight:500;text-transform:none;letter-spacing:0">(can be your client, your team member, or yourself)</span></label>
+        <input type="email" id="fp-respondent-email" placeholder="respondent@example.com">
+      </div>
+      <div class="fld">
+        <label for="fp-use">Intended use</label>
+        <select id="fp-use">
+          <option value="">Pick one…</option>
+          <option>Coaching engagement &mdash; individual</option>
+          <option>Coaching engagement &mdash; team</option>
+          <option>Workplace consulting</option>
+          <option>EAP / wellbeing service</option>
+          <option>OD / HR programme</option>
+          <option>Training programme</option>
+          <option>Research</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label for="fp-source">How did you hear about us?</label>
+        <select id="fp-source">
+          <option value="">Pick one…</option>
+          <option>LinkedIn</option>
+          <option>Search (Google / Bing)</option>
+          <option>Referred by a colleague or peer</option>
+          <option>Coaching Foundry</option>
+          <option>Conference or event</option>
+          <option>Podcast or interview</option>
+          <option>Press / article / publication</option>
+          <option>Existing partner / collaborator</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="optin">
+        <div class="optin-q">Are you interested in receiving information about our subscription version for use with your people, teams and organisation?</div>
+        <div class="optin-choices">
+          <label class="optin-choice">
+            <input type="radio" name="fp-optin" value="yes">
+            <span>Yes &mdash; please send me information</span>
+          </label>
+          <label class="optin-choice">
+            <input type="radio" name="fp-optin" value="no">
+            <span>No &mdash; not at this time</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="button" class="fc-submit" id="fp-submit" onclick="pfPaidSubmit()">Continue to checkout &rarr;</button>
+      <div class="fc-error" id="fp-error"></div>
+      <div class="fc-success" id="fp-success">
+        <strong>Redirecting to secure checkout…</strong> If the new tab doesn&rsquo;t open, <a id="fp-fallback-link" href="#" target="_blank" rel="noopener" style="color:var(--punch);font-weight:600">click here</a>.
+      </div>
+
+      <div class="fc-foot">
+        Payment is processed securely by Stripe. Receipt and tax invoice land in your inbox automatically. We never see or store your card details.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Warm invitation to explore the editions ─────────────────── -->
+  <section class="back-invite">
+    <div class="back-invite-inner">
+      <div class="back-invite-eyebrow">Curious about more?</div>
+      <h3>Nine editions tuned to <span class="hl-serif">where you work, learn, play or age well</span>.</h3>
+      <p>Workplace, University, Life, Veterinary, Sport, School (Kids and Youth), In Aging Well, Bespoke. Evidence-based PERMA+ measurement built into the dashboard, the conversation, and the next action your people need. Have a wander &mdash; no signup required.</p>
+      <div class="back-invite-buttons">
+        <a class="back-invite-btn back-invite-btn-primary" href="the-good-foundry-index.html">Explore The Good Foundry &rarr;</a>
+        <a class="back-invite-btn back-invite-btn-secondary" href="offerings.html">Browse the editions</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-ft">
+    <div class="ft-divider"></div>
+    <strong style="color:var(--text);font-weight:600">The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+    <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy policy</a> &middot;
+    <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a>
+    <div style="margin-top:12px;font-size:10.5px;opacity:.7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved.</div>
+  </footer>
+
+  <script>
+  (function () {
+    /* ── Stripe Payment Link ──
+       Replace this URL with the Payment Link generated in your Stripe
+       Dashboard (Products → Payment Links → New). The generated link
+       points at a Stripe-hosted checkout page that already has the
+       A$19.97 line item, GST, and customer email field configured.
+       We append the form fields as `prefilled_email` + `client_reference_id`
+       (used by the webhook to mint the eval key against the right
+       respondent). Until this URL is filled in, the paid path falls
+       through to a "we'll be in touch" email so prospects aren't
+       stuck. */
+    var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/bJe14o0BnfW870Q4rJabK01';
+    var ENQUIRY_URL = 'https://smart-tools-foundry.com/WBM/api/send_enquiry.php';
+    /* Endpoint the FREE flow will call once we wire the eval-key
+       minting on the server side. Until that exists the free path
+       falls back to the generic enquiry endpoint so the request
+       still lands in our inbox. */
+    var FREE_SIGNUP_URL = 'https://smart-tools-foundry.com/WBM/api/public_signup.php';
+    /* Public-evaluation URL the visitor lands on after successful free
+       warrant submission OR after Stripe payment confirmation. The
+       form is the gating + audit step; the evaluation itself is open
+       under SUB-MOQ0UBYQ — a public-free subscription provisioned
+       for the per-evaluation + free-personal-use flows. */
+    var SURVEY_URL = 'https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?sub=SUB-MOQ0UBYQ';
+
+    function $(id){ return document.getElementById(id); }
+
+    /* Tile picker — opens / closes the relevant form panel and
+       smoothly scrolls it into view. Tiles toggle the .active class
+       so the visitor always knows which panel they triggered. */
+    window.pfPickTile = function (which) {
+      $('tile-free').classList.toggle('active', which === 'free');
+      $('tile-paid').classList.toggle('active', which === 'paid');
+      $('fc-free').classList.toggle('open',     which === 'free');
+      $('fc-paid').classList.toggle('open',     which === 'paid');
+      var target = which === 'free' ? $('fc-free') : $('fc-paid');
+      setTimeout(function () { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+      var firstField = which === 'free' ? $('ff-first') : $('fp-first');
+      setTimeout(function () { try { firstField.focus(); } catch(e){} }, 360);
+    };
+
+    /* "Other" reveal on the source field — only for the FREE form;
+       the paid form doesn't accept free-text since the source is
+       already cross-checked against the marketing-attribution data
+       on the receipt. */
+    $('ff-source').addEventListener('change', function (e) {
+      $('ff-source-other-fld').style.display = e.target.value === 'Other' ? '' : 'none';
+    });
+
+    function _show(el, msg) { if (msg) el.textContent = msg; el.classList.add('shown'); }
+    function _hide(el)      { el.classList.remove('shown'); }
+    function _emailValid(s) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s); }
+
+    /* ── FREE submission ──
+       POSTs to public_signup.php (creates the evaluation_users row
+       under the public-FREE subscription and triggers the existing
+       invitation email path). If that endpoint isn't deployed yet
+       (404) we fall through to the generic enquiry endpoint so the
+       request still reaches us — the user gets a friendly success
+       message either way and we mint their eval key by hand from
+       the queue. */
+    /* 2026-06-19 — Confirm-email guards on ff-email pair. */
+    (function _pfFreeBindConfirmGuards() {
+      var confirm = $('ff-email-confirm');
+      if (!confirm || confirm._wmGuarded) return;
+      confirm._wmGuarded = true;
+      confirm.addEventListener('paste', function (ev) {
+        ev.preventDefault();
+        _show($('ff-error'), 'Please type your email again instead of pasting — this confirms there is no typo in the first field.');
+      });
+      function _paintMatchState() {
+        var a = ($('ff-email').value || '').trim().toLowerCase();
+        var b = (confirm.value || '').trim().toLowerCase();
+        if (!a || !b) { confirm.style.borderColor = ''; return; }
+        confirm.style.borderColor = (a === b) ? '#18a36e' : '#dc2626';
+      }
+      confirm.addEventListener('input', _paintMatchState);
+      var primaryField = $('ff-email');
+      if (primaryField) primaryField.addEventListener('input', _paintMatchState);
+    })();
+
+    window.pfFreeSubmit = function () {
+      var first = ($('ff-first').value || '').trim();
+      var last  = ($('ff-last').value  || '').trim();
+      var email = ($('ff-email').value || '').trim();
+      var emailConfirm = ($('ff-email-confirm').value || '').trim();
+      var src   = ($('ff-source').value || '').trim();
+      var srcOther = ($('ff-source-other').value || '').trim();
+      var warrant  = $('ff-warrant').checked;
+      var errEl = $('ff-error');
+      var sucEl = $('ff-success');
+      _hide(errEl); _hide(sucEl);
+
+      var optinEl = document.querySelector('input[name="ff-optin"]:checked');
+      var optin   = optinEl ? optinEl.value : '';
+
+      if (!first || !last)         return _show(errEl, 'Please enter your first and last name.');
+      if (!_emailValid(email))     return _show(errEl, 'Please enter a valid email address.');
+      /* 2026-06-19 — Confirm-email gate. */
+      if (!emailConfirm) {
+        return _show(errEl, 'Please type your email again in the Confirm Email field — we want to make sure there’s no typo.');
+      }
+      if (email.toLowerCase() !== emailConfirm.toLowerCase()) {
+        var confirmEl = $('ff-email-confirm');
+        if (confirmEl) confirmEl.focus();
+        return _show(errEl, 'The two email addresses don’t match — please check for typos and try again.');
+      }
+      if (!src)                    return _show(errEl, 'Pick how you heard about us — it helps us keep the evaluation free.');
+      if (src === 'Other' && !srcOther) return _show(errEl, 'Tell us a little more about where you found us.');
+      if (!warrant)                return _show(errEl, 'Please confirm you’re using the evaluation for personal use. Switch to the paid option if your use is commercial.');
+      if (!optin)                  return _show(errEl, 'Please pick yes or no for subscription information.');
+
+      var btn = $('ff-submit');
+      var orig = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending…';
+
+      var payload = {
+        intent:           'free_personal',
+        firstName:        first,
+        lastName:         last,
+        email:            email,
+        source:           src + (srcOther ? (' — ' + srcOther) : ''),
+        marketing_optin:  optin,
+        warrant_text:     $('ff-warrant').parentNode.querySelector('.warrant-text').textContent.trim(),
+        warrant_at:       new Date().toISOString(),
+        page:             'permah-free.html'
+      };
+
+      /* Build the evaluation destination URL up-front. The visitor
+         is redirected here regardless of whether the audit POST
+         succeeds — the evaluation is the primary thing, the audit
+         row + email are best-effort follow-ups. */
+      var qs = ['email=' + encodeURIComponent(email)];
+      if (first) qs.push('first_name=' + encodeURIComponent(first));
+      if (last)  qs.push('last_name=' + encodeURIComponent(last));
+      var dest = SURVEY_URL + (SURVEY_URL.indexOf('?') === -1 ? '?' : '&') + qs.join('&');
+
+      /* Show the redirect notice immediately so the visitor doesn't
+         see a stalled spinner if the audit endpoint is slow. */
+      sucEl.innerHTML = '<strong>You&rsquo;re in.</strong> Taking you to the evaluation now&hellip;<br><a id="ff-dest-link" href="' + dest + '" style="color:var(--arctic);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(27,117,188,.3)">Open the evaluation →</a>';
+      _show(sucEl);
+      btn.disabled = false; btn.textContent = orig;
+
+      /* Fire-and-forget the audit POST. If public_signup.php is
+         missing, returns 5xx, or the network fails, we still
+         redirect — the visitor gets to take the evaluation. If it
+         succeeds and returns a ref, append it to the destination so
+         the evaluation can correlate back to the public_signups row
+         (and we still get the warrant + email + opt-in audit). */
+      var auditPromise = fetch(FREE_SIGNUP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function (r) { return r.json().catch(function(){ return null; }); })
+      .then(function (j) {
+        if (j && j.ref) {
+          var sep = (dest.indexOf('?') === -1 ? '?' : '&');
+          dest += sep + 'ref=' + encodeURIComponent(j.ref);
+          var lnk = document.getElementById('ff-dest-link');
+          if (lnk) lnk.setAttribute('href', dest);
+        }
+      })
+      .catch(function () { /* swallow — redirect happens anyway */ });
+
+      /* Race the audit against a short delay. If the audit returns
+         within 1500ms we use the augmented URL with ref; otherwise
+         redirect on the bare URL. */
+      Promise.race([
+        auditPromise,
+        new Promise(function (res) { setTimeout(res, 1500); })
+      ]).then(function () {
+        window.location.href = dest;
+      });
+    };
+
+    /* ── PAID submission ──
+       Validates the form, then either opens the configured Stripe
+       Payment Link with prefilled email + client_reference_id, or
+       posts the request as a "talk to us" enquiry if the Payment
+       Link hasn't been pasted in yet. Both paths give the visitor
+       confirmation. */
+    window.pfPaidSubmit = function () {
+      var first = ($('fp-first').value || '').trim();
+      var last  = ($('fp-last').value  || '').trim();
+      var email = ($('fp-email').value || '').trim();
+      var org   = ($('fp-org').value   || '').trim();
+      var resp  = ($('fp-respondent-email').value || '').trim();
+      var use   = ($('fp-use').value   || '').trim();
+      var src   = ($('fp-source').value || '').trim();
+      var errEl = $('fp-error');
+      var sucEl = $('fp-success');
+      _hide(errEl); _hide(sucEl);
+
+      var optinEl = document.querySelector('input[name="fp-optin"]:checked');
+      var optin   = optinEl ? optinEl.value : '';
+
+      if (!first || !last)        return _show(errEl, 'Please enter your first and last name.');
+      if (!_emailValid(email))    return _show(errEl, 'Please enter a valid email for the receipt.');
+      if (!org)                   return _show(errEl, 'Please enter your business or practice name.');
+      if (!_emailValid(resp))     return _show(errEl, 'Please enter the respondent’s email address.');
+      if (!use)                   return _show(errEl, 'Pick the intended use.');
+      if (!src)                   return _show(errEl, 'Pick how you heard about us.');
+      if (!optin)                 return _show(errEl, 'Please pick yes or no for subscription information.');
+
+      /* POST to public_signup.php first so we get a server-issued
+         ref + a row in the public_signups table. The ref is what we
+         then hand to Stripe as client_reference_id, so the webhook
+         can find this row when payment lands. */
+      var btn = $('fp-submit');
+      var orig = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Preparing checkout…';
+
+      fetch(FREE_SIGNUP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          intent:           'paid_pending',
+          firstName:        first,
+          lastName:         last,
+          email:            email,
+          org:              org,
+          respondent:       resp,
+          intended_use:     use,
+          source:           src,
+          source_other:     '',
+          marketing_optin:  optin,
+          page:             'permah-free.html'
+        })
+      })
+      .then(function (r) { return r.json().catch(function(){ return { ok: r.ok }; }); })
+      .then(function (j) {
+        btn.disabled = false; btn.textContent = orig;
+
+        if (!j || !j.ok || !j.ref) {
+          _show(errEl, (j && j.error) || 'Could not start the checkout. Please try again, or email marty@the-good-foundry.com directly.');
+          return;
+        }
+
+        var ref = j.ref;
+
+        /* Stash for the success page to display + as a fallback ref
+           lookup if the URL doesn't carry it post-redirect. */
+        try {
+          sessionStorage.setItem('pf_paid_pending', JSON.stringify({
+            ref: ref, firstName: first, lastName: last,
+            email: email, org: org,
+            respondent: resp, use: use, source: src,
+            submittedAt: new Date().toISOString()
+          }));
+        } catch (e) {}
+
+        if (STRIPE_PAYMENT_LINK) {
+          var qs = '?prefilled_email=' + encodeURIComponent(email) +
+                   '&client_reference_id=' + encodeURIComponent(ref);
+          var paymentUrl = STRIPE_PAYMENT_LINK + (STRIPE_PAYMENT_LINK.indexOf('?') === -1 ? qs : qs.replace('?', '&'));
+          /* Same-tab redirect to Stripe — Payment Links can't be
+             iframed (Stripe sets X-Frame-Options: DENY) and opening
+             in a new tab triggers popup-blocker false positives.
+             The clean flow is linear in one tab:
+               permah-free.html → Stripe checkout → permah-free-success.html → wm_evaluation.html
+             Stripe's "After payment" success URL on the Payment
+             Link is configured to land on permah-free-success.html
+             with our ref appended — that page then forwards to the
+             evaluation. */
+          $('fp-fallback-link').setAttribute('href', paymentUrl);
+          sucEl.innerHTML = '<strong>Taking you to secure checkout&hellip;</strong> If the page doesn&rsquo;t load, <a id="fp-fallback-link" href="' + paymentUrl.replace(/"/g, '&quot;') + '" style="color:var(--punch);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(236,0,139,.4)">click here</a>.';
+          _show(sucEl);
+          /* Tiny delay so the success card paints before the
+             navigation kicks in. Otherwise some browsers cancel the
+             render and the user sees a flash of the form. */
+          setTimeout(function () { window.location.href = paymentUrl; }, 200);
+          return;
+        }
+
+        /* Fallback path stays the same — invoice manually. */
+        $('fp-success').innerHTML = '<strong>We&rsquo;ve got your details.</strong> A team member will email you a payment link and the evaluation access shortly. (Ref: ' + ref + ')';
+        _show(sucEl);
+      })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = orig;
+        _show(errEl, 'Network error preparing the checkout. Please try again, or email marty@the-good-foundry.com.');
+      });
+    };
+
+    /* Pre-select a tile if the URL hash hints at one (e.g. an email
+       campaign linking directly to permah-free.html#paid). */
+    if (window.location.hash === '#paid') pfPickTile('paid');
+    else if (window.location.hash === '#free') pfPickTile('free');
+  })();
+  </script>
+
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>

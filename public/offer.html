@@ -1,0 +1,2364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wellbeing Matters · Your Offer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* Public proposal viewer — themed to match the public marketing
+     pages (app/the-good-foundry-index.html). Deep blue + grape→punch
+     accents on Outfit + DM Serif Display. The page is what prospects
+     see in their inbox, so it has to read as a continuation of the
+     marketing site, not the orange admin chrome. */
+  :root {
+    --twilight:#293890; --arctic:#1B75BC; --aqua:#26AAE1;
+    --grape:#662C90;   --orchid:#91268F;  --punch:#EC008B;
+    --bg:#F4F6FB; --card:#FFFFFF; --mid:#EEF1F8;
+    --border:rgba(41,56,144,.12); --border-light:rgba(41,56,144,.08);
+    --text:#161A2E; --text-dim:rgba(22,26,46,.58);
+    --font:'Outfit',sans-serif;
+    --serif:'DM Serif Display',serif;
+    /* Legacy aliases so the existing class names keep resolving. */
+    --text-dark:var(--text); --text-mid:#475066; --text-muted:var(--text-dim);
+    --surface:var(--card); --surface-2:var(--mid);
+    --green:#166534;
+    --mono:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:var(--font); color:var(--text); background:var(--bg);
+    line-height:1.65; font-size:15px; overflow-x:hidden;
+  }
+  body::before {
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  }
+  body > * { position:relative; z-index:1; }
+  .wrap { max-width:880px; margin:0 auto; padding:32px 24px 80px; }
+  .hero {
+    background:linear-gradient(135deg,var(--twilight) 0%,var(--grape) 65%,var(--punch) 130%);
+    color:#fff; padding:42px 36px; border-radius:22px; margin-bottom:24px;
+    box-shadow:0 20px 60px rgba(41,56,144,.22);
+    position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; right:-100px; top:-100px;
+    width:320px; height:320px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.15); pointer-events:none;
+  }
+  .hero::after {
+    content:''; position:absolute; right:-50px; top:-50px;
+    width:200px; height:200px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.12); pointer-events:none;
+  }
+  .hero .tag { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.10em; color:rgba(255,255,255,.85); margin-bottom:10px; position:relative; }
+  .hero h1 { font-family:var(--font); font-size:34px; font-weight:700; line-height:1.15; margin-bottom:8px; letter-spacing:-0.02em; position:relative; color:#fff; }
+  .hero h1 em { font-family:var(--serif); font-style:italic; font-weight:400; color:#fff; }
+  .hero .sub { font-size:14.5px; color:rgba(255,255,255,.85); position:relative; }
+  /* Hero meta line — overrides the page-level .meta default which
+     uses var(--text-dim) (dark grey on light bg). Inside the hero
+     it sits on a deep gradient so meta + strong both flip to white
+     for legibility. */
+  .hero .meta { color:rgba(255,255,255,.78); position:relative; }
+  .hero .meta strong { color:#fff; }
+  /* TGF logo lockup at the top of the hero. Sits left of (or above)
+     the tag line. White SVG variant on a translucent backdrop tile
+     so it reads on any of the gradient stops. */
+  .hero-brand {
+    display:flex; align-items:center; gap:12px; margin-bottom:18px;
+    position:relative;
+  }
+  /* 2x logo per Marty 2026-06-06 — 38px felt undersized against
+     the wordmark + 26px hero h1 sibling. Bumped to 76px (radius
+     + padding scaled proportionally) so the brand mark anchors
+     the hero properly. */
+  .hero-brand .hero-logo {
+    width:76px; height:76px; flex-shrink:0; border-radius:14px;
+    background:rgba(255,255,255,.10); padding:8px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-brand .hero-logo img {
+    width:100%; height:100%; object-fit:contain; display:block;
+  }
+  .hero-brand .hero-wordmark {
+    font-size:14px; font-weight:600; letter-spacing:-.01em; color:#fff;
+  }
+  .hero-brand .hero-wordmark .hero-sub {
+    font-size:10px; font-weight:500; color:rgba(255,255,255,.65);
+    text-transform:uppercase; letter-spacing:.10em; margin-top:2px;
+    display:block;
+  }
+  .card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:24px 26px; margin-bottom:18px; box-shadow:0 2px 18px rgba(41,56,144,.04); }
+  .card-h { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--grape); margin-bottom:12px; }
+  .item { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--border-light); }
+  .item:last-child { border-bottom:none; }
+  .item .name { font-size:14px; font-weight:600; color:var(--text); }
+  .item .desc { font-size:11.5px; color:var(--text-dim); margin-top:3px; line-height:1.55; }
+  .item .price { font-size:15px; font-weight:700; color:var(--text); white-space:nowrap; }
+  .item .toggle-wrap { display:flex; align-items:center; gap:10px; }
+  .item .toggle { width:42px; height:22px; background:var(--border); border-radius:99px; position:relative; cursor:pointer; transition:background .2s; flex-shrink:0; }
+  .item .toggle::after { content:''; position:absolute; left:2px; top:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition:left .2s; box-shadow:0 1px 3px rgba(41,56,144,.18); }
+  .item.on .toggle { background:linear-gradient(135deg,var(--grape),var(--punch)); }
+  .item.on .toggle::after { left:22px; }
+  .totals { background:var(--mid); border-radius:16px; padding:24px 26px; margin-bottom:18px; }
+  .totals-row { display:flex; justify-content:space-between; padding:7px 0; font-size:13.5px; color:var(--text-dim); }
+  .totals-row.grand { border-top:1px solid var(--border); margin-top:10px; padding-top:16px; font-size:20px; font-weight:700; color:var(--text); }
+  .totals-row.grand .v { background:linear-gradient(135deg,var(--grape),var(--punch));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent; }
+  .accept-card { background:linear-gradient(135deg,rgba(236,0,139,.05) 0%,#fff 80%); border:1px solid rgba(236,0,139,.18); border-radius:22px; padding:32px 36px; margin-bottom:18px; }
+  .accept-card h2 { font-family:var(--font); font-size:22px; font-weight:700; color:var(--text); margin-bottom:8px; letter-spacing:-.01em; }
+  .accept-card h2 em { font-family:var(--serif); font-style:italic; font-weight:400; color:var(--arctic); }
+  .accept-card p { font-size:13.5px; color:var(--text-dim); margin-bottom:20px; line-height:1.65; }
+  .accept-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .input { flex:1 1 240px; min-width:200px; padding:12px 16px; border:1px solid var(--border); border-radius:100px; font-size:14px; font-family:inherit; color:var(--text); background:#fff; transition:border-color .15s; }
+  /* 2026-06-07 — Marty: "Fix the input fields on the Offer areas
+     they aren't human usable". The base `.input` rule above is
+     pill-shaped (border-radius 100px) which works for the single-
+     line signature input but reads as broken on multi-line textareas
+     and date pickers (text squeezes into the rounded ends, native
+     date-picker calendar icon overlaps the right curve, placeholder
+     wraps awkwardly). Per-control overrides below restore a normal
+     rectangular shape + generous inner padding + a sensible
+     min-height so the field reads as something you can actually
+     type into. */
+  textarea.input {
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.55;
+    display: block;
+    box-sizing: border-box;
+    min-width: 0;       /* let the textarea shrink to fit narrow panels */
+  }
+  input[type="date"].input,
+  input[type="datetime-local"].input,
+  input[type="time"].input {
+    border-radius: 10px;
+    padding: 11px 14px;
+    width: 100%;
+    max-width: 260px;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .input:focus { outline:none; border-color:var(--arctic); }
+  .btn { padding:12px 24px; border-radius:100px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; border:1px solid transparent; line-height:1.2; letter-spacing:.01em; transition:opacity .2s, transform .12s, box-shadow .15s, border-color .15s; }
+  .btn-primary { background:linear-gradient(135deg,var(--grape),var(--punch)); color:#fff; box-shadow:0 4px 14px rgba(236,0,139,.22); }
+  .btn-primary:hover { opacity:.92; transform:translateY(-1px); box-shadow:0 6px 18px rgba(236,0,139,.28); }
+  .btn-ghost { background:#fff; color:var(--text); border-color:var(--border); }
+  .btn-ghost:hover { border-color:var(--text-dim); }
+  .status-pill { display:inline-block; padding:5px 14px; border-radius:99px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .status-pill.sent { background:rgba(236,0,139,.10); color:var(--punch); }
+  .status-pill.accepted { background:rgba(45,158,107,.15); color:var(--green); }
+  .status-pill.declined { background:rgba(220,38,38,.10); color:#b91c1c; }
+  .status-pill.expired { background:rgba(148,163,184,.15); color:#64748b; }
+  .flash { padding:12px 16px; border-radius:12px; margin-bottom:14px; font-size:13px; font-weight:500; }
+  .flash.ok { background:rgba(45,158,107,.10); color:var(--green); border:1px solid rgba(45,158,107,.25); }
+  .flash.err { background:rgba(220,38,38,.08); color:#b91c1c; border:1px solid rgba(220,38,38,.25); }
+  .cover { font-size:14.5px; color:var(--text-dim); line-height:1.75; white-space:pre-line; }
+  .meta { display:flex; flex-wrap:wrap; gap:18px; font-size:12px; color:var(--text-dim); margin-top:8px; }
+  .meta strong { color:var(--text); font-weight:600; }
+
+  /* ── Brochure-shape sections ────────────────────────────────────
+     The proposal viewer now opens with narrative — a "Why this
+     matters" framing block, per-edition "What you'll measure" panels
+     drawn from proposal_pricing.json's summary + highlights, and a
+     per-module "Modules & power-ups" section — before the pricing
+     table appears. The sticky bottom-line pill at top-right
+     short-circuits the narrative for clients who just want the
+     number. */
+  .brochure-section {
+    background:#fff; border:1px solid var(--border); border-radius:16px;
+    padding:28px 30px; margin-bottom:18px; box-shadow:0 2px 18px rgba(41,56,144,.04);
+  }
+  .brochure-section .b-eyebrow {
+    font-size:11px; font-weight:600; color:var(--grape);
+    text-transform:uppercase; letter-spacing:.10em; margin-bottom:10px;
+  }
+  .brochure-section h2 {
+    font-size:22px; font-weight:700; color:var(--text); letter-spacing:-.02em;
+    margin-bottom:10px; line-height:1.25;
+  }
+  .brochure-section h2 em { font-family:var(--serif); font-style:italic; font-weight:400; color:var(--arctic); }
+  .brochure-section .b-lede {
+    font-size:14.5px; color:var(--text-dim); line-height:1.7; margin-bottom:14px;
+  }
+  .b-item {
+    padding:18px 0; border-bottom:1px solid var(--border-light);
+  }
+  .b-item:last-child { border-bottom:none; padding-bottom:4px; }
+  .b-item .b-head {
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:14px; margin-bottom:8px; flex-wrap:wrap;
+  }
+  .b-item .b-name {
+    font-size:16px; font-weight:600; color:var(--text); line-height:1.35;
+  }
+  .b-item .b-name em { font-family:var(--serif); font-style:italic; font-weight:400; color:var(--arctic); }
+  .b-item .b-tag {
+    font-size:9px; font-weight:700; padding:3px 10px; border-radius:99px;
+    text-transform:uppercase; letter-spacing:.08em; white-space:nowrap;
+    background:rgba(102,44,144,.10); color:var(--grape);
+  }
+  .b-item .b-aud {
+    font-size:11.5px; color:var(--text-dim); margin-top:2px;
+  }
+  .b-item .b-summary {
+    font-size:14px; color:var(--text-dim); line-height:1.7; margin-top:8px;
+  }
+  .b-item .b-highlights {
+    list-style:none; margin-top:12px; padding:0;
+  }
+  .b-item .b-highlights li {
+    position:relative; padding-left:24px; margin:6px 0; font-size:13.5px;
+    color:var(--text); line-height:1.6;
+  }
+  .b-item .b-highlights li::before {
+    content:''; position:absolute; left:0; top:9px;
+    width:10px; height:10px; border-radius:50%;
+    background:linear-gradient(135deg,var(--grape),var(--punch));
+  }
+
+  /* Sticky "Show me the bottom line" pill — fades in after the user
+     scrolls past the hero so the client can jump straight to the
+     pricing card without scrolling through the narrative. */
+  #bottom-line-pill {
+    position:fixed; top:18px; right:18px; z-index:50;
+    display:none; align-items:center; gap:6px;
+    padding:10px 18px; border-radius:100px;
+    background:linear-gradient(135deg,var(--grape),var(--punch));
+    color:#fff; font-family:var(--font); font-weight:600; font-size:12.5px;
+    text-decoration:none; box-shadow:0 6px 20px rgba(236,0,139,.35);
+    letter-spacing:.01em; transition:opacity .2s, transform .2s;
+  }
+  #bottom-line-pill:hover { transform:translateY(-1px); opacity:.92; }
+  #bottom-line-pill.visible { display:inline-flex; }
+  #bottom-line-pill svg { width:14px; height:14px; }
+
+  /* Download / Print button — sits next to the bottom-line pill in
+     the top-right. Clicking it triggers window.print() with the
+     print stylesheet below, which strips chrome (sticky pills,
+     accept/decline buttons, scroll-watchers, toggle switches) so
+     the prospect's browser produces a clean PDF via Save as PDF. */
+  /* 2026-06-06 — Marty: "offer a print top right corner and at the
+     end on these [proposal viewer URLs]". Pill is now visible from
+     page load (was display:none until the scroll-watcher added
+     .visible past 280px — that pattern made the Print affordance
+     invisible to anyone reading the hero without scrolling). The
+     bottom Print button is added separately below the trust block. */
+  /* Themed to match the bottom Print button — brand gradient pill,
+     white text + white SVG stroke. Sits top-right; smaller padding
+     than the bottom pill since corner real-estate is tight.
+     (Marty 2026-06-06.) */
+  #download-pdf-pill {
+    position:fixed; top:18px; right:18px; z-index:51;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:99px;
+    background:linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%);
+    color:#fff;
+    border:0; cursor:pointer;
+    font-family:var(--font); font-weight:700; font-size:12.5px;
+    box-shadow:0 6px 18px rgba(102,44,144,.22);
+    letter-spacing:.04em; transition:transform .12s, box-shadow .15s;
+  }
+  #download-pdf-pill:hover { transform:translateY(-1px); box-shadow:0 8px 22px rgba(102,44,144,.30); }
+  #download-pdf-pill.visible { display:inline-flex; }
+  #download-pdf-pill svg { stroke:#fff; }
+  /* Bottom Print button — sits below the trust block as a clear
+     end-of-document affordance. Visible from page load; hidden in
+     print output. */
+  /* Tighter top spacing — pulls the print pill closer to the
+     gradient end-panel (was 36px; the prospect's eye was drifting
+     past the CTA looking for what came next). Bottom stays 28px
+     so it still has breathing room before the page end.
+     (Marty 2026-06-06.) */
+  .prop-print-bot-wrap { display:flex; justify-content:center; margin:14px 0 28px; }
+  /* Print button themed to The Good Foundry brand gradient
+     (navy → grape → punch) rather than the platform orange.
+     Marty 2026-06-06: "Apply the-good-foundry.com theme which should
+     not include orange buttons." */
+  .prop-print-bot-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px;
+    background:linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%);
+    color:#fff;
+    border:0; border-radius:99px; font-family:var(--font); font-size:13px;
+    font-weight:700; letter-spacing:.04em; cursor:pointer;
+    box-shadow:0 6px 18px rgba(102,44,144,.22);
+    transition:transform .12s, box-shadow .15s;
+  }
+  .prop-print-bot-btn:hover { transform:translateY(-1px); box-shadow:0 8px 22px rgba(102,44,144,.30); }
+  .prop-print-bot-btn svg { width:14px; height:14px; stroke:#fff; }
+  @media print { .prop-print-bot-wrap { display:none !important; } }
+  #download-pdf-pill svg { width:14px; height:14px; }
+  /* When the bottom-line pill is showing, shift the download pill
+     left so they don't overlap. Bottom-line is the orange CTA so
+     it stays in the right slot; download sits next to it. */
+  #bottom-line-pill.visible ~ #download-pdf-pill.visible,
+  body:has(#bottom-line-pill.visible) #download-pdf-pill { right:230px; }
+
+  /* ── Print stylesheet ────────────────────────────────────────
+     Strips every interactive / sticky / chrome affordance so the
+     prospect's "Save as PDF" produces a clean brochure-shape
+     document. Keeps the hero, narrative sections, pricing table,
+     and trust block. Hides the sticky pills, accept buttons, and
+     decline toggles (a printed proposal is a snapshot, not an
+     interactive surface). Drops gradient backgrounds for pure
+     ink-friendly white + dark-on-light type on every page. */
+  @media print {
+    @page { margin: 18mm 14mm; size: A4; }
+    body { background:#fff !important; overflow:visible !important; }
+    body::before { display:none !important; }
+    #bottom-line-pill, #download-pdf-pill { display:none !important; }
+    .accept-card { display:none !important; }
+    /* Toggle switches don't render meaningfully in print — replace
+       with a flat tick / cross derived from .item.on / item:not(.on). */
+    .item .toggle, .item .toggle-wrap > .toggle { display:none !important; }
+    /* Page-break hints — keep edition/addon items together where
+       possible; let the brochure sections split naturally between
+       narrative blocks. */
+    .hero { page-break-after:avoid; }
+    .brochure-section, .card, .totals, .trust-card { page-break-inside:avoid; }
+    .b-item { page-break-inside:avoid; }
+    /* Print the hero gradient even when browsers respect "background
+       printing off" — use !important + -webkit-print-color-adjust so
+       the cover stays branded. */
+    .hero, .trust-card {
+      -webkit-print-color-adjust:exact !important;
+      print-color-adjust:exact !important;
+    }
+    .wrap { padding:0; max-width:100%; }
+  }
+
+  /* Trust block at the bottom — founder + research + credibility
+     mirror of the MMcQ proposal's "Why you can rely on us" page. */
+  .trust-card {
+    background:linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%);
+    color:#fff; padding:32px 36px; border-radius:22px;
+    margin-bottom:18px; position:relative; overflow:hidden;
+  }
+  .trust-card::before {
+    content:''; position:absolute; right:-80px; bottom:-80px;
+    width:280px; height:280px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.12); pointer-events:none;
+  }
+  .trust-card h2 {
+    font-size:22px; font-weight:700; line-height:1.25; letter-spacing:-.01em;
+    margin-bottom:10px; position:relative;
+  }
+  .trust-card h2 em { font-family:var(--serif); font-style:italic; font-weight:400; }
+  .trust-card p {
+    font-size:14.5px; color:rgba(255,255,255,.88); line-height:1.75;
+    margin-bottom:14px; position:relative; max-width:640px;
+  }
+  .trust-card p:last-child { margin-bottom:0; }
+
+  /* Decline reason chips — multi-select pills above the free-text
+     decline area. Unselected: ghost outline. Selected: filled punch
+     pink to make the picked state legible without a tick icon. Hover
+     and focus lift the chip so taps feel responsive on touch. */
+  .decline-chip {
+    appearance:none; -webkit-appearance:none;
+    background:#fff;
+    border:1.5px solid rgba(102,44,144,.22);
+    color:var(--text-dark,#1c2b3a);
+    padding:8px 14px; border-radius:99px;
+    font-family:inherit; font-size:12.5px; font-weight:600;
+    line-height:1.2; cursor:pointer;
+    transition:background .15s, border-color .15s, color .15s, transform .15s, box-shadow .15s;
+  }
+  .decline-chip:hover { border-color:var(--punch,#EC008B); transform:translateY(-1px); box-shadow:0 3px 10px rgba(236,0,139,.10); }
+  .decline-chip:focus-visible { outline:2px solid var(--punch,#EC008B); outline-offset:2px; }
+  .decline-chip.selected {
+    background:var(--punch,#EC008B); border-color:var(--punch,#EC008B); color:#fff;
+    box-shadow:0 4px 14px rgba(236,0,139,.22);
+  }
+  .decline-chip.selected:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(236,0,139,.30); }
+  .trust-card strong { font-weight:600; color:#fff; }
+
+  /* ── Mobile pass (2026-06-04) ──────────────────────────────
+     Public proposal viewer is shared via SMS / WhatsApp / email
+     to clients who often open it on a phone first. The desktop
+     layout was untouched for narrow viewports; this block addresses
+     the highest-impact mobile issues: iOS zoom-on-focus from
+     sub-16px form inputs, the 260px+1fr modal grid that crushed
+     the right pane on iPhone width, sticky pills overlapping each
+     other, and tap targets too small for thumbs. */
+  @media (max-width: 720px) {
+    .wrap { padding: 18px 14px 64px; }
+    .hero h1 { font-size: 28px !important; line-height: 1.18; }
+    .hero p  { font-size: 14.5px !important; }
+    .brochure-section { padding: 22px 18px; border-radius: 14px; }
+    .brochure-section h2 { font-size: 19px; }
+    .accept-card { padding: 22px 18px; border-radius: 16px; }
+    .accept-card h2 { font-size: 19px; }
+    .trust-card { padding: 24px 20px; border-radius: 16px; }
+    .trust-card h2 { font-size: 19px; }
+    .trust-card p  { font-size: 13.5px; }
+    /* Pricing item header stacks instead of squeezing name + price + toggle into one row */
+    .item .b-head, .b-item .b-head { flex-direction: column; gap: 8px; }
+    .item .b-name, .b-item .b-name { font-size: 15px; }
+    /* iOS Safari zooms in on any input with font-size < 16px — bump
+       every text input + textarea on mobile to suppress that. The
+       desktop 14px setting was producing the auto-zoom-and-lose-
+       layout bug on every form. */
+    .input { font-size: 16px !important; padding: 14px 16px; }
+    /* Tap targets — every .btn lifts to ≥44px row height per HIG */
+    .btn { min-height: 44px; padding: 12px 20px; font-size: 14px; }
+    /* Sticky pills — on a narrow screen the side-by-side rule
+       (`right:230px` for the download pill when bottom-line is
+       visible) wraps the download button half off-screen. Stack
+       them vertically instead. */
+    #bottom-line-pill { top: 10px; right: 10px; padding: 9px 14px; font-size: 12px; }
+    #download-pdf-pill { top: 60px !important; right: 10px !important; padding: 9px 14px; font-size: 12px; }
+    body:has(#bottom-line-pill.visible) #download-pdf-pill { right: 10px !important; }
+    /* Talk-to-human modal — the 260px+1fr grid produced a 30px
+       right pane on iPhone SE. Stack the rep rail above the
+       tabbed content so each gets the full width. Reduce the
+       fixed 86vh height so the iOS soft keyboard doesn't push
+       the Send button off-screen. */
+    #prop-talk-modal { padding: 8px !important; }
+    #prop-talk-modal > div {
+      width: 100% !important;
+      height: 96vh !important;
+      max-height: 96vh !important;
+      border-radius: 12px !important;
+    }
+    #prop-talk-modal > div > div:nth-child(2) {
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto 1fr !important;
+    }
+    #prop-talk-modal [style*="border-right"] {
+      border-right: none !important;
+      border-bottom: 1px solid rgba(15,22,34,0.08) !important;
+      padding: 16px !important;
+    }
+    /* Meta row wraps tighter */
+    .meta { gap: 10px; font-size: 11.5px; }
+    /* Accept row buttons stack on iPhone SE */
+    .accept-row { gap: 8px; }
+    .accept-row .input { flex-basis: 100%; }
+  }
+
+  /* Tighter pass for iPhone SE-class widths (≤380px). */
+  @media (max-width: 380px) {
+    .wrap { padding: 14px 10px 56px; }
+    .hero h1 { font-size: 24px !important; }
+    .brochure-section, .accept-card, .trust-card { padding: 18px 14px; }
+    /* Sticky pills get smaller still so they don't dominate */
+    #bottom-line-pill, #download-pdf-pill { font-size: 11.5px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+<!-- 2026-06-06 (brand rev) — Marty: "This looks terrible! can we
+     align to brand dont need whole of width GREEN. When presenting
+     cards maybe use the theme rather than green." Stripped the
+     full-width pale-green wash and switched the card header to the
+     proposal's brand gradient (navy → grape → punch — matches the
+     proposal hero immediately below). A small green check chip in
+     the corner still carries the "accepted" semantic without
+     hijacking the whole card. -->
+<div id="prop-status-banner" style="display:none;width:100%;padding:24px 24px 0;background:transparent;font-family:-apple-system,system-ui,sans-serif;animation:propBannerSlideDown .45s ease-out">
+  <div id="prop-status-hero" style="max-width:832px;margin:0 auto;background:#fff;border:1px solid var(--border,#e5e7ee);border-radius:18px;box-shadow:0 14px 42px rgba(41,56,144,0.16),0 4px 12px rgba(41,56,144,0.08);overflow:hidden;position:relative">
+    <button type="button" onclick="window._propStatusBannerClose()" title="Dismiss this message"
+            style="position:absolute;top:14px;right:14px;z-index:2;width:32px;height:32px;background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.4);border-radius:50%;color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:background .15s,transform .12s">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#293890" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="prop-status-hero-head" style="padding:26px 28px 24px;text-align:center;background:linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%);color:#fff;position:relative">
+      <div id="prop-status-status-chip" style="display:none;position:absolute;top:14px;left:14px;background:#16a34a;color:#fff;padding:4px 10px 4px 8px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(22,163,74,0.30)">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="prop-status-status-chip-label">Accepted</span>
+      </div>
+      <div id="prop-status-headline" style="font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;line-height:1.3;letter-spacing:-.005em;margin:6px 0 8px">Accepted — we appreciate YOU and your business.</div>
+      <div id="prop-status-detail" style="font-size:13px;color:rgba(255,255,255,0.92);line-height:1.55;max-width:520px;margin:0 auto"></div>
+    </div>
+    <div id="prop-status-rep-row" style="display:none;padding:16px 28px;background:#fafbff;border-bottom:1px solid var(--border,#e5e7ee);align-items:center;gap:12px">
+      <div id="prop-status-rep-photo" style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:#eef1f8;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#293890" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:9.5px;font-weight:700;color:#293890;text-transform:uppercase;letter-spacing:.10em;margin-bottom:2px">How this landed on us</div>
+        <div id="prop-status-rep-name" style="font-size:13.5px;font-weight:700;color:#161A2E;line-height:1.3">Your rep</div>
+        <div id="prop-status-rep-meta" style="font-size:11.5px;color:#475569;line-height:1.4"></div>
+      </div>
+    </div>
+    <div id="prop-status-quote-row" style="display:none;padding:20px 28px 16px;background:#fff">
+      <div style="font-size:9.5px;font-weight:700;color:#662C90;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;text-align:center">A thought to take with you</div>
+      <blockquote id="prop-status-quote-text" style="margin:0;padding:0;font-family:'DM Serif Display',Georgia,serif;font-size:16.5px;line-height:1.45;font-style:italic;color:#1c2b3a;text-align:center"></blockquote>
+      <div id="prop-status-quote-attr" style="font-size:11px;color:#475569;text-align:center;margin-top:6px;letter-spacing:.04em"></div>
+    </div>
+    <div id="prop-status-rater-row" style="display:none;padding:10px 28px 22px;background:#fff;text-align:center">
+      <div id="prop-status-rater-label" style="font-size:10.5px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.10em;margin-bottom:8px">How did that land?</div>
+      <div id="prop-status-rater-row-buttons" style="display:inline-flex;gap:5px;justify-content:center"></div>
+      <div id="prop-status-rater-thanks" style="display:none;font-size:12px;color:#662C90;font-weight:600;margin-top:8px">Thank you for poking.</div>
+    </div>
+  </div>
+</div>
+<style>
+  @keyframes propBannerSlideDown { from { transform: translateY(-14px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  #prop-status-banner button:hover { background: rgba(255,255,255,1); transform: scale(1.05); }
+  .prop-rater-btn {
+    width:40px; height:40px; border-radius:50%; border:1.5px solid rgba(41,56,144,0.18);
+    background:#fff; font-size:21px; line-height:1; cursor:pointer; padding:0;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition:transform .12s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .prop-rater-btn:hover { transform: scale(1.15); border-color:#662C90; background:#f7f5fb; box-shadow:0 4px 12px rgba(102,44,144,0.18); }
+  .prop-rater-btn.picked { background:#662C90; border-color:#662C90; transform: scale(1.22); }
+</style>
+<div class="wrap" id="proposal-root">
+  <div class="card" style="text-align:center;padding:48px 24px;color:var(--text-muted)">Loading offer…</div>
+</div>
+
+<!-- 2026-06-06 — Client carousel under the trust-card. Reuses the
+     same `api/public_client_logos.php` feed as the-good-foundry-
+     index.html. Filters out the CURRENT client (proposal.client_org
+     match, case-insensitive + trim) so the prospect doesn't see
+     their own logo in the trust strip. Hidden in print. Only renders
+     once proposal data has loaded (so client_org is known for the
+     filter). Marty 2026-06-06. -->
+<section class="prop-client-band" id="prop-client-band" style="display:none">
+  <div class="pcb-inner">
+    <div class="pcb-head">We've had the privilege and pleasure of working with</div>
+    <div class="pcb-carousel">
+      <button class="pcb-arrow" type="button" id="pcb-arrow-prev" aria-label="Previous clients">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="pcb-viewport" id="pcb-viewport">
+        <div class="pcb-track" id="pcb-track"></div>
+      </div>
+      <button class="pcb-arrow" type="button" id="pcb-arrow-next" aria-label="Next clients">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+<style>
+  /* Client carousel — visually matches the public index band
+     (the-good-foundry-index.html `.client-logo-band`). 21px header,
+     84px tiles, 4-per-page at proposal-width viewport, twilight
+     gradient tiles for white-on-transparent logos. Class prefix
+     `pcb-` to keep scope local + avoid colliding with the public
+     page's `clb-` namespace. (Marty 2026-06-06.) */
+  /* Spacing math (Marty 2026-06-07: "EXACTLY the same please"):
+       trust-card.margin-bottom = 18px (canonical card-to-card gap)
+       wrap.padding-bottom      = 80px (brochure breathing room)
+       Natural gap above carousel = 18 + 80 = 98px (way too big).
+       Pull up by 80px so the carousel sits exactly 18px below the
+       trust card — matches every other card-to-card gap on the page. */
+  .prop-client-band { max-width:880px; margin:-80px auto 8px; padding:0 24px; position:relative; z-index:1; }
+  .pcb-inner { background:linear-gradient(135deg,rgba(41,56,144,0.04) 0%,rgba(102,44,144,0.05) 100%); border:1px solid rgba(41,56,144,0.12); border-radius:18px; padding:20px 18px 22px; }
+  .pcb-head { color:#293890; font-size:21px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; text-align:center; margin-bottom:18px; }
+  .pcb-carousel { display:flex; align-items:center; gap:10px; }
+  .pcb-arrow { flex-shrink:0; width:36px; height:36px; border-radius:50%; border:1.5px solid rgba(41,56,144,0.18); background:#fff; color:#293890; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s, border-color .15s, color .15s, transform .12s; font-family:inherit; padding:0; }
+  .pcb-arrow:hover { background:#293890; border-color:#293890; color:#fff; transform:translateY(-1px); }
+  .pcb-viewport { flex:1; min-width:0; overflow:hidden; }
+  .pcb-track { display:flex; gap:14px; }
+  .pcb-logo-tile { flex:0 0 auto; height:84px; border-radius:12px; background:linear-gradient(135deg,#293890 0%,#1f2a6e 100%); border:1px solid rgba(41,56,144,0.35); display:flex; align-items:center; justify-content:center; padding:12px; box-sizing:border-box; transition:border-color .18s, box-shadow .18s, transform .12s; }
+  .pcb-logo-tile img { max-width:100%; max-height:100%; object-fit:contain; display:block; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.18)); }
+  .pcb-logo-name { color:#fff; font-size:11px; font-weight:700; text-align:center; letter-spacing:.02em; line-height:1.2; }
+  @media (max-width:600px) { .prop-client-band { padding:0 14px; margin:18px auto 6px; } .pcb-head { font-size:14px; margin-bottom:12px; } .pcb-logo-tile { height:68px; padding:10px; } }
+  @media print { .prop-client-band { display:none !important; } }
+</style>
+<script>
+(function () {
+  /* Wire arrows + autoplay. Logo data loads once proposal context
+     is known, since we need client_org to exclude the prospect's
+     own logo from the strip. The main proposal script dispatches
+     `wm:proposal-loaded` with the proposal payload — we listen
+     for it. */
+  var PCB_GAP = 14, PCB_AUTO_MS = 5000, PCB_SMOOTH_MS = 900;
+  var paused = false, timer = null, rafTok = null;
+  /* Per-page count mirrors the public index `.client-logo-band`
+     thresholds — 2 at tiny phone, 4 at proposal-width laptop. The
+     proposal page caps the wrap at 880px so the upper 5/6-per-page
+     branches from the public index never fire here. */
+  function _perPage() {
+    var w = window.innerWidth;
+    if (w < 600) return 2;
+    return 4;
+  }
+  function _esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function _normName(s) { return String(s || '').trim().toLowerCase().replace(/\s+/g,' ').replace(/[^a-z0-9 ]+/g,''); }
+  function _tileHtml(o) {
+    var nm = _esc(o.name);
+    var url = (typeof o.logo === 'string' && o.logo.trim() !== '') ? _esc(o.logo) : '';
+    if (url) {
+      return '<div class="pcb-logo-tile" title="' + nm + '"><img src="' + url + '" alt="' + nm + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<span class=&quot;pcb-logo-name&quot;>' + nm + '</span>\'"></div>';
+    }
+    return '<div class="pcb-logo-tile" title="' + nm + '"><span class="pcb-logo-name">' + nm + '</span></div>';
+  }
+  function _fit() {
+    var vp = document.getElementById('pcb-viewport');
+    if (!vp) return;
+    var tiles = vp.querySelectorAll('.pcb-logo-tile');
+    if (!tiles.length) return;
+    var perPage = _perPage();
+    var vw = vp.clientWidth;
+    if (vw <= 0) return;
+    var tileW = Math.floor((vw - (perPage - 1) * PCB_GAP) / perPage);
+    if (tileW < 70) tileW = 70;
+    for (var i = 0; i < tiles.length; i++) tiles[i].style.width = tileW + 'px';
+    var pageW = vw + PCB_GAP;
+    vp.scrollLeft = Math.round(vp.scrollLeft / pageW) * pageW;
+  }
+  function _smoothScrollTo(vp, target, duration) {
+    if (!vp) return;
+    if (rafTok) { cancelAnimationFrame(rafTok); rafTok = null; }
+    var start = vp.scrollLeft, delta = target - start;
+    if (Math.abs(delta) < 1) { vp.scrollLeft = target; return; }
+    var startTs = null;
+    function _ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    function _frame(ts) {
+      if (startTs === null) startTs = ts;
+      var p = Math.min(1, (ts - startTs) / duration);
+      vp.scrollLeft = start + delta * _ease(p);
+      if (p < 1) rafTok = requestAnimationFrame(_frame); else rafTok = null;
+    }
+    rafTok = requestAnimationFrame(_frame);
+  }
+  function _nudge(dir, wrap) {
+    var vp = document.getElementById('pcb-viewport');
+    if (!vp) return;
+    var maxScroll = vp.scrollWidth - vp.clientWidth;
+    if (maxScroll <= 1) return;
+    var step = vp.clientWidth + PCB_GAP;
+    var next = vp.scrollLeft + (dir * step);
+    var wrapping = false;
+    if (next > maxScroll - 2) { if (wrap) { next = 0; wrapping = true; } else next = maxScroll; }
+    else if (next < 0)        { if (wrap) { next = Math.ceil(maxScroll / step) * step; wrapping = true; } else next = 0; }
+    if (wrapping) { if (rafTok) { cancelAnimationFrame(rafTok); rafTok = null; } vp.scrollLeft = next; }
+    else          { _smoothScrollTo(vp, next, PCB_SMOOTH_MS); }
+  }
+  function _render(logos) {
+    var band = document.getElementById('prop-client-band');
+    var track = document.getElementById('pcb-track');
+    if (!band || !track) return;
+    if (!logos || !logos.length) { band.style.display = 'none'; return; }
+    track.innerHTML = logos.map(_tileHtml).join('');
+    band.style.display = '';
+    _fit();
+    window.addEventListener('resize', _fit, { passive: true });
+    if (timer) { clearInterval(timer); timer = null; }
+    timer = setInterval(function () { if (!paused) _nudge(1, true); }, PCB_AUTO_MS);
+  }
+  function _wire() {
+    var prev = document.getElementById('pcb-arrow-prev');
+    var next = document.getElementById('pcb-arrow-next');
+    var vp = document.getElementById('pcb-viewport');
+    if (prev) prev.addEventListener('click', function () { _nudge(-1, true); });
+    if (next) next.addEventListener('click', function () { _nudge(1, true); });
+    if (vp) {
+      vp.addEventListener('mouseenter', function () { paused = true; });
+      vp.addEventListener('mouseleave', function () { paused = false; });
+    }
+  }
+  function _load(clientOrgName) {
+    _wire();
+    var excludeKey = _normName(clientOrgName);
+    fetch('https://smart-tools-foundry.com/WBM/api/public_client_logos.php', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j || !j.ok) { _render([]); return; }
+        var logos = Array.isArray(j.logos) ? j.logos : [];
+        /* Exclude the current proposal's client logo so the prospect
+           never sees their own logo in the trust strip. Normalised
+           name match — case-insensitive, whitespace-collapsed,
+           punctuation-stripped. */
+        if (excludeKey) {
+          logos = logos.filter(function (o) { return _normName(o && o.name) !== excludeKey; });
+        }
+        _render(logos);
+      })
+      .catch(function () { _render([]); });
+  }
+  /* The proposal script fires `wm:proposal-loaded` after the
+     proposal JSON arrives + the body is rendered. We listen for
+     that event so we get the client_org before fetching logos.
+     Fallback: if the event hasn't fired within 3s (e.g. the
+     proposal failed to load), boot anyway with no exclusion. */
+  var booted = false;
+  function _boot(orgName) {
+    if (booted) return; booted = true;
+    _load(orgName || '');
+  }
+  document.addEventListener('wm:proposal-loaded', function (ev) {
+    var det = (ev && ev.detail) || {};
+    _boot(det.client_org || '');
+  });
+  setTimeout(function () { _boot(''); }, 3000);
+})();
+</script>
+
+<!-- 2026-06-06 — End-of-document Print button (per Marty: "offer a
+     print top right corner and at the end on these"). Top-right
+     #download-pdf-pill is now visible from page load (see CSS edit
+     above). This one sits at the foot of the brochure as a clear
+     "you've read enough — save / print" affordance. Hidden in print. -->
+<div class="prop-print-bot-wrap">
+  <button type="button" class="prop-print-bot-btn" onclick="window.print()" title="Print this offer (Ctrl/Cmd+P)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Print this offer
+  </button>
+</div>
+
+<script>
+(function () {
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]); }); }
+  function money(n, ccy) {
+    var v = Number(n || 0);
+    return (ccy || 'AUD') + ' ' + v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  /* 2026-06-19 — Currency switch for non-AUD clients.
+     Marty: 'For clients with currency not AUD on their account (Zoho
+     billing) the price amount stays same but is USD instead of AUD and
+     then show the AUD based on the set amount which will be USD.'
+
+     Logic:
+       • AUD client → show prices as AUD (existing behaviour)
+       • Non-AUD client → relabel the same numeric value as USD AND
+         append a small "≈ AUD <equiv>" note alongside, using a static
+         USD→AUD FX rate.
+
+     The catalogue prices stay numeric — the relabel happens at the
+     display layer only. No DB change to existing proposals.
+
+     USD→AUD rate is a hard-coded constant here so a deploy is the
+     authoritative source of truth. Bump on a quarterly review (or
+     whenever Marty says); set as low as we want to honour for the
+     "≈ AUD" courtesy figure on offers. As of 2026-06-19: 1 USD ≈ 1.52 AUD. */
+  var USD_TO_AUD = 1.52;
+  function _displayCurrency() {
+    /* client_currency comes from organisations.default_currency via
+       proposals.php (2026-06-19). Falls back to the rep-selected
+       proposal.currency, then 'AUD'. */
+    var cc = '';
+    try { cc = String((proposal && proposal.client_currency) || '').toUpperCase().trim(); } catch (_e) {}
+    if (!cc) {
+      try { cc = String((proposal && proposal.currency) || '').toUpperCase().trim(); } catch (_e) {}
+    }
+    if (!cc) return 'AUD';
+    /* Any non-AUD client routes to USD per spec — Zoho can carry NZD /
+       GBP / EUR / etc but we standardise the offer display on USD. */
+    return cc === 'AUD' ? 'AUD' : 'USD';
+  }
+  function _isNonAudClient() { return _displayCurrency() !== 'AUD'; }
+  /* moneyWithEquiv — client-facing surface (offer viewer). Direction:
+     - USD client → primary in USD only. No AUD courtesy line. (Marty
+       2026-06-19: "USD. No need to show AUD.")
+     - AUD client → primary in AUD + a small "≈ USD …" courtesy line
+       so the AU client can see what the US-equivalent price looks
+       like. (Marty 2026-06-19: "But when AUD do show USD.")
+     Static USD_TO_AUD constant — AUD-to-USD is the reciprocal. */
+  function moneyWithEquiv(n) {
+    var ccy = _displayCurrency();
+    var v   = Number(n || 0);
+    var primary = money(v, ccy);
+    if (ccy === 'USD') return primary; /* USD client → no equivalent line */
+    /* AUD client → tack on the USD courtesy line. */
+    var usdEq = +(v / USD_TO_AUD).toFixed(2);
+    return primary
+         + '<span class="fx-note" style="display:block;font-size:10.5px;font-weight:500;color:var(--text-muted,#8097ad);margin-top:2px;letter-spacing:0">≈ ' + money(usdEq, 'USD') + '</span>';
+  }
+  /* Decline key for an edition line — includes plan_code so two
+     plans of the same edition (e.g. WPL 1-month + WPL 12-month)
+     can be toggled independently. Legacy lines with no plan fall
+     back to "ed:<key>" so existing data renders unchanged. */
+  function _edDeclineKey(e) {
+    var k = String(e && e.key ? e.key : '');
+    var p = String(e && e.plan_code ? e.plan_code : '');
+    return p ? ('ed:' + k + '|' + p) : ('ed:' + k);
+  }
+
+  var _params = new URLSearchParams(window.location.search);
+  var token = _params.get('token') || '';
+  /* `preview=1` lets the rep portal's Preview button view its own
+     drafts before sending. Forwarded straight through to the API
+     which gates the draft read behind preview-flag AND a rep/admin
+     session cookie (so a leaked draft token alone isn't enough). */
+  var _preview = _params.get('preview') ? '&preview=1' : '';
+  if (!token) {
+    $('proposal-root').innerHTML = '<div class="card" style="text-align:center;padding:48px 24px;color:var(--text-muted)">No offer token — please use the link from your email.</div>';
+    return;
+  }
+
+  /* In-page item-toggle state — what the prospect has UN-ticked.
+     Doesn't change the canonical proposal; just lets them play with
+     the total before deciding. Submitted set is still the full
+     proposal as offered (counter-offer is a Phase 2 feature). */
+  var declined = {};
+  var proposal = null;
+
+  /* 2026-06-06 — Fetch timeout. Without it, a hung server keeps the
+     "Loading proposal…" placeholder visible indefinitely (Marty:
+     "sits in Loading proposal… never loads"). 25s is well above any
+     legitimate response time but well below user patience for a
+     blank screen. AbortController triggers the .catch with a clear
+     "Request timed out" message + a Retry button. */
+  var _propLoadAbort = null;
+  try { _propLoadAbort = new AbortController(); } catch (_eAC) {}
+  var _propLoadTimer  = setTimeout(function () {
+    try { if (_propLoadAbort) _propLoadAbort.abort(); } catch (_e) {}
+  }, 25000);
+  var _propFetchOpts = { cache: 'no-store', credentials: 'include' };
+  if (_propLoadAbort) _propFetchOpts.signal = _propLoadAbort.signal;
+  fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=public&token=' + encodeURIComponent(token) + _preview, _propFetchOpts)
+    .then(function (r) { return r.text().then(function (t) {
+      clearTimeout(_propLoadTimer);
+      var j; try { j = JSON.parse(t); } catch (e) {
+        throw new Error('Server returned non-JSON (HTTP ' + r.status + '). The offer API may be down or misconfigured. Try refreshing in a minute.');
+      }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j.proposal;
+    }); })
+    .then(render)
+    .catch(function (e) {
+      clearTimeout(_propLoadTimer);
+      var msg = (e && e.name === 'AbortError')
+        ? 'The offer API took too long to respond. Try refreshing the page.'
+        : (e.message || String(e));
+      /* "Not found" = the proposal was voided / deleted by the rep.
+         Surface a softer brand-aligned card with TGF contact details
+         so the prospect knows what to do next. (2026-06-06 Marty.)
+         Other errors (network, timeout, server) keep the technical
+         message + Retry button since they're recoverable. */
+      var isGone = /not\s*found/i.test(msg) || /HTTP\s*404/i.test(msg) || /HTTP\s*410/i.test(msg);
+      var BRAND_GRADIENT = 'linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%)';
+      var TGF_CONTACT_NAME  = 'The Good Foundry team';
+      var TGF_CONTACT_EMAIL = 'info@the-good-foundry.com';
+      var TGF_CONTACT_PHONE = '';   /* phone left blank — surface the website + email instead */
+      /* Canonical brand URL is `https://www.the-good-foundry.com/` —
+         the bare `the-good-foundry.com` resolves to a 404 / hosting
+         landing page. (Marty 2026-06-06.) */
+      var TGF_WEBSITE       = 'https://www.the-good-foundry.com/';
+      /* Email row links to the on-site contact drawer instead of
+         firing a mailto: — keeps the conversation in-channel where
+         the team can route it, and avoids the desktop "which mail
+         client?" prompt some prospects get. (Marty 2026-06-06.) */
+      var TGF_CONTACT_URL   = 'https://www.the-good-foundry.com/#contact';
+      if (isGone) {
+        $('proposal-root').innerHTML = ''
+          + '<div class="card" style="overflow:hidden;padding:0;border:1px solid var(--border,#e5e7ee);box-shadow:0 14px 42px rgba(41,56,144,0.16),0 4px 12px rgba(41,56,144,0.08)">'
+          +   '<div style="padding:32px 28px 28px;background:' + BRAND_GRADIENT + ';color:#fff;text-align:center;position:relative;overflow:hidden">'
+          +     '<div style="font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,0.78);margin-bottom:10px">Offer status</div>'
+          +     '<div style="display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.14);margin-bottom:14px">'
+          +       '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>'
+          +     '</div>'
+          +     '<div style="font-family:\'DM Serif Display\',Georgia,serif;font-size:22px;font-weight:400;line-height:1.3;letter-spacing:-.005em;margin:0 auto 8px;max-width:480px">Oh the paperwork &mdash; this offer has been voided or has gone walkies.</div>'
+          +     '<div style="font-size:13px;color:rgba(255,255,255,0.88);line-height:1.55;max-width:440px;margin:0 auto">No need to worry. Get in touch with us directly and we&rsquo;ll sort it.</div>'
+          +   '</div>'
+          +   '<div style="padding:24px 28px 28px;background:#fff">'
+          +     '<div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#662C90;margin-bottom:10px;text-align:center">Talk to us directly</div>'
+          +     '<div style="display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto">'
+          +       '<a href="' + esc(TGF_CONTACT_URL) + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fafbff;border:1px solid #eef1f8;border-radius:10px;text-decoration:none;color:#1c2b3a;font-size:13.5px;font-weight:600;transition:border-color .15s,background .15s" onmouseover="this.style.borderColor=\'#EC008B\';this.style.background=\'#fff\'" onmouseout="this.style.borderColor=\'#eef1f8\';this.style.background=\'#fafbff\'">'
+          +         '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#EC008B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'
+          +         '<span style="flex:1">' + esc(TGF_CONTACT_EMAIL) + '</span>'
+          +       '</a>'
+          +       '<a href="' + esc(TGF_WEBSITE) + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fafbff;border:1px solid #eef1f8;border-radius:10px;text-decoration:none;color:#1c2b3a;font-size:13.5px;font-weight:600;transition:border-color .15s,background .15s" onmouseover="this.style.borderColor=\'#EC008B\';this.style.background=\'#fff\'" onmouseout="this.style.borderColor=\'#eef1f8\';this.style.background=\'#fafbff\'">'
+          +         '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#EC008B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+          +         '<span style="flex:1">the-good-foundry.com</span>'
+          +       '</a>'
+          +     '</div>'
+          +     '<div style="margin-top:18px;text-align:center;font-size:11.5px;color:var(--text-muted,#8097ad);line-height:1.55">'
+          +       '&mdash; ' + esc(TGF_CONTACT_NAME) + ' &mdash;'
+          +     '</div>'
+          +   '</div>'
+          + '</div>';
+      } else {
+        $('proposal-root').innerHTML = '<div class="card" style="text-align:center;padding:48px 24px;color:#b91c1c">'
+          + '<div style="font-size:15px;font-weight:700;margin-bottom:10px">Could not load offer</div>'
+          + '<div style="font-size:13px;color:#7f1d1d;line-height:1.55;margin-bottom:14px">' + esc(msg) + '</div>'
+          + '<button type="button" onclick="window.location.reload()" style="padding:10px 22px;background:linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%);color:#fff;border:none;border-radius:99px;font-weight:700;cursor:pointer;font-size:13px;box-shadow:0 4px 14px rgba(102,44,144,.25)">Retry</button>'
+          + '</div>';
+      }
+    });
+
+  function recalcTotals() {
+    var subtotal = 0;
+    (proposal.items.editions || []).forEach(function (e) {
+      if (declined[_edDeclineKey(e)]) return;
+      var qty = Math.max(1, Number(e.qty || 1));
+      subtotal += Number(e.amount || 0) * qty;
+    });
+    (proposal.items.addons || []).forEach(function (a, _ix) {
+      /* data-key now includes the row index so flex-addon rows
+         (Technical & Software Services can repeat with the same `id`)
+         get distinct toggles. The key shape is `ad:<id>:<idx>`. */
+      if (declined['ad:' + a.id + ':' + _ix]) return;
+      var qty = Math.max(1, Number(a.qty || 1));
+      subtotal += Number(a.price || 0) * qty;
+    });
+    /* Per-seat charging is OFF — flat plan pricing only. The
+       proposal row may still carry a non-zero discount_pct from
+       legacy proposals; honour it on read so historical proposals
+       render the same way they were sent. */
+    var seatCharge = 0;
+    var discountPct = Number(proposal.discount_pct || 0);
+    var discount = +(subtotal * discountPct / 100).toFixed(2);
+    /* Coupon — match the wizard's math so the prospect's view agrees
+       with the admin's review screen. Coupons stack on top of the
+       volume bracket. */
+    var coupon = proposal.items && proposal.items.coupon ? proposal.items.coupon : null;
+    var couponDiscount = 0;
+    if (coupon) {
+      var afterVolume = subtotal - discount;
+      if ((coupon.discount_type || 'percentage') === 'flat') {
+        couponDiscount = Math.min(afterVolume, Number(coupon.discount_value || 0));
+      } else {
+        couponDiscount = +(afterVolume * Number(coupon.discount_value || 0) / 100).toFixed(2);
+      }
+    }
+    var preTax = +(subtotal - discount - couponDiscount).toFixed(2);
+    /* 2026-06-06 — Marty: "If the proposal is for a client which is
+       in Australia the proposal should add in 10% and show clearly
+       the tax IN ADDITION to the rates can you fix". GST detection:
+         - explicit gst_applicable flag on the proposal (future
+           field that bank super / rep portal can set per proposal),
+         - OR the client country is AU,
+         - OR the currency is AUD AND an Australian ABN is present
+           on the proposal (presence of ABN is a strong "this is an
+           AU registered business" tell).
+       The AUD-only heuristic is intentional — a Canadian buyer
+       paying in AUD isn't subject to GST. Tax sits on top of the
+       discounted subtotal (post-coupon, post-volume), shown as its
+       own line so the client sees exactly what's being added. */
+    /* GST detection is STRICT country-only (Marty 2026-06-06, revised).
+       GST applies only when the proposal's snapshotted client_country
+       normalises to 'AU' (au / aus / australia) — the country is
+       captured from the linked org at save time. The earlier
+       AUD-currency default + ABN/gst_applicable cascade was removed so
+       every surface (rep builder, sent cards, Bank Super list, send
+       email, this viewer) decides GST from the one frozen signal and
+       can't disagree. Consequence: a proposal whose org country isn't
+       Australia (or a fresh prospect with no linked org) shows no GST.
+       Legacy proposals saved before migration 130 carry no
+       client_country → no GST line. */
+    var isAU = false;
+    try {
+      isAU = /^(au|aus|australia)$/i.test(String(proposal.client_country || '').trim());
+    } catch (_eGST) {}
+    var taxRate = isAU ? 0.10 : 0;
+    var tax = +(preTax * taxRate).toFixed(2);
+    var total = +(preTax + tax).toFixed(2);
+    return { subtotal: subtotal, discount: discount, discountPct: discountPct, coupon: coupon, couponDiscount: couponDiscount, preTax: preTax, tax: tax, taxRate: taxRate, isAU: isAU, total: total, seatCharge: seatCharge };
+  }
+
+  function paintTotals() {
+    var t = recalcTotals();
+    /* 2026-06-19 — switched to innerHTML so the moneyWithEquiv helper
+       can append a small "≈ AUD" footnote span for non-AUD clients. */
+    $('t-subtotal').innerHTML = moneyWithEquiv(t.subtotal);
+    $('t-discount').innerHTML = '- ' + moneyWithEquiv(t.discount);
+    $('t-total').innerHTML    = moneyWithEquiv(t.total);
+    var dRow = $('t-discount-row');
+    if (dRow) dRow.style.display = t.discountPct > 0 ? '' : 'none';
+    var cRow = $('t-coupon-row');
+    var cAmt = $('t-coupon-amount');
+    if (cRow && cAmt) {
+      if (t.coupon) {
+        cRow.style.display = '';
+        cAmt.innerHTML = '- ' + moneyWithEquiv(t.couponDiscount);
+        var lbl = $('t-coupon-label');
+        if (lbl) lbl.textContent = 'Coupon ' + (t.coupon.name || t.coupon.coupon_code || '');
+      } else {
+        cRow.style.display = 'none';
+      }
+    }
+    /* GST (AU only) — pre-tax subtotal + tax line, both visible so
+       the client sees the addition explicitly. Tax row hides for
+       non-AU proposals; the grand-total row label switches between
+       "Total" and "Total (incl. GST)" so the addition reads as
+       intentional, not hidden. */
+    var preTaxRow = $('t-pretax-row');
+    var taxRow    = $('t-tax-row');
+    var taxAmtEl  = $('t-tax-amount');
+    var preTaxEl  = $('t-pretax-amount');
+    var totalLbl  = $('t-total-label');
+    if (t.isAU && t.tax > 0) {
+      if (preTaxRow) {
+        preTaxRow.style.display = '';
+        if (preTaxEl) preTaxEl.innerHTML = moneyWithEquiv(t.preTax);
+      }
+      if (taxRow) {
+        taxRow.style.display = '';
+        if (taxAmtEl) taxAmtEl.innerHTML = '+ ' + moneyWithEquiv(t.tax);
+      }
+      if (totalLbl) totalLbl.textContent = 'Total (incl. GST)';
+    } else {
+      if (preTaxRow) preTaxRow.style.display = 'none';
+      if (taxRow)    taxRow.style.display    = 'none';
+      if (totalLbl)  totalLbl.textContent    = 'Total';
+    }
+  }
+
+  function toggleItem(key, btn) {
+    declined[key] = !declined[key];
+    var row = btn.closest('.item');
+    if (declined[key]) {
+      row.classList.remove('on');
+      row.style.opacity = '0.55';
+    } else {
+      row.classList.add('on');
+      row.style.opacity = '';
+    }
+    paintTotals();
+
+    /* 2026-06-10 — Single-item nil-offer guard. When the proposal
+       has exactly ONE line item and the client toggles it OFF,
+       the offer is effectively a nil offer (nothing remains).
+       Ask the client whether they want to decline outright; if yes
+       route them through the existing decline flow, if no revert
+       the toggle. Marty: "Ask the person if they wish to decline
+       the offer ... if so its like pressing the REJECT button.
+       If not allow them to go back and switch the one item toggle
+       on again." Multi-item proposals are unaffected — admins
+       still need to consciously hit Decline to nil the whole
+       package out. */
+    if (declined[key] && proposal && proposal.items) {
+      var totalItems = ((proposal.items.editions || []).length)
+                     + ((proposal.items.addons   || []).length);
+      if (totalItems === 1) {
+        _showNilOfferConfirm(key, btn);
+      }
+    }
+  }
+
+  /* Inline confirm dialog for the single-item nil-offer guard.
+     Builds on first invocation, reused on every subsequent open.
+     YES → revert toggle visually first (so the decline panel
+     opens with the original state preserved), then call
+     _propShowDecline() to open the existing decline reasons UI.
+     NO  → re-toggle the item back ON. */
+  function _showNilOfferConfirm(key, btn) {
+    var modal = document.getElementById('prop-nil-offer-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'prop-nil-offer-modal';
+      modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(15,22,46,.58);'
+        + 'display:flex;align-items:center;justify-content:center;padding:18px;'
+        + 'opacity:0;transition:opacity .18s ease';
+      modal.innerHTML = ''
+        + '<div style="background:#fff;border-radius:16px;max-width:460px;width:100%;'
+        +   'padding:26px 26px 22px;box-shadow:0 22px 60px rgba(15,22,46,.30);'
+        +   'font-family:var(--font, \'Inter\', sans-serif);text-align:center">'
+        +   '<div style="width:54px;height:54px;border-radius:50%;'
+        +     'background:linear-gradient(135deg,var(--grape,#662C90),var(--punch,#EC008B));'
+        +     'margin:0 auto 14px;display:flex;align-items:center;justify-content:center">'
+        +     '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" '
+        +       'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+        +       '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>'
+        +       '<line x1="12" y1="9" x2="12" y2="13"/>'
+        +       '<line x1="12" y1="17" x2="12.01" y2="17"/>'
+        +     '</svg>'
+        +   '</div>'
+        +   '<div style="font-size:18px;font-weight:800;color:var(--text,#161A2E);margin-bottom:8px">Decline this offer?</div>'
+        +   '<div style="font-size:13.5px;color:var(--text-dim,#42556e);line-height:1.6;margin-bottom:20px">'
+        +     'This offer only has one line item. By switching it off you\'re effectively '
+        +     'making this a <strong>nil offer</strong> &mdash; there\'s nothing left to accept. '
+        +     'Would you like to <strong>decline this offer</strong> instead, or switch the '
+        +     'item back on?'
+        +   '</div>'
+        +   '<div style="display:flex;gap:10px;flex-direction:column">'
+        +     '<button type="button" id="prop-nil-confirm-decline" '
+        +       'style="padding:12px 18px;background:linear-gradient(135deg,var(--grape,#662C90),var(--punch,#EC008B));'
+        +       'color:#fff;border:0;border-radius:99px;font-family:inherit;font-size:13px;font-weight:700;'
+        +       'cursor:pointer;letter-spacing:.02em">Yes, decline this offer</button>'
+        +     '<button type="button" id="prop-nil-confirm-cancel" '
+        +       'style="padding:11px 18px;background:transparent;color:var(--text-dim,#42556e);border:1.5px solid var(--border-light,#d9dde7);'
+        +       'border-radius:99px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">'
+        +       'No, switch the item back on</button>'
+        +   '</div>'
+        + '</div>';
+      document.body.appendChild(modal);
+    }
+    /* Wire (or re-wire) the buttons each open so the latest key+btn
+       are captured by the click handlers. */
+    var yes = document.getElementById('prop-nil-confirm-decline');
+    var no  = document.getElementById('prop-nil-confirm-cancel');
+    function _close() {
+      modal.style.opacity = '0';
+      setTimeout(function () { modal.style.display = 'none'; }, 180);
+    }
+    if (yes) yes.onclick = function () {
+      _close();
+      /* Open the decline panel — the same flow as clicking the
+         Decline button manually. The client can still add a reason
+         + chips before final submit, which gives the rep useful
+         signal even on a single-item nil. */
+      if (typeof window._propShowDecline === 'function') {
+        try { window._propShowDecline(); } catch (_e) {}
+        /* Smooth-scroll the decline panel into view since the
+           single-item proposal layout often has the items above
+           the action buttons. */
+        setTimeout(function () {
+          var dp = document.getElementById('decline-panel');
+          if (dp && dp.scrollIntoView) {
+            try { dp.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (_e) {}
+          }
+        }, 50);
+      }
+    };
+    if (no) no.onclick = function () {
+      _close();
+      /* Revert by re-calling toggleItem — flips declined[key] back
+         to false and restores the on/opacity visual + totals. */
+      try { toggleItem(key, btn); } catch (_e) {}
+    };
+    modal.style.display = 'flex';
+    /* Force a reflow so the opacity transition kicks in. */
+    void modal.offsetWidth;
+    modal.style.opacity = '1';
+  }
+
+  /* Edition-aware "Why this matters" intro paragraph. Pitched at
+     the prospect; falls back to a generic framing for proposals
+     that mix multiple editions or are pre-narrative-content. */
+  var WHY_BY_EDITION = {
+    'WPA': 'Wellbeing in your workforce is one of the strongest predictors of retention, engagement and discretionary effort — yet most workplace wellbeing measures stop at survey results. The Wellbeing Matters platform combines a five-minute PERMA+ survey with real-time cohort dashboards, AI-driven coaching for every respondent, and an evidence base that scales from a 30-person team to a 50,000-person enterprise.',
+    'WPU': 'Faculty and staff wellbeing under sustained academic load is one of the hardest things to measure — and one of the strongest predictors of research output, teaching quality and pastoral capacity. Wellbeing Matters @ University runs the same evidence base as the Workplace edition, tuned to the rhythm of academic life.',
+    'WPL': 'Individual wellbeing is rarely a straight line — it ebbs and flows with life, work and the people around us. Wellbeing Matters in Life gives coaches, therapists, recovery programs and community-development organisations a five-minute PERMA+ snapshot of how a person is actually doing, with an instant personalised report and coach-friendly cohort dashboard.',
+    'WPV': 'Veterinary practice carries wellbeing realities most workplaces will never see — moral injury, compassion fatigue, exposure to euthanasia decisions, after-hours load. Wellbeing Matters @ Veterinary Practice measures these signals with profession-specific language and benchmarks built only on veterinary data.',
+    'WPS': 'Performance, identity and transition are the three forces that shape an athlete\'s wellbeing — and the three that elite sporting organisations most often get blind-sided by. Wellbeing Matters @ Sport surfaces these signals across athletes, coaches and support staff with framing tuned to the rhythm of competition.',
+    'WPK': 'Primary-school students don\'t answer surveys like adults. Wellbeing Matters @ School · Kids uses visual face-scales, story-led prompts and a playful runtime to keep young respondents engaged — while giving your wellbeing lead an anonymised cohort dashboard with the same evidence base used by adult-workplace clients.',
+    'WPY': 'Adolescent and senior-school wellbeing measurement has to handle friendship, identity, screen time, study load and the slow build toward graduation — without reading like a clinical assessment. Wellbeing Matters @ School · Youth runs the PERMA+ framework in language adolescents recognise.',
+    'WPD': 'Australian workplaces operating in high-risk industries now sit under explicit WHS psychosocial-hazard regulations. Wellbeing Matters · Psychosocial Safety is a bespoke deployment built to those rules — a hazards-led survey with heat-map dashboards by Line of Business and Contract.',
+    'WHC': 'Organisational change rarely fails because the plan is wrong — it fails because the change does not land safely in the people living it. Workplace · Heart Of Change measures the five HEART factors (Honour Feelings, Engage Purposefully, Appreciate Strengths, Reach Out, Take Tiny Steps) across Individual, Team and Workplace tiers, so leaders can see whether the change is actually being absorbed and act before fatigue or quiet resistance set in.',
+    'WAW': 'The years after fifty are when wellbeing becomes the most powerful predictor of how the next decades feel — and the modifiable choices made now compound for the rest of life. Wellbeing Matters · In Aging Well measures emotional resilience, inclusion and belonging, maintaining purpose, learning and growing, and optimising health, alongside a non-clinical reflection on the fourteen Lancet-Commission risk factors for cognitive decline. Built for community-ageing programs, retirement communities and EAP partners serving older-adult cohorts.'
+  };
+
+  function _proposalIntro(p) {
+    /* Polish-with-AI override (Plan B) — when the rep has saved a
+       tailored intro on this proposal we surface it verbatim. Falls
+       through to the edition-keyed static framing only when no
+       polish has been applied. The polished string is stored on the
+       proposal row (proposals.tailored_intro) and round-tripped via
+       proposals.php's public_get, so existing drafts/sent proposals
+       that never saw the polish flow keep their stock framing. */
+    if (p.tailored_intro && String(p.tailored_intro).trim()) {
+      return String(p.tailored_intro).trim();
+    }
+    var eds = (p.items.editions || []);
+    if (!eds.length) return '';
+    /* Pick the edition copy from the first (or only) edition in the
+       proposal. For mixed-edition proposals we fall back to the
+       Workplace framing since adult-workplace is the most common
+       cross-edition case in practice. */
+    var key = String(eds[0].key || '').toUpperCase();
+    var copy = WHY_BY_EDITION[key] || WHY_BY_EDITION['WPA'];
+    return copy;
+  }
+
+  function _renderEditionItem(e) {
+    var hasPlan  = !!(e.plan_name || e.plan_code || e.billing_label);
+    var headline = hasPlan ? (e.plan_name || e.plan_code) : (e.label || e.key);
+    var sub      = hasPlan
+      ? (esc(e.label || e.key) + ' &middot; ' + esc(e.key) + (e.billing_label ? ' &middot; ' + esc(e.billing_label) : ''))
+      : esc(e.label || e.key) + ' · ' + esc(e.key);
+    var highlightsHtml = '';
+    if (Array.isArray(e.highlights) && e.highlights.length) {
+      highlightsHtml = '<ul class="b-highlights">'
+        + e.highlights.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('')
+        + '</ul>';
+    }
+    return ''
+      + '<div class="b-item">'
+      +   '<div class="b-head">'
+      +     '<div style="flex:1;min-width:200px">'
+      +       '<div class="b-name"><em>' + esc(headline) + '</em></div>'
+      +       '<div class="b-aud">' + sub + (e.audience ? ' &middot; ' + esc(e.audience) : '') + '</div>'
+      +     '</div>'
+      +     '<span class="b-tag">Edition</span>'
+      +   '</div>'
+      +   (e.summary ? '<div class="b-summary">' + esc(e.summary) + '</div>' : '')
+      +   highlightsHtml
+      + '</div>';
+  }
+
+  function _renderAddonItem(a) {
+    var highlightsHtml = '';
+    if (Array.isArray(a.highlights) && a.highlights.length) {
+      highlightsHtml = '<ul class="b-highlights">'
+        + a.highlights.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('')
+        + '</ul>';
+    }
+    return ''
+      + '<div class="b-item">'
+      +   '<div class="b-head">'
+      +     '<div style="flex:1;min-width:200px">'
+      +       '<div class="b-name">' + esc(a.label) + '</div>'
+      +       '<div class="b-aud">' + esc(a.recurring || 'annual') + '</div>'
+      +     '</div>'
+      +     '<span class="b-tag" style="background:rgba(27,117,188,.10);color:var(--arctic)">Module</span>'
+      +   '</div>'
+      +   (a.summary ? '<div class="b-summary">' + esc(a.summary) + '</div>' : (a.desc ? '<div class="b-summary">' + esc(a.desc) + '</div>' : ''))
+      +   highlightsHtml
+      + '</div>';
+  }
+
+  function render(p) {
+    proposal = p;
+    /* Both 'sent' and 'on_ice' keep the action surface live — a
+       paused proposal must remain actionable so the prospect can come
+       back from ice at any time to accept, counter, decline, or
+       re-ice with a different date. */
+    /* 're_issued' rolls into the same acceptable-state set as 'sent'
+       and 'on_ice' — the prospect needs to be able to accept /
+       counter / decline a freshly re-issued offer exactly like a
+       first-pass one. (Marty 2026-06-06.) */
+    var canDecide = (p.status === 'sent' || p.status === 'on_ice' || p.status === 're_issued');
+    var intro = _proposalIntro(p);
+    var editions = p.items.editions || [];
+    var addons   = p.items.addons   || [];
+    /* Brochure sections only render when there's narrative content
+       to show. For legacy proposals where the catalogue had no
+       summary/highlights, fall back to the pricing-only layout. */
+    /* `anyNarrative` gates the brochure-shape sections — render
+       them when at least ONE of three things is present:
+         1. A rep-polished tailored intro (Plan B).
+         2. Any edition with summary/highlights from the catalogue.
+         3. Any add-on with summary/highlights from the catalogue.
+       Legacy proposals that pre-date the brochure work still fall
+       through to the pricing-only layout. */
+    var anyNarrative = !!(p.tailored_intro && String(p.tailored_intro).trim())
+                    || editions.some(function (e) { return e.summary || (e.highlights && e.highlights.length); })
+                    || addons.some(function (a) { return a.summary || (a.highlights && a.highlights.length); });
+    var html = ''
+      + '<a id="bottom-line-pill" href="#pricing">'
+      +   '<span>Show me the bottom line</span>'
+      +   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'
+      + '</a>'
+      + '<button type="button" id="download-pdf-pill" onclick="window.print()" title="Save this offer as a PDF — your browser\'s print dialog will offer Save as PDF as an option">'
+      +   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+      +   '<span>Download as PDF</span>'
+      + '</button>'
+      + '<div class="hero">'
+      +   '<div class="hero-brand">'
+      +     '<div class="hero-logo"><img src="https://smart-tools-foundry.com/WBM/app/logos/TGFIconwhite.png" alt="The Good Foundry"></div>'
+      +     '<div class="hero-wordmark">Wellbeing Matters<span class="hero-sub">The Good Foundry</span></div>'
+      +   '</div>'
+      +   '<div class="tag">Offer · ' + esc(p.id) + '</div>'
+      +   '<h1>For <em>' + esc(p.client_org || p.client_name || 'You') + '</em></h1>'
+      +   '<div class="sub">' + (p.rep_name ? 'Prepared by ' + esc(p.rep_name) : 'Prepared by Wellbeing Matters') + ' · ' + (p.sent_at ? 'Sent ' + esc(String(p.sent_at).slice(0,10)) : 'Draft') + (p.expires_at ? ' · Expires ' + esc(p.expires_at) : '') + '</div>'
+      /* Hero meta — rep contact first (so the prospect knows who to
+         email back), then the client contact echo so they can verify
+         we've got the right recipient. Both fall back gracefully when
+         the rep row is missing (legacy proposals without created_by_rep_id). */
+      +   '<div class="meta">'
+      +     (p.rep_name || p.rep_email
+            ? '<span><strong>Contact</strong> ' + esc(p.rep_name || 'Your Wellbeing Matters rep') + '</span>'
+              + (p.rep_email ? '<span><strong>Email</strong> <a href="mailto:' + esc(p.rep_email) + '" style="color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.4)">' + esc(p.rep_email) + '</a></span>' : '')
+            : '<span><strong>Contact</strong> ' + esc(p.client_name || '—') + '</span><span><strong>Email</strong> ' + esc(p.client_email || '—') + '</span>')
+      +   '</div>'
+      + '</div>'
+      + '<div style="margin-bottom:14px"><span class="status-pill ' + esc(p.status) + '">' + esc(_propStatusLabel(p.status)) + '</span></div>'
+      + (p.cover_letter
+          ? '<div class="card"><div class="card-h">Cover</div><div class="cover">' + esc(p.cover_letter) + '</div></div>'
+          : '')
+      /* Brochure-shape narrative sections — only render when the
+         catalogue carried summary/highlights for at least one item
+         in the proposal. Legacy proposals fall straight through to
+         the existing pricing tables. */
+      + (anyNarrative && intro
+          ? '<div class="brochure-section">'
+            +   '<div class="b-eyebrow">Why this matters</div>'
+            +   '<h2>Wellbeing measurement that <em>moves the dial</em></h2>'
+            +   '<div class="b-lede">' + esc(intro) + '</div>'
+            + '</div>'
+          : '')
+      /* 2026-06-19 — Marty: 'When I do preview on offers it's not
+         carrying over all established items.' Root cause: the brochure
+         section gate AND the per-item filter both required `summary`
+         OR `highlights.length` to be non-empty. Items without narrative
+         (any Zoho-fetched add-on whose code / puKey / normalised label
+         didn't match a static narrative in proposal_pricing.json) were
+         silently dropped from the brochure section even though they
+         appeared in the pricing card below. Net effect: the prospect
+         saw the price but no description card for those items.
+         Fix: keep the brochure section live whenever there ARE items
+         (the existing `anyNarrative` gate still falls through to the
+         legacy pricing-only layout when NOTHING has narrative), and
+         render every item. The per-item renderers
+         (_renderEditionItem / _renderAddonItem) already handle a
+         missing summary gracefully — the edition card falls back to
+         label + key, and the addon card falls back to `a.desc`. */
+      + (anyNarrative && editions.length
+          ? '<div class="brochure-section">'
+            +   '<div class="b-eyebrow">What you\'ll measure</div>'
+            +   '<h2>Your <em>edition</em> in focus</h2>'
+            +   '<div class="b-lede">The edition(s) you\'re proposed include the items below. Each one is a self-contained surface for your respondents and a cohort dashboard for your wellbeing lead.</div>'
+            +   editions.map(_renderEditionItem).join('')
+            + '</div>'
+          : '')
+      + (anyNarrative && addons.length
+          ? '<div class="brochure-section">'
+            +   '<div class="b-eyebrow">Modules &amp; power-ups</div>'
+            +   '<h2>Layered <em>capabilities</em> for your context</h2>'
+            +   '<div class="b-lede">Power-ups turn on extra measurement, AI-driven coaching, and integration capabilities without rebuilding the platform underneath.</div>'
+            +   addons.map(_renderAddonItem).join('')
+            + '</div>'
+          : '')
+      /* Pricing card anchor — bottom-line pill jumps here. */
+      + '<div id="pricing" style="scroll-margin-top:24px"></div>'
+      /* Explainer banner — sits ABOVE the Editions / Add-ons cards
+         so the prospect understands the toggle affordance before
+         they encounter it. Only renders when there's at least one
+         togglable line AND we're in an actionable state (canDecide).
+         (2026-06-03 — user request.) */
+      + ((canDecide && ((p.items.editions || []).length || (p.items.addons || []).length))
+          ? '<div style="margin:0 0 14px;padding:14px 18px;background:linear-gradient(135deg,rgba(102,44,144,0.06) 0%,rgba(236,0,139,0.06) 100%);border:1px solid rgba(102,44,144,0.18);border-radius:10px;font-size:13px;color:var(--text-dark);line-height:1.6">'
+            + '<div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--grape,#662C90);margin-bottom:4px">Make it yours</div>'
+            + '<strong>Tap the toggles below</strong> to switch off any line that isn\'t relevant — the totals update live. If something\'s missing, jump to the bottom and let us know via <em>Send me a revision</em>.'
+            + '</div>'
+          : '')
+      /* Editions card is hidden when no edition lines were quoted —
+         add-on-only proposals (e.g. Technical & Software Services
+         pure-services quote) shouldn't show an empty "No editions
+         selected" placeholder. (2026-06-03 user request.) */
+      + ((p.items.editions || []).length ? '<div class="card"><div class="card-h">Editions</div>' : '')
+      +   ((p.items.editions || []).length
+            ? (p.items.editions || []).map(function (e) {
+                /* Two plans of the same edition can coexist in one
+                   proposal (1-month trial + 12-month renewal), so the
+                   decline key includes plan_code to distinguish rows.
+                   Falls back to the legacy "ed:<key>" shape when the
+                   line carries no plan (pre-plan-mode drafts). */
+                var dk = _edDeclineKey(e);
+                /* Prefer plan-mode display: plan name as headline,
+                   edition label + code + billing label as supporting
+                   context. Legacy lines (no plan_name) render the old
+                   "edition label" + proposal-level term shape. */
+                var hasPlan = !!(e.plan_name || e.plan_code || e.billing_label);
+                var headline = hasPlan ? (e.plan_name || e.plan_code) : (e.label || e.key);
+                var sub = hasPlan
+                  ? (esc(e.label || e.key) + ' · ' + esc(e.key) + (e.billing_label ? ' · ' + esc(e.billing_label) : ''))
+                  : (esc(e.key) + ' · ' + esc(p.term));
+                var qty = Math.max(1, Number(e.qty || 1));
+                var qtyPip = qty > 1 ? ' <span style="font-size:11px;font-weight:700;color:var(--orange);margin-left:6px">× ' + qty + '</span>' : '';
+                var lineAmount = (Number(e.amount || 0) * qty);
+                return '<div class="item on" data-key="' + esc(dk) + '">'
+                     +   '<div><div class="name">' + esc(headline) + qtyPip + '</div><div class="desc">' + sub + '</div></div>'
+                     +   '<div class="toggle-wrap">'
+                     +     '<div class="price">' + moneyWithEquiv(lineAmount) + '</div>'
+                     +     (canDecide ? '<div class="toggle" onclick="window._toggleItem(\'' + esc(dk) + '\',this)"></div>' : '')
+                     +   '</div>'
+                     + '</div>';
+              }).join('')
+            : '')
+      + ((p.items.editions || []).length ? '</div>' : '')
+      + '<div class="card"><div class="card-h">Power-ups</div>'
+      +   ((p.items.addons || []).length
+            ? (p.items.addons || []).map(function (a, _ix) {
+                /* Flex addon (Outcome Fee — renamed 2026-06-07 from
+                   "Technical & Software Services" per Marty's request
+                   to drop per-hour signalling). Its line_note is the
+                   headline so the client can tell multiple Outcome
+                   Fee lines apart; the badge always reads "Outcome Fee"
+                   now (no per-effort branch). Legacy proposals saved
+                   with pricing_mode='per_effort' fall through into the
+                   same rendering — their stored `price` is the source
+                   of truth. Toggle key includes the index so two rows
+                   with the same `id` get distinct toggles. */
+                var isFlex = a.pricing_mode === 'fixed' || a.pricing_mode === 'per_effort';
+                var dk = 'ad:' + esc(a.id) + ':' + _ix;
+                if (isFlex) {
+                  var headline = (a.line_note && String(a.line_note).trim()) ? a.line_note : a.label;
+                  /* Always read as an Outcome Fee — no rate × qty for
+                     new proposals, and legacy per_effort rows have
+                     their computed price already on `a.price`. */
+                  var modeLine = 'Outcome Fee &middot; ' + esc(a.label);
+                  return '<div class="item on" data-key="' + dk + '">'
+                       +   '<div><div class="name">' + esc(headline) + '</div><div class="desc">' + modeLine + '</div></div>'
+                       +   '<div class="toggle-wrap">'
+                       +     '<div class="price">' + moneyWithEquiv(a.price) + '</div>'
+                       +     (canDecide ? '<div class="toggle" onclick="window._toggleItem(\'' + dk + '\',this)"></div>' : '')
+                       +   '</div>'
+                       + '</div>';
+                }
+                return '<div class="item on" data-key="' + dk + '">'
+                     +   '<div><div class="name">' + esc(a.label) + '</div><div class="desc">' + esc(a.recurring || 'annual') + '</div></div>'
+                     +   '<div class="toggle-wrap">'
+                     +     '<div class="price">' + moneyWithEquiv(a.price) + '</div>'
+                     +     (canDecide ? '<div class="toggle" onclick="window._toggleItem(\'' + dk + '\',this)"></div>' : '')
+                     +   '</div>'
+                     + '</div>';
+              }).join('')
+            : '<div style="font-size:12px;color:var(--text-muted);padding:8px 0">No power-ups selected.</div>')
+      + '</div>'
+      + '<div class="totals">'
+      +   '<div class="totals-row"><span>Subtotal</span><span class="v" id="t-subtotal">—</span></div>'
+      +   '<div class="totals-row" id="t-discount-row" style="display:none"><span>Volume discount (' + (Number(p.discount_pct || 0)) + '%)</span><span class="v" id="t-discount" style="color:var(--green)">—</span></div>'
+      +   '<div class="totals-row" id="t-coupon-row" style="display:none"><span id="t-coupon-label">Coupon</span><span class="v" id="t-coupon-amount" style="color:var(--green)">—</span></div>'
+      /* 2026-06-06 — GST line (AU clients only). preTax row shows
+         the discounted subtotal that the tax is calculated on; tax
+         row shows the 10% addition itself; grand-total label below
+         switches to "Total (incl. GST)" so the client sees the
+         addition rather than discovering it via mental math. Both
+         rows hide for non-AU proposals. */
+      +   '<div class="totals-row" id="t-pretax-row" style="display:none;border-top:1px dashed var(--border);margin-top:6px;padding-top:10px"><span>Subtotal (before GST)</span><span class="v" id="t-pretax-amount">—</span></div>'
+      +   '<div class="totals-row" id="t-tax-row" style="display:none"><span>GST · 10% (Australia)</span><span class="v" id="t-tax-amount" style="color:#b45309">—</span></div>'
+      +   '<div class="totals-row grand"><span id="t-total-label">Total</span><span class="v" id="t-total">—</span></div>'
+      + '</div>'
+      + (canDecide
+          ? '<div class="accept-card">'
+            +   /* On-ice context banner — only renders when the
+                 prospect is revisiting a paused proposal. Echoes
+                 their chosen reminder date (when set) so they can
+                 see exactly what they asked for. */
+                (p.status === 'on_ice'
+                  ? '<div style="margin:-4px -4px 18px;padding:12px 16px;background:linear-gradient(135deg,rgba(56,189,248,0.10) 0%,rgba(125,211,252,0.10) 100%);border-left:3px solid #0ea5e9;border-radius:8px;font-size:13px;color:var(--text-dark);line-height:1.55">'
+                    + '<strong>On ice.</strong> '
+                    + (p.ice_until
+                        ? 'We have you on pause until <strong>' + esc(String(p.ice_until).slice(0,10)) + '</strong> &mdash; you can also pick this back up any time.'
+                        : 'No pressure &mdash; come back when you\'re ready.')
+                    + '</div>'
+                  : '')
+            +   '<h2>Ready to <em>go ahead</em>?</h2>'
+            +   '<p>Type your full name to accept this offer. We\'ll be in touch within one business day to confirm the details.</p>'
+            +   '<div id="flash-host"></div>'
+            +   '<div class="accept-row" id="prop-action-row">'
+            +     '<input type="text" class="input" id="signed-name" placeholder="Your full name" />'
+            +     '<button id="prop-act-accept"   class="btn btn-primary" data-act="accept"   onclick="window._propAccept()">Accept offer</button>'
+            +     '<button id="prop-act-counter"  class="btn btn-ghost"   data-act="counter"  onclick="window._propShowCounter()">Counter-offer</button>'
+            +     '<button id="prop-act-revise"   class="btn btn-ghost"   data-act="revise"   onclick="window._propShowRevise()">Send me a revision</button>'
+            +     '<button id="prop-act-ice"      class="btn btn-ghost"   data-act="ice"      onclick="window._propShowIce()">Put on ice</button>'
+            +     '<button id="prop-act-decline"  class="btn btn-ghost"   data-act="decline"  onclick="window._propShowDecline()">Decline</button>'
+            +   '</div>'
+            +   /* Talk-to-a-human card (2026-06-03; re-styled for
+                 prominence 2026-06-06 per Marty). Surfaces a friendly
+                 contact card with the rep avatar + booking iframe +
+                 free-text message form so prospects who prefer a real
+                 conversation aren't pushed through the accept/decline
+                 flow. Now a full-bleed brand-tinted card with chat
+                 icon + bigger CTA button so the option reads as a
+                 first-class path, not a footnote. */
+                '<div style="margin-top:20px;padding:18px 22px;background:linear-gradient(135deg,rgba(236,0,139,0.06) 0%,rgba(102,44,144,0.06) 100%);border:1px solid rgba(236,0,139,0.20);border-radius:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
+            +     '<div style="flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--punch,#EC008B);display:flex;align-items:center;justify-content:center;color:#fff">'
+            +       '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+            +     '</div>'
+            +     '<div style="flex:1;min-width:200px">'
+            +       '<div style="font-family:\'DM Serif Display\',Georgia,serif;font-size:18px;color:var(--text-dark,#1c2b3a);line-height:1.3;margin-bottom:4px">Prefer to talk it through?</div>'
+            +       '<div style="font-size:12.5px;color:var(--text-mid,#4a5f72);line-height:1.55">Skip the form — book a quick chat with the team that wrote this offer.</div>'
+            +     '</div>'
+            +     '<button type="button" onclick="window._propShowTalk()" style="flex-shrink:0;background:var(--punch,#EC008B);color:#fff;border:none;padding:11px 22px;border-radius:99px;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:.02em;cursor:pointer;box-shadow:0 4px 14px rgba(236,0,139,0.25);transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform=\'translateY(-1px)\';this.style.boxShadow=\'0 6px 18px rgba(236,0,139,0.35)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'0 4px 14px rgba(236,0,139,0.25)\'">Book a chat &rarr;</button>'
+            +   '</div>'
+            +   /* Counter-offer + decline panels — hidden by default;
+                 revealed by the respective Show handlers. Each carries
+                 its own textarea so the client can phrase the message
+                 to the rep. Counter REQUIRES text (so the rep has
+                 something to respond to); Decline accepts an empty
+                 reason (silent decline is fine). */
+                '<div id="counter-panel" style="display:none;margin-top:14px">'
+            /* 2026-06-07 — Marty: "provide the ability for the
+               person to stipulate their budget constraints… make
+               this inviting and say we are The Good Foundry and we
+               do support various communities, organisations and
+               researches… we are all trying to do GOOD". Counter
+               panel rebuilt with a warm intro card + an explicit
+               budget input ahead of the free-text field. The budget
+               is composed into the counter_terms message in
+               _propCounter so the rep sees it without a schema
+               change. */
+            +     '<div style="padding:18px 20px;background:linear-gradient(135deg,rgba(236,0,139,.06),rgba(102,44,144,.06));border:1px solid rgba(102,44,144,.18);border-radius:14px;margin-bottom:14px;line-height:1.55;color:var(--text-dark)">'
+            +       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
+            +         '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--punch,#EC008B)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
+            +         '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--punch,#EC008B)">A note from us</div>'
+            +       '</div>'
+            +       '<div style="font-size:13.5px">We&rsquo;re <strong>The Good Foundry</strong>, and we work alongside schools, community groups, research teams and not-for-profits as well as our enterprise clients &mdash; because we believe in the work. <strong>If budget is a constraint, tell us.</strong> Name what you can do and what matters most about this engagement, and we&rsquo;ll come back with the best version of this we can stand behind.</div>'
+            +       '<div style="font-size:13px;margin-top:8px;color:var(--text-mid)">After all, we&rsquo;re all trying to do good. Tell us &mdash; we&rsquo;ll try our hardest to help.</div>'
+            +     '</div>'
+            +     '<label for="counter-budget" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">What budget can you realistically work with? <span style="font-weight:400;color:var(--text-muted)">(optional but really helpful)</span></label>'
+            +     '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">'
+            +       '<div style="display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:100px;background:#fff;padding:0 4px 0 16px;max-width:280px">'
+            +         '<span id="counter-budget-ccy" style="font-size:14px;font-weight:700;color:var(--text-mid);user-select:none">' + esc(_displayCurrency()) + '</span>'
+            +         '<input type="number" id="counter-budget" min="0" step="100" placeholder="e.g. 12000" style="border:none;outline:none;padding:12px 14px;font-size:14px;font-family:inherit;color:var(--text);background:transparent;flex:1;min-width:0;width:160px">'
+            +       '</div>'
+            +       '<span style="font-size:11.5px;color:var(--text-muted);font-style:italic">A round number is fine &mdash; we use this to guide the conversation, not to corner you.</span>'
+            +     '</div>'
+            +     '<label for="counter-text" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">Anything else you&rsquo;d like us to consider?</label>'
+            +     '<textarea id="counter-text" class="input" rows="4" placeholder="e.g. The pricing on Edition X feels stretched for our community context, we&rsquo;d love a shorter term, the research goals matter more to us than the dashboard polish&hellip;"></textarea>'
+            +     '<div style="display:flex;gap:8px;margin-top:12px">'
+            +       '<button class="btn btn-primary" onclick="window._propCounter()">Send counter-offer</button>'
+            +       '<button class="btn btn-ghost" onclick="window._propHideAll()">Cancel</button>'
+            +     '</div>'
+            +   '</div>'
+            +   '<div id="decline-panel" style="display:none;margin-top:14px">'
+            /* 2026-06-07 — Marty: "give them some items to pick…
+               present options on canvas, allow one or more". Multi-
+               select chip row above the free-text. Selected chips
+               flip to a filled punch-pink fill so the picked state
+               reads at a glance. The "Something else" chip auto-
+               focuses the textarea so the prompt is obvious.
+               Reasons + free text post together — the server stitches
+               them into a single decline_reason TEXT field with a
+               "Reasons picked: …" header so no migration is needed. */
+            +     '<div style="font-size:12px;font-weight:700;color:var(--text-dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What\'s holding you back? <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-muted)">(tap any that apply)</span></div>'
+            +     '<div id="decline-chips" role="group" aria-label="Reasons for declining" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">'
+            +       '<button type="button" class="decline-chip" data-reason="Too expensive" onclick="window._propToggleDeclineReason(this)">Too expensive</button>'
+            +       '<button type="button" class="decline-chip" data-reason="Not the right fit" onclick="window._propToggleDeclineReason(this)">Not the right fit</button>'
+            +       '<button type="button" class="decline-chip" data-reason="Timing is not right" onclick="window._propToggleDeclineReason(this)">Timing is not right</button>'
+            +       '<button type="button" class="decline-chip" data-reason="Nothing specific — I was shopping around" onclick="window._propToggleDeclineReason(this)">Nothing specific — I was shopping around</button>'
+            +       '<button type="button" class="decline-chip" data-reason="I don’t care to say" onclick="window._propToggleDeclineReason(this)">I don’t care to say</button>'
+            +       '<button type="button" class="decline-chip" data-reason="Something else" data-focus-text="1" onclick="window._propToggleDeclineReason(this)">Something else (tell us below)</button>'
+            +     '</div>'
+            +     '<label for="decline-text" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">Optional &mdash; anything more you\'d like to share?</label>'
+            +     '<textarea id="decline-text" class="input" rows="3" placeholder="A line or two helps us improve. Leave blank to decline silently."></textarea>'
+            +     '<div style="display:flex;gap:8px;margin-top:8px">'
+            +       '<button class="btn btn-primary" onclick="window._propDecline()">Decline offer</button>'
+            +       '<button class="btn btn-ghost" onclick="window._propHideAll()">Cancel</button>'
+            +     '</div>'
+            +   '</div>'
+            +   /* Revise panel — "have we missed anything?". Free
+                 text describing what to change. Posted to action=
+                 revise; backend flips status to 'revise' and fires
+                 an immediate notification email to the rep. */
+                '<div id="revise-panel" style="display:none;margin-top:14px">'
+            +     '<div style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px">Have we missed anything? Tell us what to change &mdash; scope, wording, pricing, anything. We\'ll come back with a revised version.</div>'
+            +     '<label for="revise-text" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">What should we change or add?</label>'
+            +     '<textarea id="revise-text" class="input" rows="4" placeholder="e.g. Add a workshop module, swap the term to biennial, soften the cancellation clause..."></textarea>'
+            +     '<div style="display:flex;gap:8px;margin-top:8px">'
+            +       '<button class="btn btn-primary" onclick="window._propRevise()">Send me a revision</button>'
+            +       '<button class="btn btn-ghost" onclick="window._propHideAll()">Cancel</button>'
+            +     '</div>'
+            +   '</div>'
+            +   /* Put-on-ice panel — soft pause. Optional reminder
+                 date + optional note. The reminder cron picks up rows
+                 with ice_until <= NOW() and emails the prospect with
+                 the rep CC'd. (2026-06-03.) */
+                '<div id="ice-panel" style="display:none;margin-top:14px">'
+            +     '<div style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:12px">Take all the time you need. We can park this and pick it back up whenever you\'re ready.</div>'
+            +     '<label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dark);margin-bottom:10px;cursor:pointer">'
+            +       '<input type="checkbox" id="ice-remind" onchange="window._propIceToggleRemind()" style="width:16px;height:16px;accent-color:var(--punch,#EC008B);cursor:pointer"/>'
+            +       'Yes please &mdash; remind me on a specific date'
+            +     '</label>'
+            +     '<div id="ice-date-row" style="display:none;margin-bottom:10px">'
+            +       '<label for="ice-date" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">Pick a date for us to nudge you</label>'
+            +       '<input type="date" id="ice-date" class="input" style="max-width:200px"/>'
+            +     '</div>'
+            +     '<label for="ice-note" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">Anything else? <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>'
+            +     '<textarea id="ice-note" class="input" rows="3" placeholder="e.g. Waiting on board sign-off, back from leave on the 20th, want to revisit next quarter..."></textarea>'
+            +     '<div style="display:flex;gap:8px;margin-top:8px">'
+            +       '<button class="btn btn-primary" onclick="window._propPutOnIce()">Put on ice</button>'
+            +       '<button class="btn btn-ghost" onclick="window._propHideAll()">Cancel</button>'
+            +     '</div>'
+            +   '</div>'
+            + '</div>'
+          /* 2026-06-06 — Marty: "Remove Accepted — thank you / We
+             appreciate YOU and your business … duplicate card at the
+             bottom." The sticky top status banner (rendered by
+             _propPaintStatusBanner) is now the single canonical
+             status surface — the inline accept-card lower down was
+             duplicating that message AND leaking it back into print
+             output. Inline strings collapsed to empty so the rest
+             of the brochure renders cleanly after acceptance. */
+          : (p.status === 'accepted'  ? ''
+              : (p.status === 'declined'  ? ''
+                  : (p.status === 'countered' ? ''
+                      : (p.status === 'revise'    ? ''
+                          : (p.status === 'expired'  ? ''
+                              : ''))))))
+      /* Trust block — founder credentials + research lineage. Only
+         renders alongside the brochure layout; legacy proposals
+         (pricing-only fall-through) skip it to stay compact. */
+      + (anyNarrative
+          ? '<div class="trust-card">'
+            +   '<h2>Why you can <em>rely on us</em></h2>'
+            +   '<p>Sought around the world for our ability to translate cutting-edge research in positive psychology and neuroscience into practical everyday actions, our team at <strong>The Good Foundry</strong> helps people and workplaces thrive. The PERMAH Wellbeing Survey was originally created by Dr. Peggy Kern from the University of Melbourne\'s Centre for Positive Psychology and Dr. Michelle McQuaid, both of whom have had the privilege of working with many of the world\'s leading wellbeing researchers including Professors Martin Seligman, Carol Dweck, Richard Ryan, Amy Edmondson, Angela Duckworth, Kim Cameron, and David Cooperrider.</p>'
+            +   '<p>With decades of leadership and research experience in organisations of all sizes, we work with boards, leadership teams, managers, and employees to help them improve their resilience and grit, boost their wellbeing, and build psychological safety so they can do the best work of their lives.</p>'
+            + '</div>'
+          : '');
+    $('proposal-root').innerHTML = html;
+    paintTotals();
+    window._toggleItem = toggleItem;
+    /* 2026-06-06 — Paint the sticky top status banner whenever the
+       proposal is in a terminal state. Hidden by default; populated
+       + revealed here. The user can dismiss via the Close button. */
+    try { _propPaintStatusBanner(p); } catch (_eS) {}
+    /* Signal the client-carousel script that the proposal payload
+       is ready — it listens for this event to fetch logos with the
+       prospect's own client name excluded from the strip. Carries
+       client_org + client_name + client_email so the carousel
+       script can match on whichever field surfaces the cleanest
+       logo-name comparison. (Marty 2026-06-06.) */
+    try {
+      document.dispatchEvent(new CustomEvent('wm:proposal-loaded', {
+        detail: {
+          client_org:   p.client_org   || '',
+          client_name:  p.client_name  || '',
+          client_email: p.client_email || ''
+        }
+      }));
+    } catch (_eP) {}
+    /* Sticky bottom-line pill — visible from the top of the page and
+       hides only when the pricing area comes into view. The PDF-
+       download pill follows the same rules so prospects always have
+       a one-click "save this" affordance while reading. */
+    var _pill    = document.getElementById('bottom-line-pill');
+    var _pdfPill = document.getElementById('download-pdf-pill');
+    var _pricingEl = document.getElementById('pricing');
+
+    /* 2026-06-07 — Marty: "The Bottom line button its not presenting
+       and when I scroll it flickers. It's mean to present when the
+       person is on top the page and want to jump to the pricing area
+       qucikly."
+
+       Two bugs:
+       (a) Required scrollY > 280 to ever appear — so on first paint
+           at the top of the page, the pill was hidden (the exact
+           moment the prospect benefits from it most).
+       (b) Single-threshold show/hide on rect.top < viewportH * 0.65
+           meant pixel-by-pixel oscillation around that line flickered
+           the pill on and off.
+
+       Fix:
+       - Show the pill as soon as the page loads (any time pricing is
+         BELOW the viewport's lower band — i.e. still scrolling toward
+         it).
+       - Hysteresis: HIDE once pricing's top crosses 65% of the
+         viewport (well in view); SHOW again only when it drops below
+         80% (clearly out of view going back up). The 15-point dead
+         zone kills the flicker.
+
+       Pricing pill state machine: 'shown' | 'hidden'. We persist this
+       between ticks so the threshold logic uses the prior state to
+       decide whether to flip. */
+    var _pillState = 'shown';   /* default-shown at top of page */
+    var _onScroll = function () {
+      if (!_pricingEl) {
+        /* No pricing anchor on the page — show pill always (legacy
+           proposal pages without the #pricing anchor still benefit
+           from the print affordance). */
+        if (_pill)    _pill.classList.add('visible');
+        if (_pdfPill) _pdfPill.classList.add('visible');
+        return;
+      }
+      var rect = _pricingEl.getBoundingClientRect();
+      var viewportH = window.innerHeight || document.documentElement.clientHeight;
+      var topRatio = rect.top / viewportH;  /* 1.0 = at bottom of viewport, 0 = at top */
+      /* Hysteresis thresholds — wide enough that a scroll-tick can't
+         straddle both. */
+      var HIDE_AT = 0.65;  /* pricing top has climbed above 65% of viewport — hide */
+      var SHOW_AT = 0.80;  /* pricing top has dropped below 80% of viewport — show */
+      if (_pillState === 'shown' && topRatio < HIDE_AT)      _pillState = 'hidden';
+      else if (_pillState === 'hidden' && topRatio > SHOW_AT) _pillState = 'shown';
+      var show = (_pillState === 'shown');
+      if (_pill)    _pill.classList.toggle('visible', show);
+      if (_pdfPill) _pdfPill.classList.toggle('visible', show);
+    };
+    if (_pill || _pdfPill) {
+      window.addEventListener('scroll', _onScroll, { passive: true });
+      window.addEventListener('resize', _onScroll, { passive: true });
+      /* Run AFTER first paint so #pricing has a real bounding rect.
+         Without rAF, a scrollY=0 + rect.top=0 from a not-yet-laid-out
+         element could land in the "hide" zone and stay there. */
+      requestAnimationFrame(_onScroll);
+    }
+  }
+
+  function flash(message, kind) {
+    var host = $('flash-host'); if (!host) return;
+    host.innerHTML = '<div class="flash ' + kind + '">' + esc(message) + '</div>';
+    setTimeout(function () { if (host.firstChild) host.removeChild(host.firstChild); }, 6000);
+  }
+
+  /* 2026-06-06 — Status banner controller. Headline + detail + icon
+     colour are picked per terminal state so the same banner renders
+     for accept / decline / counter / revise / expired. Default state
+     is hidden (no banner for live drafts / sent-but-unanswered). */
+  /* Human-readable label for every lifecycle status. Used by the
+     status pill at the top of the brochure AND the status banner.
+     Without this, raw status codes (`re_issued`, `on_ice`) leak
+     through as user-visible strings, which violates the
+     human-readable-labels standing rule. (Marty 2026-06-06.) */
+  var _PROP_STATUS_LABELS = {
+    'draft':      'Draft',
+    'sent':       'Sent',
+    'accepted':   'Accepted',
+    'declined':   'Declined',
+    'expired':    'Expired',
+    'countered':  'Counter-offer',
+    'on_ice':     'On hold',
+    'revise':     'Revision requested',
+    're_issued':  'Re-issued'
+  };
+  function _propStatusLabel(s) {
+    if (s == null) return '';
+    var k = String(s).toLowerCase();
+    return _PROP_STATUS_LABELS[k] || String(s).charAt(0).toUpperCase() + String(s).slice(1).replace(/[_-]/g, ' ');
+  }
+
+  function _propPaintStatusBanner(p) {
+    var banner   = $('prop-status-banner'); if (!banner) return;
+    var headHost = $('prop-status-hero-head');
+    var headEl   = $('prop-status-headline');
+    var detailEl = $('prop-status-detail');
+    if (!p || !p.status) { banner.style.display = 'none'; return; }
+    /* 2026-06-06 (brand rev) — all states share the same brand
+       gradient (navy → grape → punch) so the banner reads as part
+       of the proposal viewer, not a foreign overlay. Status is
+       carried by a small coloured chip in the top-left corner +
+       the headline copy — not by a wash of green/red/amber across
+       the whole card. */
+    var BRAND_GRADIENT = 'linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%)';
+    var spec = null;
+    if (p.status === 'accepted') {
+      spec = {
+        chipBg: '#16a34a',
+        chip:   'Accepted',
+        head:   'Accepted — we appreciate YOU and your business.',
+        detail: 'Signed by <strong>' + esc(p.signed_name || '') + '</strong>'
+                + (p.signed_at ? ' on ' + esc(String(p.signed_at).slice(0,10)) : '')
+                + '. Your rep will be in touch shortly to walk you through next steps.'
+      };
+    } else if (p.status === 'declined') {
+      spec = {
+        chipBg: '#dc2626',
+        chip:   'Declined',
+        head:   'Thanks for letting us know.',
+        detail: 'We appreciate your time. If you’d like to revisit, please get in touch.'
+      };
+    } else if (p.status === 'countered') {
+      spec = {
+        chipBg: '#d97706',
+        chip:   'Counter-offer',
+        head:   'Counter-offer received — thank you.',
+        detail: 'Your terms have been logged. Your rep will be in touch shortly to discuss.'
+      };
+    } else if (p.status === 'revise') {
+      spec = {
+        chipBg: '#2563eb',
+        chip:   'Revision',
+        head:   'Revision requested — thank you.',
+        detail: 'Your notes are on the way to your rep. A revised version will follow shortly.'
+      };
+    } else if (p.status === 'expired') {
+      spec = {
+        chipBg: '#6b7280',
+        chip:   'Expired',
+        head:   'This offer has expired.',
+        detail: 'Expired on ' + esc(p.expires_at || '—') + '. Please contact us for a refreshed quote.'
+      };
+    } else if (p.status === 're_issued') {
+      /* Re-issued = a fresh offer your rep sent you regardless of
+         what happened with the prior one. Same lifecycle affordances
+         as a 'sent' offer — you can accept / counter / on_ice it.
+         Banner is intentionally warm + light-touch — not a warning. */
+      spec = {
+        chipBg: '#e8621a',
+        chip:   'Re-issued',
+        head:   'A fresh offer for you to look at.',
+        detail: 'Your rep updated this offer'
+                + (p.re_issue_seq && Number(p.re_issue_seq) > 1 ? ' (version ' + Number(p.re_issue_seq) + ')' : '')
+                + '. Have a read, and let us know what you think.'
+      };
+    }
+    if (!spec) { banner.style.display = 'none'; return; }
+    /* Banner host is transparent; the brand gradient sits on the
+       hero head inside the card. */
+    banner.style.background = 'transparent';
+    if (headHost) headHost.style.background = BRAND_GRADIENT;
+    if (headEl)   headEl.textContent = spec.head;
+    if (detailEl) detailEl.innerHTML = spec.detail;
+    var chipEl   = $('prop-status-status-chip');
+    var chipLbl  = $('prop-status-status-chip-label');
+    if (chipEl) {
+      chipEl.style.background = spec.chipBg;
+      chipEl.style.display    = 'inline-flex';
+    }
+    if (chipLbl) chipLbl.textContent = spec.chip;
+
+    /* 2026-06-06 — Rep credit row ("Be sure to include the rep —
+       how did this land on that too"). Renders only when the
+       proposal payload carries rep_* fields (proposals.php returns
+       them on the public read since 2026-06-03). */
+    var repRow      = $('prop-status-rep-row');
+    var repPhotoEl  = $('prop-status-rep-photo');
+    var repNameEl   = $('prop-status-rep-name');
+    var repMetaEl   = $('prop-status-rep-meta');
+    if (repRow && p.rep_name) {
+      repRow.style.display = 'flex';
+      if (repNameEl) repNameEl.textContent = p.rep_name + (p.rep_title ? ' · ' + p.rep_title : '');
+      if (repMetaEl) {
+        var metaBits = [];
+        if (p.rep_email) metaBits.push('<a href="mailto:' + esc(p.rep_email) + '" style="color:#15803d;text-decoration:none">' + esc(p.rep_email) + '</a>');
+        if (p.rep_phone) metaBits.push(esc(p.rep_phone));
+        repMetaEl.innerHTML = metaBits.join(' · ');
+      }
+      if (repPhotoEl && p.rep_photo) {
+        repPhotoEl.innerHTML = '<img src="' + esc(p.rep_photo) + '" alt="' + esc(p.rep_name) + '" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display=\'none\'">';
+      }
+    } else if (repRow) {
+      repRow.style.display = 'none';
+    }
+
+    /* 2026-06-06 — Inspirational quote + landing rater. Per the
+       project standing rule, an inspirational message MUST be paired
+       with a 5-emoji "how did this land?" rater. Fetched from the
+       public endpoint so no auth is required from the prospect's
+       browser. Quote is only shown on the accepted state — adding
+       cheer to a decline / counter / revise / expired would be
+       jarring. */
+    var quoteRow    = $('prop-status-quote-row');
+    var raterRow    = $('prop-status-rater-row');
+    if (p.status === 'accepted' && quoteRow && raterRow) {
+      fetch('https://smart-tools-foundry.com/WBM/api/inspiration_quote.php?action=public&_=' + Date.now(), { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (qj) {
+          if (!qj || !qj.ok || !qj.quote || !qj.quote.text) return;
+          var qt = qj.quote;
+          var qTextEl = $('prop-status-quote-text');
+          var qAttrEl = $('prop-status-quote-attr');
+          if (qTextEl) qTextEl.textContent = '“' + qt.text + '”';
+          if (qAttrEl) qAttrEl.textContent = qt.attribution ? '— ' + qt.attribution : '';
+          quoteRow.style.display = 'block';
+          /* Mount the rater right under the quote per the standing
+             rule. Five sentiment buttons. Single click commits +
+             swaps the row for a quiet thank-you. */
+          var btnHost = $('prop-status-rater-row-buttons');
+          if (btnHost) {
+            /* Theme SVG palette (Lucide-style stroke faces) — replaces
+               the raw emoji set so the rater inherits theme colour via
+               currentColor and matches the platform's icon system per
+               CLAUDE.md (no emoji icons). Five sentiment levels: very
+               sad → sad → neutral → smile → loved (sparkle eyes).
+               (Marty 2026-06-06.) */
+            var raterIcons = [
+              '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 17s-2-3-4-3-4 3-4 3"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+              '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+              '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+              '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+              '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7 13s2 4 5 4 5-4 5-4"/><path d="M9 8v2M8 9h2M15 8v2M14 9h2"/></svg>'
+            ];
+            btnHost.innerHTML = raterIcons.map(function (svg, i) {
+              return '<button type="button" class="prop-rater-btn" data-rating="' + (i + 1) + '" title="' + (i + 1) + ' / 5" aria-label="Rate ' + (i + 1) + ' of 5">' + svg + '</button>';
+            }).join('');
+            Array.prototype.forEach.call(btnHost.querySelectorAll('.prop-rater-btn'), function (b) {
+              b.addEventListener('click', function () {
+                var rating = parseInt(b.getAttribute('data-rating'), 10) || 0;
+                b.classList.add('picked');
+                /* POST to inspiration_reactions — best-effort,
+                   silent on failure (we don't want to nag a happy
+                   user with an error if the relay is briefly down). */
+                try {
+                  fetch('https://smart-tools-foundry.com/WBM/api/inspiration_reactions.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      reaction:          ['sparkle','heart','lightbulb','sprout','smile'][rating - 1] || 'smile',
+                      surface:           'proposal_acceptance',
+                      quote_id:          qt.id || null,
+                      quote_text:        qt.text || '',
+                      quote_attribution: qt.attribution || '',
+                      rating_1_5:        rating,
+                      proposal_id:       p.id || ''
+                    })
+                  }).catch(function () { /* swallow */ });
+                } catch (_eR) {}
+                /* Swap to thank-you state. */
+                setTimeout(function () {
+                  btnHost.style.display = 'none';
+                  var thanks = $('prop-status-rater-thanks');
+                  if (thanks) thanks.style.display = 'block';
+                  var lbl = $('prop-status-rater-label');
+                  if (lbl) lbl.style.display = 'none';
+                }, 280);
+              });
+            });
+          }
+          raterRow.style.display = 'block';
+        })
+        .catch(function () { /* quiet — banner still works without the quote */ });
+    } else {
+      if (quoteRow) quoteRow.style.display = 'none';
+      if (raterRow) raterRow.style.display = 'none';
+    }
+
+    /* Dismiss state is per-status — closing a "Pending" banner
+       shouldn't hide a future "Accepted" one. Keyed off status. */
+    var dismissedKey = 'wm_prop_banner_dismissed_' + p.status + '_' + (p.id || p.token || '');
+    try {
+      if (sessionStorage.getItem(dismissedKey) === '1') {
+        banner.style.display = 'none';
+        return;
+      }
+    } catch (_eSS) {}
+    banner._dismissKey  = dismissedKey;
+    banner.style.display = 'block';
+  }
+
+  window._propStatusBannerClose = function () {
+    var banner = $('prop-status-banner'); if (!banner) return;
+    /* Hero shape collapses cleanly via opacity + a small upward
+       drift rather than the full slide-out the strip version used. */
+    banner.style.transition = 'opacity .28s ease, transform .28s ease';
+    banner.style.opacity    = '0';
+    banner.style.transform  = 'translateY(-12px)';
+    setTimeout(function () { banner.style.display = 'none'; }, 300);
+    try { if (banner._dismissKey) sessionStorage.setItem(banner._dismissKey, '1'); } catch (_e) {}
+  };
+
+  window._propAccept = function () {
+    var name = ($('signed-name').value || '').trim();
+    if (!name) { flash('Please type your full name.', 'err'); return; }
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=accept', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, signed_name: name })
+    }).then(function (r) { return r.text().then(function (t) {
+      var j; try { j = JSON.parse(t); } catch (e) { throw new Error('Invalid response'); }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    }); }).then(function () {
+      flash('Accepted — we appreciate YOU and your business.', 'ok');
+      /* Scroll to top so the about-to-render top status banner is
+         the first thing the user sees after reload. */
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_e) {}
+      setTimeout(function () { window.location.reload(); }, 1400);
+    }).catch(function (e) { flash('Could not accept: ' + (e.message || e), 'err'); });
+  };
+
+  /* Counter / decline / ice panel toggles. Mutually exclusive —
+     opening one closes the others so the action card stays compact
+     and the prospect can't accidentally fill more than one. */
+  function _propHidePanels() {
+    ['counter-panel', 'decline-panel', 'ice-panel', 'revise-panel'].forEach(function (id) {
+      var el = $(id); if (el) el.style.display = 'none';
+    });
+  }
+
+  /* 2026-06-07 — Marty: "the button stays grading/selection stays
+     on Accept offer". The action row left Accept offer styled as
+     btn-primary (filled gradient) even when the prospect had clicked
+     a different path (Counter / Revise / Ice / Decline) — visually
+     wrong because Accept is no longer the active intent. Helper
+     below flips the .btn-primary / .btn-ghost classes so the active
+     intent's button is the gradient one, and also clears the lingering
+     :focus ring on the previously-active button (which the browser
+     keeps glued there after a click). On panel-close everything snaps
+     back to the default state with Accept as the primary. */
+  function _propSetActiveAction(name) {
+    var row = $('prop-action-row');
+    if (!row) return;
+    var btns = row.querySelectorAll('button[data-act]');
+    Array.prototype.forEach.call(btns, function (b) {
+      var match = (b.getAttribute('data-act') === name);
+      if (match) {
+        b.classList.remove('btn-ghost');
+        b.classList.add('btn-primary');
+      } else {
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-ghost');
+        /* Drop focus on the previously-primary button so its focus
+           ring doesn't visually compete with the newly-active one. */
+        if (document.activeElement === b) try { b.blur(); } catch (_e) {}
+      }
+    });
+  }
+
+  window._propShowCounter = function () {
+    _propHidePanels();
+    _propSetActiveAction('counter');
+    var cp = $('counter-panel');
+    if (cp) { cp.style.display = ''; var t = $('counter-text'); if (t) t.focus(); }
+  };
+  window._propShowDecline = function () {
+    _propHidePanels();
+    _propSetActiveAction('decline');
+    var dp = $('decline-panel');
+    if (dp) { dp.style.display = ''; var t = $('decline-text'); if (t) t.focus(); }
+  };
+  window._propShowIce = function () {
+    _propHidePanels();
+    _propSetActiveAction('ice');
+    var ip = $('ice-panel');
+    if (ip) {
+      ip.style.display = '';
+      /* Pre-set the date picker's min to today so a stale calendar
+         widget can't pick a date that the server would reject. */
+      var d = $('ice-date');
+      if (d) {
+        var t = new Date();
+        var mm = String(t.getMonth() + 1).padStart(2, '0');
+        var dd = String(t.getDate()).padStart(2, '0');
+        d.min = t.getFullYear() + '-' + mm + '-' + dd;
+      }
+    }
+  };
+  window._propIceToggleRemind = function () {
+    var cb = $('ice-remind'); var row = $('ice-date-row'); var d = $('ice-date');
+    if (!cb || !row) return;
+    row.style.display = cb.checked ? '' : 'none';
+    if (cb.checked && d) d.focus();
+  };
+  window._propHideAll = function () {
+    _propHidePanels();
+    /* Snap back to default — Accept = primary, others = ghost. */
+    _propSetActiveAction('accept');
+  };
+
+  window._propCounter = function () {
+    var t = $('counter-text');
+    var b = $('counter-budget');
+    var ccyEl = $('counter-budget-ccy');
+    var terms = (t && t.value ? t.value : '').trim();
+    var budgetRaw = (b && b.value ? b.value : '').trim();
+    var budgetNum = budgetRaw === '' ? null : Number(budgetRaw);
+    if (budgetNum !== null && (!isFinite(budgetNum) || budgetNum < 0)) {
+      flash('Budget needs to be a positive number — or just leave it blank.', 'err');
+      if (b) b.focus();
+      return;
+    }
+    /* Either the budget OR the free-text counter terms must carry
+       SOMETHING — without either field, the rep has nothing to act
+       on. (Budget alone is fine; words alone are fine; both is great.) */
+    if (!terms && budgetNum === null) {
+      flash('Tell us your budget OR what you have in mind — anything we can work with.', 'err');
+      if (b) b.focus();
+      else if (t) t.focus();
+      return;
+    }
+    /* Compose the message. Budget lands at the top so it's the first
+       thing the rep sees in the notification email. The backend stores
+       the whole string in `decline_reason` (reused as the prospect-message
+       column) — no schema change required. */
+    var ccy = ccyEl ? (ccyEl.textContent || 'AUD') : 'AUD';
+    var composed = '';
+    if (budgetNum !== null) {
+      composed += 'Budget: ' + ccy + ' '
+        + budgetNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+        + '\n\n';
+    }
+    if (terms) composed += terms;
+    composed = composed.trim();
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=counter', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, counter_terms: composed })
+    }).then(function (r) { return r.text().then(function (raw) {
+      var j; try { j = JSON.parse(raw); } catch (e) { throw new Error('Invalid response'); }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    }); }).then(function () {
+      flash('Sent — thanks for trusting us with the context. We\'ll come back with the best version we can stand behind.', 'ok');
+      setTimeout(function () { window.location.reload(); }, 1800);
+    }).catch(function (e) { flash('Could not send: ' + (e.message || e), 'err'); });
+  };
+
+  /* Toggle a decline-reason chip on/off. Multi-select: every chip
+     is independent. The "Something else" chip carries a
+     data-focus-text attribute so picking it auto-focuses the
+     free-text box (and unpicking it doesn't blur — the user may
+     still be typing). 2026-06-07. */
+  window._propToggleDeclineReason = function (btn) {
+    if (!btn) return;
+    var on = btn.classList.toggle('selected');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (on && btn.getAttribute('data-focus-text') === '1') {
+      var t = $('decline-text');
+      if (t) try { t.focus(); } catch (_e) {}
+    }
+  };
+
+  /* Collect the picked chip labels (in document order) for posting
+     alongside the free-text. Returns an array of strings. */
+  function _propCollectDeclineReasons() {
+    var picked = [];
+    var chips = document.querySelectorAll('#decline-chips .decline-chip.selected');
+    chips.forEach(function (c) {
+      var r = c.getAttribute('data-reason');
+      if (r) picked.push(r);
+    });
+    return picked;
+  }
+
+  window._propDecline = function () {
+    /* Read the optional free-text reason + the picked quick-pick
+       chips. Both ride in the same POST so the server can stitch
+       them into the single `decline_reason` TEXT column with a
+       human-readable header (no migration needed). */
+    var t = $('decline-text');
+    var freeText = (t && t.value ? t.value : '').trim();
+    var picked = _propCollectDeclineReasons();
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=decline', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: token,
+        decline_reason: freeText,
+        decline_reasons: picked
+      })
+    }).then(function (r) { return r.json(); }).then(function () {
+      flash('Recorded. Thanks for the heads-up.', 'ok');
+      setTimeout(function () { window.location.reload(); }, 1200);
+    }).catch(function (e) { flash('Could not record: ' + (e.message || e), 'err'); });
+  };
+
+  window._propShowRevise = function () {
+    _propHidePanels();
+    _propSetActiveAction('revise');
+    var rp = $('revise-panel');
+    if (rp) { rp.style.display = ''; var t = $('revise-text'); if (t) t.focus(); }
+  };
+
+  window._propRevise = function () {
+    var t = $('revise-text');
+    var msg = (t && t.value ? t.value : '').trim();
+    if (!msg) {
+      flash('Tell us what to change so we can come back with a revised version.', 'err');
+      if (t) t.focus();
+      return;
+    }
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=revise', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, revision_request: msg })
+    }).then(function (r) { return r.text().then(function (raw) {
+      var j; try { j = JSON.parse(raw); } catch (e) { throw new Error('Invalid response'); }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    }); }).then(function () {
+      flash('Got it — your rep has been notified.', 'ok');
+      setTimeout(function () { window.location.reload(); }, 1400);
+    }).catch(function (e) { flash('Could not send: ' + (e.message || e), 'err'); });
+  };
+
+  window._propPutOnIce = function () {
+    var remindCb = $('ice-remind');
+    var dateEl   = $('ice-date');
+    var noteEl   = $('ice-note');
+    var wantsRemind = !!(remindCb && remindCb.checked);
+    var remindAt = '';
+    if (wantsRemind) {
+      remindAt = (dateEl && dateEl.value ? dateEl.value : '').trim();
+      if (!remindAt) {
+        flash('Pick a date for us to nudge you, or untick the reminder.', 'err');
+        if (dateEl) dateEl.focus();
+        return;
+      }
+    }
+    var note = (noteEl && noteEl.value ? noteEl.value : '').trim();
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=put_on_ice', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, remind_at: remindAt, ice_note: note })
+    }).then(function (r) { return r.text().then(function (raw) {
+      var j; try { j = JSON.parse(raw); } catch (e) { throw new Error('Invalid response'); }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    }); }).then(function () {
+      flash(wantsRemind ? ('On ice. We\'ll nudge you on ' + remindAt + '.') : 'On ice. Come back when you\'re ready.', 'ok');
+      setTimeout(function () { window.location.reload(); }, 1400);
+    }).catch(function (e) { flash('Could not park: ' + (e.message || e), 'err'); });
+  };
+
+  /* ── Talk-to-a-human drawer ────────────────────────────────────
+     Built lazily on first open. Houses three things:
+       1. Rep contact card (avatar + name + title + email + phone +
+          tagline) so the prospect sees who they're reaching.
+       2. "Book a call" iframe (same coachingfoundry.com/bookcall/
+          URL the marketing site uses — the prospect picks a time
+          inside the embed without leaving the proposal page).
+       3. Free-text message form — posts to
+          proposals.php?action=talk_to_human; backend emails the rep
+          with marty@the-good-foundry.com BCC'd.
+     ESC + backdrop click both dismiss. Locks page scroll while open. */
+  window._propShowTalk = function () {
+    var modal = document.getElementById('prop-talk-modal');
+    if (!modal) {
+      modal = _buildTalkModal();
+      document.body.appendChild(modal);
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        var m = document.getElementById('prop-talk-modal');
+        if (m && m.style.display !== 'none') _propCloseTalk();
+      });
+    }
+    /* Pre-fill the from-name + from-email inputs from the proposal's
+       saved client fields so the rep gets context even if the
+       prospect doesn't retype it. Fields stay editable so the
+       prospect can override (e.g. their colleague is the actual
+       contact). */
+    var nameEl  = document.getElementById('prop-talk-name');
+    var emailEl = document.getElementById('prop-talk-email');
+    if (nameEl  && !nameEl.value)  nameEl.value  = (proposal && proposal.client_name)  || '';
+    if (emailEl && !emailEl.value) emailEl.value = (proposal && proposal.client_email) || '';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window._propCloseTalk = function () {
+    var modal = document.getElementById('prop-talk-modal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  /* Tab switch between the message form and the booking iframe.
+     Lazy-loads the iframe src on first switch — keeps the modal
+     light when the prospect only wants to send a message. */
+  window._propTalkTab = function (which) {
+    var msgTab  = document.getElementById('prop-talk-tab-msg');
+    var bookTab = document.getElementById('prop-talk-tab-book');
+    var msgPnl  = document.getElementById('prop-talk-pane-msg');
+    var bookPnl = document.getElementById('prop-talk-pane-book');
+    var active = 'background:var(--punch,#EC008B);color:#fff;border-color:var(--punch,#EC008B)';
+    var inactive = 'background:#fff;color:var(--text-mid,#4a5f72);border-color:rgba(15,22,34,0.18)';
+    if (which === 'book') {
+      msgTab.style.cssText  += ';' + inactive;
+      bookTab.style.cssText += ';' + active;
+      msgPnl.style.display  = 'none';
+      bookPnl.style.display = '';
+      var ifr = document.getElementById('prop-talk-iframe');
+      if (ifr && (!ifr.src || ifr.src === 'about:blank')) {
+        ifr.src = 'https://www.coachingfoundry.com/bookcall/';
+      }
+    } else {
+      msgTab.style.cssText  += ';' + active;
+      bookTab.style.cssText += ';' + inactive;
+      msgPnl.style.display  = '';
+      bookPnl.style.display = 'none';
+    }
+  };
+
+  window._propTalkSend = function () {
+    var msgEl   = document.getElementById('prop-talk-msg');
+    var nameEl  = document.getElementById('prop-talk-name');
+    var emailEl = document.getElementById('prop-talk-email');
+    var flashEl = document.getElementById('prop-talk-flash');
+    var msg = (msgEl && msgEl.value || '').trim();
+    if (msg.length < 15) {
+      _talkFlash(flashEl, 'Add a few more words so we know how to help.', 'err');
+      if (msgEl) msgEl.focus();
+      return;
+    }
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=talk_to_human', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: token,
+        message: msg,
+        from_name:  (nameEl  && nameEl.value  || '').trim(),
+        from_email: (emailEl && emailEl.value || '').trim()
+      })
+    }).then(function (r) { return r.text().then(function (raw) {
+      var j; try { j = JSON.parse(raw); } catch (e) { throw new Error('Invalid response'); }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    }); }).then(function () {
+      _talkFlash(flashEl, 'Sent — your rep will be in touch shortly.', 'ok');
+      if (msgEl) msgEl.value = '';
+      setTimeout(window._propCloseTalk, 1800);
+    }).catch(function (e) {
+      _talkFlash(flashEl, 'Could not send: ' + (e.message || e), 'err');
+    });
+  };
+
+  function _talkFlash(host, message, kind) {
+    if (!host) return;
+    host.innerHTML = '<div class="flash ' + kind + '">' + esc(message) + '</div>';
+  }
+
+  /* Builds the modal node lazily so the markup cost only lands when
+     the prospect actually opens the drawer. Renders the rep contact
+     card using whatever rep_name / rep_email / rep_title / rep_phone /
+     rep_photo / rep_tagline the public payload returned (the JOIN was
+     extended in proposals.php to surface these). When the rep row is
+     missing on the proposal (legacy data), the card falls back to
+     "Wellbeing Matters team" with the support inbox. */
+  function _buildTalkModal() {
+    var p = proposal || {};
+    var repName  = p.rep_name  || 'Wellbeing Matters team';
+    var repEmail = p.rep_email || 'info@the-good-foundry.com';
+    var repTitle = p.rep_title || 'Wellbeing Consultant';
+    var repPhone = p.rep_phone || '';
+    var repPhoto = p.rep_photo || '';
+    var repTagline = p.rep_tagline || 'We\'re here to help you decide what\'s right for your team.';
+
+    var initials = repName.split(/\s+/).slice(0,2).map(function(w){ return (w[0]||'').toUpperCase(); }).join('') || 'WM';
+    var avatarBlock = repPhoto
+      ? '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#293890,#EC008B);padding:3px;flex-shrink:0;box-shadow:0 4px 16px rgba(41,56,144,0.18)"><img src="' + esc(repPhoto) + '" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;background:#fff"/></div>'
+      : '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#293890,#EC008B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:DM Serif Display,Georgia,serif;font-size:22px;font-weight:400;flex-shrink:0;box-shadow:0 4px 16px rgba(41,56,144,0.18)">' + esc(initials) + '</div>';
+
+    var contactRows = ''
+      + '<a href="mailto:' + esc(repEmail) + '" style="display:flex;align-items:center;gap:8px;padding:8px 0;color:var(--text-dark);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(15,22,34,0.06)">'
+      +   '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--punch,#EC008B);flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'
+      +   '<span>' + esc(repEmail) + '</span>'
+      + '</a>'
+      + (repPhone
+        ? '<a href="tel:' + esc(repPhone.replace(/\s/g, '')) + '" style="display:flex;align-items:center;gap:8px;padding:8px 0;color:var(--text-dark);text-decoration:none;font-size:13px">'
+          + '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--punch,#EC008B);flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'
+          + '<span>' + esc(repPhone) + '</span>'
+        + '</a>'
+        : '');
+
+    var node = document.createElement('div');
+    node.id = 'prop-talk-modal';
+    node.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(14,30,64,0.55);display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)';
+    node.addEventListener('click', function (e) {
+      if (e.target === node) window._propCloseTalk();
+    });
+    node.innerHTML =
+      '<div style="background:#fff;border-radius:16px;width:min(880px,100%);height:min(86vh,820px);display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,0.35);overflow:hidden">'
+      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid rgba(15,22,34,0.10);background:linear-gradient(135deg,rgba(102,44,144,0.05) 0%,rgba(236,0,139,0.05) 100%);flex-shrink:0">'
+        + '<div>'
+          + '<div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--punch,#EC008B)">Talk to a human</div>'
+          + '<div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-top:2px;font-family:DM Serif Display,Georgia,serif;font-style:italic;font-weight:400">We\'re here to help.</div>'
+        + '</div>'
+        + '<button type="button" onclick="window._propCloseTalk()" aria-label="Close" style="background:#fff;border:1.5px solid rgba(15,22,34,0.12);cursor:pointer;font-size:18px;color:var(--text-mid);padding:6px 12px;border-radius:8px;font-family:inherit;font-weight:600">&times;</button>'
+      + '</div>'
+      + '<div style="display:grid;grid-template-columns:260px 1fr;flex:1;min-height:0">'
+        /* Left rail — rep contact card */
+        + '<div style="padding:22px;border-right:1px solid rgba(15,22,34,0.08);background:#fafbff;overflow:auto">'
+          + '<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">'
+            + avatarBlock
+            + '<div>'
+              + '<div style="font-size:15px;font-weight:800;color:var(--text-dark);font-family:DM Serif Display,Georgia,serif;font-style:italic;font-weight:400">' + esc(repName) + '</div>'
+              + '<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">' + esc(repTitle) + '</div>'
+            + '</div>'
+          + '</div>'
+          + '<div style="font-size:12px;line-height:1.6;color:var(--text-mid);margin-top:14px;padding:12px;background:#fff;border:1px solid rgba(15,22,34,0.08);border-radius:10px;font-style:italic">' + esc(repTagline) + '</div>'
+          + '<div style="margin-top:14px">' + contactRows + '</div>'
+        + '</div>'
+        /* Right pane — tabbed Message / Book a call */
+        + '<div style="display:flex;flex-direction:column;min-height:0">'
+          + '<div style="display:flex;gap:8px;padding:14px 22px 0;flex-shrink:0">'
+            + '<button type="button" id="prop-talk-tab-msg"  onclick="window._propTalkTab(\'msg\')"  style="padding:8px 18px;border:1.5px solid var(--punch,#EC008B);background:var(--punch,#EC008B);color:#fff;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Send a message</button>'
+            + '<button type="button" id="prop-talk-tab-book" onclick="window._propTalkTab(\'book\')" style="padding:8px 18px;border:1.5px solid rgba(15,22,34,0.18);background:#fff;color:var(--text-mid);border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Book a call</button>'
+          + '</div>'
+          /* Message form pane */
+          + '<div id="prop-talk-pane-msg" style="flex:1;padding:18px 22px;overflow:auto;min-height:0">'
+            + '<p style="margin:0 0 14px;font-size:13px;color:var(--text-mid);line-height:1.6">Drop a quick note and ' + esc(repName.split(/\s+/)[0] || 'your rep') + ' will be in touch. We\'ll keep ' + esc('marty@the-good-foundry.com') + ' in the loop too.</p>'
+            + '<div id="prop-talk-flash"></div>'
+            + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">'
+              + '<div><label style="display:block;font-size:11px;font-weight:700;color:var(--text-dark);margin-bottom:4px">Your name</label><input type="text" id="prop-talk-name" class="input" placeholder="Your full name"/></div>'
+              + '<div><label style="display:block;font-size:11px;font-weight:700;color:var(--text-dark);margin-bottom:4px">Reply email</label><input type="email" id="prop-talk-email" class="input" placeholder="you@example.com"/></div>'
+            + '</div>'
+            + '<label style="display:block;font-size:11px;font-weight:700;color:var(--text-dark);margin-bottom:4px">Your message</label>'
+            /* Pill-shaped .input radius (100px) reads as ugly on a
+               tall textarea — override inline to a sensible card
+               radius for multi-line input. */
+            + '<textarea id="prop-talk-msg" class="input" rows="6" placeholder="What\'s on your mind? Tell us what you\'d like to talk through and we\'ll be in touch." style="border-radius:14px;resize:vertical;font-family:inherit;line-height:1.5;width:100%"></textarea>'
+            + '<div style="display:flex;justify-content:flex-end;margin-top:10px">'
+              + '<button type="button" class="btn btn-primary" onclick="window._propTalkSend()">Send to ' + esc(repName.split(/\s+/)[0] || 'rep') + '</button>'
+            + '</div>'
+          + '</div>'
+          /* Booking iframe pane */
+          + '<div id="prop-talk-pane-book" style="display:none;flex:1;padding:0;min-height:0;background:#fff">'
+            + '<iframe id="prop-talk-iframe" src="about:blank" title="Book a call" style="width:100%;height:100%;border:0" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+          + '</div>'
+        + '</div>'
+      + '</div>'
+      + '</div>';
+    return node;
+  }
+})();
+</script>
+<!-- Supporting Materials drawer — fetches public attachments on this
+     offer, decorates Technical & Software Services line items with a
+     chip strip, and opens a slide-in drawer with PDF/URL/generated
+     HTML in an iframe when clicked. Bolt-on; no-op when there are
+     zero attachments. 2026-06-09. -->
+<script src="https://smart-tools-foundry.com/WBM/api/wm_offer_attachments_drawer.js?v=20260609-chip-click-delegated"></script>
+</body>
+</html>

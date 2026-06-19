@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Explorer · The Good Foundry</title>
+<meta name="description" content="Explore every Wellbeing Matters edition, add-on and plan — what each one measures, who it's for, and live samples you can try right now.">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ——— Brand tokens (lifted verbatim from TGF/privacy-policy.html) ——— */
+:root {
+  --twilight: #293890;
+  --arctic:   #1B75BC;
+  --aqua:     #26AAE1;
+  --grape:    #662C90;
+  --orchid:   #91268F;
+  --punch:    #EC008B;
+  --bg:       #F4F6FB;
+  --card:     #FFFFFF;
+  --mid:      #EEF1F8;
+  --border:   rgba(41,56,144,.12);
+  --text:     #161A2E;
+  --text-dim: rgba(22,26,46,.58);
+  --font:     'Outfit', sans-serif;
+  --serif:    'DM Serif Display', serif;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ——— Topbar ——————————————————————————————————————————————————————— */
+.topbar {
+  position: sticky; top: 0;
+  z-index: 300;
+  min-height: 110px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.brand img.brand-logo { height:90px; width:auto; object-fit:contain; display:block; }
+.brand-name { font-size:15px; font-weight:700; color:var(--text); letter-spacing:-.02em; }
+.brand-name em { font-style:italic; color:var(--arctic); font-family:var(--serif); }
+.brand-sep { width:1px; height:18px; background:rgba(22,26,46,.15); }
+.brand-sub { font-size:12px; font-weight:500; color:var(--text-dim); letter-spacing:.06em; text-transform:uppercase; }
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-back { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-dim); text-decoration: none; padding: 6px 12px; border-radius: 100px; background: rgba(41,56,144,.06); border: 1px solid rgba(41,56,144,.10); transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
+.topbar-back:hover { background: rgba(41,56,144,.12); color: var(--text); border-color: rgba(41,56,144,.22); }
+.topbar-back svg { width: 12px; height: 12px; }
+.topbar-right { display:flex; align-items:center; gap:18px; }
+.topbar-right a.nav-link { font-size:12.5px; font-weight:500; color:var(--text-dim); text-decoration:none; letter-spacing:.02em; transition:color .15s; }
+.topbar-right a.nav-link:hover { color:var(--text); }
+.nav-pill {
+  font-size:12px; font-weight:600; color:#fff;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  padding:7px 18px; border-radius:100px; text-decoration:none;
+  letter-spacing:.02em; transition:opacity .2s;
+  box-shadow:0 4px 14px rgba(236,0,139,.22);
+}
+.nav-pill:hover { opacity:.9; }
+
+/* ——— Hero ———————————————————————————————————————————————————————— */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 80px 40px 50px;
+  overflow: hidden;
+}
+.hero-lines { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.hero-lines::before, .hero-lines::after {
+  content:''; position:absolute; border-radius:50%; border:1px solid rgba(41,56,144,.14);
+}
+.hero-lines::before { width:700px; height:700px; right:-200px; top:-250px; }
+.hero-lines::after  { width:400px; height:400px; right:-50px;  top:-50px; }
+.hero-inner { position:relative; z-index:1; max-width:880px; margin:0 auto; }
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background: rgba(236,0,139,.08); border:1px solid rgba(236,0,139,.28);
+  padding:5px 14px; border-radius:100px;
+  font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color: var(--punch); margin-bottom:24px;
+}
+.hero-tag::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--punch); }
+.hero h1 {
+  font-size: clamp(34px, 4.5vw, 54px);
+  font-weight: 800; letter-spacing:-.025em;
+  line-height: 1.08; margin-bottom: 18px; color: var(--text);
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero h1 .serif-italic { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.hero-desc {
+  font-size: 17px; color: var(--text-dim); font-weight: 300;
+  max-width: 720px; line-height: 1.75; margin-bottom: 8px;
+}
+
+/* ——— Section anchor nav (sticky beneath topbar) ——————————————————— */
+.anchor-nav {
+  position: sticky; top: 110px; z-index: 250;
+  background: rgba(244,246,251,.92);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.anchor-nav-inner { max-width: 1160px; margin: 0 auto; display: inline-flex; gap: 6px; }
+.anchor-nav a {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 100px;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--text-dim);
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: all .15s;
+}
+.anchor-nav a:hover {
+  color: var(--arctic); border-color: rgba(38,170,225,.45);
+  background: rgba(38,170,225,.04);
+}
+.anchor-nav a .anchor-icon {
+  width: 18px; height: 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--arctic);
+}
+.anchor-nav a .anchor-icon svg { width: 16px; height: 16px; }
+
+/* ——— Layout ——————————————————————————————————————————————————————— */
+main.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 40px 40px 100px;
+}
+
+/* ——— Section block ——————————————————————————————————————————————— */
+.section-block {
+  margin-bottom: 72px;
+  scroll-margin-top: 120px;
+}
+.section-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 8px;
+}
+.section-num {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: #fff; box-shadow: 0 4px 12px rgba(41,56,144,.22);
+}
+.section-num svg { width: 18px; height: 18px; }
+.section-block h2.section-title {
+  font-size: 26px; font-weight: 700; color: var(--text);
+  letter-spacing: -.02em; margin: 0;
+}
+.section-block h2.section-title em {
+  font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--arctic);
+}
+.section-block p.section-lede {
+  color: var(--text-dim); font-size: 15px; font-weight: 300;
+  margin: 4px 0 24px 52px; max-width: 800px; line-height: 1.75;
+}
+
+/* ——— Product card (large detailed card) ————————————————————————— */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+  transition: border-color .2s, box-shadow .2s;
+}
+.product-card:hover {
+  border-color: rgba(38,170,225,.35);
+  box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 8px 22px rgba(22,26,46,.07);
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+  opacity: .65;
+}
+.product-card.bespoke::before {
+  background: linear-gradient(90deg, var(--grape), var(--punch));
+  opacity: 1;
+}
+.product-card.bespoke {
+  background: linear-gradient(135deg, var(--card) 0%, rgba(102,44,144,.04) 200%);
+}
+
+.product-head {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+.product-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(27,117,188,.25);
+}
+.product-icon svg { width: 28px; height: 28px; }
+.product-card.bespoke .product-icon {
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  box-shadow: 0 4px 14px rgba(236,0,139,.25);
+}
+.product-meta { min-width: 0; }
+.product-meta .product-key {
+  font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700; color: var(--punch);
+  letter-spacing: .06em; margin-bottom: 6px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.product-meta .product-key::before {
+  content:''; display:block; width:14px; height:2px;
+  background: linear-gradient(90deg, var(--punch), var(--orchid));
+  border-radius: 2px;
+}
+.product-meta h3 {
+  font-size: 22px; font-weight: 700; color: var(--text);
+  margin-bottom: 4px; letter-spacing: -.02em;
+}
+.product-meta .product-tagline {
+  font-size: 14px; color: var(--text-dim); font-weight: 400;
+}
+.product-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(38,170,225,.10);
+  color: var(--arctic);
+  border: 1px solid rgba(38,170,225,.25);
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  align-self: start;
+}
+.product-card.bespoke .product-badge {
+  background: rgba(236,0,139,.08);
+  color: var(--punch);
+  border-color: rgba(236,0,139,.28);
+}
+.product-badge.coming-soon {
+  background: rgba(102,44,144,.08);
+  color: var(--grape);
+  border-color: rgba(102,44,144,.25);
+}
+
+/* ——— Card body grid (What it measures + Who it's for) ——————————— */
+.product-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+@media (max-width: 720px) {
+  .product-body { grid-template-columns: 1fr; gap: 14px; }
+}
+.product-body .body-block .body-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--punch);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.product-body .body-block .body-label::before {
+  content:''; display:block; width:14px; height:2px;
+  background: linear-gradient(90deg, var(--punch), var(--orchid));
+  border-radius: 2px;
+}
+.product-body ul {
+  list-style: none; padding: 0; margin: 0;
+}
+.product-body ul li {
+  font-size: 13.5px; color: var(--text-dim); line-height: 1.7;
+  padding: 6px 0 6px 22px; position: relative; font-weight: 400;
+}
+.product-body ul li::before {
+  content: ''; position: absolute;
+  left: 4px; top: 14px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+}
+.product-body ul li strong { color: var(--text); font-weight: 600; }
+.product-body p {
+  font-size: 13.5px; color: var(--text-dim); line-height: 1.7; font-weight: 400;
+}
+
+/* ——— Card actions footer ————————————————————————————————————————— */
+.product-actions {
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.product-actions a.act {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  border-radius: 100px;
+  font-size: 12.5px; font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: transform .15s, box-shadow .15s, background .15s, border-color .15s, color .15s;
+}
+.product-actions a.act-primary {
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(236,0,139,.22);
+}
+.product-actions a.act-primary:hover {
+  transform: translateY(-1px); box-shadow: 0 8px 22px rgba(236,0,139,.30);
+}
+.product-actions a.act-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.product-actions a.act-secondary:hover {
+  border-color: rgba(38,170,225,.45);
+  color: var(--arctic);
+}
+.product-actions a.act svg { width: 14px; height: 14px; }
+.product-actions .act-divider { width:1px; height:20px; background:var(--border); margin: 0 4px; }
+
+/* ——— Add-ons grid (compact) ——————————————————————————————————————— */
+.ao-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.ao-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  transition: border-color .2s, box-shadow .2s;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+}
+.ao-card:hover {
+  border-color: rgba(38,170,225,.35);
+  box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 6px 18px rgba(22,26,46,.05);
+}
+.ao-card .ao-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(27,117,188,.22);
+}
+.ao-card .ao-icon svg { width: 18px; height: 18px; }
+.ao-card h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -.01em; }
+.ao-card .ao-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin: 0; font-weight: 400; }
+.ao-card .ao-tag {
+  display: inline-block; padding: 3px 10px;
+  background: var(--mid); color: var(--text-dim);
+  border: 1px solid var(--border); border-radius: 100px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; margin-top: 12px;
+}
+.ao-card .ao-tag.recurring { background: rgba(236,0,139,.08); color: var(--punch); border-color: rgba(236,0,139,.20); }
+
+/* ——— Plans summary card ————————————————————————————————————————— */
+.plans-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.plan-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+.plan-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+}
+.plan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(22,26,46,.07);
+  border-color: rgba(38,170,225,.4);
+}
+.plan-card .plan-term {
+  font-size: 22px; font-weight: 700; color: var(--text);
+  letter-spacing: -.015em; margin-bottom: 4px;
+}
+.plan-card .plan-term em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--arctic); }
+.plan-card .plan-mode {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--punch); margin-bottom: 10px;
+}
+.plan-card .plan-fits {
+  font-size: 13px; color: var(--text-dim); line-height: 1.7;
+}
+
+/* ——— Contact / CTA card ——————————————————————————————————————————— */
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 48px;
+  margin-top: 110px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(22,26,46,.06);
+}
+.contact-card::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(102,44,144,.10) 0%, rgba(27,117,188,.06) 50%, rgba(236,0,139,.06) 100%);
+  pointer-events: none;
+}
+.contact-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+}
+.contact-card-inner { position: relative; z-index: 1; }
+.contact-card h3 {
+  font-size: 26px; font-weight: 800; color: var(--text);
+  letter-spacing: -.02em; margin-bottom: 10px;
+}
+.contact-card h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--arctic); }
+.contact-card p {
+  color: var(--text-dim); font-size: 15px; margin-bottom: 24px;
+  font-weight: 300; line-height: 1.7; max-width: 600px;
+}
+a.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff; border-radius: 100px;
+  font-size: 13.5px; font-weight: 600; text-decoration: none;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 18px rgba(236,0,139,.25);
+  transition: transform .18s, box-shadow .18s, opacity .15s;
+}
+a.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(236,0,139,.32); opacity:.95; }
+a.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13.5px; font-weight: 600; text-decoration: none;
+  letter-spacing: .02em;
+  transition: border-color .15s, color .15s;
+  margin-left: 8px;
+}
+a.btn-ghost:hover { border-color: rgba(38,170,225,.45); color: var(--arctic); }
+
+/* ——— Footer ——————————————————————————————————————————————————————— */
+footer.page-ft {
+  position: relative; z-index: 1;
+  text-align: center; color: var(--text-dim);
+  font-size: 12px; padding: 36px 28px 44px;
+  line-height: 1.8; border-top: 1px solid var(--border);
+}
+footer.page-ft a { color: var(--text-dim); text-decoration: none; transition: color .15s; }
+footer.page-ft a:hover { color: var(--arctic); }
+footer.page-ft .ft-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  margin: 0 auto 18px; border-radius: 2px;
+}
+footer.page-ft strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .topbar { padding: 0 18px; }
+  .topbar-right .nav-link { display: none; }
+  .anchor-nav { padding: 10px 14px; top: 110px; }
+  .hero { padding: 56px 22px 30px; }
+  .hero h1 { font-size: 30px; }
+  main.layout { padding: 30px 22px 60px; }
+  .section-block p.section-lede { margin-left: 0; }
+  .section-block { margin-bottom: 56px; }
+  .product-card { padding: 22px 22px; }
+  .product-head { grid-template-columns: 48px 1fr; }
+  .product-head .product-badge { grid-column: 1 / -1; margin-top: 4px; }
+  .product-icon { width: 48px; height: 48px; }
+  .contact-card { padding: 32px 26px; }
+  .contact-card h3 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-back" href="the-good-foundry-index.html" title="Back to The Good Foundry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+      <a class="brand" href="https://www.the-good-foundry.com/">
+        <img class="brand-logo" src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry · Action for Impact">
+      </a>
+    </div>
+    <div class="topbar-right">
+      <a class="nav-link" href="offerings.html">Offerings</a>
+      <a class="nav-link" href="business-case.html">Business case</a>
+      <a class="nav-link" href="backed-by-science.html">Backed by Science</a>
+      <a class="nav-link" href="acknowledgement.html">Acknowledgements</a>
+      <a class="nav-pill" href="mailto:info@the-good-foundry.com?subject=Wellbeing%20Matters%20%E2%80%94%20proposal%20enquiry">Request a proposal &rarr;</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-lines"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">Product Explorer</div>
+      <h1>Every edition, every add-on, every <span class="gradient-text">live</span> — in one place.</h1>
+      <p class="hero-desc">Browse the full Wellbeing Matters product suite below. Each card shows what the edition measures, who it&rsquo;s for, and links to a live preview, an individual sample report, and an admin-side dashboard sample. Use the anchor nav at the top to jump to a specific section.</p>
+    </div>
+  </section>
+
+  <!-- Sticky anchor nav — jumps to in-page sections -->
+  <nav class="anchor-nav">
+    <div class="anchor-nav-inner">
+      <a href="#at-work"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 7v14M21 7v14M9 7v14M15 7v14M3 7l9-4 9 4"/></svg></span>@ Work</a>
+      <a href="#at-life"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span>in Life</a>
+      <a href="#at-aging-well"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M5 8a7 7 0 0 1 14 0c0 4-3 6-3 9v2a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2c0-3-3-5-3-9z"/><path d="M9 18h6"/></svg></span>In Aging Well</a>
+      <a href="#at-sport"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></svg></span>@ Sport</a>
+      <a href="#at-school"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>@ School</a>
+      <a href="#bespoke"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>Bespoke</a>
+      <a href="#addons"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Add-Ons</a>
+      <a href="#plans"><span class="anchor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Plans</a>
+    </div>
+  </nav>
+
+  <main class="layout">
+
+    <!-- ───────── @ WORK ───────── -->
+    <div id="at-work" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 7v14M21 7v14M9 7v14M15 7v14M3 7l9-4 9 4"/></svg></div>
+        <h2 class="section-title">Wellbeing Matters <em>@ Work</em></h2>
+      </div>
+      <p class="section-lede">Three workplace editions. Same evidence base, different vocabulary tuned to corporate teams, university faculty, and veterinary practices.</p>
+
+      <div class="product-grid">
+
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPA · Wellbeing Matters @ Work</div>
+              <h3>Wellbeing Matters @ Work</h3>
+              <div class="product-tagline">Comprehensive workplace wellbeing assessment for adult teams + leaders.</div>
+            </div>
+            <span class="product-badge">Flagship</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li><strong>Wellbeing</strong> — PERMA+H across calm, excitement, engagement, energy, accomplishment, meaning</li>
+                <li><strong>Psychosocial Hazards</strong> — burnout, supervisor support, role clarity, exposure to harm</li>
+                <li><strong>Culture of Care</strong> — compassion, appreciation, responsibility, emotional wisdom (individual / team / leader)</li>
+                <li><strong>Civility @ Work</strong> — good will, communication norms, accountability</li>
+                <li><strong>Economic Security</strong> — financial pressure + impact on wellbeing</li>
+                <li><strong>Spirituality &middot; AI Revolution &middot; Moral Injury &middot; Quietly Cracking</strong> (optional add-ons)</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Quietly Cracking <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></div>
+              <p>A 22-item ME / WE / US assessment plus three free-text reflections that surfaces high-functioning burnout — people still meeting deadlines but running on empty. Three protective-factor items (someone to talk to, organisational mental-health support, openness to discuss wellbeing) are reverse-scored so a HIGH score across the dashboard always reads as <em>more</em> quietly cracking. Available across Workplace, Life and University editions.</p>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>HR teams running annual or quarterly wellbeing programs. Safety leads aligning to the new WHS psychosocial-hazard regulations. People-and-culture executives wanting cohort dashboards across LoB / contract / role. Used by EAPs offering wellbeing assessment as part of a member benefit.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20individual%20report%20%E2%80%94%20Wellbeing%20Matters%20%40%20Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample individual report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20admin%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20%40%20Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample admin dashboard</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPU · Wellbeing Matters @ University</div>
+              <h3>Wellbeing Matters @ University</h3>
+              <div class="product-tagline">PERMA+ tuned for the rhythm of academic life.</div>
+            </div>
+            <span class="product-badge">Higher ed</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li>Same PERMA+ core as WPA</li>
+                <li>Language reflects semesters, research load, teaching duties</li>
+                <li>Tenure-track + adjunct framing</li>
+                <li>Student-facing role wellbeing</li>
+                <li>Compatible with university benchmarks</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>Faculty wellbeing leads. HR teams supporting research staff and teaching academics. Vice-Chancellors and Deans tracking burnout across schools and faculties. Pairs cleanly with the @ School (Kids/Youth) editions for full-institution coverage.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPU"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20individual%20report%20%E2%80%94%20Wellbeing%20Matters%20%40%20University"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample individual report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20admin%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20%40%20University"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample admin dashboard</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8a4 4 0 0 1-4 4H4v8h16v-8h-2a4 4 0 0 1-4-4V2"/><circle cx="12" cy="14" r="2"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPV · Wellbeing Matters @ Veterinary Practice</div>
+              <h3>Wellbeing Matters @ Veterinary Practice</h3>
+              <div class="product-tagline">A profession-specific edition for vet clinics + animal hospitals.</div>
+            </div>
+            <span class="product-badge">Veterinary</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li>Same PERMA+ core, vet-specific framing</li>
+                <li>Moral injury + compassion fatigue</li>
+                <li>Exposure to euthanasia decisions</li>
+                <li>After-hours / on-call load</li>
+                <li>Client-interaction stressors</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>Vet practice owners and clinic leads. Specialty animal hospital administrators. Veterinary professional bodies running mental-health initiatives. Benchmarks against the global veterinary population, not generic-corporate.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20individual%20report%20%E2%80%94%20Wellbeing%20Matters%20%40%20Veterinary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample individual report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20admin%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20%40%20Veterinary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample admin dashboard</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- ───────── IN LIFE ───────── -->
+    <div id="at-life" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+        <h2 class="section-title">Wellbeing Matters <em>in Life</em></h2>
+      </div>
+      <p class="section-lede">PERMA+ stripped of the workplace lens. Personal flourishing for individuals, coaching clients, and community programs.</p>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPL · Wellbeing Matters in Life</div>
+              <h3>Wellbeing Matters in Life</h3>
+              <div class="product-tagline">Personal wellbeing measurement for life beyond work.</div>
+            </div>
+            <span class="product-badge">Personal</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li><strong>Wellbeing</strong> — PERMA+H without the workplace lens</li>
+                <li><strong>Self-Compassion</strong></li>
+                <li><strong>Hope &amp; Optimism</strong></li>
+                <li><strong>Meaning &amp; Ikigai</strong> sweet-spot mapping</li>
+                <li>Personal growth tracking across collection rounds</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>Coaches running individual development programs. Therapists tracking client progress between sessions. Community wellbeing initiatives where the participant isn&rsquo;t framed by an employer. Self-development cohorts, retreat programs, online courses.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPL"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20individual%20report%20%E2%80%94%20Wellbeing%20Matters%20in%20Life"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample individual report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20coach%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20in%20Life"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample coach dashboard</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ───────── IN AGING WELL ───────── -->
+    <div id="at-aging-well" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h2 class="section-title">Wellbeing Matters <em>In Aging Well</em></h2>
+      </div>
+      <p class="section-lede">PERMAH+ reframed for the realities of aging well. Designed for LiveWell programs, aged-care providers, third-age university programs, and family / friend supporters of older adults.</p>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WAW &middot; Wellbeing Matters In Aging Well</div>
+              <h3>Wellbeing Matters In Aging Well</h3>
+              <div class="product-tagline">PERMAH+ reframed for adults navigating later life.</div>
+            </div>
+            <span class="product-badge">Aging Well</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li><strong>Wellbeing</strong> &mdash; PERMAH+ across calm, engagement, meaning, accomplishment, health</li>
+                <li><strong>Nine Amplifiers</strong> &mdash; Ability &middot; Motivation &middot; Psych Safety &middot; Emotional Resilience &middot; Knowing Me &middot; Inclusion &amp; Belonging &middot; Maintaining Purpose &middot; Learning &amp; Growing &middot; Optimizing Health</li>
+                <li><strong>Self-Compassion</strong> &mdash; Self-Talk &middot; Mindfulness &middot; Connection</li>
+                <li><strong>Life Satisfaction</strong> + <strong>State of Wellbeing</strong> selector</li>
+                <li><strong>Modifiable Risk Reflection</strong> (optional) &mdash; the 14 Lancet-2024 dementia risk factors on a past &middot; current &middot; future matrix</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Modifiable Risk Reflection <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></div>
+              <p>A single optional matrix question covering all 14 modifiable dementia risk factors from the 2024 Lancet Commission &mdash; hearing, smoking, hypertension, alcohol, obesity, depression, social isolation, physical inactivity, air pollution, head injury, less education, diabetes, untreated vision loss, untreated cholesterol &mdash; rated across past, current, and future intent. Cohort-level dashboard surfaces risk distribution, top co-occurrence patterns, and the per-factor breakdown so program leads can target interventions. Privacy gates: n&ge;30 cohort minimum, n&ge;5 cell minimum.</p>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>LiveWell residential programs. Aged-care providers running wellbeing assessments. Third-age university programs. Family and friend supporter networks. Community programs for adults 55+. The Modifiable Risk Reflection section makes this edition uniquely valuable for programs aligned to dementia-risk-reduction goals.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WAW"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20individual%20report%20%E2%80%94%20Wellbeing%20Matters%20In%20Aging%20Well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample individual report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20program%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20In%20Aging%20Well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample program dashboard</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ───────── SPORT ───────── -->
+    <div id="at-sport" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></svg></div>
+        <h2 class="section-title">Wellbeing Matters <em>@ Sport</em></h2>
+      </div>
+      <p class="section-lede">PERMA+ for elite and community sporting organisations — performance, identity, transition, team dynamics.</p>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPS · Wellbeing Matters @ Sport</div>
+              <h3>Wellbeing Matters @ Sport</h3>
+              <div class="product-tagline">For athletes, coaches, and sporting organisations.</div>
+            </div>
+            <span class="product-badge">Sport</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li>Full adult section set with sport-specific framing</li>
+                <li>Performance identity + retirement transition risk</li>
+                <li>Team cohesion and culture-of-care factors</li>
+                <li>Coach-athlete relational quality</li>
+                <li>Off-season vs in-season deltas across collection rounds</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>Performance directors and player welfare leads at professional clubs. National sporting bodies running athlete-wellbeing programs. Community sport associations supporting volunteer coaches. AIS / institute-of-sport equivalents wanting structured wellbeing measurement alongside performance metrics.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPS"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20individual%20report%20%E2%80%94%20Wellbeing%20Matters%20%40%20Sport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample athlete report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20admin%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20%40%20Sport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample team dashboard</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ───────── SCHOOL ───────── -->
+    <div id="at-school" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <h2 class="section-title">Wellbeing Matters <em>@ School</em></h2>
+      </div>
+      <p class="section-lede">Two age-tuned editions for primary and secondary students. Run them in parallel for full-school deployments measuring across age bands.</p>
+
+      <div class="product-grid">
+
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPK · Wellbeing Matters @ School (Kids)</div>
+              <h3>Wellbeing Matters @ School &middot; Kids</h3>
+              <div class="product-tagline">Age-appropriate PERMA+ for primary-school students.</div>
+            </div>
+            <span class="product-badge">Kids</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li>PERMA+ tuned for 7-12 year olds</li>
+                <li>Visual face-scales + slider response modes</li>
+                <li>Story-led prompts for younger respondents</li>
+                <li>Friendship + classroom belonging</li>
+                <li>Teacher-relational support</li>
+                <li><strong>Digital Wellbeing</strong> (optional) &mdash; phones, social media, screen time</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>Primary school wellbeing coordinators. Whole-school flourishing programs. Wellbeing leads tracking student wellbeing over a school year. Cohort insights anonymised by default; surface to the school&rsquo;s wellbeing lead, not to teachers.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPK"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20student%20report%20%E2%80%94%20Wellbeing%20Matters%20%40%20School%20Kids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample student report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20school%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20%40%20School%20Kids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample school dashboard</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">WPY · Wellbeing Matters @ School (Youth)</div>
+              <h3>Wellbeing Matters @ School &middot; Youth</h3>
+              <div class="product-tagline">PERMA+ for adolescents and senior-school students.</div>
+            </div>
+            <span class="product-badge">Youth</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">What it measures</div>
+              <ul>
+                <li>PERMA+ for 13-18 year olds</li>
+                <li>Friendship + identity + belonging</li>
+                <li>Screen time + study-load balance</li>
+                <li>Meaning-making in adolescence</li>
+                <li>Pre-graduation transition readiness</li>
+                <li><strong>Digital Wellbeing</strong> (optional) &mdash; social media impact + PERMA+ Impact matrix</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Who it&rsquo;s for</div>
+              <p>High-school wellbeing teams. Year-12 transition programs. Boarding-school pastoral care leads. Pairs cleanly with the WPK Kids edition to give a full-school view across age bands. Used by independent schools and state systems alike.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="https://smart-tools-foundry.com/WBM/app/wm_evaluation.html?preview=1&edition=WPY"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Try the survey</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20student%20report%20%E2%80%94%20Wellbeing%20Matters%20%40%20School%20Youth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sample student report</a>
+            <a class="act act-secondary" href="mailto:info@the-good-foundry.com?subject=Sample%20school%20dashboard%20%E2%80%94%20Wellbeing%20Matters%20%40%20School%20Youth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Sample school dashboard</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- ───────── BESPOKE ───────── -->
+    <div id="bespoke" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h2 class="section-title">Bespoke / <em>Custom Implementation</em></h2>
+      </div>
+      <p class="section-lede">When the standard editions don&rsquo;t fit your context, we&rsquo;ll author a tailored variant.</p>
+
+      <div class="product-grid">
+        <article class="product-card bespoke">
+          <div class="product-head">
+            <div class="product-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <div class="product-meta">
+              <div class="product-key">CUSTOM · Tailored to your deployment</div>
+              <h3>Bespoke / Custom Implementation</h3>
+              <div class="product-tagline">When standard doesn&rsquo;t fit — language, regulation, dashboards, comms.</div>
+            </div>
+            <span class="product-badge">Bespoke</span>
+          </div>
+          <div class="product-body">
+            <div class="body-block">
+              <div class="body-label">Worked example</div>
+              <ul>
+                <li>Major Australian infrastructure services group</li>
+                <li>Workforce across regional and remote sites</li>
+                <li>Required a Psychosocial Safety variant aligned to the new Australian WHS psychosocial-hazard regulations</li>
+                <li>We replaced PERMA+ with hazards-led measurement (Job-Related, Workplace System, Harmful Behaviour groups)</li>
+                <li>Heat-map dashboards by Line of Business + Contract</li>
+                <li>EAP-aware respondent comms, offline-capable Card mode for FIFO workers</li>
+              </ul>
+            </div>
+            <div class="body-block">
+              <div class="body-label">Available to any client</div>
+              <p>The same approach is available to any client whose context calls for a custom edition — mining, defence, healthcare, education, faith-based, indigenous-community, or any other vertical. We&rsquo;ll author the language, the section set, the dashboards, and the downstream communications to match your environment. Talk to us about your scope.</p>
+            </div>
+          </div>
+          <div class="product-actions">
+            <a class="act act-primary" href="mailto:info@the-good-foundry.com?subject=Bespoke%20edition%20%E2%80%94%20enquiry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Talk to us about a bespoke edition</a>
+            <a class="act act-secondary" href="offerings.html#bespoke"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Read more on offerings page</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ───────── ADD-ONS ───────── -->
+    <div id="addons" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h2 class="section-title">Add-Ons &amp; <em>Specialist Modules</em></h2>
+      </div>
+      <p class="section-lede">Layer in the capabilities you actually need. Mix and match across any edition.</p>
+
+      <div class="ao-grid">
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+          <h4>Coaching Foundry</h4>
+          <p class="ao-desc">A Sophie-led coaching library with personalised guidance against every section of the framework.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+          <h4>AI Seeding</h4>
+          <p class="ao-desc">Pre-seeded Explainer + Ask Sophie content across every section card. Plain-English explanations, follow-up questions answered.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+          <h4>Personalised Coaching Videos</h4>
+          <p class="ao-desc">Personalised AI-generated coaching videos per respondent, scripted from their own results.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+          <h4>Moral Injury Module</h4>
+          <p class="ao-desc">Adds the Moral Injury section + dashboard tabs for healthcare, defence, justice, and other ethical-distress contexts.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <h4>Quietly Cracking <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></h4>
+          <p class="ao-desc">Surfaces high-functioning burnout — respondents still meeting deadlines but running on empty, masking it, quietly disengaging. ME / WE / US split + three free-text reflection prompts. Available on Workplace, Life and University editions.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
+          <h4>Digital Wellbeing <span style="font-size:9px;font-weight:800;background:var(--orange);color:#fff;padding:2px 6px;border-radius:10px;letter-spacing:.06em;margin-left:6px;vertical-align:2px">NEW</span></h4>
+          <p class="ao-desc">School-edition lens on how phones, social media, gaming and screen time are shaping student wellbeing. ME / WE / US split + a <strong>PERMA+ Impact matrix</strong> in the bank dashboard showing how digital strain correlates with each PERMA+ pillar. Separate question banks for Kids (7-12) and Youth (13-18). Available on Wellbeing Matters @ School (Kids and Youth) editions.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+          <h4>Spirituality Module</h4>
+          <p class="ao-desc">Adds the Spirituality section + ME/WE/US tier dashboard for clients with purpose-and-meaning strategies.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h4>Ikigai Module</h4>
+          <p class="ao-desc">Guided Ikigai discovery flow + sweet-spot dashboard. Maps love / good-at / world-needs / paid-for.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h4>White-Label Theme</h4>
+          <p class="ao-desc">Custom theme palette, logo, and PDF cover branding so the platform reads as yours. Used by EAPs + enterprise.</p>
+          <span class="ao-tag">One-off</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h4>SSO Integration</h4>
+          <p class="ao-desc">SAML / OIDC sign-on bridge to your IdP. Respondents authenticate against your own directory.</p>
+          <span class="ao-tag">One-off</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+          <h4>DataWarehouse Export Feed</h4>
+          <p class="ao-desc">Nightly response feed in Snowflake / BigQuery / Redshift / S3+Parquet. Joins to your HRIS or LMS.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h4>Managed Setup</h4>
+          <p class="ao-desc">We provision the org, sub, admin users and first collection round on your behalf. From &ldquo;yes&rdquo; to live in days.</p>
+          <span class="ao-tag">One-off</span>
+        </div>
+        <div class="ao-card">
+          <div class="ao-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/><line x1="3" y1="3" x2="21" y2="21"/></svg></div>
+          <h4>Offline Kiosk Mode</h4>
+          <p class="ao-desc">Respondents install the survey to their phone or tablet, complete it offline, and uploads happen automatically when they reconnect.</p>
+          <span class="ao-tag recurring">Annual</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────── PLANS ───────── -->
+    <div id="plans" class="section-block">
+      <div class="section-header">
+        <div class="section-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h2 class="section-title">Pick a <em>plan</em> that matches how you buy.</h2>
+      </div>
+      <p class="section-lede">Three subscription term lengths plus a one-time option for short engagements. All four work with any edition and any add-on.</p>
+
+      <div class="plans-summary">
+        <div class="plan-card">
+          <div class="plan-term"><em>3</em>-month</div>
+          <div class="plan-mode">Quarterly recurring</div>
+          <div class="plan-fits">Pilot programs, executive cohorts, short research engagements where you want to evaluate before committing.</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-term"><em>6</em>-month</div>
+          <div class="plan-mode">Half-yearly recurring</div>
+          <div class="plan-fits">Half-year wellbeing initiatives, leadership cohorts in two waves, programs aligned to a half-year fiscal calendar.</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-term"><em>12</em>-month</div>
+          <div class="plan-mode">Annual recurring</div>
+          <div class="plan-fits">The default — enterprise rollouts, school-year programs, annual wellbeing strategies. Includes baseline + follow-up rounds.</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-term"><em>One</em>-time</div>
+          <div class="plan-mode">Invoice only</div>
+          <div class="plan-fits">Conference cohorts, retreats, research samples, investor-day reporting. Single invoice, no auto-renewal.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA / contact card -->
+    <div class="contact-card">
+      <div class="contact-card-inner">
+        <h3>Want to <em>see</em> your edition live with your own data?</h3>
+        <p>Tell us a little about your audience and your timeline — we&rsquo;ll build a tailored proposal you can review, edit and accept inline. No pressure, no commitment.</p>
+        <a class="btn-primary" href="mailto:info@the-good-foundry.com?subject=Wellbeing%20Matters%20%E2%80%94%20proposal%20enquiry">Request a proposal</a>
+        <a class="btn-ghost" href="offerings.html">View offerings page</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="page-ft">
+    <div class="ft-divider"></div>
+    <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372 &middot; 1/31 Beach Street, VIC 3199, Australia<br>
+    <a href="https://smart-tools-foundry.com/TGF/privacy-policy.html">Privacy policy</a> &middot;
+    <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a> &middot;
+    Powered by <strong>Wellbeing Matters</strong>
+    <div style="margin-top:14px;font-size:10.5px;opacity:.7">&copy; 2026 The Good Foundry Pty Ltd. All rights reserved.</div>
+  </footer>
+
+  <!-- Same floating "Talk to us" pill as offerings.html / index.html -->
+  <style>
+    #wm-talk-fab {
+      position: fixed; right: 24px; bottom: 24px; z-index: 200;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 18px 10px 12px;
+      background: linear-gradient(135deg, var(--grape), var(--punch));
+      color: #fff; border: none; border-radius: 100px;
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      cursor: pointer; box-shadow: 0 8px 28px rgba(236,0,139,.32);
+      transition: transform .18s, box-shadow .18s;
+    }
+    #wm-talk-fab:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(236,0,139,.42); }
+    #wm-talk-fab .fab-img { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.18); display: inline-flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+    #wm-talk-fab .fab-img svg { width: 18px; height: 18px; }
+    #wm-talk-fab .fab-label { line-height: 1.15; text-align: left; }
+    #wm-talk-fab .fab-hi { display: block; font-size: 10px; font-weight: 600; opacity: .85; letter-spacing: .04em; text-transform: uppercase; }
+    #wm-talk-fab .fab-name { display: block; font-size: 13px; font-weight: 700; }
+    #wm-talk-backdrop { position: fixed; inset: 0; background: rgba(22,26,46,.45); backdrop-filter: blur(2px); z-index: 250; display: none; }
+    #wm-talk-backdrop.open { display: block; }
+    #wm-talk-drawer {
+      position: fixed;
+      /* Sits below the 110px sticky topbar (bumped 2026-05-15 for
+         the larger TGF wordmark logo) so the page header stays
+         visible above the drawer rather than being covered. */
+      top: 110px; right: 0; bottom: 0;
+      width: 380px; max-width: 92vw;
+      background: var(--card); box-shadow: -12px 0 40px rgba(22,26,46,.18);
+      border-top-left-radius: 14px; overflow: hidden;
+      z-index: 260; transform: translateX(100%); transition: transform .25s ease;
+      display: flex; flex-direction: column; font-family: var(--font);
+    }
+    #wm-talk-drawer.open { transform: translateX(0); }
+    #wm-talk-drawer .talk-header { position: relative; padding: 24px 26px 22px; background: linear-gradient(135deg, var(--twilight) 0%, var(--grape) 75%, var(--punch) 130%); color: #fff; }
+    #wm-talk-drawer .talk-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch)); }
+    #wm-talk-drawer .talk-header .talk-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.78); margin-bottom: 6px; }
+    #wm-talk-drawer .talk-header h3 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin: 0; }
+    #wm-talk-drawer .talk-header h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+    #wm-talk-drawer .talk-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; background: rgba(255,255,255,.14); border: none; border-radius: 50%; color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background .15s; }
+    #wm-talk-drawer .talk-close:hover { background: rgba(255,255,255,.28); }
+    #wm-talk-drawer .talk-body { flex: 1; overflow-y: auto; padding: 22px 26px 26px; }
+    #wm-talk-drawer p.talk-lede { font-size: 13.5px; color: var(--text-dim); line-height: 1.65; margin: 0 0 18px; font-weight: 400; }
+    #wm-talk-drawer label.talk-label { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--arctic); margin: 14px 0 6px; }
+    #wm-talk-drawer input.talk-input, #wm-talk-drawer textarea.talk-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); color: var(--text); font-family: var(--font); font-size: 14px; font-weight: 400; transition: border-color .15s, box-shadow .15s; resize: none; }
+    #wm-talk-drawer textarea.talk-input { min-height: 96px; line-height: 1.55; }
+    #wm-talk-drawer input.talk-input:focus, #wm-talk-drawer textarea.talk-input:focus { outline: none; border-color: var(--arctic); box-shadow: 0 0 0 3px rgba(38,170,225,.18); }
+    #wm-talk-drawer .talk-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    #wm-talk-drawer .talk-submit { margin-top: 18px; width: 100%; padding: 12px 18px; background: linear-gradient(135deg, var(--grape), var(--punch)); color: #fff; border: none; border-radius: 100px; font-family: var(--font); font-size: 13.5px; font-weight: 600; cursor: pointer; letter-spacing: .02em; box-shadow: 0 4px 18px rgba(236,0,139,.25); transition: transform .15s, box-shadow .15s, opacity .15s; }
+    #wm-talk-drawer .talk-submit:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(236,0,139,.32); }
+    #wm-talk-drawer .talk-submit:disabled { opacity: .55; cursor: not-allowed; }
+    #wm-talk-drawer .talk-error, #wm-talk-drawer .talk-help { margin-top: 12px; padding: 10px 14px; border-radius: 10px; font-size: 12px; line-height: 1.55; display: none; }
+    #wm-talk-drawer .talk-error { background: rgba(236,0,139,.07); border: 1px solid rgba(236,0,139,.28); color: var(--punch); }
+    #wm-talk-drawer .talk-help { background: rgba(38,170,225,.07); border: 1px solid rgba(38,170,225,.22); color: var(--text-dim); font-size: 11.5px; }
+    #wm-talk-drawer .talk-help.shown, #wm-talk-drawer .talk-error.shown { display: block; }
+    #wm-talk-drawer .talk-success { display: none; padding: 36px 22px 28px; text-align: center; }
+    #wm-talk-drawer .talk-success.shown { display: block; }
+    #wm-talk-drawer .talk-success .success-icon { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; background: linear-gradient(135deg, var(--arctic), var(--orchid)); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(27,117,188,.28); }
+    #wm-talk-drawer .talk-success .success-icon svg { width: 30px; height: 30px; color: #fff; }
+    #wm-talk-drawer .talk-success h4 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -.01em; }
+    #wm-talk-drawer .talk-success p { font-size: 13px; color: var(--text-dim); line-height: 1.65; max-width: 280px; margin: 0 auto 22px; }
+    #wm-talk-drawer .talk-success button { padding: 9px 22px; background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 100px; font-family: var(--font); font-size: 12.5px; font-weight: 600; cursor: pointer; transition: border-color .15s, color .15s; }
+    #wm-talk-drawer .talk-success button:hover { border-color: rgba(38,170,225,.45); color: var(--arctic); }
+
+    /* Book-a-call alternative — secondary in-drawer toggle that swaps the form for the Amelia booking iframe. */
+    #wm-talk-drawer .talk-bookcall { display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center; margin-top: 10px; padding: 10px 14px; background: var(--card); color: var(--arctic); border: 1px solid rgba(38,170,225,.30); border-radius: 100px; font-family: var(--font); font-size: 12.5px; font-weight: 600; cursor: pointer; letter-spacing: .02em; transition: background .15s, color .15s, border-color .15s; }
+    #wm-talk-drawer .talk-bookcall:hover { background: rgba(38,170,225,.07); color: var(--twilight); border-color: var(--arctic); }
+
+    /* Booking panel — reuses .talk-header above. One-line message + iframe + tiny foot. */
+    #wm-talk-drawer.booking-mode { width: 520px; }
+    #wm-talk-drawer .talk-booking { display: none; flex: 1; flex-direction: column; background: var(--card); overflow: hidden; }
+    #wm-talk-drawer.booking-mode .talk-booking { display: flex; }
+    #wm-talk-drawer.booking-mode #wm-talk-form-host,
+    #wm-talk-drawer.booking-mode #wm-talk-success { display: none !important; }
+    #wm-talk-drawer .talk-booking-frame { position: relative; flex: 1; overflow: hidden; background: var(--card); }
+    #wm-talk-drawer .talk-booking-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    #wm-talk-drawer .talk-booking-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; color: var(--text-dim); font-size: 13px; text-align: center; pointer-events: none; background: var(--card); transition: opacity .25s; }
+    #wm-talk-drawer .talk-booking-loading.hidden { opacity: 0; }
+    #wm-talk-drawer .talk-booking-loading .spinner { width: 38px; height: 38px; border: 3px solid rgba(38,170,225,.18); border-top-color: var(--arctic); border-radius: 50%; animation: wmTalkSpin .8s linear infinite; }
+    @keyframes wmTalkSpin { to { transform: rotate(360deg); } }
+    #wm-talk-drawer .talk-booking-foot { padding: 10px 18px; border-top: 1px solid var(--border); background: var(--mid); font-size: 11.5px; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    #wm-talk-drawer .talk-booking-foot a, #wm-talk-drawer .talk-booking-foot button { background: none; border: none; padding: 0; cursor: pointer; color: var(--arctic); text-decoration: none; font-weight: 600; font-family: var(--font); font-size: 11.5px; border-bottom: 1px solid rgba(27,117,188,.3); }
+    #wm-talk-drawer .talk-booking-foot a:hover, #wm-talk-drawer .talk-booking-foot button:hover { color: var(--twilight); border-color: rgba(41,56,144,.55); }
+
+    @media (max-width: 480px) { #wm-talk-fab { bottom: 16px; right: 16px; padding: 8px 14px 8px 8px; } #wm-talk-fab .fab-img { width: 28px; height: 28px; } #wm-talk-fab .fab-name { font-size: 12px; } }
+  </style>
+
+  <button id="wm-talk-fab" type="button" onclick="wmTalkOpen()" title="Talk to a Good Foundry representative">
+    <span class="fab-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+    <span class="fab-label"><span class="fab-hi">Have a question?</span><span class="fab-name">Talk to us</span></span>
+  </button>
+
+  <div id="wm-talk-backdrop" onclick="wmTalkClose()"></div>
+
+  <aside id="wm-talk-drawer" role="dialog" aria-label="Talk to a representative">
+    <div class="talk-header">
+      <button class="talk-close" onclick="wmTalkClose()" aria-label="Close"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="talk-eyebrow">The Good Foundry</div>
+      <h3>Talk to <em>us</em>.</h3>
+    </div>
+    <div class="talk-body" id="wm-talk-form-host">
+      <p class="talk-lede">Tell us a little about yourself and what you&rsquo;re looking for. A representative will be in touch within one business day.</p>
+      <div class="talk-row-2">
+        <div><label class="talk-label" for="wm-talk-first">First name</label><input class="talk-input" type="text" id="wm-talk-first" autocomplete="given-name" placeholder="Jane"></div>
+        <div><label class="talk-label" for="wm-talk-last">Last name</label><input class="talk-input" type="text" id="wm-talk-last" autocomplete="family-name" placeholder="Smith"></div>
+      </div>
+      <label class="talk-label" for="wm-talk-email">Email</label>
+      <input class="talk-input" type="email" id="wm-talk-email" autocomplete="email" placeholder="jane@your-company.com">
+      <!-- 2026-06-19 — Confirm-email gate (typo prevention). -->
+      <div class="talk-confirm-note" style="font-size:12.5px;color:var(--text-dim,#5a6b7c);margin:6px 0 4px;line-height:1.55;font-style:italic">
+        We value your effort to be here &mdash; it would be a shame if an accidental email typo prevented us from connecting. Could you type your email again so we know we have it right?
+      </div>
+      <label class="talk-label" for="wm-talk-email-confirm">Confirm email</label>
+      <input class="talk-input" type="email" id="wm-talk-email-confirm" autocomplete="off" spellcheck="false" placeholder="Type your email again">
+      <label class="talk-label" for="wm-talk-org">Organisation <span style="color:var(--text-dim);font-weight:500;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input class="talk-input" type="text" id="wm-talk-org" autocomplete="organization" placeholder="Your company or school">
+      <label class="talk-label" for="wm-talk-message">Your question</label>
+      <textarea class="talk-input" id="wm-talk-message" rows="4" placeholder="What would you like to know? Editions, add-ons, plans, custom builds, anything."></textarea>
+      <button type="button" class="talk-submit" id="wm-talk-submit" onclick="wmTalkSend()">Send to a representative &rarr;</button>
+      <button type="button" class="talk-bookcall" onclick="wmTalkShowBooking()">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a call instead &rarr;
+      </button>
+      <div class="talk-error" id="wm-talk-error"></div>
+      <div class="talk-help">We&rsquo;ll send you a confirmation email and your message lands in our representative&rsquo;s inbox immediately.</div>
+    </div>
+    <div class="talk-success" id="wm-talk-success">
+      <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h4>Your message is on its way.</h4>
+      <p>A representative from The Good Foundry will be in touch within one business day. We&rsquo;ve also sent you a confirmation copy.</p>
+      <button type="button" class="talk-bookcall" onclick="wmTalkShowBooking()" style="margin-bottom:14px">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Want to fast-track? Book a call &rarr;
+      </button>
+      <button type="button" onclick="wmTalkReset()">Send another</button>
+    </div>
+
+    <div class="talk-booking" id="wm-talk-booking">
+      <div class="talk-booking-frame">
+        <div class="talk-booking-loading" id="wm-talk-booking-loading">
+          <div class="spinner"></div>
+          <div>Loading the calendar&hellip;</div>
+        </div>
+        <iframe id="wm-talk-booking-iframe" title="Book a call" src="about:blank" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="talk-booking-foot">
+        <button type="button" onclick="wmTalkShowForm()">&larr; Back to form</button>
+        <a href="https://www.coachingfoundry.com/bookcall/" target="_blank" rel="noopener">Open in new tab &rarr;</a>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+  (function () {
+    var TGF_ENQUIRY_URL = 'https://smart-tools-foundry.com/WBM/api/send_enquiry.php';
+    function $(id){ return document.getElementById(id); }
+    function show(el){ el.classList.add('shown'); }
+    function hide(el){ el.classList.remove('shown'); }
+    window.wmTalkOpen = function () { $('wm-talk-drawer').classList.remove('booking-mode'); $('wm-talk-backdrop').classList.add('open'); $('wm-talk-drawer').classList.add('open'); setTimeout(function(){ try { $('wm-talk-first').focus(); } catch(e){} }, 320); };
+    window.wmTalkClose = function () { $('wm-talk-backdrop').classList.remove('open'); $('wm-talk-drawer').classList.remove('open'); $('wm-talk-drawer').classList.remove('booking-mode'); };
+    window.wmTalkReset = function () {
+      ['wm-talk-first','wm-talk-last','wm-talk-email','wm-talk-email-confirm','wm-talk-org','wm-talk-message'].forEach(function(id){ var el=$(id); if(el) { el.value=''; el.style.borderColor=''; } });
+      hide($('wm-talk-error')); $('wm-talk-success').classList.remove('shown'); $('wm-talk-form-host').style.display = '';
+      $('wm-talk-drawer').classList.remove('booking-mode');
+    };
+    /* Same-origin proxy that masks the WP page chrome via CSS so the iframe shows only the Amelia widget. */
+    var BOOK_URL = 'https://www.coachingfoundry.com/bookcall/';
+    window.wmTalkShowBooking = function () {
+      var heading = document.querySelector('#wm-talk-drawer .talk-header h3');
+      if (heading) heading.innerHTML = 'Book a <em>30-min call</em>.';
+      var f = $('wm-talk-booking-iframe');
+      var l = $('wm-talk-booking-loading');
+      if (l) l.classList.remove('hidden');
+      if (f && (!f.src || f.src === 'about:blank' || f.src.indexOf(BOOK_URL) !== 0)) f.src = BOOK_URL;
+      if (f) f.onload = function () { if (l) l.classList.add('hidden'); };
+      $('wm-talk-drawer').classList.add('booking-mode');
+    };
+    window.wmTalkShowForm = function () {
+      $('wm-talk-drawer').classList.remove('booking-mode');
+      var heading = document.querySelector('#wm-talk-drawer .talk-header h3');
+      if (heading) heading.innerHTML = 'Talk to <em>us</em>.';
+    };
+    /* 2026-06-19 — Confirm-email guards. */
+    (function _wmTalkBindConfirmGuards() {
+      var confirm = $('wm-talk-email-confirm');
+      if (!confirm || confirm._wmGuarded) return;
+      confirm._wmGuarded = true;
+      confirm.addEventListener('paste', function (ev) {
+        ev.preventDefault();
+        var errEl = $('wm-talk-error');
+        if (errEl) {
+          errEl.textContent = 'Please type your email again instead of pasting — this confirms there is no typo in the first field.';
+          show(errEl);
+        }
+      });
+      function _wmTalkPaintMatchState() {
+        var a = ($('wm-talk-email').value || '').trim().toLowerCase();
+        var b = (confirm.value || '').trim().toLowerCase();
+        if (!a || !b) { confirm.style.borderColor = ''; return; }
+        confirm.style.borderColor = (a === b) ? '#18a36e' : '#dc2626';
+      }
+      confirm.addEventListener('input', _wmTalkPaintMatchState);
+      var primaryField = $('wm-talk-email');
+      if (primaryField) primaryField.addEventListener('input', _wmTalkPaintMatchState);
+    })();
+
+    window.wmTalkSend = function () {
+      var firstName = ($('wm-talk-first').value || '').trim();
+      var lastName  = ($('wm-talk-last').value  || '').trim();
+      var email     = ($('wm-talk-email').value || '').trim();
+      var emailConfirm = ($('wm-talk-email-confirm').value || '').trim();
+      var organisation = ($('wm-talk-org').value || '').trim();
+      var message   = ($('wm-talk-message').value || '').trim();
+      var errEl = $('wm-talk-error');
+      if (!firstName || !lastName) { errEl.textContent = 'Please enter your first and last name.'; show(errEl); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email address.'; show(errEl); return; }
+      if (!emailConfirm) {
+        errEl.textContent = 'Please type your email again in the Confirm Email field — we want to make sure there’s no typo.';
+        show(errEl); return;
+      }
+      if (email.toLowerCase() !== emailConfirm.toLowerCase()) {
+        errEl.textContent = 'The two email addresses don’t match — please check for typos and try again.';
+        show(errEl);
+        var confirmEl = $('wm-talk-email-confirm');
+        if (confirmEl) confirmEl.focus();
+        return;
+      }
+      if (!message) { errEl.textContent = 'Please type your question.'; show(errEl); return; }
+      if (!organisation) organisation = 'Public web enquiry';
+      hide(errEl);
+      var btn = $('wm-talk-submit'); btn.disabled = true; btn.textContent = 'Sending…';
+      fetch(TGF_ENQUIRY_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, organisation: organisation, message: message + '\n\n[Submitted via Product Explorer]' })
+      })
+      .then(function(r){ return r.json().catch(function(){ return { success: r.ok }; }); })
+      .then(function(j){
+        btn.disabled = false; btn.textContent = 'Send to a representative →';
+        if (j && j.success) { $('wm-talk-form-host').style.display = 'none'; $('wm-talk-success').classList.add('shown'); }
+        else { errEl.textContent = (j && j.error) || 'Could not send right now. Please try again or email info@the-good-foundry.com directly.'; show(errEl); }
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'Send to a representative →';
+        errEl.textContent = 'Network error — please email info@the-good-foundry.com directly.'; show(errEl);
+      });
+    };
+    document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape') wmTalkClose(); });
+  })();
+  </script>
+
+<script src="https://smart-tools-foundry.com/WBM/api/wm_public_widgets.js?v=20260604-lang-trigger" data-cfasync="false"></script>
+</body>
+</html>
