@@ -25,7 +25,7 @@ jobs:
         # during the Affiliate platform setup. Use ftp:// + force
         # SSL via lftp directives.
         #
-        # Mirror source: ./public/  →  /public_html/
+        # Mirror source: ./public/  →  /the-good-foundry.com/public_html/
         # `-X` flags exclude repo-meta and docs from the upload.
         #
         # IMPORTANT: no `|| true` here. lftp's exit code propagates
@@ -49,8 +49,8 @@ jobs:
               -X README.md \
               -X CLAUDE.md \
               -X .gitignore \
-              ./public/ /public_html/;
+              ./public/ /the-good-foundry.com/public_html/;
             pwd;
-            cls -la /public_html/;
+            cls -la /the-good-foundry.com/public_html/;
             bye
           "
