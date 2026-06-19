@@ -54,6 +54,6 @@ the new SG account. See [`.github/workflows/deploy.yml`](.github/workflows/deplo
 for the FTPS-explicit pattern + exclude list.
 
 Required GitHub Actions secrets:
-- `FTP_HOST` — usually the SG FTP hostname (NOT the domain)
-- `FTP_USER` — full user@domain form on shared hosting
-- `FTP_PASS` — single-quoted in secrets to avoid `$` interpolation
+- `SG_HOST` — usually the SG FTP hostname (NOT the domain)
+- `SG_USER` — full user@domain form on shared hosting
+- `SG_PASS` — single-quoted in secrets to avoid `$` interpolation

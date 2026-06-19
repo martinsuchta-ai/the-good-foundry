@@ -32,7 +32,7 @@ jobs:
             set ftp:ssl-force yes;
             set ftp:ssl-protect-data yes;
             set ssl:verify-certificate no;
-            open -u '${{ secrets.FTP_USER }}','${{ secrets.FTP_PASS }}' ftp://${{ secrets.FTP_HOST }};
+            open -u '${{ secrets.SG_USER }}','${{ secrets.SG_PASS }}' ftp://${{ secrets.SG_HOST }};
             mirror -R --no-perms --delete \
               -X .git/ \
               -X .github/ \
