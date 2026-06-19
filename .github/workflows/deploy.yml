@@ -1,0 +1,47 @@
+name: Deploy to SiteGround (the-good-foundry.com)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Deploy via FTPS
+        # Explicit FTPS over port 21 (AUTH TLS) — what SG shared
+        # hosting actually offers. The implicit-FTPS ftps:// scheme
+        # tries port 990 which SG does not expose; that bit us
+        # during the Affiliate platform setup. Use ftp:// + force
+        # SSL via lftp directives.
+        #
+        # Mirror source: ./public/  →  /public_html/
+        # `-X` flags exclude repo-meta and docs from the upload.
+        run: |
+          lftp -d -e "
+            set ftp:ssl-force yes;
+            set ftp:ssl-protect-data yes;
+            set ssl:verify-certificate no;
+            open -u '${{ secrets.FTP_USER }}','${{ secrets.FTP_PASS }}' ftp://${{ secrets.FTP_HOST }};
+            mirror -R --no-perms --delete \
+              -X .git/ \
+              -X .github/ \
+              -X .vscode/ \
+              -X .claude/ \
+              -X node_modules/ \
+              -X README.md \
+              -X CLAUDE.md \
+              -X .gitignore \
+              ./public/ /public_html/;
+            bye
+          " || true
