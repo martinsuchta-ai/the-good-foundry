@@ -334,6 +334,153 @@
     .qa-a, .summary-line { margin-left: 0; }
   }
 </style>
+
+    <!-- Open Graph + Twitter Card -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.the-good-foundry.com/technical-faq">
+    <meta property="og:title" content="Commonly Asked Technical Questions · Wellbeing Matters @ Work">
+    <meta property="og:description" content="Plain-English answers to the technical and security questions InfoSec, IT and procurement teams ask before approving Wellbeing Matters @ Work.">
+    <meta property="og:image" content="https://www.the-good-foundry.com/logos/TGF_logo/good-foundry-gradient-primary_2560.png">
+    <meta property="og:image:alt" content="The Good Foundry -- Wellbeing Matters">
+    <meta property="og:site_name" content="The Good Foundry">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Commonly Asked Technical Questions · Wellbeing Matters @ Work">
+    <meta name="twitter:description" content="Plain-English answers to the technical and security questions InfoSec, IT and procurement teams ask before approving Wellbeing Matters @ Work.">
+    <meta name="twitter:image" content="https://www.the-good-foundry.com/logos/TGF_logo/good-foundry-gradient-primary_2560.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.the-good-foundry.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Technical FAQ",
+          "item": "https://www.the-good-foundry.com/technical-faq"
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What types of data does the application store or process?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Across every edition the platform stores and processes the following:"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the data hosted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Production hosting is on SiteGround Hosting Tier-1 data centres . Your data sits at the location closest to your country &mdash; the available regions are Sydney (Australia), Singapore, Iowa (USA), London (UK), Frankfurt (Germany), Eemshaven (Netherlands) &mdash; matching the residency map published"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the application support enterprise identity providers (Azure AD / Entra ID, Okta, Google Workspace)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SAML 2.0 and OIDC are supported. SSO is configured against your tenant for the administrator surface (the dashboard side). Group-claim mapping is supported so security groups in your IdP drive administrator / co-administrator role assignment automatically &mdash; no per-user role provisioning n"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is access restricted by role? (admin / standard / read-only)",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The platform implements four role tiers, all enforced server-side:"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is data encrypted at rest?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Hosting facilities encrypt disk volumes at the file-system level using AES-256 . Database files, backup archives, and uploaded media all sit on encrypted volumes. Application-level: passwords are bcrypt-hashed; auth + reset tokens are stored as one-way hashes; session tokens are random 32-byte "
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is data encrypted in transit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All traffic to and from the application is HTTPS only with TLS 1.2 minimum . Plain HTTP requests are 301-redirected to HTTPS at the edge. SSL certificates are managed via Let&rsquo;s Encrypt with auto-renewal. Internal service-to-service traffic (PHP &harr; MySQL, backup write, internal log fan"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you have a documented security incident response process?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The Good Foundry maintains a documented Security Incident Response Plan covering: triage, severity classification (P1&ndash;P4), containment, evidence preservation, customer notification, root-cause analysis, and post-incident review. The plan is reviewed and tested at least annually."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are customers notified of security incidents or data breaches that may impact their data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Where a confirmed security incident or data breach impacts your data, your nominated administrator(s) on record will be notified directly via email and follow-up phone call, with a written incident summary describing scope, root cause, impact, remediation actions taken, and forward-looking chan"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you willing to provide security documentation on request?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The following can be supplied to your InfoSec team under mutual NDA:"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do vendor staff have access to customer production data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Limited &mdash; only the following circumstances apply:"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is vendor access logged and auditable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every administrator action against a customer record writes to:"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can customer data be deleted or returned upon contract termination?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. On contract termination you may request, at no cost:"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you use third-party sub-processors? Can you provide a list?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The following sub-processors are engaged for the platform&rsquo;s default deployment. Each is bound by a confidentiality and data-processing agreement (per Privacy Policy: \"we sign confidentiality and data processing agreements with all third-party service providers\" ). Any optional AI or video"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
   <header class="page-hd">
