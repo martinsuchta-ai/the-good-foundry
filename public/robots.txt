@@ -1,0 +1,39 @@
+User-agent: *
+Allow: /
+
+# Token-gated outbound — personalised per-recipient links; indexing
+# would expose private offers / responses / kids 360 invites.
+# Per-page <meta name="robots" content="noindex,nofollow"> is the
+# primary control; these path entries reinforce that for crawlers
+# that arrive without rendering the HTML.
+Disallow: /offer
+Disallow: /offer.html
+Disallow: /proposal
+Disallow: /proposal.html
+Disallow: /renewal_response
+Disallow: /renewal_response.html
+Disallow: /approve_power_down
+Disallow: /approve_power_down.html
+Disallow: /wm_feedback_public
+Disallow: /wm_feedback_public.html
+Disallow: /kids_360
+Disallow: /kids_360.html
+Disallow: /kids_360_thanks
+Disallow: /kids_360_thanks.html
+Disallow: /permah-free-success
+Disallow: /permah-free-success.html
+
+# Legal pages — already <meta robots> noindex'd at the page level.
+# Mirrored here as belt-and-braces for non-JS crawlers.
+Disallow: /eula
+Disallow: /eula.html
+Disallow: /end-user-agreement-bank
+Disallow: /end-user-agreement-bank.html
+Disallow: /end-user-agreement-vault
+Disallow: /end-user-agreement-vault.html
+Disallow: /mutual-confidentiality-agreement
+Disallow: /mutual-confidentiality-agreement.html
+Disallow: /livewell-flourishing-together
+Disallow: /livewell-flourishing-together.html
+
+Sitemap: https://www.the-good-foundry.com/sitemap.xml

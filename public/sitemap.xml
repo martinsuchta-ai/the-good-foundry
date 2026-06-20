@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap for www.the-good-foundry.com (2026-06-20)
+
+  Only indexable pages listed. Token-gated outbound (offer, proposal,
+  renewal_response, etc.), legal pages, and success/thanks pages are
+  excluded by design — they're blocked via per-page <meta robots> and
+  robots.txt Disallow.
+
+  URL form is the vanity (bare) path — .htaccess transparently rewrites
+  /business-case → /business-case.html so the bare path is what users
+  + crawlers see in the address bar; the canonical tags on each page
+  also point at the bare path.
+
+  Priorities:
+    1.0  homepage
+    0.9  primary money pages (business-case, offerings)
+    0.8  secondary marketing (explorer, offerings-explorer,
+         backed-by-science, technical-faq, bookcall)
+    0.6  surveys / lead-magnet content
+    0.4  acknowledgement / subprocessors (informational, low intent)
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://www.the-good-foundry.com/</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/business-case</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/offerings</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/explorer</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/offerings-explorer</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/backed-by-science</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/technical-faq</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/bookcall</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/permah-free</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/aging-well-survey</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/livewell-survey</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/livewell-vs-aging-well</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/acknowledgement</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.the-good-foundry.com/subprocessors</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
