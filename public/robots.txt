@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Token-gated outbound — personalised per-recipient links; indexing
+# Token-gated outbound -- personalised per-recipient links; indexing
 # would expose private offers / responses / kids 360 invites.
 # Per-page <meta name="robots" content="noindex,nofollow"> is the
 # primary control; these path entries reinforce that for crawlers
@@ -23,7 +23,7 @@ Disallow: /kids_360_thanks.html
 Disallow: /permah-free-success
 Disallow: /permah-free-success.html
 
-# Legal pages — already <meta robots> noindex'd at the page level.
+# Legal pages -- already <meta robots> noindex'd at the page level.
 # Mirrored here as belt-and-braces for non-JS crawlers.
 Disallow: /eula
 Disallow: /eula.html
