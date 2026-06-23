@@ -1712,13 +1712,32 @@
     var BRAND_GRADIENT = 'linear-gradient(135deg,#293890 0%,#662C90 65%,#EC008B 130%)';
     var spec = null;
     if (p.status === 'accepted') {
+      /* 2026-06-24 — Marty: celebration copy on accept.
+         "The cogs are in motion. We will commence provisioning
+         your offer items, which will also include the issue of
+         the Invoice for payment. We look forward to working with
+         you on your initiative. At your service, always — The
+         Good Foundry team."
+         Three short paragraphs in the brand-gradient hero head
+         (white text), followed by a quiet signed-by audit line
+         so the legal/audit context survives — the warmth lands
+         first, the signature stays for the record. */
       spec = {
         chipBg: '#16a34a',
         chip:   'Accepted',
-        head:   'Accepted — we appreciate YOU and your business.',
-        detail: 'Signed by <strong>' + esc(p.signed_name || '') + '</strong>'
-                + (p.signed_at ? ' on ' + esc(String(p.signed_at).slice(0,10)) : '')
-                + '. Your rep will be in touch shortly to walk you through next steps.'
+        head:   'The cogs are in motion.',
+        detail: ''
+          + '<div style="line-height:1.7;text-align:left;max-width:520px;margin:0 auto">'
+          +   '<p style="margin:0 0 12px">We will commence provisioning your offer items, which will also include the issue of the Invoice for payment.</p>'
+          +   '<p style="margin:0 0 12px">We look forward to working with you on your initiative.</p>'
+          +   '<p style="margin:0;font-family:\'DM Serif Display\',Georgia,serif;font-style:italic;font-size:14px;color:rgba(255,255,255,0.96)">At your service, always &mdash; The Good Foundry team.</p>'
+          + '</div>'
+          + ((p.signed_name || p.signed_at)
+              ? '<div style="margin-top:18px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.18);font-size:11px;color:rgba(255,255,255,0.74);letter-spacing:.02em;text-align:center">'
+                  + 'Signed by <strong>' + esc(p.signed_name || '') + '</strong>'
+                  + (p.signed_at ? ' on ' + esc(String(p.signed_at).slice(0,10)) : '')
+                + '</div>'
+              : '')
       };
     } else if (p.status === 'declined') {
       spec = {
@@ -1918,7 +1937,12 @@
       if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
       return j;
     }); }).then(function () {
-      flash('Accepted — we appreciate YOU and your business.', 'ok');
+      /* 2026-06-24 — brief interim flash before reload.
+         The full celebration banner lands on reload with Marty's
+         "The cogs are in motion" copy + provisioning + invoice
+         + at-your-service close; this flash just acknowledges
+         the click during the 1.4s reload window. */
+      flash('The cogs are in motion — thank you.', 'ok');
       /* Scroll to top so the about-to-render top status banner is
          the first thing the user sees after reload. */
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_e) {}
