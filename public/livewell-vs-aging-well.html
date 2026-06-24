@@ -218,7 +218,11 @@ body.show-lw  .card.waw { display:none; }
       <strong>The Good Foundry</strong>
     </div>
   </div>
-  <a href="/TGF/index.html">← Back to The Good Foundry</a>
+  <!-- 2026-06-25 — Normalised to history.back() with fallback to
+       the TGF homepage (was a broken absolute /TGF/index.html that
+       points at an old structure). Same behaviour as every other
+       Back affordance across the public site. -->
+  <a href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">&larr; Back</a>
 </div>
 
 <!-- ORIGINAL pages strip — links to the two replica briefing pages

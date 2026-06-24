@@ -592,22 +592,23 @@ footer strong {
 </head>
 <body>
 
-<!-- TOPBAR -->
+<!-- TOPBAR
+     2026-06-25 — Back pill moved to LEFT of the brand logo for
+     consistency with the reference pattern (acknowledgement,
+     backed-by-science, business-case, subprocessors, technical-faq).
+     Behaviour mirrors those pages: history.back() with fallback to
+     the TGF homepage when arriving via bookmark / direct link. -->
 <header class="topbar">
-  <a href="/" class="brand">
-    <img src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry" class="brand-logo" style="height:34px;width:auto;object-fit:contain;flex-shrink:0;" />
-  </a>
-  <div style="display:flex;align-items:center;gap:10px">
-    <!-- 2026-06-25 — Back pill. Prefers browser history when there's
-         a previous page; falls back to TGF homepage. Mirrors the
-         pattern used on business-case.html / offerings-explorer.html
-         so the affordance feels consistent across the site. -->
-    <a class="nav-pill nav-pill-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='/'; }" aria-label="Back" style="background:transparent;color:var(--text);border:1px solid var(--border);box-shadow:none;display:inline-flex;align-items:center;gap:6px">
+  <div style="display:flex;align-items:center;gap:14px">
+    <a class="nav-pill nav-pill-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" aria-label="Back" title="Back to previous page" style="background:rgba(41,56,144,.06);color:var(--text);border:1px solid var(--border);box-shadow:none;display:inline-flex;align-items:center;gap:6px">
       <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       <span>Back</span>
     </a>
-    <a href="mailto:privacy@permahsurvey.com" class="nav-pill">Contact Privacy Officer &rarr;</a>
+    <a href="/" class="brand">
+      <img src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry" class="brand-logo" style="height:34px;width:auto;object-fit:contain;flex-shrink:0;" />
+    </a>
   </div>
+  <a href="mailto:privacy@permahsurvey.com" class="nav-pill">Contact Privacy Officer &rarr;</a>
 </header>
 
 <!-- HERO -->

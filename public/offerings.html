@@ -776,7 +776,7 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
   <!-- Topbar -->
   <header class="topbar">
     <div class="topbar-left">
-      <a class="topbar-back" href="the-good-foundry-index.html" title="Back to The Good Foundry">
+      <a class="topbar-back" href="javascript:void(0)" onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }" title="Back to previous page">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         Back
       </a>
