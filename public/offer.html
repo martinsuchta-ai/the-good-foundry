@@ -160,6 +160,7 @@
   .status-pill.sent { background:rgba(236,0,139,.10); color:var(--punch); }
   .status-pill.accepted { background:rgba(45,158,107,.15); color:var(--green); }
   .status-pill.declined { background:rgba(220,38,38,.10); color:#b91c1c; }
+  .status-pill.budget   { background:linear-gradient(135deg,rgba(102,44,144,.10),rgba(41,56,144,.10)); color:var(--grape,#662C90); }
   .status-pill.expired { background:rgba(148,163,184,.15); color:#64748b; }
   .flash { padding:12px 16px; border-radius:12px; margin-bottom:14px; font-size:13px; font-weight:500; }
   .flash.ok { background:rgba(45,158,107,.10); color:var(--green); border:1px solid rgba(45,158,107,.25); }
@@ -1220,7 +1221,9 @@
        and 'on_ice' — the prospect needs to be able to accept /
        counter / decline a freshly re-issued offer exactly like a
        first-pass one. (Marty 2026-06-06.) */
-    var canDecide = (p.status === 'sent' || p.status === 'on_ice' || p.status === 're_issued');
+    /* 2026-06-25 — 'budget' added: a client who saved as budget
+       must still be able to flip line items + accept/decline later. */
+    var canDecide = (p.status === 'sent' || p.status === 'on_ice' || p.status === 're_issued' || p.status === 'budget');
     var intro = _proposalIntro(p);
     var editions = p.items.editions || [];
     var addons   = p.items.addons   || [];
@@ -1350,7 +1353,11 @@
                 var qty = Math.max(1, Number(e.qty || 1));
                 var qtyPip = qty > 1 ? ' <span style="font-size:11px;font-weight:700;color:var(--orange);margin-left:6px">× ' + qty + '</span>' : '';
                 var lineAmount = (Number(e.amount || 0) * qty);
-                return '<div class="item on" data-key="' + esc(dk) + '">'
+                /* 2026-06-25 — data-amount added to support the
+                   Save-as-Budget summary computation (sum of
+                   dropped amounts is subtracted from the proposal
+                   total to show the "preserved" total). */
+                return '<div class="item on" data-key="' + esc(dk) + '" data-amount="' + (isFinite(lineAmount) ? lineAmount : 0) + '">'
                      +   '<div><div class="name">' + esc(headline) + qtyPip + '</div><div class="desc">' + sub + '</div></div>'
                      +   '<div class="toggle-wrap">'
                      +     '<div class="price">' + moneyWithEquiv(lineAmount) + '</div>'
@@ -1381,7 +1388,7 @@
                      new proposals, and legacy per_effort rows have
                      their computed price already on `a.price`. */
                   var modeLine = 'Outcome Fee &middot; ' + esc(a.label);
-                  return '<div class="item on" data-key="' + dk + '">'
+                  return '<div class="item on" data-key="' + dk + '" data-amount="' + (isFinite(Number(a.price)) ? Number(a.price) : 0) + '">'
                        +   '<div><div class="name">' + esc(headline) + '</div><div class="desc">' + modeLine + '</div></div>'
                        +   '<div class="toggle-wrap">'
                        +     '<div class="price">' + moneyWithEquiv(a.price) + '</div>'
@@ -1389,7 +1396,7 @@
                        +   '</div>'
                        + '</div>';
                 }
-                return '<div class="item on" data-key="' + dk + '">'
+                return '<div class="item on" data-key="' + dk + '" data-amount="' + (isFinite(Number(a.price)) ? Number(a.price) : 0) + '">'
                      +   '<div><div class="name">' + esc(a.label) + '</div><div class="desc">' + esc(a.recurring || 'annual') + '</div></div>'
                      +   '<div class="toggle-wrap">'
                      +     '<div class="price">' + moneyWithEquiv(a.price) + '</div>'
@@ -1433,6 +1440,7 @@
             +   '<div class="accept-row" id="prop-action-row">'
             +     '<input type="text" class="input" id="signed-name" placeholder="Your full name" />'
             +     '<button id="prop-act-accept"   class="btn btn-primary" data-act="accept"   onclick="window._propAccept()">Accept offer</button>'
+            +     '<button id="prop-act-budget"   class="btn btn-ghost"   data-act="budget"   onclick="window._propShowBudget()" title="Preserve your selection without committing — for internal funding seeking">Save as budget</button>'
             +     '<button id="prop-act-counter"  class="btn btn-ghost"   data-act="counter"  onclick="window._propShowCounter()">Counter-offer</button>'
             +     '<button id="prop-act-revise"   class="btn btn-ghost"   data-act="revise"   onclick="window._propShowRevise()">Send me a revision</button>'
             +     '<button id="prop-act-ice"      class="btn btn-ghost"   data-act="ice"      onclick="window._propShowIce()">Put on ice</button>'
@@ -1555,6 +1563,37 @@
             +       '<button class="btn btn-primary" onclick="window._propPutOnIce()">Put on ice</button>'
             +       '<button class="btn btn-ghost" onclick="window._propHideAll()">Cancel</button>'
             +     '</div>'
+            +   '</div>'
+            +   /* 2026-06-25 — Save as Budget. Inline canvas
+                 explainer + free-text note + Confirm action. No
+                 modal popups per platform rule — the explainer
+                 sits inline below the action row. The Confirm
+                 button captures the current line-item toggle state
+                 (which lines are .item.on vs .item not-on) and
+                 POSTs it as kept_keys / dropped_keys to
+                 /api/proposals.php?action=save_budget. */
+                '<div id="budget-panel" style="display:none;margin-top:14px">'
+            +     '<div style="padding:20px 22px;background:linear-gradient(135deg,rgba(102,44,144,.05) 0%,rgba(41,56,144,.05) 100%);border:1px solid rgba(102,44,144,.18);border-radius:14px;margin-bottom:14px;line-height:1.6;color:var(--text-dark)">'
+            +       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
+            +         '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--grape,#662C90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>'
+            +         '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--grape,#662C90)">Preserve your selection</div>'
+            +       '</div>'
+            +       '<div style="font-size:14px;color:var(--text-dark);margin-bottom:10px;font-weight:600">Not ready to commit yet?</div>'
+            +       '<div style="font-size:13px;color:var(--text-mid);margin-bottom:10px">Toggle the line items above to model the shape you\'d like to commit to &mdash; then <strong>save it as a budget</strong>. We\'ll preserve your selection so you can take it back to your team, your board, or your funding source for internal approval. Nothing is committed; you can come back any time and accept, refine, or decline.</div>'
+            +       '<div style="font-size:12.5px;color:var(--text-mid);font-style:italic">Common reasons to use this: seeking funding approval, modelling phase 1 vs phase 2 scope, comparing this offer to your annual planning budget, or simply needing to bring this conversation back to your team.</div>'
+            +     '</div>'
+            +     '<div id="budget-summary" style="margin-bottom:14px;padding:12px 14px;background:rgba(45,158,107,.06);border:1px solid rgba(45,158,107,.20);border-radius:10px;font-size:12.5px;color:var(--text-dark);line-height:1.55">'
+            +       '<span style="font-weight:700">Right now you\'ve kept </span><span id="budget-kept-count" style="font-weight:800;color:var(--green,#2d9e6b)">0</span><span style="font-weight:700"> items</span>'
+            +       '<span style="margin:0 8px;opacity:.4">&middot;</span>'
+            +       '<span style="font-weight:700">Total </span><span id="budget-total" style="font-weight:800;color:var(--green,#2d9e6b)">&mdash;</span>'
+            +     '</div>'
+            +     '<label for="budget-note" style="display:block;font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px">A note for our records <span style="font-weight:400;color:var(--text-muted)">(optional &mdash; e.g. "seeking Q3 board approval", "comparing against 2027 wellness budget")</span></label>'
+            +     '<textarea id="budget-note" class="input" rows="3" placeholder="Let us know what you\'re working through so we can support you when you\'re ready to come back."></textarea>'
+            +     '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">'
+            +       '<button class="btn btn-primary" onclick="window._propSaveBudget()">Save my budget</button>'
+            +       '<button class="btn btn-ghost" onclick="window._propHideAll()">Cancel</button>'
+            +     '</div>'
+            +     '<div style="font-size:11.5px;color:var(--text-muted);margin-top:10px;font-style:italic">We\'ll send a quiet note to your account team so they know you\'re shopping this internally. No follow-up unless you ask for it.</div>'
             +   '</div>'
             + '</div>'
           /* 2026-06-06 — Marty: "Remove Accepted — thank you / We
@@ -1693,7 +1732,8 @@
     'countered':  'Counter-offer',
     'on_ice':     'On hold',
     'revise':     'Revision requested',
-    're_issued':  'Re-issued'
+    're_issued':  'Re-issued',
+    'budget':     'Budget mode'
   };
   function _propStatusLabel(s) {
     if (s == null) return '';
@@ -1770,6 +1810,17 @@
         chip:   'Expired',
         head:   'This offer has expired.',
         detail: 'Expired on ' + esc(p.expires_at || '—') + '. Please contact us for a refreshed quote.'
+      };
+    } else if (p.status === 'budget') {
+      /* 2026-06-25 — Budget mode. Soft pause with the client's
+         preferred selection preserved. Banner reads as
+         encouragement, not closure: the offer is still actionable
+         and the client can come back any time to commit. */
+      spec = {
+        chipBg: '#662C90',
+        chip:   'Budget mode',
+        head:   'Your selection is preserved.',
+        detail: 'Take this version of the offer to your team, your board, or your funding source. When you\'re ready, come back here to confirm. Nothing is committed yet — you can still refine, accept, or decline at any time.'
       };
     } else if (p.status === 're_issued') {
       /* Re-issued = a fresh offer your rep sent you regardless of
@@ -1958,7 +2009,9 @@
      opening one closes the others so the action card stays compact
      and the prospect can't accidentally fill more than one. */
   function _propHidePanels() {
-    ['counter-panel', 'decline-panel', 'ice-panel', 'revise-panel'].forEach(function (id) {
+    /* 2026-06-25 — 'budget-panel' added per the Save-as-Budget
+       feature. Mirrors the other inline panels. */
+    ['counter-panel', 'decline-panel', 'ice-panel', 'revise-panel', 'budget-panel'].forEach(function (id) {
       var el = $(id); if (el) el.style.display = 'none';
     });
   }
@@ -2182,6 +2235,119 @@
       flash(wantsRemind ? ('On ice. We\'ll nudge you on ' + remindAt + '.') : 'On ice. Come back when you\'re ready.', 'ok');
       setTimeout(function () { window.location.reload(); }, 1400);
     }).catch(function (e) { flash('Could not park: ' + (e.message || e), 'err'); });
+  };
+
+  /* 2026-06-25 — Save as Budget. Shows the inline canvas panel
+     and refreshes the kept-count + total summary from the current
+     toggle state. */
+  window._propShowBudget = function () {
+    _propHidePanels();
+    _propSetActiveAction('budget');
+    var bp = $('budget-panel');
+    if (bp) bp.style.display = '';
+    _propRefreshBudgetSummary();
+    /* Refresh summary whenever the user flips an .item while the
+       panel is open. Idempotent — only binds once per page load. */
+    if (!window.__budgetSummaryWired) {
+      window.__budgetSummaryWired = true;
+      document.addEventListener('click', function (e) {
+        var bp = $('budget-panel');
+        if (!bp || bp.style.display === 'none') return;
+        var t = e.target;
+        while (t && t !== document) {
+          if (t.classList && t.classList.contains('item')) {
+            setTimeout(_propRefreshBudgetSummary, 0);
+            return;
+          }
+          t = t.parentNode;
+        }
+      }, true);
+    }
+  };
+
+  /* Read the in-page item-toggle state and refresh the kept-count
+     + total inside the budget panel summary strip. Total = full
+     proposal total minus the sum of dropped-line amounts (read
+     from data-amount on each .item div if present). Falls back to
+     "—" when amounts aren't on the DOM (legacy proposals). */
+  function _propRefreshBudgetSummary() {
+    var keptCountEl = $('budget-kept-count');
+    var totalEl     = $('budget-total');
+    if (!keptCountEl || !totalEl) return;
+    var allItems = document.querySelectorAll('.item[data-key]');
+    var keptCount = 0;
+    var droppedSum = 0;
+    Array.prototype.forEach.call(allItems, function (el) {
+      if (!el.getAttribute('data-key')) return;
+      if (el.classList.contains('on')) {
+        keptCount++;
+      } else {
+        var amt = parseFloat(el.getAttribute('data-amount') || '0');
+        if (isFinite(amt) && amt > 0) droppedSum += amt;
+      }
+    });
+    keptCountEl.textContent = keptCount;
+    var fullTotal = (proposal && typeof proposal.total === 'number') ? proposal.total : null;
+    if (fullTotal !== null && droppedSum >= 0) {
+      var budgetTotal = Math.max(0, fullTotal - droppedSum);
+      var ccy = _displayCurrency();
+      try {
+        totalEl.textContent = (ccy ? ccy + ' ' : '') + budgetTotal.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      } catch (_e) {
+        totalEl.textContent = (ccy ? ccy + ' ' : '') + budgetTotal.toFixed(2);
+      }
+    } else {
+      totalEl.textContent = '—';
+    }
+  }
+
+  /* Capture toggle state + note, POST to save_budget. On success,
+     flash thanks + reload. Reload re-renders with status='budget'
+     and the accept-row stays actionable so the client can return
+     to accept/decline later. */
+  window._propSaveBudget = function () {
+    var noteEl = $('budget-note');
+    var note = (noteEl && noteEl.value ? noteEl.value : '').trim();
+    var allItems = document.querySelectorAll('.item[data-key]');
+    var kept = [];
+    var dropped = [];
+    var droppedSum = 0;
+    Array.prototype.forEach.call(allItems, function (el) {
+      var key = el.getAttribute('data-key');
+      if (!key) return;
+      if (el.classList.contains('on')) {
+        kept.push(key);
+      } else {
+        dropped.push(key);
+        var amt = parseFloat(el.getAttribute('data-amount') || '0');
+        if (isFinite(amt) && amt > 0) droppedSum += amt;
+      }
+    });
+    if (kept.length === 0) {
+      flash('You\'ve dropped every line item — toggle at least one back ON to save a budget.', 'err');
+      return;
+    }
+    var fullTotal = (proposal && typeof proposal.total === 'number') ? proposal.total : null;
+    var computedTotal = (fullTotal !== null) ? Math.max(0, fullTotal - droppedSum) : null;
+    var ccy = _displayCurrency();
+    fetch('https://smart-tools-foundry.com/WBM/api/proposals.php?action=save_budget', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: token,
+        kept_keys: kept,
+        dropped_keys: dropped,
+        computed_total: computedTotal,
+        currency: ccy,
+        note: note
+      })
+    }).then(function (r) { return r.text().then(function (raw) {
+      var j; try { j = JSON.parse(raw); } catch (e) { throw new Error('Invalid response'); }
+      if (!j || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    }); }).then(function () {
+      flash('Your budget is saved. We\'ve preserved ' + kept.length + ' items for you. Come back any time to confirm.', 'ok');
+      setTimeout(function () { window.location.reload(); }, 1800);
+    }).catch(function (e) { flash('Could not save budget: ' + (e.message || e), 'err'); });
   };
 
   /* ── Talk-to-a-human drawer ────────────────────────────────────
