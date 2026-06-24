@@ -784,10 +784,14 @@
   var _params = new URLSearchParams(window.location.search);
   var token = _params.get('token') || '';
   /* `preview=1` lets the rep portal's Preview button view its own
-     drafts before sending. Forwarded straight through to the API
-     which gates the draft read behind preview-flag AND a rep/admin
-     session cookie (so a leaked draft token alone isn't enough). */
+     drafts before sending. 2026-06-24 — also forward
+     `preview_grant` (short-lived HMAC signed by rep_proposals.php
+     ?action=preview_grant). Cross-domain (TGF → smart-tools) means
+     the rep session cookie does NOT cross; the grant proves the
+     rep validly clicked Preview without needing the cookie. */
   var _preview = _params.get('preview') ? '&preview=1' : '';
+  var _previewGrant = _params.get('preview_grant') || '';
+  if (_previewGrant) _preview += '&preview_grant=' + encodeURIComponent(_previewGrant);
   if (!token) {
     $('proposal-root').innerHTML = '<div class="card" style="text-align:center;padding:48px 24px;color:var(--text-muted)">No offer token — please use the link from your email.</div>';
     return;
