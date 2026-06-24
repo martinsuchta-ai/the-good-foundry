@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Privacy Policy — Wellbeing Matters @ Series · The Good Foundry</title>
+<meta name="description" content="How The Good Foundry collects, holds and uses your personal information across all Wellbeing Matters @ Series services.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.the-good-foundry.com/privacy-policy.html">
+<link rel="icon" href="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ── BRAND TOKENS ───────────────────────────────────────────────── */
+:root {
+  --twilight:   #293890;
+  --arctic:     #1B75BC;
+  --aqua:       #26AAE1;
+  --grape:      #662C90;
+  --orchid:     #91268F;
+  --punch:      #EC008B;
+  --bg:         #F4F6FB;
+  --card:       #FFFFFF;
+  --mid:        #EEF1F8;
+  --border:     rgba(41,56,144,.12);
+  --text:       #161A2E;
+  --text-dim:   rgba(22,26,46,.58);
+  --font:       'Outfit', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ── GRADIENT MESH BACKGROUND ──────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── TOPBAR ────────────────────────────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+.brand-name em { font-style: italic; color: var(--arctic); }
+
+.brand-sep { width: 1px; height: 18px; background: rgba(22,26,46,.15); }
+
+.brand-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.nav-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  padding: 7px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: opacity .2s;
+  box-shadow: 0 4px 14px rgba(236,0,139,.22);
+}
+.nav-pill:hover { opacity: .9; }
+
+/* ── HERO ──────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 90px 40px 80px;
+  overflow: hidden;
+}
+
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-lines::before,
+.hero-lines::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(41,56,144,.14);
+}
+.hero-lines::before { width: 700px; height: 700px; right: -200px; top: -250px; }
+.hero-lines::after  { width: 400px; height: 400px; right: -50px; top: -50px; }
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(236,0,139,.08);
+  border: 1px solid rgba(236,0,139,.28);
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--punch);
+  margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--punch);
+}
+
+.hero h1 {
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  margin-bottom: 18px;
+  color: var(--text);
+}
+
+.hero h1 .gradient-text {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: var(--text-dim);
+  font-weight: 300;
+  max-width: 540px;
+  line-height: 1.75;
+  margin-bottom: 32px;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.hero-chip-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+  flex-shrink: 0;
+}
+.hero-chip strong { color: var(--text); }
+
+.hero-divider {
+  width: 1px; height: 16px;
+  background: rgba(22,26,46,.15);
+}
+
+/* ── LAYOUT ────────────────────────────────────────────────────── */
+.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0;
+  padding: 0 40px 100px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ── TOC ───────────────────────────────────────────────────────── */
+.toc {
+  position: sticky;
+  top: 72px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 4px 16px rgba(22,26,46,.04);
+}
+
+.toc-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(102,44,144,.08), rgba(27,117,188,.05));
+}
+
+.toc-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--arctic);
+}
+
+.toc ol {
+  list-style: none;
+  padding: 10px 0;
+  counter-reset: toc;
+}
+.toc ol li { counter-increment: toc; }
+.toc ol li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 8px 20px;
+  transition: all .15s;
+  border-left: 2px solid transparent;
+}
+.toc ol li a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(27,117,188,.45);
+  flex-shrink: 0;
+  min-width: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.toc ol li a:hover,
+.toc ol li a.active {
+  color: var(--text);
+  border-left-color: var(--arctic);
+  background: rgba(38,170,225,.07);
+}
+.toc ol li a:hover::before,
+.toc ol li a.active::before { color: var(--arctic); }
+.toc ol li a.active { font-weight: 600; }
+
+/* ── CONTENT ───────────────────────────────────────────────────── */
+.content { min-width: 0; }
+
+.intro-card {
+  background: linear-gradient(135deg, rgba(41,56,144,.06), rgba(102,44,144,.05));
+  border: 1px solid rgba(38,170,225,.18);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  position: relative;
+  overflow: hidden;
+}
+.intro-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--arctic), var(--orchid), var(--punch));
+  border-radius: 16px 16px 0 0;
+}
+.intro-card strong { color: var(--arctic); font-weight: 600; }
+
+/* ── SECTION ───────────────────────────────────────────────────── */
+.section {
+  margin-bottom: 44px;
+  scroll-margin-top: 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.section-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--twilight), var(--grape));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -.02em;
+  box-shadow: 0 4px 12px rgba(41,56,144,.22);
+}
+
+.section h2 {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+
+.section > p,
+.section > ul {
+  margin-bottom: 14px;
+}
+.section > p:last-child { margin-bottom: 0; }
+
+.section p {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+
+/* ── SUB-SECTION ───────────────────────────────────────────────── */
+.sub-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  transition: border-color .2s, box-shadow .2s;
+  box-shadow: 0 1px 2px rgba(22,26,46,.04), 0 3px 12px rgba(22,26,46,.03);
+}
+.sub-section:hover { border-color: rgba(38,170,225,.35); box-shadow: 0 2px 4px rgba(22,26,46,.05), 0 6px 18px rgba(22,26,46,.05); }
+
+.sub-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--punch);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sub-section-title::before {
+  content: '';
+  display: block;
+  width: 14px; height: 2px;
+  background: linear-gradient(90deg, var(--punch), var(--orchid));
+  border-radius: 2px;
+}
+
+.sub-section p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.sub-section p:last-child { margin-bottom: 0; }
+
+/* ── LISTS ─────────────────────────────────────────────────────── */
+.section ul,
+.sub-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section ul li,
+.sub-section ul li {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  padding: 9px 12px 9px 28px;
+  position: relative;
+  border-radius: 6px;
+  margin-bottom: 2px;
+  transition: background .15s;
+}
+.section ul li:hover,
+.sub-section ul li:hover {
+  background: rgba(38,170,225,.06);
+}
+.section ul li::before,
+.sub-section ul li::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 18px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--arctic), var(--orchid));
+}
+.section ul li strong,
+.sub-section ul li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+a.elink {
+  color: var(--arctic);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27,117,188,.3);
+  transition: border-color .15s, color .15s;
+}
+a.elink:hover {
+  color: var(--twilight);
+  border-color: rgba(41,56,144,.55);
+}
+
+/* ── HIGHLIGHT BOX ─────────────────────────────────────────────── */
+.highlight-box {
+  background: rgba(38,170,225,.07);
+  border: 1px solid rgba(38,170,225,.22);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-top: 14px;
+  font-size: 14.5px;
+  color: var(--text-dim);
+  line-height: 1.75;
+}
+.highlight-box a { color: var(--arctic); }
+
+/* ── NEVER SELL CALLOUT ────────────────────────────────────────── */
+.never-sell {
+  background: linear-gradient(135deg, rgba(236,0,139,.07), rgba(145,38,143,.05));
+  border: 1px solid rgba(236,0,139,.28);
+  border-radius: 12px;
+  padding: 16px 22px;
+  margin-bottom: 18px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.never-sell::before {
+  content: '🔒';
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ── CONTACT CARD ──────────────────────────────────────────────── */
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 48px;
+  margin-top: 56px;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  box-shadow: 0 4px 24px rgba(22,26,46,.06);
+}
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102,44,144,.10) 0%, rgba(27,117,188,.06) 50%, rgba(236,0,139,.06) 100%);
+  pointer-events: none;
+}
+.contact-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--twilight), var(--arctic), var(--orchid), var(--punch));
+}
+.contact-card-inner { position: relative; z-index: 1; }
+.contact-card h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.02em;
+  margin-bottom: 10px;
+}
+.contact-card p {
+  color: var(--text-dim);
+  font-size: 15px;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 8px 32px rgba(236,0,139,.28);
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(236,0,139,.4);
+}
+
+/* ── FOOTER ────────────────────────────────────────────────────── */
+footer {
+  position: relative;
+  z-index: 1;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+footer strong {
+  background: linear-gradient(90deg, var(--arctic), var(--orchid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── FADE-IN ANIMATION ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.section {
+  animation: fadeUp .5s ease both;
+}
+.section:nth-child(1)  { animation-delay: .05s; }
+.section:nth-child(2)  { animation-delay: .10s; }
+.section:nth-child(3)  { animation-delay: .15s; }
+.section:nth-child(4)  { animation-delay: .20s; }
+.section:nth-child(5)  { animation-delay: .25s; }
+
+/* ── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .layout { grid-template-columns: 1fr; padding: 0 20px 80px; }
+  .toc { display: none; }
+  .hero { padding: 60px 20px 60px; }
+  .contact-card { padding: 32px 24px; }
+  footer { padding: 20px; }
+  .topbar { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="/" class="brand">
+    <img src="https://smart-tools-foundry.com/TGF/assets/TGFIconcolor.png" alt="The Good Foundry" style="width:36px;height:36px;object-fit:contain;flex-shrink:0;border-radius:0;" />
+    <span class="brand-name">Wellbeing Matters @ <em>Series</em></span>
+    <div class="brand-sep"></div>
+    <span class="brand-sub">The Good Foundry</span>
+  </a>
+  <a href="mailto:privacy@permahsurvey.com" class="nav-pill">Contact Privacy Officer &rarr;</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Legal &middot; Privacy</div>
+    <h1>Privacy Policy<br><span class="gradient-text">&amp; Disclaimer</span></h1>
+    <p class="hero-desc">How The Good Foundry collects, holds, and uses your personal information across all Wellbeing Matters @ Series services.</p>
+    <div class="hero-meta">
+      <div class="hero-chip">
+        <div class="hero-chip-dot"></div>
+        Last reviewed <strong>January 2026</strong>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-chip">
+        <div class="hero-chip-dot"></div>
+        Applies to <strong>all Wellbeing Matters @ Series services</strong>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-chip">
+        <div class="hero-chip-dot"></div>
+        <strong>ACN 103 558 372</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-header">
+      <div class="toc-label">On this page</div>
+    </div>
+    <ol>
+      <li><a href="#s1">Definitions</a></li>
+      <li><a href="#s2">Children</a></li>
+      <li><a href="#s3">What We Collect</a></li>
+      <li><a href="#s4">Controller / Processor</a></li>
+      <li><a href="#s5">Data Security</a></li>
+      <li><a href="#s6">How We Use Data</a></li>
+      <li><a href="#s7">Anonymity</a></li>
+      <li><a href="#s8">Who Has Access</a></li>
+      <li><a href="#s9">Your Rights</a></li>
+      <li><a href="#s10">Retention</a></li>
+      <li><a href="#s11">Complaints</a></li>
+      <li><a href="#s12">Additional Info</a></li>
+      <li><a href="#s13">Contact Us</a></li>
+    </ol>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div class="intro-card">
+      This Privacy Policy explains how <strong>The Good Foundry Pty Ltd</strong> collects and handles your personal information across all of our Services &mdash; including this website and all connected products. Through our offerings, employees can provide individual, team, and organizational wellbeing feedback. We value your trust and take our privacy obligations seriously.
+    </div>
+
+    <!-- 1 -->
+    <section class="section" id="s1">
+      <div class="section-header"><div class="section-num">01</div><h2>Definitions</h2></div>
+      <ul>
+        <li><strong>Administrator</strong> &mdash; any person with login credentials to a Wellbeing Matters @ Series Customer account, able to manage accounts, create surveys, and review depersonalized results.</li>
+        <li><strong>The Good Foundry / we / us / our</strong> &mdash; The Good Foundry Pty Ltd (ACN 103 558 372), 1/31 Beach Street, VIC 3199, Australia, and any related entities.</li>
+        <li><strong>Customer / Company</strong> &mdash; the person or entity that has procured access to The Good Foundry&rsquo;s Services; generally your employer or an identified subgroup within it.</li>
+        <li><strong>Respondent / Participant</strong> &mdash; any person who uses the Wellbeing Matters @ Series platform (wholly or partially) through a Customer.</li>
+        <li><strong>Services</strong> &mdash; all products, services, and websites offered by The Good Foundry, including the Wellbeing Matters @ Series platform and related mobile applications.</li>
+        <li><strong>Visitor</strong> &mdash; any person who visits our website(s).</li>
+        <li><strong>Websites</strong> &mdash; <a href="http://www.permahsurvey.com" class="elink">www.permahsurvey.com</a>, <a href="http://www.perma4plus.com" class="elink">www.perma4plus.com</a>, <a href="http://www.the-good-foundry.com" class="elink">www.the-good-foundry.com</a>, and any other The Good Foundry websites linking to this Policy.</li>
+        <li><strong>You / your</strong> &mdash; an Administrator, Respondent/Participant, or Visitor as applicable.</li>
+      </ul>
+      <p style="margin-top:14px; font-size:14px; color:var(--text-dim);">We may update this Privacy Policy from time to time. Questions? Contact our Privacy Officer at <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="section" id="s2">
+      <div class="section-header"><div class="section-num">02</div><h2>A Note About Children</h2></div>
+      <p>Unless permitted by applicable law, you must not provide any child under the age of 16 with the Wellbeing Matters @ Series Platform (except editions designed specifically for Kids and Youth). We do not intentionally gather personal information from minors outside those dedicated editions.</p>
+      <p>If a minor submits personal information through an adult version of the platform and we become aware of it, we will attempt to delete that information promptly. To report a concern, contact <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="section" id="s3">
+      <div class="section-header"><div class="section-num">03</div><h2>What Information Do We Collect?</h2></div>
+      <p>We collect information about you and your use of our Services from a variety of sources. The information we collect depends on how you use our Services &mdash; whether as an Administrator, Respondent, or Visitor.</p>
+      <div class="sub-section">
+        <div class="sub-section-title">(a) Information We Generally Collect</div>
+        <ul>
+          <li><strong>Contact information.</strong> Your name and email address when provided through account creation, forms, or interactions with our sales or support team.</li>
+          <li><strong>Usage information.</strong> Data about how you interact with our Services, including pages visited, clicks, and activity timing.</li>
+          <li><strong>Device and browser data.</strong> IP address, operating system, browser details, and time of visit &mdash; which may also indicate your location.</li>
+          <li><strong>Log data.</strong> Log files recording each server access, including originating IP address, to maintain an audit trail and improve our Services.</li>
+          <li><strong>Referral data.</strong> Information about the source that referred you to our websites.</li>
+          <li><strong>Other submitted data.</strong> Personal information provided in testimonials, events, downloads, purchases, or social media interactions.</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(b) Information Specific to Administrators &amp; Respondents</div>
+        <ul>
+          <li><strong>Personal information.</strong> Company, name, phone number, encrypted password, and email address upon account creation.</li>
+          <li><strong>Sensitive information.</strong> Demographic information (such as ethnicity) collected during evaluations. You may always select &ldquo;Prefer Not To Answer.&rdquo;</li>
+          <li><strong>Your content.</strong> All responses submitted through the Wellbeing Matters @ Series platform, unless you request removal at <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(c) Information Specific to Administrators</div>
+        <ul>
+          <li><strong>Registration details.</strong> Name, company name, email address, password, and related information.</li>
+          <li><strong>Survey data.</strong> Survey questions and related information created and launched through the Services.</li>
+          <li><strong>Billing details.</strong> Cardholder name, billing address, email, card number, expiry date, and security code (collected by our card processor).</li>
+          <li><strong>Account settings.</strong> Name, email, default language, time zone, and other preferences on your account or profile page.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="section" id="s4">
+      <div class="section-header"><div class="section-num">04</div><h2>Who Is the Data Controller or Processor?</h2></div>
+      <ul>
+        <li><strong>For Administrators and Respondents:</strong> your company (our Customer) is the controller; The Good Foundry is the processor.</li>
+        <li><strong>For Visitors:</strong> The Good Foundry is generally the controller of your personal information.</li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section class="section" id="s5">
+      <div class="section-header"><div class="section-num">05</div><h2>How Do We Hold the Information We Collect?</h2></div>
+      <div class="sub-section">
+        <div class="sub-section-title">(a) Security</div>
+        <p>All data is private and confidential. We take reasonable steps to ensure it is handled securely and follow generally accepted security standards for both transmission and storage. We recommend using a sophisticated password and keeping it secret. To report unauthorized access, contact <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(b) Data Location</div>
+        <p>Your data is stored at the location closest to your country. Our servers are located in: Sydney (Australia), Singapore, Iowa (USA), London (UK), Eemshaven (Netherlands), and Frankfurt (Germany). Personal data and response data are always stored separately across different servers. Servers are protected by 24&times;7 human security, biometrics, access control, and video surveillance.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(c) European Union &amp; Swiss Users</div>
+        <p>The Good Foundry offers the EU Standard Contractual Clauses (EU SCCs) to meet adequacy and security requirements for Customers operating in the European Union and for other international data transfers.</p>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="section" id="s6">
+      <div class="section-header"><div class="section-num">06</div><h2>How Do We Use the Information We Collect?</h2></div>
+      <div class="never-sell">We never sell any of the data we collect to third parties.</div>
+      <div class="sub-section">
+        <div class="sub-section-title">(a) EU Users</div>
+        <p>We process your personal information either with your consent, to fulfill our contractual responsibility to deliver Services, or to pursue The Good Foundry&rsquo;s legitimate interests of improving our Services or developing new features.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(b) Administrators</div>
+        <ul>
+          <li><strong>To provide our Services.</strong> Providing platform access, customer support, and technical assistance.</li>
+          <li><strong>To manage our Services.</strong> Monitoring, maintaining, and improving features; personalizing your experience; enforcing contracts; preventing illegal activities.</li>
+          <li><strong>To contact you.</strong> Notifying you of changes to Services, terms, or policies.</li>
+          <li><strong>For marketing purposes.</strong> Sending news and product information you&rsquo;ve requested or that may interest you.</li>
+          <li><strong>To respond to legal requests.</strong> Inspecting personal information if required by law or to prevent potential harm.</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(c) Respondents</div>
+        <ul>
+          <li><strong>Account management.</strong> Creating and maintaining your account.</li>
+          <li><strong>Service management.</strong> Monitoring and improving features; personalizing your experience; responding to legal requests; publishing research.</li>
+          <li><strong>De-identified reporting.</strong> Using survey data in de-identified aggregated form to generate organizational results, improve Services, and create population scores.</li>
+        </ul>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(d) Visitors</div>
+        <ul>
+          <li><strong>Marketing communications.</strong> Sending news and product information you&rsquo;ve requested or that may interest you.</li>
+          <li><strong>Service management.</strong> Personalizing your experience; monitoring and improving Services; enforcing contracts; responding to legal requests.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="section" id="s7">
+      <div class="section-header"><div class="section-num">07</div><h2>Anonymity and Pseudonyms</h2></div>
+      <p>In most cases, we will have difficulty providing our Services if you do not provide your real name and contact details &mdash; particularly as an Administrator or Respondent. Where lawful and practicable, you may use a pseudonym or not identify yourself (for example, for general queries or complaints). In some cases, not providing information may limit our ability to provide Services or respond to you adequately.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="section" id="s8">
+      <div class="section-header"><div class="section-num">08</div><h2>Who Has Access to Your Personal Information?</h2></div>
+      <p>We share your personal information with third parties only as described in this Policy. We may disclose it to staff and service providers (including hosting, project management, email, monitoring, customer support, and analytics services) solely as necessary to provide our Services.</p>
+      <ul>
+        <li><strong>To provide Services.</strong> Filling orders, processing payments, storing documents, providing professional advice, sending service emails, and providing technical support.</li>
+        <li><strong>Actions you consent to.</strong> Disclosures you specifically authorize, or to integrate third-party services.</li>
+        <li><strong>Business transactions.</strong> In connection with mergers, acquisitions, or asset sales. You will be notified of any change in ownership affecting your personal information.</li>
+      </ul>
+      <p style="margin-top:10px; font-size:14px; color:var(--text-dim);">We sign confidentiality and data processing agreements with all third-party service providers to ensure appropriate privacy and security standards.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="section" id="s9">
+      <div class="section-header"><div class="section-num">09</div><h2>What Are Your Rights to Your Personal Information?</h2></div>
+      <p>If you live in certain countries (e.g., EU member states), you may have rights to access, correct, delete, port, limit, or stop use of your personal information.</p>
+      <ul>
+        <li><strong>Update account details.</strong> Change information directly in your account settings, or contact <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</li>
+        <li><strong>Access, correction, and deletion.</strong> Request review, correction, or deletion by contacting <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</li>
+        <li><strong>Data exports.</strong> Request a CSV export of your data by contacting <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</li>
+        <li><strong>Limiting or stopping use.</strong> Contact <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a> &mdash; note this may limit Services available to you.</li>
+        <li><strong>Unsubscribe.</strong> Use the unsubscribe link in our emails or contact <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section class="section" id="s10">
+      <div class="section-header"><div class="section-num">10</div><h2>How Long Do We Retain Your Personal Information?</h2></div>
+      <div class="sub-section">
+        <div class="sub-section-title">Administrators &amp; Respondents</div>
+        <p>We retain your personal information indefinitely.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">Visitors</div>
+        <p>We retain your personal information for as long as necessary to provide our Services, comply with legal obligations, resolve disputes, and enforce our legal rights.</p>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="section" id="s11">
+      <div class="section-header"><div class="section-num">11</div><h2>How Do You Make a Complaint?</h2></div>
+      <div class="sub-section">
+        <div class="sub-section-title">(a) Privacy Officer</div>
+        <p>Contact our Privacy Officer for any complaints about compliance with this Privacy Policy or relevant privacy laws: <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(b) European Union Complaints</div>
+        <p>If dissatisfied with our handling of a complaint, contact the relevant EU Data Protection Authority in your country. Please contact our Privacy Officer first at <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(c) Australian Privacy Act Complaints</div>
+        <p>If dissatisfied with our handling of a complaint, contact the Office of the Australian Information Commissioner at <a href="https://www.oaic.gov.au/about-us/contact-us" class="elink">www.oaic.gov.au/about-us/contact-us</a>. Please contact our Privacy Officer first at <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="section" id="s12">
+      <div class="section-header"><div class="section-num">12</div><h2>Additional Information</h2></div>
+      <div class="sub-section">
+        <div class="sub-section-title">(a) Sensitive Personal Data</div>
+        <p>By submitting sensitive personal information (e.g., racial or ethnic origin, sex life, physical or mental health conditions) when using the Services, you consent to our processing of such data as necessary to provide the Services. You may withdraw consent in accordance with applicable laws and Section 8 of this Policy.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(b) Cookies and Tracking Technologies</div>
+        <p>We use technologies such as cookies, beacons, tags, and scripts to analyze trends, administer the website, and gather demographic information. We use cookies for session management and user preferences. You can control cookie use at the browser level, though some features may be limited if cookies are disabled.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(c) Links to Other Websites</div>
+        <p>Our websites may link to third-party websites. Their privacy practices may differ from ours. Personal information submitted to those sites is governed by their own privacy policies. We encourage you to review each site&rsquo;s privacy policy.</p>
+      </div>
+      <div class="sub-section">
+        <div class="sub-section-title">(d) Testimonials</div>
+        <p>We may post testimonials with your consent. To update or delete your testimonial, contact <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</p>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="section" id="s13">
+      <div class="section-header"><div class="section-num">13</div><h2>Our Contact Details</h2></div>
+      <p>For any questions, concerns, or complaints about this Privacy Policy, our data collection or processing practices, or to report data privacy or security concerns, please contact us at:</p>
+      <div class="highlight-box">
+        &#128231; <a href="mailto:privacy@permahsurvey.com" class="elink"><strong>privacy@permahsurvey.com</strong></a>
+      </div>
+    </section>
+
+    <!-- CONTACT CTA -->
+    <div class="contact-card">
+      <div class="contact-card-inner">
+        <h2>Questions?</h2>
+        <p>Our Privacy Officer is here to help with any concerns about your personal information.</p>
+        <a href="mailto:privacy@permahsurvey.com" class="cta-btn">Contact Privacy Officer &rarr;</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>&copy; 2026 <strong>The Good Foundry Pty Ltd</strong> &middot; ACN 103 558 372</span>
+  <span>1/31 Beach Street, VIC 3199, Australia</span>
+</footer>
+
+<!-- TOC active-state script -->
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc ol li a');
+  const sections = [];
+  links.forEach(function(a){
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if(el) sections.push({id:id, el:el, link:a});
+  });
+  function update(){
+    var scrollY = window.scrollY || window.pageYOffset;
+    var current = '';
+    sections.forEach(function(s){
+      if(s.el.offsetTop - 120 <= scrollY) current = s.id;
+    });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    sections.forEach(function(s){
+      if(s.id === current) s.link.classList.add('active');
+    });
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+
+</body>
+</html>
