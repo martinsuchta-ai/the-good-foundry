@@ -1621,6 +1621,40 @@
             + '</div>'
           : '');
     $('proposal-root').innerHTML = html;
+
+    /* 2026-06-26 — Marty: "client set and saved their budget but
+       when I open it at my end I cannot see what has been set on
+       or off". Save handler persists kept_keys / dropped_keys on
+       the server (proposals.budget_lines_json) but the page render
+       was using the default-on state for every line item. Anyone
+       opening the offer URL after a budget save (rep auditing, the
+       client returning from another device / browser, Marty) saw
+       every toggle ON.
+
+       Fix: after the markup is injected, walk p.budget_lines
+       .dropped_keys and apply the OFF state to each matching
+       .item[data-key=…]. Mirrors what _toggleItem would do for an
+       in-session click but without the re-render — the items are
+       already in the DOM, we just flip the visual + register the
+       key in the `declined` map so totals recompute correctly via
+       paintTotals() below.
+
+       Defensive: gates on status===budget AND a parsed
+       budget_lines payload AND a non-empty dropped_keys array.
+       Other states fall through unchanged. */
+    if (p.status === 'budget' && p.budget_lines && Array.isArray(p.budget_lines.dropped_keys)) {
+      try {
+        p.budget_lines.dropped_keys.forEach(function (k) {
+          if (!k) return;
+          declined[String(k)] = true;
+          var el = document.querySelector('.item[data-key="' + String(k).replace(/"/g, '\\"') + '"]');
+          if (el) {
+            el.classList.remove('on');
+          }
+        });
+      } catch (_eBL) {}
+    }
+
     paintTotals();
     window._toggleItem = toggleItem;
     /* 2026-06-06 — Paint the sticky top status banner whenever the
