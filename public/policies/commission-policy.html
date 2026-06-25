@@ -86,7 +86,7 @@
        from the-good-foundry-index.html line 56-127) ─────────────── */
   header.page-hd {
     position: sticky; top: 0; z-index: 300;
-    min-height: 86px;
+    min-height: 104px;   /* bumped from 86 to fit 72px logo with breathing room */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -104,8 +104,12 @@
     align-items: center;
     gap: 14px;
   }
+  /* 2026-06-26 — Marty: "fix the size of our logo on the policy
+     pages". Bumped from 44px to 72px for better brand presence
+     against the chrome. Topbar min-height bumped to 104px below
+     to accommodate. */
   header.page-hd .brand-mark {
-    width: 44px; height: 44px;
+    width: 72px; height: 72px;
     flex-shrink: 0;
     display: inline-flex; align-items: center; justify-content: center;
     overflow: hidden;

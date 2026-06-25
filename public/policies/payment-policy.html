@@ -75,7 +75,7 @@
   /* ── Header (TGF-style sticky white-glass topbar) ─────────────── */
   header.page-hd {
     position: sticky; top: 0; z-index: 300;
-    min-height: 86px;
+    min-height: 104px;   /* bumped from 86 to accommodate 72px logo with breathing room */
     display: flex; align-items: center; justify-content: space-between;
     padding: 10px 32px;
     background: rgba(255,255,255,.85);
@@ -83,7 +83,13 @@
     border-bottom: 1px solid var(--border);
   }
   header.page-hd .hd-inner { max-width: 1100px; margin: 0 auto; flex: 1 1 auto; display: flex; align-items: center; gap: 14px; }
-  header.page-hd .brand-mark { width: 44px; height: 44px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
+  /* 2026-06-26 — Marty: "fix the size of our logo on the policy
+     pages". 44px×44px was too tiny against the chrome — barely
+     visible next to the wordmark. Bumped to 72px to match the
+     TGF brand presence on the public marketing pages (homepage
+     wordmark is 90px; 72px feels right alongside the smaller
+     policy-page sub-line). */
+  header.page-hd .brand-mark { width: 72px; height: 72px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
   header.page-hd .brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
   header.page-hd .brand-text { color: var(--text); font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
   header.page-hd .brand-text em { font-style: italic; color: var(--arctic); font-family: var(--serif); font-weight: 400; }
