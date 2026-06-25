@@ -11,45 +11,110 @@
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 
 <meta name="description" content="Rep payment workflow — submission window, payout timing, and case-by-case early-payment exception. Internal rep distribution only.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23EC008B'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
+  /* 2026-06-26 — Re-themed to match the-good-foundry.com homepage.
+     Tokens lifted verbatim from the TGF brand; legacy property
+     names kept as aliases so the body rules below keep working. */
   :root {
-    --orange: #e8621a;
-    --orange-light: #f5a06e;
-    --orange-pale: #fff4ee;
-    --navy-deep: #14202e;
-    --navy-mid:  #1f3045;
-    --text-dark: #1c2b3a;
-    --text-mid:  #45586a;
-    --text-muted:#8097ad;
-    --surface:   #ffffff;
-    --surface-2: #f4f6f8;
-    --border:    #e2e8ef;
-    --body-bg:   #f0f2f5;
-    --good:      #2db87a;
-    --warn:      #d97706;
+    --twilight:  #293890;
+    --arctic:    #1B75BC;
+    --aqua:      #26AAE1;
+    --grape:     #662C90;
+    --orchid:    #91268F;
+    --punch:     #EC008B;
+
+    --bg:        #F4F6FB;
+    --card:      #FFFFFF;
+    --mid:       #EEF1F8;
+    --border:    rgba(41,56,144,.12);
+    --text:      #161A2E;
+    --text-dim:  rgba(22,26,46,.58);
+
+    --orange:       var(--punch);
+    --orange-light: rgba(236,0,139,.78);
+    --orange-pale:  rgba(236,0,139,.06);
+    --navy-deep:    var(--twilight);
+    --navy-mid:     var(--grape);
+    --text-dark:    var(--text);
+    --text-mid:     rgba(22,26,46,.66);
+    --text-muted:   rgba(22,26,46,.45);
+    --surface:      var(--card);
+    --surface-2:    var(--mid);
+    --body-bg:      var(--bg);
+    --good:         #2db87a;
+    --warn:         #d97706;
+
+    --font:  'Outfit', sans-serif;
+    --serif: 'DM Serif Display', serif;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: var(--body-bg);
-    color: var(--text-dark);
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
     -webkit-font-smoothing: antialiased;
     line-height: 1.65;
+    overflow-x: hidden;
   }
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(102,44,144,.09) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(41,56,144,.11) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,117,188,.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  header.page-hd, main.page-bd { position: relative; z-index: 1; }
+  em { font-family: var(--serif); font-style: italic; }
 
-  /* ── Shared chrome (matches commission-policy.html) ───────────── */
-  header.page-hd { background: var(--navy-deep); border-bottom: 4px solid var(--orange); padding: 22px 28px; }
-  header.page-hd .hd-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
-  header.page-hd .brand-mark { width: 44px; height: 44px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #fff; overflow: hidden; }
+  /* ── Header (TGF-style sticky white-glass topbar) ─────────────── */
+  header.page-hd {
+    position: sticky; top: 0; z-index: 300;
+    min-height: 86px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 32px;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  header.page-hd .hd-inner { max-width: 1100px; margin: 0 auto; flex: 1 1 auto; display: flex; align-items: center; gap: 14px; }
+  header.page-hd .brand-mark { width: 44px; height: 44px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
   header.page-hd .brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
-  header.page-hd .brand-text { color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em; }
-  header.page-hd .brand-sub { color: var(--orange-light); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
-  header.page-hd .hd-back { order: -1; margin-right: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78); text-decoration: none; padding: 6px 14px; border-radius: 100px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
-  header.page-hd .hd-back:hover { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.32); }
-  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+  header.page-hd .brand-text { color: var(--text); font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
+  header.page-hd .brand-text em { font-style: italic; color: var(--arctic); font-family: var(--serif); font-weight: 400; }
+  header.page-hd .brand-sub { color: var(--text-dim); font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+  /* Bookmark / copy-link pill — mirrors TGF's .nav-pill (grape →
+     punch gradient). Replaces the old back button. */
+  header.page-hd .hd-copy {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: #fff;
+    background: linear-gradient(135deg, var(--grape), var(--punch));
+    padding: 8px 18px; border-radius: 100px; border: 0;
+    cursor: pointer; letter-spacing: .02em;
+    box-shadow: 0 4px 14px rgba(236,0,139,.22);
+    transition: opacity .2s, transform .15s;
+    white-space: nowrap; font-family: var(--font);
+  }
+  header.page-hd .hd-copy:hover { opacity: .92; transform: translateY(-1px); }
+  header.page-hd .hd-copy:active { transform: translateY(0); }
+  header.page-hd .hd-copy svg { width: 14px; height: 14px; }
+  header.page-hd .hd-copy.copied {
+    background: linear-gradient(135deg, #2db87a, #16a34a);
+    box-shadow: 0 4px 14px rgba(22,163,74,.22);
+  }
+  @media (max-width: 560px) {
+    header.page-hd { padding: 10px 18px; min-height: 72px; }
+    header.page-hd .brand-text { font-size: 13px; }
+    header.page-hd .brand-sub { font-size: 10px; }
+    header.page-hd .hd-copy span.lbl { display: none; }
+    header.page-hd .hd-copy { padding: 8px 12px; }
+  }
 
   main.page-bd { max-width: 1100px; margin: 0 auto; padding: 40px 28px 60px; }
 
@@ -251,22 +316,58 @@
 
 <header class="page-hd">
   <div class="hd-inner">
-    <a class="hd-back" href="javascript:void(0)"
-       onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }"
-       title="Back to previous page">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back
-    </a>
     <div class="brand-mark">
       <img src="../logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry"
            onerror="this.style.display='none'">
     </div>
     <div>
-      <div class="brand-text">The Good Foundry</div>
+      <div class="brand-text">The Good <em>Foundry</em></div>
       <div class="brand-sub">Rep Payment Workflow</div>
     </div>
   </div>
+  <!-- 2026-06-26 — Bookmark pill replaces BACK (which made no
+       sense — opens in a new tab so there's no history to walk). -->
+  <button type="button" class="hd-copy" onclick="_tgfCopyPolicyUrl(this)" title="Copy this page's URL — paste it anywhere to bookmark or share with a fellow rep">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+    </svg>
+    <span class="lbl">Copy link &middot; Bookmark me</span>
+  </button>
 </header>
+
+<script>
+  function _tgfCopyPolicyUrl(btn) {
+    var url = window.location.href;
+    var label = btn.querySelector('.lbl');
+    var origText = label ? label.textContent : '';
+    var flash = function () {
+      btn.classList.add('copied');
+      if (label) label.textContent = 'Copied · paste to bookmark';
+      setTimeout(function () {
+        btn.classList.remove('copied');
+        if (label) label.textContent = origText;
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(flash, function () {
+        try {
+          var t = document.createElement('textarea');
+          t.value = url; document.body.appendChild(t); t.select();
+          document.execCommand('copy'); document.body.removeChild(t);
+          flash();
+        } catch (_e) {}
+      });
+    } else {
+      try {
+        var t2 = document.createElement('textarea');
+        t2.value = url; document.body.appendChild(t2); t2.select();
+        document.execCommand('copy'); document.body.removeChild(t2);
+        flash();
+      } catch (_e) {}
+    }
+  }
+</script>
 
 <main class="page-bd">
 
