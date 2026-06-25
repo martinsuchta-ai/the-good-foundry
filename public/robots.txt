@@ -36,4 +36,11 @@ Disallow: /mutual-confidentiality-agreement.html
 Disallow: /livewell-flourishing-together
 Disallow: /livewell-flourishing-together.html
 
+# Internal sales rep policy pages — back-end distribution only,
+# linked from the rep wallet. Per-page <meta robots noindex,nofollow>
+# is the primary control; the path disallow here reinforces it for
+# crawlers that arrive without rendering the HTML.
+Disallow: /policies/
+Disallow: /policies
+
 Sitemap: https://www.the-good-foundry.com/sitemap.xml

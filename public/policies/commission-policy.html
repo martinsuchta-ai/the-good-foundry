@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Commission Policy — The Good Foundry</title>
+
+<!-- NO-INDEX. This is an internal back-end policy distributed to
+     authenticated reps only. Per-page meta is the primary control;
+     /policies/ is also reinforced in robots.txt for non-rendering
+     crawlers. -->
+<meta name="robots"   content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+
+<meta name="description" content="Sales commission policy and per-deal calculator. Internal rep distribution only.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e8621a'/%3E%3C/svg%3E">
+
+<style>
+  :root {
+    --orange: #e8621a;
+    --orange-light: #f5a06e;
+    --orange-pale: #fff4ee;
+    --navy-deep: #14202e;
+    --navy-mid:  #1f3045;
+    --text-dark: #1c2b3a;
+    --text-mid:  #45586a;
+    --text-muted:#8097ad;
+    --surface:   #ffffff;
+    --surface-2: #f4f6f8;
+    --border:    #e2e8ef;
+    --body-bg:   #f0f2f5;
+    --good:      #2db87a;
+    --warn:      #d97706;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.65;
+  }
+
+  /* ── Header (shared chrome with other TGF policy / read pages) ── */
+  header.page-hd {
+    background: var(--navy-deep);
+    border-bottom: 4px solid var(--orange);
+    padding: 22px 28px;
+  }
+  header.page-hd .hd-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header.page-hd .brand-mark {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  header.page-hd .brand-mark img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  header.page-hd .brand-text {
+    color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em;
+  }
+  header.page-hd .brand-sub {
+    color: var(--orange-light);
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; margin-top: 2px;
+  }
+  header.page-hd .hd-back {
+    order: -1;
+    margin-right: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.78);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  header.page-hd .hd-back:hover { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.32); }
+  header.page-hd .hd-back svg { width: 12px; height: 12px; }
+
+  main.page-bd {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .hero-card {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 44px 44px 36px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .hero-card::before {
+    content: ''; position: absolute;
+    top: -120px; right: -120px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(232,98,26,.22), transparent 65%);
+    pointer-events: none;
+  }
+  .hero-card .hero-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--orange-light);
+    margin-bottom: 10px;
+  }
+  .hero-card h1 {
+    font-size: 32px; font-weight: 800; letter-spacing: -.012em;
+    line-height: 1.15; margin: 0 0 14px; color: #fff;
+  }
+  .hero-card h1 em {
+    font-style: italic; color: var(--orange-light); font-weight: 700;
+  }
+  .hero-card .hero-lede {
+    font-size: 15.5px; color: rgba(255,255,255,.82); max-width: 720px;
+    line-height: 1.7; margin: 0 0 10px;
+  }
+  .hero-card .hero-tagline {
+    border-top: 1px solid rgba(255,255,255,.14);
+    padding-top: 16px; margin-top: 18px;
+    font-size: 13px; font-weight: 600; color: rgba(255,255,255,.92);
+    display: flex; gap: 18px; flex-wrap: wrap;
+  }
+  .hero-card .hero-tagline span:not(:last-child)::after {
+    content: '·'; margin-left: 18px; color: rgba(255,255,255,.4);
+  }
+  @media (max-width: 720px) {
+    .hero-card { padding: 32px 26px 26px; }
+    .hero-card h1 { font-size: 24px; }
+  }
+
+  /* ── Numbered section marker ──────────────────────────────────── */
+  .section { margin-top: 36px; }
+  .section-hd {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 12px;
+  }
+  .section-num {
+    font-size: 11px; font-weight: 700; letter-spacing: .14em;
+    color: var(--orange);
+    font-variant-numeric: tabular-nums;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -.012em; margin: 0;
+  }
+  .section-lede {
+    font-size: 15px; color: var(--text-mid); line-height: 1.75;
+    margin: 0 0 16px; max-width: 820px;
+  }
+
+  /* ── Cards ───────────────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 28px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+  }
+  .card p { font-size: 14.5px; color: var(--text-mid); margin: 0 0 12px; line-height: 1.75; }
+  .card p:last-child { margin-bottom: 0; }
+  .card strong { color: var(--text-dark); }
+
+  /* ── Table ───────────────────────────────────────────────────── */
+  .ptable {
+    width: 100%; border-collapse: collapse; margin-top: 6px;
+    font-size: 14px;
+  }
+  .ptable th, .ptable td {
+    text-align: left; padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ptable th {
+    background: var(--surface-2);
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--text-mid);
+    border-bottom: 1px solid var(--border);
+  }
+  .ptable td.event-num { font-weight: 800; color: var(--text-dark); width: 36px; text-align: center; }
+  .ptable td.pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .ptable td.amt { text-align: right; font-variant-numeric: tabular-nums; }
+  .ptable tr.total-row td { background: var(--orange-pale); font-weight: 800; color: var(--text-dark); border-bottom: 0; }
+  .ptable td .ev-name { font-weight: 700; color: var(--text-dark); }
+  .ptable td .ev-desc { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Calculator ──────────────────────────────────────────────── */
+  .calc {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--orange-pale) 130%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 720px) { .calc-grid { grid-template-columns: 1fr; } }
+  .field-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--text-mid);
+    margin-bottom: 6px;
+  }
+  .field select, .field input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text-dark);
+    font-family: inherit;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .field select:focus, .field input:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(232,98,26,.12);
+  }
+  .field .help {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 6px; line-height: 1.55;
+    font-style: italic;
+  }
+  .field .input-curr {
+    position: relative;
+  }
+  .field .input-curr::before {
+    content: 'AUD';
+    position: absolute; left: 12px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-mid);
+    letter-spacing: .05em;
+  }
+  .field .input-curr input { padding-left: 46px; font-variant-numeric: tabular-nums; }
+
+  .calc-out {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 10px;
+  }
+  @media (max-width: 720px) { .calc-out { grid-template-columns: 1fr; } }
+  .out-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(20,32,46,.04);
+  }
+  .out-tile.rep { border-color: rgba(232,98,26,.30); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,98,26,.04) 100%); }
+  .out-tile.svc { border-color: rgba(45,184,122,.30); background: linear-gradient(135deg, var(--surface) 0%, rgba(45,184,122,.04) 100%); }
+  .out-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text-mid);
+    margin-bottom: 6px;
+  }
+  .out-tile.rep .out-eyebrow { color: var(--orange); }
+  .out-tile.svc .out-eyebrow { color: var(--good); }
+  .out-num {
+    font-size: 28px; font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: -.01em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .out-pct {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .calc-note {
+    font-size: 12.5px; color: var(--text-muted);
+    margin-top: 16px; text-align: center; line-height: 1.55;
+  }
+  .calc-event-line {
+    font-size: 13px; color: var(--text-dark);
+    background: rgba(232,98,26,.06);
+    border-left: 3px solid var(--orange);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+
+  /* ── Decision flow ───────────────────────────────────────────── */
+  .flow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 10px rgba(20, 32, 46, 0.04);
+  }
+  .flow-step {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  .flow-step:first-of-type { border-top: 0; padding-top: 4px; }
+  .flow-chip {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--navy-deep);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    margin-top: 2px;
+  }
+  .flow-q {
+    font-size: 14.5px; color: var(--text-dark); font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .flow-a {
+    font-size: 13.5px; color: var(--text-mid);
+    margin: 0; line-height: 1.65;
+  }
+  .flow-pill {
+    display: inline-block;
+    background: var(--orange-pale);
+    color: var(--orange);
+    border-radius: 99px;
+    font-size: 11px; font-weight: 800;
+    padding: 3px 10px;
+    margin-left: 6px;
+    letter-spacing: .04em;
+  }
+
+  /* ── Definitions ─────────────────────────────────────────────── */
+  .def-list { display: grid; gap: 14px; }
+  .def {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    box-shadow: 0 1px 4px rgba(20,32,46,.04);
+  }
+  .def-term {
+    font-size: 14.5px; font-weight: 800; color: var(--text-dark);
+    margin: 0 0 6px;
+  }
+  .def-body {
+    font-size: 14px; color: var(--text-mid);
+    margin: 0; line-height: 1.7;
+  }
+
+  /* ── Footer ──────────────────────────────────────────────────── */
+  footer.page-ft {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 22px 28px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    text-align: center;
+    line-height: 1.7;
+  }
+  footer.page-ft .ft-credit { font-weight: 600; color: var(--text-mid); }
+  footer.page-ft a { color: var(--orange); text-decoration: none; font-weight: 700; }
+  footer.page-ft a:hover { text-decoration: underline; }
+
+  /* ── Internal pill ───────────────────────────────────────────── */
+  .internal-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(217,119,6,.12);
+    border: 1px solid rgba(217,119,6,.32);
+    color: var(--warn);
+    border-radius: 99px;
+    font-size: 10px; font-weight: 800;
+    padding: 4px 10px;
+    text-transform: uppercase; letter-spacing: .08em;
+    margin-left: 10px;
+  }
+
+  /* ── Worked-example panel ────────────────────────────────────── */
+  .we-grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px;
+  }
+  .we-figure {
+    background: var(--orange-pale);
+    border: 1px solid rgba(232,98,26,.20);
+    border-radius: 12px;
+    padding: 18px 22px;
+    display: flex; gap: 14px; align-items: center;
+    flex-wrap: wrap;
+  }
+  .we-figure .we-lbl {
+    font-size: 11px; font-weight: 700; color: var(--orange);
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .we-figure .we-num {
+    font-size: 20px; font-weight: 800; color: var(--text-dark);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body>
+
+<header class="page-hd">
+  <div class="hd-inner">
+    <a class="hd-back" href="javascript:void(0)"
+       onclick="if (history.length > 1) { history.back(); } else { window.location.href='the-good-foundry-index.html'; }"
+       title="Back to previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <div class="brand-mark">
+      <img src="../logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry"
+           onerror="this.style.display='none'">
+    </div>
+    <div>
+      <div class="brand-text">The Good Foundry</div>
+      <div class="brand-sub">Sales Commission Policy</div>
+    </div>
+  </div>
+</header>
+
+<main class="page-bd">
+
+  <!-- Hero -->
+  <div class="hero-card">
+    <div class="hero-eyebrow">Internal · For sales representatives</div>
+    <h1>Sales Commission <em>Policy</em></h1>
+    <p class="hero-lede">How sales commission is earned and split between Sales Representatives and the Service / Delivery team across the full lifecycle of a Wellbeing Matters account.</p>
+    <div class="hero-tagline">
+      <span>Effective <span data-policy-date>[date]</span></span>
+      <span>Owner: Sales Ops</span>
+      <span>Reviewed annually</span>
+    </div>
+  </div>
+
+  <!-- 01 Purpose -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">01</span><h2 class="section-title">Purpose</h2></div>
+    <div class="card">
+      <p>This policy sets out how sales commission is earned and split between <strong>Sales Representatives</strong> and the <strong>Service / Delivery team</strong> across the full lifecycle of a Wellbeing Matters account — from the initial subscription through to post-sale add-ons and expansions (further editions, 360 Foundry, Rewards Foundry Power-Up, bespoke extensions, and other up-sells).</p>
+      <p>It exists to reward the right people for the right work: the rep who lands the account, and the service team who grow it.</p>
+    </div>
+  </section>
+
+  <!-- 02 The principle -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">02</span><h2 class="section-title">The principle</h2></div>
+    <div class="card">
+      <p>Commission tracks <strong>effort and influence</strong>. The rep who opens an account earns the full rate on what they personally close, and a smaller originator credit on what others grow afterwards. When the rep and the service team genuinely sell an expansion together, they share equally.</p>
+      <p><strong>Ownership of any commission event is determined by whose name is on the accepted proposal (offer).</strong> Whoever raises a proposal that the customer accepts owns that event. This is the single, objective attribution rule — no time-boxing, no after-the-fact arguments.</p>
+    </div>
+  </section>
+
+  <!-- 03 The commission structure -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">03</span><h2 class="section-title">The commission structure</h2></div>
+    <p class="section-lede">All percentages apply to the <strong>top-line</strong> value of the relevant subscription or add-on.</p>
+    <div class="card" style="padding:6px 10px">
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th style="width:36px">#</th>
+            <th>Commission event</th>
+            <th style="width:120px">Owner</th>
+            <th style="width:90px;text-align:right">Rep</th>
+            <th style="width:120px;text-align:right">Service team</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="event-num">1</td>
+            <td><div class="ev-name">Initial subscription</div><div class="ev-desc">Rep closes the new-business sale.</div></td>
+            <td>Rep</td>
+            <td class="pct">30%</td>
+            <td class="pct">—</td>
+          </tr>
+          <tr>
+            <td class="event-num">2</td>
+            <td><div class="ev-name">Service-led add-on</div><div class="ev-desc">Service team raises and closes; rep not involved.</div></td>
+            <td>Service</td>
+            <td class="pct">5%<br><span style="font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase">Originator</span></td>
+            <td class="pct">15%</td>
+          </tr>
+          <tr>
+            <td class="event-num">3</td>
+            <td><div class="ev-name">Joint up-sell</div><div class="ev-desc">Service-led proposal, rep materially assists.</div></td>
+            <td>Service</td>
+            <td class="pct">15%</td>
+            <td class="pct">15%</td>
+          </tr>
+          <tr>
+            <td class="event-num">4</td>
+            <td><div class="ev-name">Rep-led up-sell</div><div class="ev-desc">Rep raises and closes the expansion themselves.</div></td>
+            <td>Rep</td>
+            <td class="pct">30%</td>
+            <td class="pct">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Worked example -->
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">03·a</span><h2 class="section-title" style="font-size:18px">Worked example <span class="internal-pill">Illustrative</span></h2></div>
+    <div class="card" style="padding:6px 10px">
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th style="width:150px;text-align:right">Revenue</th>
+            <th style="width:120px;text-align:right">Rep</th>
+            <th style="width:140px;text-align:right">Service team</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initial subscription</td>
+            <td class="amt">$100,000</td>
+            <td class="amt">$30,000</td>
+            <td class="amt">—</td>
+          </tr>
+          <tr>
+            <td>Service-led add-on <span style="font-size:11.5px;color:var(--text-muted)">(rep not involved)</span></td>
+            <td class="amt">$20,000</td>
+            <td class="amt">$1,000</td>
+            <td class="amt">$3,000</td>
+          </tr>
+          <tr>
+            <td>Joint up-sell <span style="font-size:11.5px;color:var(--text-muted)">(rep assists)</span></td>
+            <td class="amt">$30,000</td>
+            <td class="amt">$4,500</td>
+            <td class="amt">$4,500</td>
+          </tr>
+          <tr class="total-row">
+            <td>Totals</td>
+            <td class="amt">$150,000</td>
+            <td class="amt">$35,500</td>
+            <td class="amt">$7,500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Calculator -->
+  <section class="section" id="calculator">
+    <div class="section-hd"><span class="section-num">03·b</span><h2 class="section-title">Calculator <span class="internal-pill">Live</span></h2></div>
+    <p class="section-lede">Pick the event type + enter a top-line deal value. The page shows what the rep and the service team would each be paid under the policy.</p>
+
+    <div class="calc">
+      <div class="calc-grid">
+        <div class="field">
+          <div class="field-label">Event type</div>
+          <select id="calc-event" onchange="recalc()">
+            <option value="1">Event 1 — Initial subscription (rep closes new business)</option>
+            <option value="2">Event 2 — Service-led add-on (rep not involved)</option>
+            <option value="3">Event 3 — Joint up-sell (rep materially assists)</option>
+            <option value="4">Event 4 — Rep-led up-sell (rep closes expansion)</option>
+          </select>
+          <div class="help" id="calc-event-help">Rep closes the new-business sale. Rep earns 30% of top-line value.</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Deal value (top-line)</div>
+          <div class="input-curr">
+            <input id="calc-value" type="number" min="0" step="1" value="100000" oninput="recalc()" inputmode="numeric">
+          </div>
+          <div class="help">Top-line. No discounting logic in v1 — flag for future enhancement if needed.</div>
+        </div>
+      </div>
+
+      <div class="calc-event-line" id="calc-event-summary">
+        <strong>Event 1</strong> · Rep 30% · Service 0%
+      </div>
+
+      <div class="calc-out">
+        <div class="out-tile rep">
+          <div class="out-eyebrow">Rep payout</div>
+          <div class="out-num"><span id="calc-rep-amt">$0</span></div>
+          <div class="out-pct"><span id="calc-rep-pct">30%</span> of <span id="calc-rep-base">$0</span></div>
+        </div>
+        <div class="out-tile svc">
+          <div class="out-eyebrow">Service-team payout</div>
+          <div class="out-num"><span id="calc-svc-amt">$0</span></div>
+          <div class="out-pct"><span id="calc-svc-pct">0%</span> of <span id="calc-svc-base">$0</span></div>
+        </div>
+      </div>
+
+      <div class="calc-note">All percentages apply to top-line deal value. Originator credit (Event 2) is conditional on the rep being the named account owner at the time of acceptance.</div>
+    </div>
+  </section>
+
+  <!-- Which event is this? -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">03·c</span><h2 class="section-title">Which event is this?</h2></div>
+    <p class="section-lede">Short decision flow. Run through it from the top — the first question identifies the owner; the follow-ups distinguish the four events.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-chip">Q1</div>
+        <div>
+          <div class="flow-q">Who is named on the accepted proposal?</div>
+          <p class="flow-a">This is the single attribution rule. Whoever's name is on the proposal the customer accepted owns the event.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-chip">Rep</div>
+        <div>
+          <div class="flow-q">Is this new business or an expansion on an existing account?</div>
+          <p class="flow-a">
+            New business → <span class="flow-pill">Event 1</span> Initial subscription. Rep 30%, service 0%.<br>
+            Expansion → <span class="flow-pill">Event 4</span> Rep-led up-sell. Rep 30%, service 0%.
+          </p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-chip">Svc</div>
+        <div>
+          <div class="flow-q">Is the rep also named on the proposal before acceptance?</div>
+          <p class="flow-a">
+            <strong>Yes, named on the deal in CRM before the customer accepted</strong> → <span class="flow-pill">Event 3</span> Joint up-sell. Rep 15%, service 15%.<br>
+            <strong>No, rep not on the deal record</strong> → <span class="flow-pill">Event 2</span> Service-led add-on. Rep 5% originator credit (if still the named account owner), service 15%.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Definitions & rules -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">04</span><h2 class="section-title">Definitions &amp; rules</h2></div>
+    <div class="def-list">
+      <div class="def">
+        <div class="def-term">Accepted proposal = ownership</div>
+        <p class="def-body">The name on the proposal the customer accepts owns the commission event. If the rep's name is on it, event type 1 or 4 applies (30% rep). If the service team's name is on it, event type 2 or 3 applies.</p>
+      </div>
+      <div class="def">
+        <div class="def-term">"Rep materially assists" (the line between event 2 and event 3)</div>
+        <p class="def-body">A rep counts as assisting — unlocking the 15% / 15% split instead of 5% / 15% — <strong>only if they are named on the proposal / opportunity in the CRM before the customer accepts it.</strong> Named on the deal = assist. Not named = service-led. This is recorded, not recalled, so it cannot be re-litigated after payout.</p>
+      </div>
+      <div class="def">
+        <div class="def-term">Originator credit boundary</div>
+        <p class="def-body">The rep's 5% originator credit (event 2) applies for as long as the rep remains the <strong>named account owner</strong>. Once an account formally transitions to an account manager or service owner, the 5% originator credit stops — or transfers to the new owner — from the date of transition. This prevents a rep clipping 5% indefinitely on accounts they no longer touch.</p>
+      </div>
+      <div class="def">
+        <div class="def-term">Cost note for approvers</div>
+        <p class="def-body">A joint up-sell (event 3) costs 30% in total commission — the same as new business. That is intentional where two people genuinely contributed, but it makes event 3 the most expensive expansion type. The "named before acceptance" test is what keeps it controlled.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Edge cases -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">05</span><h2 class="section-title">Edge cases</h2></div>
+    <div class="card">
+      <p><strong>Rep raises the proposal but service negotiates the detail.</strong> Ownership still follows the accepted proposal. If the rep's name is on it, it's event 4 (30% rep).</p>
+      <p><strong>Multiple add-ons in one accepted proposal.</strong> Classify the whole proposal by its owner and whether the rep is named; apply one event type to the bundle.</p>
+      <p><strong>Account in transition when an add-on closes.</strong> The named account owner on the date of acceptance governs the originator credit.</p>
+    </div>
+  </section>
+
+  <!-- 06 Governance -->
+  <section class="section">
+    <div class="section-hd"><span class="section-num">06</span><h2 class="section-title">Governance</h2></div>
+    <div class="card">
+      <p>Disputes are resolved by <strong>Sales Ops / Finance</strong> against the CRM record of the accepted proposal and the named-owner field. Because attribution is tied to recorded CRM state at the moment of acceptance, the record is the single source of truth. This policy is reviewed annually.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-ft">
+  <div class="ft-credit">The Good Foundry Pty Ltd · ACN 103 558 372</div>
+  <div>1/31 Beach Street, VIC 3199, Australia</div>
+  <div style="margin-top:8px">
+    <a href="../privacy-policy.html">Privacy policy</a> · © <span id="ft-year">2026</span> The Good Foundry. Internal distribution only — no external sharing.
+  </div>
+</footer>
+
+<script>
+/* Single source of truth for the rate table. Sales Ops can change
+   the rates here without touching layout. */
+const COMMISSION_RATES = {
+  '1': { name: 'Initial subscription',  owner: 'Rep',     rep: 0.30, svc: 0.00, help: 'Rep closes the new-business sale. Rep earns 30% of top-line value.' },
+  '2': { name: 'Service-led add-on',    owner: 'Service', rep: 0.05, svc: 0.15, help: 'Service team raises & closes; rep not involved. Rep retains a 5% originator credit only while still the named account owner.' },
+  '3': { name: 'Joint up-sell',         owner: 'Service', rep: 0.15, svc: 0.15, help: 'Service-led proposal where the rep is named on the deal BEFORE the customer accepts. Equal 15% / 15% split.' },
+  '4': { name: 'Rep-led up-sell',       owner: 'Rep',     rep: 0.30, svc: 0.00, help: 'Rep raises and closes the expansion themselves. Same 30% as new business.' },
+};
+
+function fmt$(n) {
+  if (!isFinite(n) || n < 0) n = 0;
+  return '$' + Math.round(n).toLocaleString('en-AU');
+}
+function pct(p) {
+  return (Math.round(p * 1000) / 10).toFixed(1).replace(/\.0$/, '') + '%';
+}
+
+function recalc() {
+  const ev = document.getElementById('calc-event').value;
+  const val = Math.max(0, parseFloat(document.getElementById('calc-value').value) || 0);
+  const r = COMMISSION_RATES[ev];
+  if (!r) return;
+  document.getElementById('calc-event-help').textContent = r.help;
+  document.getElementById('calc-event-summary').innerHTML =
+      '<strong>Event ' + ev + '</strong> · Rep ' + pct(r.rep) + ' · Service ' + pct(r.svc);
+  document.getElementById('calc-rep-amt').textContent = fmt$(val * r.rep);
+  document.getElementById('calc-svc-amt').textContent = fmt$(val * r.svc);
+  document.getElementById('calc-rep-pct').textContent = pct(r.rep);
+  document.getElementById('calc-svc-pct').textContent = pct(r.svc);
+  document.getElementById('calc-rep-base').textContent = fmt$(val);
+  document.getElementById('calc-svc-base').textContent = fmt$(val);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  /* Year stamp in the footer. */
+  var yEl = document.getElementById('ft-year');
+  if (yEl) {
+    var y = (new Date()).getFullYear();
+    if (isFinite(y) && y >= 2026) yEl.textContent = String(y);
+  }
+  /* Initial calculator render. */
+  recalc();
+
+  /* Effective date placeholder — read from ?effective= query param
+     if provided (so Sales Ops can deep-link a stamped version).
+     Falls back to leaving the bracketed placeholder in place. */
+  try {
+    var u = new URL(window.location.href);
+    var eff = u.searchParams.get('effective');
+    if (eff) {
+      var el = document.querySelector('[data-policy-date]');
+      if (el) el.textContent = eff;
+    }
+  } catch (_e) {}
+});
+</script>
+
+</body>
+</html>
