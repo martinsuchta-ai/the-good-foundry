@@ -1429,8 +1429,12 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
 
       <div class="fs-grid">
 
+        <!-- 2026-06-26 — Same icon harmonisation as Rewards Foundry
+             above. Inline color: overrides removed so the icons
+             inherit white-on-gradient from the base .fs-card-icon
+             rule. -->
         <div class="fs-card fs-card-a" style="background:linear-gradient(135deg,#ffffff 0%,rgba(26,130,118,.04) 200%);border:1px solid rgba(26,130,118,.20)">
-          <div class="fs-card-icon" style="color:#1a8276">
+          <div class="fs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="3"/><line x1="12" y1="7" x2="12" y2="17"/><circle cx="12" cy="12" r="2"/></svg>
           </div>
           <div class="fs-card-eyebrow">Connect once, sync forever</div>
@@ -1439,7 +1443,7 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
         </div>
 
         <div class="fs-card fs-card-b" style="background:linear-gradient(135deg,#ffffff 0%,rgba(0,163,212,.04) 200%);border:1px solid rgba(0,163,212,.20)">
-          <div class="fs-card-icon" style="color:#00a3d4">
+          <div class="fs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
           <div class="fs-card-eyebrow">Four high-signal metrics</div>
@@ -1448,7 +1452,7 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
         </div>
 
         <div class="fs-card fs-card-c" style="background:linear-gradient(135deg,#ffffff 0%,rgba(102,44,144,.04) 200%);border:1px solid rgba(102,44,144,.18)">
-          <div class="fs-card-icon" style="color:#662C90">
+          <div class="fs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
           </div>
           <div class="fs-card-eyebrow">Plugs into Rewards Foundry</div>
@@ -1482,8 +1486,17 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
 
       <div class="fs-grid">
 
+        <!-- 2026-06-26 — Marty: "harmonise icons across public
+             pages — some don't use the white inner outline".
+             Dropped the inline color: override on the icon div
+             so it inherits the base .fs-card-icon { color: #fff }
+             rule + the matching fs-card-{a,b,c} backing gradient.
+             Result: white icon strokes on arctic→aqua /
+             grape→orchid / orchid→punch tile backings — the same
+             visual rhythm as every other showcase block on the
+             homepage. -->
         <div class="fs-card fs-card-a" style="background:linear-gradient(135deg,#ffffff 0%,rgba(16,185,129,.04) 200%);border:1px solid rgba(16,185,129,.18)">
-          <div class="fs-card-icon" style="color:#059669">
+          <div class="fs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </div>
           <div class="fs-card-eyebrow">Show up for yourself</div>
@@ -1492,7 +1505,7 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
         </div>
 
         <div class="fs-card fs-card-b" style="background:linear-gradient(135deg,#ffffff 0%,rgba(217,119,6,.04) 200%);border:1px solid rgba(217,119,6,.20)">
-          <div class="fs-card-icon" style="color:#d97706">
+          <div class="fs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <div class="fs-card-eyebrow">Show up for each other</div>
@@ -1501,7 +1514,7 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
         </div>
 
         <div class="fs-card fs-card-c" style="background:linear-gradient(135deg,#ffffff 0%,rgba(102,44,144,.04) 200%);border:1px solid rgba(102,44,144,.18)">
-          <div class="fs-card-icon" style="color:#662C90">
+          <div class="fs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
           <div class="fs-card-eyebrow">Member-gated by design</div>

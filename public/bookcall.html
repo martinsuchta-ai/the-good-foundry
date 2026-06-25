@@ -425,19 +425,31 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
       <div class="bc-label">What to expect</div>
       <div class="bc-title">A conversation built around <span class="hl">you</span></div>
 
+      <!-- 2026-06-26 — Marty: harmonise icons across public pages.
+           Replaced emojis (📊 🧠 🤝) with SVG icons matching the
+           white-stroke-on-gradient pattern used by the homepage
+           feature-showcase blocks. Existing .bc-card-icon already
+           has color:#fff + arctic→orchid gradient backing — the
+           SVGs inherit white via stroke="currentColor". -->
       <div class="bc-cards">
         <div class="bc-card">
-          <div class="bc-card-icon">📊</div>
+          <div class="bc-card-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          </div>
           <div class="bc-card-title">Understand your needs</div>
           <p class="bc-card-desc">We&rsquo;ll listen first. Whether it&rsquo;s workplace wellbeing, education, research, or coaching &mdash; we&rsquo;ll tailor the conversation to where you are.</p>
         </div>
         <div class="bc-card">
-          <div class="bc-card-icon">🧠</div>
+          <div class="bc-card-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
           <div class="bc-card-title">Evidence-based guidance</div>
           <p class="bc-card-desc">We bring over two decades of applied positive psychology, the PERMA+ framework, and real-world implementation experience to every call.</p>
         </div>
         <div class="bc-card">
-          <div class="bc-card-icon">🤝</div>
+          <div class="bc-card-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
           <div class="bc-card-title">Clear next steps</div>
           <p class="bc-card-desc">You&rsquo;ll leave with clarity &mdash; whether that&rsquo;s a product fit, a partnership pathway, or simply knowing more about what&rsquo;s possible.</p>
         </div>
