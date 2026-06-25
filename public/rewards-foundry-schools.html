@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rewards Foundry for Schools — The Good Foundry</title>
+
+<meta name="description" content="Spin Up, Spin Down — reward positive behaviour and discourage negative behaviour across Me · We · Us, with a full dashboard. A Power-Up that bolts onto any active Wellbeing Matters @ School subscription. Aligned to PERMA+.">
+
+<link rel="canonical" href="https://www.the-good-foundry.com/rewards-foundry-schools.html">
+<link rel="icon" href="logos/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* TGF base tokens — lifted verbatim from the homepage to keep
+   chrome (topbar, mesh bg, fonts) identical to the rest of the site. */
+:root {
+  --twilight:  #293890;
+  --arctic:    #1B75BC;
+  --aqua:      #26AAE1;
+  --grape:     #662C90;
+  --orchid:    #91268F;
+  --punch:     #EC008B;
+
+  /* Schools Power-Up palette — per rewards-foundry-schools-rollout-brief.md §0.
+     Teal → Green → Amber. Used for hero gradient, badges, accent
+     colours within this page. The general TGF chrome (topbar,
+     mesh bg) stays in twilight/grape/punch so the page reads as
+     part of the broader site, not a standalone microsite. */
+  --schools-teal:  #0F6E56;
+  --schools-green: #639922;
+  --schools-amber: #BA7517;
+  --schools-gradient: linear-gradient(135deg, var(--schools-teal) 0%, var(--schools-green) 50%, var(--schools-amber) 100%);
+
+  --bg:        #F4F6FB;
+  --card:      #FFFFFF;
+  --mid:       #EEF1F8;
+  --border:    rgba(41,56,144,.12);
+  --text:      #161A2E;
+  --text-dim:  rgba(22,26,46,.58);
+
+  --font:  'Outfit', sans-serif;
+  --serif: 'DM Serif Display', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(15,110,86,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(99,153,34,.10) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(186,117,23,.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+main, header, footer { position: relative; z-index: 1; }
+em { font-family: var(--serif); font-style: italic; }
+
+/* TGF sticky white-glass topbar (mirrors the-good-foundry-index.html). */
+.topbar {
+  position: sticky; top: 0; z-index: 300;
+  min-height: 86px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { height: 70px; width: auto; object-fit: contain; display: block; }
+.brand-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+.brand-name em { font-style: italic; color: var(--arctic); font-family: var(--serif); font-weight: 400; }
+.brand-sep { width: 1px; height: 18px; background: rgba(22,26,46,.15); margin: 0 4px; }
+.brand-sub { font-size: 12px; font-weight: 500; color: var(--text-dim); letter-spacing: .06em; text-transform: uppercase; }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.topbar-right a.nav-link {
+  font-size: 12.5px; font-weight: 500; color: var(--text-dim);
+  text-decoration: none; letter-spacing: .02em; transition: color .15s;
+}
+.topbar-right a.nav-link:hover { color: var(--text); }
+.nav-pill {
+  font-size: 12px; font-weight: 600; color: #fff;
+  background: var(--schools-gradient);
+  padding: 8px 18px; border-radius: 100px;
+  text-decoration: none; letter-spacing: .02em;
+  transition: transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 14px rgba(99,153,34,.28);
+}
+.nav-pill:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,153,34,.36); }
+
+/* ── Hero ───────────────────────────────────────────────── */
+.hero {
+  max-width: 1100px; margin: 60px auto 30px; padding: 0 32px;
+  text-align: center;
+}
+.power-up-badge {
+  display: inline-block;
+  background: var(--schools-gradient);
+  color: #fff;
+  font-size: 11px; font-weight: 800; letter-spacing: .14em;
+  padding: 6px 16px; border-radius: 100px;
+  box-shadow: 0 4px 12px rgba(99,153,34,.32);
+  margin-bottom: 22px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(36px, 5.4vw, 56px);
+  letter-spacing: -.012em; line-height: 1.1;
+  max-width: 900px; margin: 0 auto 18px;
+}
+.hero h1 .grad {
+  background: var(--schools-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-lede {
+  font-size: 17px; color: var(--text-dim);
+  max-width: 720px; margin: 0 auto 18px;
+  line-height: 1.7; font-weight: 400;
+}
+.perma-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  background: rgba(15,110,86,.08);
+  border: 1px solid rgba(15,110,86,.22);
+  color: var(--schools-teal);
+  border-radius: 99px;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ── Section base ──────────────────────────────────────── */
+.section { max-width: 1100px; margin: 60px auto; padding: 0 32px; }
+.section h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(26px, 3.4vw, 36px);
+  letter-spacing: -.012em; line-height: 1.2;
+  margin: 0 0 10px;
+}
+.section h2 em { color: var(--schools-teal); }
+.section .section-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--schools-amber);
+  margin: 0 0 10px;
+}
+.section .section-lede {
+  color: var(--text-dim); font-size: 15px;
+  max-width: 720px; margin: 0 0 32px; line-height: 1.7;
+}
+
+/* ── Spin Up / Spin Down two-card pair ─────────────────── */
+.spin-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.spin-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 30px 28px 28px;
+  box-shadow: 0 2px 14px rgba(22,40,68,.05);
+  position: relative;
+  overflow: hidden;
+}
+.spin-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.spin-card.up::before    { background: linear-gradient(90deg, var(--schools-green), var(--schools-teal)); }
+.spin-card.down::before  { background: linear-gradient(90deg, var(--schools-amber), #7a4a0a); }
+.spin-card .spin-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(15,110,86,.22);
+}
+.spin-card.up   .spin-icon { background: linear-gradient(135deg, var(--schools-green), var(--schools-teal)); }
+.spin-card.down .spin-icon { background: linear-gradient(135deg, var(--schools-amber), #7a4a0a); box-shadow: 0 4px 14px rgba(186,117,23,.22); }
+.spin-card h3 {
+  font-size: 21px; font-weight: 700;
+  letter-spacing: -.012em;
+  margin: 0 0 8px;
+}
+.spin-card p {
+  color: var(--text-dim); font-size: 14.5px; line-height: 1.7; margin: 0;
+}
+.spin-card .spin-points {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  padding: 5px 12px; border-radius: 99px;
+}
+.spin-card.up   .spin-points { background: rgba(99,153,34,.10);  color: var(--schools-green); }
+.spin-card.down .spin-points { background: rgba(186,117,23,.10); color: var(--schools-amber); }
+@media (max-width: 720px) { .spin-pair { grid-template-columns: 1fr; } }
+
+/* ── Me · We · Us three-card row ───────────────────────── */
+.mwu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.mwu-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 24px;
+  position: relative;
+  text-align: center;
+}
+.mwu-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  border-radius: 16px 16px 0 0;
+}
+.mwu-card.me::before { background: var(--schools-teal); }
+.mwu-card.we::before { background: var(--schools-green); }
+.mwu-card.us::before { background: var(--schools-amber); }
+.mwu-card .mwu-letter {
+  font-family: var(--serif); font-weight: 400;
+  font-size: 64px; line-height: 1;
+  background: var(--schools-gradient);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-bottom: 8px;
+}
+.mwu-card h3 {
+  font-size: 16px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+.mwu-card p { color: var(--text-dim); font-size: 14px; line-height: 1.7; margin: 0; }
+@media (max-width: 720px) { .mwu-grid { grid-template-columns: 1fr; } }
+
+/* ── How a spin happens — 4 steps ──────────────────────── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  position: relative;
+}
+.step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 20px;
+  position: relative;
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 99px;
+  background: var(--schools-gradient);
+  color: #fff;
+  font-size: 13px; font-weight: 800; letter-spacing: .02em;
+  margin-bottom: 14px;
+  box-shadow: 0 3px 8px rgba(15,110,86,.22);
+}
+.step .step-title {
+  font-size: 15px; font-weight: 700; color: var(--text);
+  margin-bottom: 6px; letter-spacing: -.005em;
+}
+.step .step-desc { font-size: 13.5px; color: var(--text-dim); line-height: 1.65; }
+@media (max-width: 920px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+/* ── Dashboard drill-down ──────────────────────────────── */
+.dash-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 14px;
+}
+.dash-card {
+  background: linear-gradient(135deg, var(--card) 0%, rgba(15,110,86,.04) 200%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 22px;
+}
+.dash-card .dash-eyebrow {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.dash-card.me .dash-eyebrow { color: var(--schools-teal); }
+.dash-card.we .dash-eyebrow { color: var(--schools-green); }
+.dash-card.us .dash-eyebrow { color: var(--schools-amber); }
+.dash-card h4 {
+  font-size: 18px; font-weight: 700; color: var(--text);
+  letter-spacing: -.005em; margin: 0 0 10px;
+}
+.dash-card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin: 0; }
+@media (max-width: 920px) { .dash-row { grid-template-columns: 1fr; } }
+
+/* ── CTA block ─────────────────────────────────────────── */
+.cta {
+  background: linear-gradient(135deg, var(--schools-teal) 0%, var(--schools-green) 60%, var(--schools-amber) 100%);
+  color: #fff;
+  border-radius: 22px;
+  padding: 48px 44px 40px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 12px 36px rgba(15,110,86,.22);
+}
+.cta::before {
+  content: '';
+  position: absolute; top: -100px; right: -100px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255,255,255,.18), transparent 70%);
+}
+.cta h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(26px, 3.4vw, 36px);
+  margin: 0 0 12px; color: #fff;
+}
+.cta p {
+  color: rgba(255,255,255,.92);
+  font-size: 16px; max-width: 600px; margin: 0 auto 24px;
+  line-height: 1.7;
+}
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+.btn-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; border-radius: 100px;
+  font-weight: 700; font-size: 14px; letter-spacing: .02em;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .2s, background .15s;
+  font-family: var(--font);
+}
+.btn-cta.solid {
+  background: #fff; color: var(--schools-teal);
+  box-shadow: 0 4px 18px rgba(0,0,0,.12);
+}
+.btn-cta.solid:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.btn-cta.outline {
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,.55);
+}
+.btn-cta.outline:hover { background: rgba(255,255,255,.10); border-color: #fff; }
+.cta .email-mention {
+  display: block;
+  margin-top: 18px;
+  color: rgba(255,255,255,.80);
+  font-size: 12.5px;
+  font-weight: 500;
+  position: relative; z-index: 1;
+}
+.cta .email-mention a { color: #fff; font-weight: 700; text-decoration: underline; }
+
+/* ── Footnote ──────────────────────────────────────────── */
+.footnote {
+  max-width: 800px;
+  margin: 32px auto 0; padding: 16px 28px;
+  font-size: 12.5px; color: var(--text-dim);
+  text-align: center; line-height: 1.7;
+  border-top: 1px solid var(--border);
+}
+.footnote strong { color: var(--schools-teal); font-weight: 700; }
+
+/* ── Footer ────────────────────────────────────────────── */
+.foot {
+  max-width: 1100px; margin: 60px auto 30px; padding: 0 32px;
+  text-align: center; font-size: 12px; color: var(--text-dim);
+  border-top: 1px solid var(--border); padding-top: 22px;
+}
+.foot a { color: var(--schools-teal); text-decoration: none; font-weight: 600; }
+.foot a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- ── TGF sticky topbar ─────────────────────────────────── -->
+<header class="topbar">
+  <a class="brand" href="the-good-foundry-index.html">
+    <img src="logos/TGF_logo/good-foundry-gradient-primary_2560.png" alt="The Good Foundry"
+         onerror="this.style.display='none'">
+    <div>
+      <div class="brand-name">The Good <em>Foundry</em></div>
+      <div class="brand-sub">Rewards Foundry for Schools</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <a class="nav-link" href="the-good-foundry-index.html">Home</a>
+    <a class="nav-link" href="offerings.html">Offerings</a>
+    <a class="nav-pill" href="#talk-to-us">Talk to us &rarr;</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero">
+    <span class="power-up-badge">Power-Up &middot; Pilot</span>
+    <h1>Rewards Foundry for <span class="grad">Schools</span></h1>
+    <p class="hero-lede">A simple, fair way to reward positive behaviour and discourage negative behaviour across <strong>Me &middot; We &middot; Us</strong>. Scan, name the moment, and the wallet updates. A Power-Up that bolts onto any active <strong>Wellbeing Matters @ School</strong> subscription.</p>
+    <span class="perma-tag">Aligned to PERMA+</span>
+  </section>
+
+  <!-- ── Spin Up / Spin Down ──────────────────────────── -->
+  <section class="section">
+    <div class="section-eyebrow">Two directions</div>
+    <h2>Spin <em>Up</em>. Spin <em>Down</em>.</h2>
+    <p class="section-lede">Every behaviour pulls the wallet in a direction. Spin Up adds points for things worth recognising; Spin Down subtracts points for things worth pausing on. Same simple scan, opposite sign.</p>
+
+    <div class="spin-pair">
+
+      <div class="spin-card up">
+        <div class="spin-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </div>
+        <h3>Spin Up &mdash; recognise.</h3>
+        <p>A teacher, aide, or peer-mentor scans a Spin Up code when a student shows up well: kindness to a classmate, focused effort, looking out for someone, owning a mistake, bringing curiosity. Points land in the wallet automatically.</p>
+        <span class="spin-points">Points <strong>+ added</strong> to the wallet</span>
+      </div>
+
+      <div class="spin-card down">
+        <div class="spin-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <polyline points="5 12 12 19 19 12"/>
+          </svg>
+        </div>
+        <h3>Spin Down &mdash; reflect.</h3>
+        <p>A trusted person scans a Spin Down code when a behaviour misses the mark: disruption, unkindness, repeated lateness, off-task patterns. Points come out of the wallet &mdash; with the message that the score is recoverable on the next round.</p>
+        <span class="spin-points">Points <strong>&minus; subtracted</strong> from the wallet</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Me · We · Us ──────────────────────────────────── -->
+  <section class="section">
+    <div class="section-eyebrow">Three levels</div>
+    <h2>Me <em>&middot;</em> We <em>&middot;</em> Us.</h2>
+    <p class="section-lede">Behaviour shows up at three levels &mdash; what a student does alone, what they bring to their class, and how they contribute to the whole school. Spin tokens are organised the same way, with point bands scaled to match.</p>
+
+    <div class="mwu-grid">
+
+      <div class="mwu-card me">
+        <span class="mwu-letter">Me</span>
+        <h3>The Student</h3>
+        <p>Personal practice &mdash; showing up on time, completing work, looking after self. Default point band: <strong>&plusmn;5</strong>.</p>
+      </div>
+
+      <div class="mwu-card we">
+        <span class="mwu-letter">We</span>
+        <h3>The Class</h3>
+        <p>Class contribution &mdash; helping a peer, contributing to group work, running a small initiative. Default point band: <strong>&plusmn;10</strong>.</p>
+      </div>
+
+      <div class="mwu-card us">
+        <span class="mwu-letter">Us</span>
+        <h3>The School</h3>
+        <p>Whole-school contribution &mdash; representing the school, looking after grounds, supporting a community moment. Default point band: <strong>&plusmn;20</strong>.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── How a spin happens ────────────────────────────── -->
+  <section class="section">
+    <div class="section-eyebrow">How a spin happens</div>
+    <h2>Four taps. <em>No paperwork.</em></h2>
+    <p class="section-lede">Designed to slot into the day without slowing it down. Teachers carry a single picker, or scan a code on a card or classroom poster.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-title">Scan QR</div>
+        <div class="step-desc">Open the camera, scan the behaviour&rsquo;s QR code (on a card, poster, or printed sheet). Resolves to a Spin Up or Spin Down.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-title">Enter code or email</div>
+        <div class="step-desc">Type the student&rsquo;s access KEY (or email). Same identification mechanism the rest of Wellbeing Matters uses.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-title">Confirm spin</div>
+        <div class="step-desc">Review the behaviour, the direction, and the points. One tap to confirm.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-title">Wallet updates</div>
+        <div class="step-desc">Points land in the student&rsquo;s wallet immediately. They can see why &mdash; the behaviour title, the date, and who recognised it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Dashboard drill-down ──────────────────────────── -->
+  <section class="section">
+    <div class="section-eyebrow">Your full dashboard, included</div>
+    <h2>See <em>every</em> wallet movement.</h2>
+    <p class="section-lede">The Schools Power-Up comes with the same drill-down dashboard the rest of Wellbeing Matters has, organised by the Me &middot; We &middot; Us model.</p>
+
+    <div class="dash-row">
+
+      <div class="dash-card me">
+        <div class="dash-eyebrow">Me view</div>
+        <h4>Per-student wallet history.</h4>
+        <p>Every Spin Up + Spin Down on this student&rsquo;s wallet, organised by date and by PERMA-H dimension. Patterns over time become visible at a glance.</p>
+      </div>
+
+      <div class="dash-card we">
+        <div class="dash-eyebrow">We view</div>
+        <h4>Per-class behaviour signal.</h4>
+        <p>How a class is trending &mdash; volume of Spin Up vs Spin Down, distribution across the PERMA-H dimensions, top recognised behaviours, top reflected behaviours.</p>
+      </div>
+
+      <div class="dash-card us">
+        <div class="dash-eyebrow">Us view</div>
+        <h4>Whole-school heatmap.</h4>
+        <p>Cross-class comparison + month-over-month trend on the dimensions the school is choosing to amplify. Privacy-clipped: no individual student data surfaces below the n &ge; 5 floor.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PERMA+ footnote ───────────────────────────────── -->
+  <p class="footnote">
+    <strong>Why PERMA+?</strong> Behaviour categories follow the PERMA+ framework &mdash; <em>Positive Emotions, Engagement, Relationships, Meaning, Accomplishment, and Health</em>. The same evidence base the rest of Wellbeing Matters uses, applied to the rhythm of a school day.
+  </p>
+
+  <!-- ── CTA ───────────────────────────────────────────── -->
+  <section class="section" id="talk-to-us">
+    <div class="cta">
+      <h2>Ready to <em>spin</em> at your school?</h2>
+      <p>Pilot pricing is set per school, by cohort size and edition. A representative will get back to you within one business day with a tailored offer for your school.</p>
+      <div class="cta-btns">
+        <a class="btn-cta solid" href="https://www.the-good-foundry.com/#contact">Talk to a representative &rarr;</a>
+        <a class="btn-cta outline" href="https://www.coachingfoundry.com/bookcall/">Book a call</a>
+      </div>
+      <span class="email-mention">Or email us direct &mdash; <a href="mailto:info@the-good-foundry.com">info@the-good-foundry.com</a></span>
+    </div>
+  </section>
+
+  <!-- ── Foot ──────────────────────────────────────────── -->
+  <div class="foot">
+    The Good Foundry &middot; Wellbeing Matters &middot;
+    <a href="the-good-foundry-index.html">Home</a> &middot;
+    <a href="offerings.html">Offerings</a> &middot;
+    <a href="offerings-explorer.html">Editions</a>
+  </div>
+
+</main>
+
+</body>
+</html>
