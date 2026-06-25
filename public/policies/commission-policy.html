@@ -580,6 +580,26 @@
         </div>
       </div>
 
+      <!-- 2026-06-26 — 45-day originator-credit inactivity lapse.
+           Surfaces only when event 2 is selected. Optional date of
+           the rep's most recent submitted proposal on the account
+           (CRM field). If today − lastProposalDate > 45 days, the
+           rep's 5% originator credit is forfeited — recalc zeroes
+           it out + shows a lapse banner. The 45-day window is a
+           named constant (LAPSE_DAYS_INACTIVE) so Sales Ops can
+           adjust without touching layout. -->
+      <div class="field" id="calc-lapse-row" style="display:none;margin-bottom:18px">
+        <div class="field-label">Most recent submitted proposal on this account</div>
+        <input id="calc-last-proposal" type="date" onchange="recalc()" oninput="recalc()" style="max-width:240px">
+        <div class="help">Originator credit (event 2) is forfeited if today − this date is greater than <span id="calc-lapse-days">45</span> days. Activity = submitted proposals in the CRM, not meetings or calls. Leave blank to assume the rep is still active.</div>
+      </div>
+
+      <!-- Lapse-fired banner. Hidden by default; shown when event 2
+           is selected AND the date check trips. -->
+      <div id="calc-lapse-banner" style="display:none;margin-bottom:16px;padding:12px 16px;background:rgba(217,119,6,.10);border:1px solid rgba(217,119,6,.32);border-left:4px solid var(--warn);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-dark);line-height:1.55">
+        <strong>Originator credit forfeited.</strong> No submitted proposal in the last <span id="calc-lapse-banner-days">45</span> days <span id="calc-lapse-banner-detail" style="color:var(--text-muted)"></span>. Rep payout falls to 0%; the full 20% service-team share still applies.
+      </div>
+
       <div class="calc-event-line" id="calc-event-summary">
         <strong>Event 1</strong> · Rep 30% · Service 0%
       </div>
@@ -653,7 +673,10 @@
       </div>
       <div class="def">
         <div class="def-term">Originator credit boundary</div>
-        <p class="def-body">The rep's 5% originator credit (event 2) applies for as long as the rep remains the <strong>named account owner</strong>. Once an account formally transitions to an account manager or service owner, the 5% originator credit stops — or transfers to the new owner — from the date of transition. This prevents a rep clipping 5% indefinitely on accounts they no longer touch.</p>
+        <p class="def-body">The rep's 5% originator credit (event 2) applies for as long as the rep remains the <strong>named account owner</strong> <em>and stays actively engaged on the account</em>. Two things end the credit:</p>
+        <p class="def-body" style="margin-top:10px"><strong>Transition of ownership.</strong> Once an account formally transitions to an account manager or service owner, the 5% originator credit stops — or transfers to the new owner — from the date of transition.</p>
+        <p class="def-body" style="margin-top:6px"><strong>45-day inactivity lapse.</strong> If the rep has no <strong>proposal (offer) submitted on the account</strong> within any rolling 45-day period, they forfeit their right to the 5% originator credit from that point. Activity is measured by <strong>submitted proposals recorded in the CRM</strong>, not meetings or calls.</p>
+        <p class="def-body" style="margin-top:10px">This ensures the originator credit rewards reps who keep working the account, not reps clipping 5% indefinitely on accounts they no longer touch.</p>
       </div>
       <div class="def">
         <div class="def-term">Cost note for approvers</div>
@@ -695,10 +718,17 @@
    the rates here without touching layout. */
 const COMMISSION_RATES = {
   '1': { name: 'Initial subscription',  owner: 'Rep',     rep: 0.30, svc: 0.00, help: 'Rep closes the new-business sale. Rep earns 30% of top-line value.' },
-  '2': { name: 'Service-led add-on',    owner: 'Service', rep: 0.05, svc: 0.15, help: 'Service team raises & closes; rep not involved. Rep retains a 5% originator credit only while still the named account owner.' },
+  '2': { name: 'Service-led add-on',    owner: 'Service', rep: 0.05, svc: 0.15, help: 'Service team raises & closes; rep not involved. Rep retains a 5% originator credit only while still the named account owner AND has submitted a proposal on the account within the last 45 days.' },
   '3': { name: 'Joint up-sell',         owner: 'Service', rep: 0.15, svc: 0.15, help: 'Service-led proposal where the rep is named on the deal BEFORE the customer accepts. Equal 15% / 15% split.' },
   '4': { name: 'Rep-led up-sell',       owner: 'Rep',     rep: 0.30, svc: 0.00, help: 'Rep raises and closes the expansion themselves. Same 30% as new business.' },
 };
+
+/* 2026-06-26 — 45-day originator-credit inactivity lapse. Named
+   constant so Sales Ops can adjust without touching the recalc
+   logic. Applies only to Event 2 (service-led add-on); if the
+   rep's most recent submitted proposal on the account is older
+   than this window, the originator credit is forfeited. */
+const LAPSE_DAYS_INACTIVE = 45;
 
 function fmt$(n) {
   if (!isFinite(n) || n < 0) n = 0;
@@ -708,17 +738,68 @@ function pct(p) {
   return (Math.round(p * 1000) / 10).toFixed(1).replace(/\.0$/, '') + '%';
 }
 
+/* Returns null when no date is set; otherwise integer days since
+   that date (current local timezone — same day = 0). */
+function daysSince(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d.getTime())) return null;
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const ms = now.getTime() - d.getTime();
+  return Math.floor(ms / 86400000);
+}
+
 function recalc() {
   const ev = document.getElementById('calc-event').value;
   const val = Math.max(0, parseFloat(document.getElementById('calc-value').value) || 0);
   const r = COMMISSION_RATES[ev];
   if (!r) return;
+
+  /* Event 2 is the only event with originator credit and the only
+     one the 45-day lapse applies to. Toggle the lapse row + banner
+     visibility based on event selection. */
+  const isEvent2 = (ev === '2');
+  const lapseRow = document.getElementById('calc-lapse-row');
+  const banner   = document.getElementById('calc-lapse-banner');
+  if (lapseRow) lapseRow.style.display = isEvent2 ? '' : 'none';
+
+  let effRep = r.rep;
+  let lapseFired = false;
+  let lapseDays = null;
+  if (isEvent2) {
+    const lastProposalDate = (document.getElementById('calc-last-proposal') || {}).value || '';
+    lapseDays = daysSince(lastProposalDate);
+    if (lapseDays !== null && lapseDays > LAPSE_DAYS_INACTIVE) {
+      effRep = 0;
+      lapseFired = true;
+    }
+  }
+
+  /* Banner: only shows when event 2 is selected AND the date check
+     trips. Shows the actual day count for clarity. */
+  if (banner) {
+    if (lapseFired) {
+      document.getElementById('calc-lapse-banner-days').textContent = LAPSE_DAYS_INACTIVE;
+      document.getElementById('calc-lapse-banner-detail').textContent = '(' + lapseDays + ' days since last submitted proposal)';
+      banner.style.display = '';
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
+  /* Reflect the 45 constant in the inline help so the page reads
+     true to LAPSE_DAYS_INACTIVE no matter what Sales Ops sets it
+     to. */
+  const lapseDaysSpan = document.getElementById('calc-lapse-days');
+  if (lapseDaysSpan) lapseDaysSpan.textContent = LAPSE_DAYS_INACTIVE;
+
   document.getElementById('calc-event-help').textContent = r.help;
   document.getElementById('calc-event-summary').innerHTML =
-      '<strong>Event ' + ev + '</strong> · Rep ' + pct(r.rep) + ' · Service ' + pct(r.svc);
-  document.getElementById('calc-rep-amt').textContent = fmt$(val * r.rep);
+      '<strong>Event ' + ev + '</strong> · Rep ' + pct(effRep) + (lapseFired ? ' <span style="color:#d97706;font-weight:700">(originator credit forfeited)</span>' : '') + ' · Service ' + pct(r.svc);
+  document.getElementById('calc-rep-amt').textContent = fmt$(val * effRep);
   document.getElementById('calc-svc-amt').textContent = fmt$(val * r.svc);
-  document.getElementById('calc-rep-pct').textContent = pct(r.rep);
+  document.getElementById('calc-rep-pct').textContent = pct(effRep);
   document.getElementById('calc-svc-pct').textContent = pct(r.svc);
   document.getElementById('calc-rep-base').textContent = fmt$(val);
   document.getElementById('calc-svc-base').textContent = fmt$(val);
