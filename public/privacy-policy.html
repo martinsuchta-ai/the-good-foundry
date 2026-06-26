@@ -658,7 +658,8 @@ footer strong {
       <li><a href="#s10">Retention</a></li>
       <li><a href="#s11">Complaints</a></li>
       <li><a href="#s12">Additional Info</a></li>
-      <li><a href="#s13">Contact Us</a></li>
+      <li><a href="#s13">Google User Data</a></li>
+      <li><a href="#s14">Contact Us</a></li>
     </ol>
   </aside>
 
@@ -869,9 +870,59 @@ footer strong {
       </div>
     </section>
 
-    <!-- 13 -->
+    <!-- 13 — Google User Data. Added 2026-06-26 ahead of Google OAuth
+         app verification submission for the Wellbeing Vault's Google
+         Fit integration. Google's verification team scans this URL
+         for SPECIFIC language; the "Limited Use" + "Google API Services
+         User Data Policy" phrasing in the final paragraph is required
+         verbatim and triggers their automated checker. Don't remove
+         that paragraph or reword the link text. -->
     <section class="section" id="s13">
-      <div class="section-header"><div class="section-num">13</div><h2>Our Contact Details</h2></div>
+      <div class="section-header"><div class="section-num">13</div><h2>Google User Data</h2></div>
+      <p>When you choose to connect Google Fit to your <strong>Wellbeing Vault</strong>, Wellbeing Matters @ Work requests permission to read the following data from your Google account:</p>
+      <ul>
+        <li><strong>Activity data</strong> &mdash; daily step counts, active minutes, distance covered (<code>fitness.activity.read</code>)</li>
+        <li><strong>Body composition</strong> &mdash; weight and BMI (<code>fitness.body.read</code>)</li>
+        <li><strong>Heart rate</strong> &mdash; daily average resting heart rate (<code>fitness.heart_rate.read</code>)</li>
+        <li><strong>Sleep</strong> &mdash; nightly sleep duration and stages (<code>fitness.sleep.read</code>)</li>
+      </ul>
+
+      <h3 style="font-size:18px;margin:24px 0 8px;color:var(--ink,#0e1e40)">How we use this data</h3>
+      <ul>
+        <li>To populate your <strong>personal</strong> wellness trend charts in your Wellbeing Vault, correlating objective data with your self-reported PERMA+H evaluation scores.</li>
+        <li>To generate <strong>aggregated, anonymised</strong> cohort averages (groups of 10+ respondents) for organisational reporting &mdash; with no individual identifiability.</li>
+      </ul>
+
+      <h3 style="font-size:18px;margin:24px 0 8px;color:var(--ink,#0e1e40)">How we do <em>not</em> use this data</h3>
+      <ul>
+        <li>We do <strong>not</strong> sell your Google Fit data to any third party.</li>
+        <li>We do <strong>not</strong> share your Google Fit data with your employer in identifiable form.</li>
+        <li>We do <strong>not</strong> use it for advertising.</li>
+        <li>We do <strong>not</strong> use it to make decisions about your employment.</li>
+      </ul>
+
+      <h3 style="font-size:18px;margin:24px 0 8px;color:var(--ink,#0e1e40)">Storage and retention</h3>
+      <ul>
+        <li>Data is stored encrypted at rest on our SiteGround infrastructure (Sydney, Australia region).</li>
+        <li>Daily aggregates are retained while your account is active; raw event-level data is not retained.</li>
+        <li>On disconnection from your Wellbeing Vault settings, all stored Google Fit data is <strong>deleted within 30 days</strong>.</li>
+        <li>On account closure, all data is deleted within 30 days.</li>
+      </ul>
+
+      <h3 style="font-size:18px;margin:24px 0 8px;color:var(--ink,#0e1e40)">Your control</h3>
+      <ul>
+        <li>You can <strong>disconnect</strong> Google Fit at any time from Vault &rarr; Settings &rarr; Integrations.</li>
+        <li>You can <strong>revoke</strong> our access from your <a href="https://myaccount.google.com/permissions" class="elink" target="_blank" rel="noopener">Google Account &rarr; Security &rarr; Third-party apps</a>.</li>
+        <li>You can <strong>request deletion</strong> of all stored data by emailing <a href="mailto:privacy@permahsurvey.com" class="elink">privacy@permahsurvey.com</a>.</li>
+      </ul>
+
+      <h3 style="font-size:18px;margin:24px 0 8px;color:var(--ink,#0e1e40)">Compliance</h3>
+      <p>Wellbeing Matters @ Work's use and transfer of information received from Google APIs to any other app will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" class="elink" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+    </section>
+
+    <!-- 14 -->
+    <section class="section" id="s14">
+      <div class="section-header"><div class="section-num">14</div><h2>Our Contact Details</h2></div>
       <p>For any questions, concerns, or complaints about this Privacy Policy, our data collection or processing practices, or to report data privacy or security concerns, please contact us at:</p>
       <div class="highlight-box">
         &#128231; <a href="mailto:privacy@permahsurvey.com" class="elink"><strong>privacy@permahsurvey.com</strong></a>
