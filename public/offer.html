@@ -910,7 +910,27 @@
        render the same way they were sent. */
     var seatCharge = 0;
     var discountPct = Number(proposal.discount_pct || 0);
-    var discount = +(subtotal * discountPct / 100).toFixed(2);
+    /* Power-Down awareness (2026-07-03) — the rep-portal Power-Down
+       workflow stamps pd_request_status on the proposal. When the
+       discount is a Power-Down (coupon_name matches, or a PD workflow
+       row exists) and it's still pending approval, the client should
+       see it as a PENDING advisory rather than a live deduction — the
+       rep-side send-gate already blocks send while pending, but a
+       preview / re-issued view can still hit the pending state. When
+       approved (or when the discount predates the workflow entirely,
+       i.e. pd_request_status = 'none'), the deduction applies as
+       before. Rejected / more_info both suppress the deduction. */
+    var pdStatus     = String(proposal.pd_request_status || 'none').toLowerCase();
+    var pdName       = String(proposal.coupon_name || '');
+    var pdIsPending  = pdStatus === 'pending';
+    var pdIsBlocked  = pdStatus === 'rejected' || pdStatus === 'more_info';
+    var pdIsApproved = pdStatus === 'approved';
+    var isPowerDown  = pdStatus !== 'none' || /power[\s\-]?down/i.test(pdName);
+    var applyDiscountPct = (!pdIsPending && !pdIsBlocked) ? discountPct : 0;
+    var discount = +(subtotal * applyDiscountPct / 100).toFixed(2);
+    /* What the discount WOULD be if approved — used to render the
+       pending advisory below the totals. */
+    var pendingDiscount = +(subtotal * discountPct / 100).toFixed(2);
     /* Coupon — match the wizard's math so the prospect's view agrees
        with the admin's review screen. Coupons stack on top of the
        volume bracket. */
@@ -956,7 +976,24 @@
     var taxRate = isAU ? 0.10 : 0;
     var tax = +(preTax * taxRate).toFixed(2);
     var total = +(preTax + tax).toFixed(2);
-    return { subtotal: subtotal, discount: discount, discountPct: discountPct, coupon: coupon, couponDiscount: couponDiscount, preTax: preTax, tax: tax, taxRate: taxRate, isAU: isAU, total: total, seatCharge: seatCharge };
+    /* Pending / would-be totals — the values the client would see IF
+       the Power-Down request were approved. Only meaningful when the
+       PD is pending (recalc above zeroed applyDiscountPct in that
+       case so `total` reflects the un-discounted price the rep is
+       currently authorised to offer). */
+    var pendingPreTax = +(subtotal - pendingDiscount - couponDiscount).toFixed(2);
+    var pendingTax    = +(pendingPreTax * taxRate).toFixed(2);
+    var pendingTotal  = +(pendingPreTax + pendingTax).toFixed(2);
+    return {
+      subtotal: subtotal, discount: discount, discountPct: discountPct,
+      coupon: coupon, couponDiscount: couponDiscount,
+      preTax: preTax, tax: tax, taxRate: taxRate, isAU: isAU,
+      total: total, seatCharge: seatCharge,
+      pdStatus: pdStatus, pdName: pdName,
+      isPowerDown: isPowerDown, pdIsPending: pdIsPending,
+      pdIsApproved: pdIsApproved, pdIsBlocked: pdIsBlocked,
+      pendingDiscount: pendingDiscount, pendingTotal: pendingTotal
+    };
   }
 
   function paintTotals() {
@@ -967,7 +1004,37 @@
     $('t-discount').innerHTML = '- ' + moneyWithEquiv(t.discount);
     $('t-total').innerHTML    = moneyWithEquiv(t.total);
     var dRow = $('t-discount-row');
-    if (dRow) dRow.style.display = t.discountPct > 0 ? '' : 'none';
+    var dLbl = $('t-discount-label');
+    /* Show the discount row when it's actually deducting from the
+       total. That's discountPct > 0 AND (not-pending, not-blocked).
+       When PD is pending, the row hides and the pending advisory
+       strip below carries the "would-be" story instead. Label swaps
+       between "Volume discount" and "Power-Down (Approved)" based on
+       PD status so an approved Power-Down reads unambiguously. */
+    var showDiscountRow = t.discountPct > 0 && !t.pdIsPending && !t.pdIsBlocked;
+    if (dRow) dRow.style.display = showDiscountRow ? '' : 'none';
+    if (dLbl) {
+      if (t.isPowerDown) {
+        dLbl.textContent = 'Power-Down (' + Number(t.discountPct) + '%)' + (t.pdIsApproved ? ' — Approved' : '');
+      } else {
+        dLbl.textContent = 'Volume discount (' + Number(t.discountPct) + '%)';
+      }
+    }
+    /* Pending advisory — visible only while PD sits in 'pending'.
+       Renders the requested % and the total the client WOULD pay
+       once approval lands, so they can see the ask up-front. */
+    var pdRow    = $('t-pd-pending-row');
+    var pdPctEl  = $('t-pd-pending-pct');
+    var pdTotEl  = $('t-pd-pending-total');
+    if (pdRow) {
+      if (t.pdIsPending && t.discountPct > 0) {
+        pdRow.style.display = '';
+        if (pdPctEl) pdPctEl.textContent = Number(t.discountPct) + '%';
+        if (pdTotEl) pdTotEl.innerHTML   = moneyWithEquiv(t.pendingTotal);
+      } else {
+        pdRow.style.display = 'none';
+      }
+    }
     var cRow = $('t-coupon-row');
     var cAmt = $('t-coupon-amount');
     if (cRow && cAmt) {
@@ -1408,8 +1475,14 @@
       + '</div>'
       + '<div class="totals">'
       +   '<div class="totals-row"><span>Subtotal</span><span class="v" id="t-subtotal">—</span></div>'
-      +   '<div class="totals-row" id="t-discount-row" style="display:none"><span>Volume discount (' + (Number(p.discount_pct || 0)) + '%)</span><span class="v" id="t-discount" style="color:var(--green)">—</span></div>'
+      +   '<div class="totals-row" id="t-discount-row" style="display:none"><span id="t-discount-label">Volume discount (' + (Number(p.discount_pct || 0)) + '%)</span><span class="v" id="t-discount" style="color:var(--green)">—</span></div>'
       +   '<div class="totals-row" id="t-coupon-row" style="display:none"><span id="t-coupon-label">Coupon</span><span class="v" id="t-coupon-amount" style="color:var(--green)">—</span></div>'
+      /* 2026-07-03 — Power-Down PENDING advisory. Renders under the
+         totals when the proposal has a Power-Down request awaiting
+         approval so the client sees the ask AND the would-be total.
+         Kept as an inline strip (not a row) so it doesn't imply the
+         discount has landed on this offer's price yet. */
+      +   '<div class="totals-row" id="t-pd-pending-row" style="display:none;margin-top:8px;padding:10px 12px;background:linear-gradient(135deg,rgba(217,119,6,0.06) 0%,rgba(102,44,144,0.05) 100%);border:1px dashed rgba(217,119,6,0.30);border-radius:10px;line-height:1.5;font-size:12.5px;color:var(--text-dark)"><span style="display:block"><strong style="color:#b45309">Pending approval</strong> &mdash; under our <strong>Power-Down Program</strong> a discount of <strong id="t-pd-pending-pct"></strong> would bring the offer cost down to <strong id="t-pd-pending-total"></strong>.</span></div>'
       /* 2026-06-06 — GST line (AU clients only). preTax row shows
          the discounted subtotal that the tax is calculated on; tax
          row shows the 10% addition itself; grand-total label below
