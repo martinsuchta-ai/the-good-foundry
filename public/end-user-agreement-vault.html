@@ -428,11 +428,23 @@ footer.page-ft a:hover { text-decoration: underline; }
       <li>Nothing in this Agreement excludes, restricts, or modifies any consumer guarantee, right, or remedy that you have under the Australian Consumer Law or any other law that cannot lawfully be excluded or limited (including any equivalent rights you may have under UK, EU, or US law). This clause is subject to that protection in all cases.</li>
       <li>Subject to clause 8(a), and to the maximum extent permitted by law, The Good Foundry is not liable to you for any indirect, incidental, special, or consequential loss, or for any loss of profits, data, or goodwill, arising out of or in connection with your use of the Platform.</li>
       <li>Subject to clause 8(a), and to the maximum extent permitted by law, The Good Foundry&rsquo;s total liability to you in connection with this Agreement is limited to re-supplying access to the Platform or, where re-supply is not possible, AUD 100.</li>
+      <!-- 2026-07-03 · ODU redline · Commonwealth-of-Virginia liability cap. Shown only when client=ORG-MQQZN604. -->
+      <li class="client-clause" data-client-only="ORG-MQQZN604" style="display:none">
+        <strong>Commonwealth of Virginia liability cap.</strong> The total cumulative liability of the Commonwealth of Virginia, its officers, employees and agents in connection with the Agreement or in connection with any goods, services, actions, or omissions relating to the Agreement, shall not under any circumstance exceed the maximum purchase price.
+      </li>
     </ol>
 
     <!-- ── 9 · Responsibility ── -->
     <h2><span class="num">9</span>Your Responsibility</h2>
     <p>You are responsible for your own use of the Platform. To the extent permitted by law, and proportionate to your own acts or omissions, you are responsible for loss we suffer that is caused by your breach of clause 4 (Acceptable Use) or your unlawful or wilful misuse of the Platform. This clause does not apply to anything caused by us, and nothing in it requires you to indemnify us for matters outside your reasonable control.</p>
+    <!-- 2026-07-03 · ODU redline · Virginia Tort Claims Act + sovereign
+         immunity carve-out. Sits under clause 9 because it's a
+         responsibility / indemnity qualification. Shown only when
+         client=ORG-MQQZN604. -->
+    <p class="client-clause" data-client-only="ORG-MQQZN604" style="display:none">
+      <strong>Sovereign immunity &mdash; Old Dominion University.</strong>
+      Notwithstanding anything to the contrary or written or referenced herein, ODU shall only be responsible for the negligence of its employees and agents to the extent permitted by the Virginia Tort Claims Act. Nothing herein and/or contained in The Good Foundry&rsquo;s End User Agreement and MSA shall be construed as a waiver of any protections of sovereign immunity provided to Customer under Virginia Law.
+    </p>
 
     <!-- ── 10 · Term and Termination ── -->
     <h2><span class="num">10</span>Term and Termination</h2>
@@ -445,6 +457,12 @@ footer.page-ft a:hover { text-decoration: underline; }
     <!-- ── 11 · Governing law ── -->
     <h2><span class="num">11</span>Governing Law and Jurisdiction</h2>
     <p>This Agreement is governed by the laws of <strong data-token="OWNER_JURISDICTION">{{OWNER_JURISDICTION}}</strong>, and the parties submit to the non-exclusive jurisdiction of the courts of that place. If you are a consumer resident elsewhere, this does not deprive you of the protection of mandatory consumer-protection laws of the country in which you live, and you may have the right to bring proceedings in your local courts.</p>
+    <!-- 2026-07-03 · ODU redline · Commonwealth of Virginia governing
+         law override. Shown only when client=ORG-MQQZN604. -->
+    <p class="client-clause" data-client-only="ORG-MQQZN604" style="display:none">
+      <strong>Governing law &mdash; Old Dominion University.</strong>
+      Notwithstanding anything to the contrary, this End User Agreement, MSA and any subsequent purchase order(s) issued against same shall be governed by and will be construed in accordance with the laws of the Commonwealth of Virginia.
+    </p>
 
     <!-- ── 12 · General ── -->
     <h2><span class="num">12</span>General</h2>
@@ -552,17 +570,41 @@ footer.page-ft a:hover { text-decoration: underline; }
     OWNER_JURISDICTION: 'Victoria, Australia'
   };
 
+  /* 2026-07-03 — Client registry. When ?client=<ORG-ID> lands on this
+     page, we surface the client's redlined clauses (elements marked
+     with data-client-only="<ORG-ID>"), apply their theme colour to
+     the hero + eyebrow accents, and swap the OWNER_JURISDICTION meta
+     pill to the client-specific governing law. Add new clients by
+     appending an entry here — no other code changes required.
+     Each entry:
+       name:       Display name shown in a "Prepared for" chip
+       theme:      { primary } CSS colour applied to accents
+       jurisdiction: overrides OWNER_JURISDICTION on the meta pill
+                   (client-side only — the base clause 11 text still
+                    shows Victoria, Australia; the appended
+                    data-client-only paragraph overrides it for
+                    signature purposes).  */
+  var CLIENTS = {
+    'ORG-MQQZN604': {
+      name:         'Old Dominion University',
+      theme:        { primary: '#12d4de' },   /* ODU cyan-teal from wm_bank theme registry */
+      jurisdiction: 'Commonwealth of Virginia, USA'
+    }
+  };
+
   function _qs(name) {
     try { return new URLSearchParams(window.location.search).get(name); }
     catch (e) { return null; }
   }
 
-  function _resolveTokens(editionCode) {
+  function _resolveTokens(editionCode, clientMeta) {
     var ed = EDITIONS[editionCode] || EDITIONS.WPA;
-    return Object.assign({}, CONST_TOKENS, {
+    var overrides = {
       PLATFORM_NAME: ed.label,
       EDITION:       editionCode
-    });
+    };
+    if (clientMeta && clientMeta.jurisdiction) overrides.OWNER_JURISDICTION = clientMeta.jurisdiction;
+    return Object.assign({}, CONST_TOKENS, overrides);
   }
 
   function _applyTokens(tokens) {
@@ -590,11 +632,78 @@ footer.page-ft a:hover { text-decoration: underline; }
     if (empty) empty.style.display = anyVisible ? 'none' : '';
   }
 
+  /* 2026-07-03 — Show elements marked data-client-only="<ORG-ID>" ONLY
+     when the URL's ?client= matches. Everything else stays hidden so
+     the base agreement never carries a stray client clause. Idempotent
+     — safe to call more than once. */
+  function _applyClientClauses(clientId) {
+    var nodes = document.querySelectorAll('[data-client-only]');
+    for (var i = 0; i < nodes.length; i++) {
+      var target = String(nodes[i].getAttribute('data-client-only') || '');
+      nodes[i].style.display = (clientId && target === clientId) ? '' : 'none';
+    }
+  }
+
+  /* 2026-07-03 — Paint the client's brand colour on the hero eyebrow
+     pill + the h1 italic accent + the meta-strip dots so the page
+     reads as prepared for THAT client. Base styling reappears when
+     no client is set (or an unknown one is passed). */
+  function _applyClientTheme(clientMeta) {
+    var eyebrow = document.querySelector('.hero-eyebrow');
+    var italic  = document.querySelector('.hero h1 em');
+    if (clientMeta && clientMeta.theme && clientMeta.theme.primary) {
+      var c = clientMeta.theme.primary;
+      if (eyebrow) {
+        eyebrow.style.color = c;
+        eyebrow.style.background = 'rgba(18,212,222,0.10)';   /* fallback tint; overridden per client below via inline mix */
+        try {
+          /* Derive a soft background tint from the primary. Falls back
+             to the hardcoded tint above if the browser lacks
+             color-mix(). */
+          if (window.CSS && CSS.supports && CSS.supports('background', 'color-mix(in srgb, red 10%, white)')) {
+            eyebrow.style.background = 'color-mix(in srgb, ' + c + ' 12%, transparent)';
+          }
+        } catch (_e) {}
+      }
+      if (italic) italic.style.color = c;
+    } else {
+      if (eyebrow) { eyebrow.style.color = ''; eyebrow.style.background = ''; }
+      if (italic)  italic.style.color = '';
+    }
+  }
+
+  /* 2026-07-03 — Prepared-for chip. Inserted into the meta-strip
+     when a client is set so the reader sees exactly whose bespoke
+     variant they're looking at. Idempotent — removed on re-run when
+     the client is cleared. */
+  function _applyClientChip(clientMeta) {
+    var strip = document.querySelector('.meta-strip');
+    if (!strip) return;
+    var chipId = 'meta-client-chip';
+    var existing = document.getElementById(chipId);
+    if (existing) existing.remove();
+    if (!clientMeta || !clientMeta.name) return;
+    var chip = document.createElement('span');
+    chip.id = chipId;
+    chip.className = 'meta-pill';
+    chip.style.background = (clientMeta.theme && clientMeta.theme.primary)
+      ? ('color-mix(in srgb, ' + clientMeta.theme.primary + ' 12%, transparent)')
+      : 'rgba(18,212,222,0.10)';
+    chip.style.color = (clientMeta.theme && clientMeta.theme.primary) || 'inherit';
+    chip.innerHTML = '<span class="dot"></span> Prepared for: <strong style="margin-left:4px">' + clientMeta.name + '</strong>';
+    strip.appendChild(chip);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var ed = String(_qs('edition') || 'WPA').toUpperCase();
     if (!EDITIONS[ed]) ed = 'WPA';
-    _applyTokens(_resolveTokens(ed));
+    var clientId   = String(_qs('client') || '').toUpperCase();
+    var clientMeta = CLIENTS[clientId] || null;
+    _applyTokens(_resolveTokens(ed, clientMeta));
     _applySchedules(ed);
+    _applyClientClauses(clientMeta ? clientId : '');
+    _applyClientTheme(clientMeta);
+    _applyClientChip(clientMeta);
   });
 })();
 </script>
