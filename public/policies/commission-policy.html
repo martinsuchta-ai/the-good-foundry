@@ -815,9 +815,93 @@
     </div>
   </section>
 
-  <!-- 06 Governance -->
+  <!-- 06 Early payment (rep-facing service offered by TGF) -->
+  <section class="section" id="early-payment">
+    <div class="section-hd"><span class="section-num">06</span><h2 class="section-title">Early Payment (7.5% fee)</h2></div>
+    <p class="section-lede">Representatives can request early disbursement on pending (unpaid) client invoices via the <strong>⚡ Pay early</strong> button in the rep wallet's Submit Claim drawer. This lets a rep access commission cashflow ahead of the client actually settling their invoice, in exchange for a small disbursement fee.</p>
+
+    <div class="card">
+      <p><strong>Eligibility.</strong> Pay Early is available on any invoice sitting in the <em>Pending payment</em> block of the rep wallet's Submit Claim drawer. It is <strong>not</strong> available on:</p>
+      <ul style="margin:6px 0 0 20px;padding:0">
+        <li>Invoices already paid by the client — those flow through the standard monthly claim cycle.</li>
+        <li>Invoices that haven't been raised in Zoho yet.</li>
+        <li>Invoices tied to a cancelled or archived subscription.</li>
+      </ul>
+    </div>
+
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">06·a</span><h2 class="section-title" style="font-size:18px">How the fee is calculated</h2></div>
+    <div class="card">
+      <p>The early disbursement fee is <strong>7.5% of the invoice total</strong> — <em>not</em> 7.5% of the rep's commission. The fee scales with the size of the invoice The Good Foundry is advancing against, not with the commission percentage, because our cashflow exposure is the full invoice value: we're paying the rep now against an amount the client hasn't yet paid us.</p>
+      <p>The fee is deducted from the rep's commission before disbursement.</p>
+    </div>
+
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">06·b</span><h2 class="section-title" style="font-size:18px">Worked example <span class="internal-pill">Illustrative</span></h2></div>
+    <div class="card" style="padding:6px 10px">
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th>Line</th>
+            <th style="width:180px;text-align:right">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Invoice total <span style="font-size:11.5px;color:var(--text-muted)">(unpaid)</span></td>
+            <td class="amt">AUD $4,494.00</td>
+          </tr>
+          <tr>
+            <td>Rep's commission <span style="font-size:11.5px;color:var(--text-muted)">(20% of invoice)</span></td>
+            <td class="amt">AUD $898.80</td>
+          </tr>
+          <tr>
+            <td>Early disbursement fee <span style="font-size:11.5px;color:var(--text-muted)">(7.5% of invoice)</span></td>
+            <td class="amt">− AUD $337.05</td>
+          </tr>
+          <tr class="total-row">
+            <td>Net paid to the rep now</td>
+            <td class="amt">AUD $561.75</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;font-size:12.5px;color:var(--text-muted)">When the client eventually settles the AUD $4,494.00 invoice, that payment lands with The Good Foundry — we've already advanced the commission to the rep.</p>
+    </div>
+
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">06·c</span><h2 class="section-title" style="font-size:18px">When Pay Early is not worth it</h2></div>
+    <div class="card">
+      <p>Because the fee is calculated on the invoice total while the rep's commission is a smaller percentage of the same invoice, <strong>low-commission-rate lines can end up with a fee that exceeds the commission</strong>. The rep wallet's confirm dialog shows a red warning banner when this happens and recommends waiting for the client to settle.</p>
+      <p><strong>Rough guide.</strong> At a 10% commission rate, the 7.5% fee already consumes 75% of the commission. At 7.5% commission or lower, Pay Early leaves the rep nothing — the wallet clamps the net at zero and the rep is warned off.</p>
+    </div>
+
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">06·d</span><h2 class="section-title" style="font-size:18px">Requesting early payment</h2></div>
+    <div class="card">
+      <ol style="margin:0 0 0 20px;padding:0">
+        <li>Rep opens the Submit Claim drawer in the rep wallet.</li>
+        <li>On any pending row, clicks <strong>⚡ Pay early</strong>.</li>
+        <li>Reviews the confirm dialog (invoice total, commission, fee, net).</li>
+        <li>Clicks <em>Yes, pay early</em> to include, <em>I'll wait</em> to skip.</li>
+        <li>Included rows show a green <span style="color:#166534;font-weight:700">✓ Included · early pay</span> indicator.</li>
+        <li>Submits the claim as normal.</li>
+      </ol>
+    </div>
+
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">06·e</span><h2 class="section-title" style="font-size:18px">After submission</h2></div>
+    <div class="card">
+      <ul style="margin:0 0 0 20px;padding:0">
+        <li>Early-pay items are disbursed on the next commission payment cycle, alongside the rep's standard monthly claim.</li>
+        <li>The vendor bill lodged into Zoho Books flags early-pay lines with <code>bucket='early_pay'</code> so accounts can process them correctly.</li>
+        <li>Once submitted, the request is locked in for that claim cycle. To reverse, the rep contacts <a href="mailto:accounts@the-good-foundry.com">accounts@the-good-foundry.com</a> before the next disbursement.</li>
+      </ul>
+    </div>
+
+    <div class="section-hd" style="margin-top:28px"><span class="section-num">06·f</span><h2 class="section-title" style="font-size:18px">Client-side impact</h2></div>
+    <div class="card">
+      <p><strong>There is none.</strong> The client is invoiced at the standard amount and pays the standard amount to The Good Foundry. The 7.5% fee is entirely between the rep and The Good Foundry. Clients are not aware that early payment has been requested against their invoice.</p>
+    </div>
+  </section>
+
+  <!-- 07 Governance -->
   <section class="section">
-    <div class="section-hd"><span class="section-num">06</span><h2 class="section-title">Governance</h2></div>
+    <div class="section-hd"><span class="section-num">07</span><h2 class="section-title">Governance</h2></div>
     <div class="card">
       <p>Disputes are resolved by <strong>Sales Ops / Finance</strong> against the CRM record of the accepted proposal and the named-owner field. Because attribution is tied to recorded CRM state at the moment of acceptance, the record is the single source of truth. This policy is reviewed annually.</p>
     </div>
