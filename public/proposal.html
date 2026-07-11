@@ -28,7 +28,11 @@
     .stub p{font-size:13px;color:#475569;margin:0;line-height:1.55}
     .stub a{color:#662C90;font-weight:600;text-decoration:none}
     .stub a:hover{text-decoration:underline}
-  </style>
+  
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
+</style>
 </head>
 <body>
   <div class="stub">

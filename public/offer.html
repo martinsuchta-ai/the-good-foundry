@@ -458,6 +458,10 @@
     /* Sticky pills get smaller still so they don't dominate */
     #bottom-line-pill, #download-pdf-pill { font-size: 11.5px; padding: 8px 12px; }
   }
+
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
 </style>
 </head>
 <body>

@@ -290,6 +290,10 @@ footer.page-ft a:hover { text-decoration: underline; }
   .doc table.defs th { width: 38%; font-size: 12px; }
   .doc table.defs td { font-size: 12.5px; }
 }
+
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
 </style>
 </head>
 <body>

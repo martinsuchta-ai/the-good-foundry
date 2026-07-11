@@ -164,6 +164,18 @@ body.show-lw  .card.waw { display:none; }
 .foot { margin-top:60px; text-align:center; color:var(--text-dim); font-size:12.5px; }
 .foot a { color:var(--twilight); text-decoration:none; font-weight:600; }
 .foot a:hover { color:var(--grape); }
+
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
+/* Responsive layout (2026-07-12) — the comparison cards use
+   minmax(360px,1fr) which overflows phones narrower than ~360px; stack to a
+   single column + tighten padding/headings below 640px. */
+@media (max-width:640px){
+  .cards{grid-template-columns:1fr;gap:16px}
+  .card{padding:24px 20px}
+  .card h2{font-size:24px}
+}
 </style>
 
     <!-- Open Graph + Twitter Card -->

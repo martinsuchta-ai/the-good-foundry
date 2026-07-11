@@ -346,6 +346,10 @@ a:hover { text-decoration: underline; }
   .layout { padding: 22px 16px 40px; }
   .detail { padding: 22px 18px 24px; }
 }
+
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
 </style>
 
     <!-- Open Graph + Twitter Card -->

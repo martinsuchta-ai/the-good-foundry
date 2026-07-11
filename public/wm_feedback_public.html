@@ -122,6 +122,10 @@
     .body { padding: 20px 16px 12px; }
     .footer-row { padding: 14px 16px 20px; }
   }
+
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
 </style>
 </head>
 <body>

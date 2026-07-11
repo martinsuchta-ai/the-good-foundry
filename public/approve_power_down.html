@@ -72,6 +72,19 @@
   .msg.err { background:var(--red-pale); border:1px solid #fecaca; color:#b91c1c; }
 
   .ftr { font-size:11px; color:var(--text-muted); text-align:center; padding:14px 16px; }
+
+/* Mobile safety net (2026-07-12) — 16px form controls on small screens (no iOS focus-zoom) + media capped to container width. */
+@media (max-width:480px){input,textarea,select{font-size:16px!important}}
+img,video,iframe{max-width:100%}
+/* Responsive layout (2026-07-12) — tighten the generous desktop padding on
+   phones so the 3-up decide-row + content have room; no horizontal scroll. */
+@media (max-width:560px){
+  .hdr{padding:22px 20px}
+  .hdr h1{font-size:19px}
+  .body{padding:20px 18px}
+  .meta-row strong{min-width:104px}
+  .decide-btn{padding:12px 6px;font-size:12px}
+}
 </style>
 </head>
 <body>
