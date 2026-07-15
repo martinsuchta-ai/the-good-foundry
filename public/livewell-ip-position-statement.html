@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Position Statement · Live Well · The Good Foundry</title>
+<link rel="canonical" href="https://www.the-good-foundry.com/livewell-ip-position-statement">
+<meta name="description" content="The Good Foundry's plain-language statement of intellectual property position for the Live Well engagement — Wellbeing, Brain Health Vitality and the Brain Health Profiler. Draft for discussion, shared under a non-public review link.">
+<!-- Non-public side page: reachable via direct link only, not promoted from public nav. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" href="logos/TGFIconcolor.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* Brand tokens — lifted verbatim from the TGF marketing site so this page
+   reads as part of the family. Purple + blue forward per brief. */
+:root {
+  --twilight: #293890;  /* navy blue   */
+  --arctic:   #1B75BC;  /* blue        */
+  --aqua:     #26AAE1;  /* light blue  */
+  --grape:    #662C90;  /* purple      */
+  --orchid:   #91268F;  /* deep purple */
+  --punch:    #EC008B;  /* magenta     */
+  --bg:       #F4F6FB;
+  --card:     #FFFFFF;
+  --mid:      #EEF1F8;
+  --border:   rgba(41,56,144,.14);
+  --text:     #161A2E;
+  --text-dim: rgba(22,26,46,.60);
+  --font:     'Outfit', sans-serif;
+  --serif:    'DM Serif Display', serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.72;
+  font-size: 15.5px;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+/* Soft gradient-mesh background in the brand's purple + blue. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 82% 6%,  rgba(102,44,144,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 8% 78%,  rgba(41,56,144,.13)  0%, transparent 58%),
+    radial-gradient(ellipse 50% 40% at 50% 45%, rgba(27,117,188,.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.wrap { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; padding: 0 22px 90px; }
+
+/* Header band — the brand gradient (blue → purple → magenta). */
+header.hero {
+  position: relative; z-index: 1;
+  background: linear-gradient(125deg, var(--twilight) 0%, var(--grape) 58%, var(--punch) 128%);
+  color: #fff;
+  padding: 46px 22px 40px;
+  overflow: hidden;
+}
+header.hero::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 40% 80% at 92% 20%, rgba(255,255,255,.14) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 820px; margin: 0 auto; position: relative; }
+.hero-brand { display: flex; align-items: center; gap: 11px; margin-bottom: 26px; }
+.hero-brand img { height: 34px; width: auto; display: block; }
+.hero-brand .bn { font-size: 13px; font-weight: 700; letter-spacing: .01em; opacity: .92; }
+.hero-eyebrow {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  opacity: .82; margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; margin-bottom: 10px;
+}
+.hero .sub { font-size: 15.5px; opacity: .9; max-width: 620px; }
+
+/* Meta card — the "prepared for / by / date / status" block. */
+.meta {
+  position: relative; z-index: 2;
+  margin: -26px auto 34px; max-width: 820px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  box-shadow: 0 18px 46px -24px rgba(41,56,144,.34);
+  padding: 20px 24px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 26px;
+}
+.meta .m-lbl { font-size: 10px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase; color: var(--grape); margin-bottom: 3px; }
+.meta .m-val { font-size: 14px; font-weight: 600; color: var(--text); }
+.status-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 700; color: var(--twilight);
+  background: rgba(27,117,188,.10); border: 1px solid rgba(27,117,188,.22);
+  padding: 4px 12px; border-radius: 99px;
+}
+.status-pill::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--arctic); }
+
+/* Body sections. */
+section { margin-bottom: 30px; }
+h2 {
+  font-family: var(--serif); font-weight: 400; font-size: 22.5px; color: var(--twilight);
+  letter-spacing: -.01em; margin-bottom: 12px; display: flex; align-items: baseline; gap: 12px;
+}
+h2 .n {
+  font-family: var(--font); font-size: 13px; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg, var(--grape), var(--arctic));
+  min-width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; top: 2px;
+}
+p { margin-bottom: 12px; color: var(--text); }
+p:last-child { margin-bottom: 0; }
+.lead {
+  font-size: 17px; color: var(--text); line-height: 1.62;
+  border-left: 3px solid var(--punch); padding-left: 18px; margin-bottom: 14px;
+}
+ul { list-style: none; margin: 6px 0 12px; }
+ul li {
+  position: relative; padding-left: 24px; margin-bottom: 9px; color: var(--text);
+}
+ul li::before {
+  content: ''; position: absolute; left: 4px; top: 11px;
+  width: 7px; height: 7px; border-radius: 2px; transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--grape), var(--punch));
+}
+ol.steps { counter-reset: st; list-style: none; margin: 6px 0 4px; }
+ol.steps li {
+  counter-increment: st; position: relative; padding-left: 40px; margin-bottom: 12px; min-height: 28px; display: flex; align-items: center;
+}
+ol.steps li::before {
+  content: counter(st); position: absolute; left: 0; top: 0;
+  width: 27px; height: 27px; border-radius: 8px;
+  background: var(--mid); color: var(--grape); font-weight: 800; font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--border);
+}
+strong { font-weight: 700; color: var(--twilight); }
+hr.div { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 30px 0; }
+
+/* Closing note. */
+.closing {
+  background: var(--mid); border: 1px solid var(--border); border-radius: 14px;
+  padding: 18px 22px; margin-top: 34px;
+  font-size: 13.5px; color: var(--text-dim); line-height: 1.62;
+}
+footer.pg {
+  position: relative; z-index: 1; max-width: 820px; margin: 40px auto 0; padding: 0 22px;
+  font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+footer.pg .dot { opacity: .5; }
+@media (max-width: 560px) {
+  h2 { font-size: 20px; }
+  .lead { font-size: 15.5px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-brand">
+      <img src="logos/TGFlogowhite.png" alt="The Good Foundry" onerror="this.style.display='none'">
+      <span class="bn">The Good Foundry</span>
+    </div>
+    <div class="hero-eyebrow">Statement of Intellectual Property Position</div>
+    <h1>Wellbeing, Brain Health Vitality &amp; the Brain Health Profiler</h1>
+    <p class="sub">A plain-language statement of position, prepared in a spirit of partnership — establishing a clear, shared, dated understanding of who owns what, so we can keep building with confidence.</p>
+  </div>
+</header>
+
+<div class="meta">
+  <div><div class="m-lbl">Prepared for</div><div class="m-val">Live Well</div></div>
+  <div><div class="m-lbl">Prepared by</div><div class="m-val">The Good Foundry (TGF)</div></div>
+  <div><div class="m-lbl">Effective / record date</div><div class="m-val">[DATE]</div></div>
+  <div><div class="m-lbl">Status</div><div class="m-val"><span class="status-pill">Draft for discussion</span></div></div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <h2><span class="n">1</span> Purpose and spirit</h2>
+    <p class="lead">We are raising this early, openly, and in a spirit of partnership.</p>
+    <p>The work we are undertaking with Live Well on wellbeing measurement — and now extending into brain health — has moved beyond configuration and delivery. It is producing genuinely new intellectual property: original question sets, scoring logic, derivation methods, and interpretive frameworks that did not exist before this engagement.</p>
+    <p>We think it is healthier for both parties to say so now, plainly and early, than to discover a difference of understanding later. Nothing in this statement is intended to constrain Live Well's use of what we build together, or to alter the commercial relationship. Its purpose is simply to establish a clear, shared, dated understanding of who owns what — so that we can keep building with confidence.</p>
+    <p>We welcome Live Well's review, questions and response. We expect this to be a conversation.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span> Record date and effect</h2>
+    <p>This statement records the position as at the effective date above.</p>
+    <p>Copyright and related rights in original work arise automatically on creation. This statement does not create those rights; it gives notice of them, identifies the body of work to which they attach, and fixes a shared reference point in time. Development work predating this date is included where it forms part of the body of work described below.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">3</span> Scope of the work covered</h2>
+    <p>This statement applies to TGF's wellbeing and brain health work, including:</p>
+    <ul>
+      <li>The <strong>Wellbeing Matters @</strong> suite and its PERMA Plus-based instruments, including derivatives of PERMA Plus such as the <strong>Live Well domains</strong> (which we acknowledge belong to Live Well — see section 5)</li>
+      <li><strong>Brain Health Vitality</strong></li>
+      <li>The <strong>Brain Health Profiler</strong></li>
+      <li>Any further instruments, modules, extensions or derivative works that build on the above from time to time, whether developed for Live Well or otherwise</li>
+    </ul>
+    <p>It applies to that work regardless of the format in which it is expressed — evaluation instruments, scoring engines, Insights outputs, documentation, code, dashboards, briefs and supporting materials.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">4</span> What The Good Foundry owns</h2>
+    <p>TGF asserts ownership of the intellectual property it has originated, including:</p>
+    <ul>
+      <li><strong>Question sets and item wording</strong> — the specific items, phrasing, response scales and sequencing authored by TGF</li>
+      <li><strong>Scoring methodology</strong> — TGF's scoring algorithms, weightings, thresholds, banding, normative treatment and composite construction</li>
+      <li><strong>Derivation of findings</strong> — the logic by which scores become interpretation: rules, decision paths, narrative generation, and the reasoning that turns data into an Insight</li>
+      <li><strong>Frameworks, structures and labels</strong> — TGF-authored domain and pillar labels, taxonomies, and the models by which constructs are organised and related. This extends only to labels and structures originated by TGF; it does not extend to the Live Well domains or other Live Well-owned frameworks</li>
+      <li><strong>Selection, arrangement and compilation</strong> — TGF's original curation of source material into a coherent, working instrument, including the choices about what to include, exclude, adapt and combine</li>
+      <li><strong>Platform, code and technical implementation</strong> — the software, data structures, pipelines and delivery infrastructure</li>
+      <li><strong>Know-how and methodology</strong> — the accumulated practice, judgement and process by which TGF designs, validates and evolves these instruments</li>
+    </ul>
+    <p>This ownership extends to work developed in the course of, and informed by, the Live Well engagement.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">5</span> What The Good Foundry does not claim</h2>
+    <p>We think it is important to be equally clear about the limits of our claim. TGF does not assert, and does not seek to assert, ownership of:</p>
+    <ul>
+      <li><strong>Established academic models and scholarship</strong> in the public domain or published under open licence — including the PERMA model and its scholarly lineage, published dementia-risk and lifestyle indices, and the peer-reviewed literature on multidomain brain health intervention</li>
+      <li><strong>Third-party licensed instruments</strong> — where an established clinical or psychometric instrument is used, it remains the property of its owner and is used under licence on its own terms</li>
+      <li><strong>General wellbeing or brain health concepts</strong> — the underlying constructs, the science, and the general propositions of the field</li>
+      <li><strong>The Live Well domains and other Live Well frameworks</strong> — the Live Well domains, being a derivative of the PERMA Plus model, are acknowledged by TGF as belonging to Live Well. TGF makes no claim to them, to their naming, or to any further derivative of PERMA Plus originated by Live Well. Where TGF's instruments measure, score or report against those domains, that work does not create any TGF interest in the domains themselves</li>
+      <li><strong>Live Well's own material</strong> — Live Well's data, brand, content, client information and pre-existing intellectual property remain Live Well's throughout</li>
+    </ul>
+    <p>Our claim is to what we have originated: the instrument, not the ideas it draws on, and not the frameworks our partners bring to it.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">6</span> Live Well's position</h2>
+    <p>Nothing in this statement is intended to disturb Live Well's ability to use what has been built. Subject to the terms to be settled in the formal agreement, our intention is that Live Well holds:</p>
+    <ul>
+      <li>Full ownership of its own data and of the outputs generated for it</li>
+      <li>A licence to use the instruments and their outputs for its own purposes, on terms to be agreed</li>
+      <li>Continuity and certainty of access for the duration of the relationship</li>
+    </ul>
+    <p>We are not seeking to restrict Live Well. We are seeking to be clear about the boundary.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">7</span> Research and non-commercial use</h2>
+    <p>We recognise that we build on scholarship that others made openly available to us, and we take that seriously.</p>
+    <p>Accordingly, TGF is open — at its discretion, on a case-by-case basis, and with appropriate acknowledgement — to granting licences to its intellectual property for research and non-commercial use. We would welcome conversations of that kind, including any that Live Well wishes to initiate or support.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">8</span> Next steps</h2>
+    <p>This statement is a plain-language expression of position, not a legal instrument. We propose:</p>
+    <ol class="steps">
+      <li>Live Well reviews this statement and comes back with questions, concerns or amendments</li>
+      <li>We discuss and reach a shared understanding in principle</li>
+      <li>Our respective legal advisers formalise that understanding into an appropriate agreement</li>
+      <li>That agreement, once executed, supersedes this statement</li>
+    </ol>
+    <p style="margin-top:14px">We would rather have this conversation now, while the work is going well, than at a point where it is harder.</p>
+  </section>
+
+  <div class="closing">
+    This statement is provided for discussion purposes. It is not legal advice and does not constitute a binding agreement between the parties.
+  </div>
+
+</div>
+
+<footer class="pg">
+  <span>&copy; The Good Foundry Pty Ltd</span>
+  <span class="dot">&middot;</span>
+  <span>Draft for discussion &mdash; shared under a private review link</span>
+</footer>
+
+</body>
+</html>
