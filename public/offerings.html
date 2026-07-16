@@ -696,8 +696,14 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
 
 /* ——— Mobile tightening ——————————————————————————————————————————— */
 @media (max-width: 720px) {
-  .topbar { padding: 0 18px; }
+  /* 2026-07-16 — kill the topbar horizontal overflow. The right-hand cluster
+     (Free-eval CTA + pills + bookmark) sat in one nowrap row ≈ 593px, forcing
+     a sideways scroll on a 360px phone. Let the topbar stack: brand on row one,
+     then a full-width WRAPPING action row so no item can exceed the viewport. */
+  .topbar { padding: 10px 18px; min-height: 0; flex-wrap: wrap; row-gap: 8px; }
+  .topbar-right { flex-wrap: wrap; justify-content: flex-start; gap: 8px 10px; width: 100%; }
   .topbar-right .nav-link { display: none; }
+  .brand img.brand-logo { height: 54px; }
   .hero { padding: 56px 22px 36px; }
   .hero h1 { font-size: 30px; }
   .hero-desc { font-size: 15.5px; }

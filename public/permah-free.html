@@ -526,8 +526,12 @@ footer.page-ft .ft-divider {
 }
 
 @media (max-width: 720px) {
-  .topbar { padding: 0 18px; }
+  /* 2026-07-16 — kill topbar horizontal overflow on mobile: stack the bar,
+     full-width wrapping action row, smaller logo. Mirrors offerings.html. */
+  .topbar { padding: 10px 18px; min-height: 0; flex-wrap: wrap; row-gap: 8px; }
+  .topbar-right { flex-wrap: wrap; justify-content: flex-start; gap: 8px 10px; width: 100%; }
   .topbar-right .nav-link { display: none; }
+  .brand img.brand-logo { height: 54px; }
   .pf-hero { padding: 44px 22px 18px; }
   .form-card { padding: 26px 22px 22px; }
   /* iOS Safari zooms in on any input with font-size < 16px — bump

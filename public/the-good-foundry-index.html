@@ -857,8 +857,12 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
 
 /* Mobile tightening */
 @media (max-width: 720px) {
-  .topbar { padding: 0 18px; }
+  /* 2026-07-16 — kill topbar horizontal overflow on mobile: stack the bar,
+     full-width wrapping action row, smaller logo. Mirrors offerings.html. */
+  .topbar { padding: 10px 18px; min-height: 0; flex-wrap: wrap; row-gap: 8px; }
+  .topbar-right { flex-wrap: wrap; justify-content: flex-start; gap: 8px 10px; width: 100%; }
   .topbar-right .nav-link { display: none; }
+  .brand img.brand-logo { height: 54px; }
   .hero { padding: 56px 20px 40px; }
   .hero h1 { font-size: 36px; }
   .hero-desc { font-size: 15.5px; }

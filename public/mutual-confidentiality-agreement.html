@@ -388,6 +388,12 @@ footer.page-ft a:hover { text-decoration: underline; }
   .doc { padding: 28px 22px; border-radius: 14px; }
   .doc h2 { font-size: 22px; }
   .doc dl { grid-template-columns: 1fr; gap: 2px 0; }
+  /* 2026-07-16 — parties table: stack the two-column layout + let the long
+     fill-in-the-blank underscore lines wrap, so the 545px table no longer
+     forces a sideways scroll on a 360px phone. */
+  .doc table.parties, .doc table.parties tbody, .doc table.parties tr { display: block; width: 100%; }
+  .doc table.parties th, .doc table.parties td { display: block; width: auto; overflow-wrap: anywhere; }
+  .doc table.parties th { border-bottom: none; }
   .doc dl dt { margin-top: 10px; }
 }
 
