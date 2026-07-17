@@ -523,6 +523,27 @@ var ADDONS = {
     appliesTo: ['WPK','WPY','WPA','WPU','WPV','WPS','WPL'],
     isNew: true
   },
+  /* 2026-07-10 — Social Drivers @ Work. A toggleable evaluation SECTION
+     (not a Power-Up), surfaced here as an add-on any admin can switch on
+     per subscription. Universal — the need to belong is human, not just a
+     workplace concern; canonical platform label is "Social Drivers @ Work". */
+  'social-drivers': {
+    label: 'Social Drivers @ Work',
+    desc: 'A SCARF-informed belonging measure — the five drivers that decide whether people feel they belong: Valued, Clarity, Choice, Connection and a Fair go. Each rated across Me (the individual), We (the team) and Us (the organisation), so you see exactly where belonging, psychological safety and trust break down. Reads as clear threat / mixed / reward zones.',
+    appliesTo: null /* universal — available across every edition */,
+    isNew: true
+  },
+  /* 2026-07-17 — Neuro-Inclusion @ Work. A first-class evaluation SECTION
+     (not a Power-Up) measuring the organisation's CLIMATE for cognitive
+     diversity — explicitly NOT a screener; no item identifies or diagnoses
+     anyone. Workplace-family editions only (excluded from Life/School/Aging
+     in edition_config). Structural twin of Social Drivers (6 domains × me/we/us). */
+  'neuro-inclusion': {
+    label: 'Neuro-Inclusion @ Work',
+    desc: 'A climate read on how well your workplace works for people who think, process and communicate differently — across six domains (Safety &amp; Openness, Flexibility &amp; Adjustments, Environment &amp; Sensory Fit, Communication &amp; Clarity, Manager Capability, Strengths &amp; Value), rated Me / We / Us. It measures the environment, never the individual — not a screener, no diagnosis. Includes an optional, strictly confidential self-identification item used only in aggregate.',
+    appliesTo: ['WPA','WPU','WPV','WPS'],
+    isNew: true
+  },
   'spirituality': {
     label: 'Spirituality Module',
     desc: 'Adds the Spirituality section + ME/WE/US dashboard for organisations whose wellbeing strategy includes purpose and meaning beyond the self.',
@@ -612,7 +633,7 @@ var EDITIONS = [
     sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup','offline-kiosk']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','social-drivers','neuro-inclusion','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup','offline-kiosk']
   },
   {
     code: 'WPU', tag: 'Higher education',
@@ -622,7 +643,7 @@ var EDITIONS = [
     sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','social-drivers','neuro-inclusion','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup']
   },
   {
     code: 'WPL', tag: 'Personal',
@@ -632,7 +653,7 @@ var EDITIONS = [
     sections: ['Wellbeing', 'Self-Compassion', 'Hope &amp; Optimism', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','spirituality','moral-injury','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','social-drivers','spirituality','moral-injury','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
   },
   {
     code: 'WPV', tag: 'Veterinary',
@@ -642,7 +663,7 @@ var EDITIONS = [
     sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Moral Injury', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','social-drivers','neuro-inclusion','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
   },
   {
     code: 'WPS', tag: 'Sport',
@@ -652,7 +673,7 @@ var EDITIONS = [
     sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Self-Care', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','social-drivers','neuro-inclusion','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
   },
   {
     code: 'WPK', tag: 'Kids',
@@ -662,7 +683,7 @@ var EDITIONS = [
     sections: ['Wellbeing (PERMAH)', 'Self-Care', 'Digital Wellbeing'],
     sectionsNew: ['Digital Wellbeing'],
     modes: ['Faces', 'Pictures', 'Slider', 'Card'],
-    addons: ['coaching-foundry','rewards-foundry','ai-seeding','digital-wellbeing','kids-360','reporting-foundry','trends-reporting','white-label','sso','managed-setup']
+    addons: ['coaching-foundry','rewards-foundry','ai-seeding','digital-wellbeing','social-drivers','kids-360','reporting-foundry','trends-reporting','white-label','sso','managed-setup']
   },
   {
     code: 'WPY', tag: 'Youth',
@@ -672,7 +693,7 @@ var EDITIONS = [
     sections: ['Wellbeing (PERMAH)', 'Self-Care', 'Digital Wellbeing', 'Ikigai (bonus)'],
     sectionsNew: ['Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'Faces', 'At my pace'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','digital-wellbeing','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','digital-wellbeing','social-drivers','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
   },
   {
     code: 'WAW', tag: 'Aging Well',
@@ -685,7 +706,7 @@ var EDITIONS = [
     /* kids-360 added 2026-05-25 to align with the kids_360_orgs
        power-up which covers WAW (aged-care raters: spouse, adult
        child, nurse, doctor, carer, allied health). */
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','kids-360','reporting-foundry','trends-reporting','white-label','sso','managed-setup']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','social-drivers','kids-360','reporting-foundry','trends-reporting','white-label','sso','managed-setup']
   },
   {
     code: 'WHC', tag: 'Bespoke · The Change Lab', bespoke: true,
@@ -695,7 +716,7 @@ var EDITIONS = [
     sections: ['Getting Started', 'Your Individual HEART Factors', 'Your Team HEART Factors', 'Your Workplace HEART Factors', 'The Impacts Of Change', 'Your Change AMPlifiers', 'State of Change &amp; Reflection'],
     sectionsNew: ['HEART Factors (5)', 'State of Change'],
     modes: ['Section by Section'],
-    addons: ['coaching-foundry','rewards-foundry','ai-seeding','coaching-videos','reporting-foundry','white-label','sso','managed-setup']
+    addons: ['coaching-foundry','rewards-foundry','ai-seeding','coaching-videos','social-drivers','reporting-foundry','white-label','sso','managed-setup']
   },
   {
     code: 'BESPOKE', tag: 'Bespoke / Custom', bespoke: true,
@@ -704,7 +725,7 @@ var EDITIONS = [
     blurb: 'When a deployment doesn’t fit a standard edition, we author a bespoke variant — language, regulatory framing, dashboards, downstream comms. Worked examples: a Psychosocial Safety variant for a major Australian infrastructure services group, and the HEART Of Change Tool for The Change Lab.',
     sections: ['Custom sections authored to your spec'],
     modes: ['Custom — chosen to match the audience'],
-    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','reporting-foundry','white-label','sso','datawarehouse','managed-setup']
+    addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','social-drivers','reporting-foundry','white-label','sso','datawarehouse','managed-setup']
   }
 ];
 
