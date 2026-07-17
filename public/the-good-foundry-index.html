@@ -317,6 +317,12 @@ a.btn-ghost:hover {
   border-radius: 16px;
   box-shadow: 0 6px 22px rgba(22,26,46,.06);
 }
+/* 2026-07-17 — the intro card that used to sit directly above this quote
+   was removed. The negative top margin above (and the -18px mobile value)
+   existed only to tighten the gap against that card's 50px bottom margin.
+   As the first child of .layout there is nothing to pull up against, so
+   reset it — otherwise the quote rides up into the client logo band. */
+.layout > .drucker-quote:first-child { margin-top: 0; }
 .drucker-quote::before {
   content: '“';
   position: absolute;
@@ -956,7 +962,7 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
     <div class="hero-inner">
       <div class="hero-tag">The Good Foundry</div>
       <h1>We measure <span class="serif-italic">what matters</span> — at work, at school, <span class="gradient-text">in life</span>.</h1>
-      <p class="hero-desc">The Good Foundry is the research-led team behind <strong style="color:var(--text);font-weight:600">Wellbeing Matters</strong> — an evidence-based PERMA+ measurement platform that helps organisations, schools and individuals understand wellbeing in a structured, repeatable way. Built on decades of positive psychology research; used by workplaces, universities, sporting bodies, schools, vet practices and EAPs across Australia and beyond.</p>
+      <p class="hero-desc">The Good Foundry is the research-led team behind <strong style="color:var(--text);font-weight:600">Wellbeing Matters</strong> — an evidence-based measurement platform that helps organisations, schools and individuals understand wellbeing in a structured, repeatable way. Built on decades of positive psychology research; used by workplaces, universities, sporting bodies, schools, vet practices and EAPs across Australia and beyond.</p>
       <div class="hero-cta">
         <a class="btn-primary" href="offerings.html">View our offerings &rarr;</a>
         <a class="btn-ghost" href="javascript:void(0)" onclick="wmTalkOpen()">Talk to us</a>
@@ -1265,11 +1271,6 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
 
   <main class="layout">
 
-    <!-- Intro card -->
-    <div class="intro-card">
-      The Good Foundry Pty Ltd is the team behind <strong>Wellbeing Matters</strong>, a measurement platform built on the PERMA+ framework — a research-validated extension of Dr. Martin Seligman&rsquo;s PERMA model of flourishing, originally translated into measurable form by Dr. Michelle McQuaid and Professor Peggy Kern, and continued by an extended scientific team. Every dashboard, every chart, every recommendation traces back to peer-reviewed research.
-    </div>
-
     <!-- Drucker pull-quote — sets the rationale for measuring wellbeing -->
     <aside class="drucker-quote">
       <span class="dq-attrib">As Peter Drucker famously says</span>
@@ -1292,13 +1293,6 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
         <div class="pillar-eyebrow">Who it&rsquo;s for</div>
         <h3>Leaders responsible for people</h3>
         <p>HR teams running annual wellbeing programs &mdash; with a 360 Foundry option that brings supervisors, colleagues and mentors into each employee&rsquo;s picture. Safety leads measuring psychosocial hazards under the new WHS regulations. School wellbeing coordinators tracking student flourishing, including multi-rater 360 views of individual children and youth with input from parents, teachers, peers and clinicians. University wellbeing teams running cohort-level student welfare with optional 360 input from peers, lecturers and mentors. Sporting organisations supporting athlete welfare. Coaches running individual development. EAPs offering wellbeing assessment &mdash; including 360 Foundry for adults wanting a 360-degree view of their own flourishing across partner, family and close friends. We deploy across Australia and globally.</p>
-      </div>
-
-      <div class="pillar">
-        <div class="pillar-num">03</div>
-        <div class="pillar-eyebrow">Why it works</div>
-        <h3>Evidence over opinion</h3>
-        <p>Built on the PERMA+ framework — a research-validated extension of Dr. Martin Seligman&rsquo;s PERMA model of flourishing, originally translated into measurable form by Dr. Michelle McQuaid and Professor Peggy Kern. Continued scientific development is led by Martin Suchta with contributions from Dr. Stewart I. Donaldson and Dr. Scott Donaldson.</p>
       </div>
 
     </div>
@@ -1810,13 +1804,6 @@ footer.page-ft strong { color: var(--text); font-weight: 600; }
         </div>
       </div>
     </section>
-
-    <!-- Acknowledgements -->
-    <div class="ack-callout">
-      <div class="ack-eyebrow">Acknowledgements</div>
-      <h2>Standing on the shoulders of <em>researchers</em>.</h2>
-      <p>We acknowledge the foundational and ongoing contribution of Dr. Martin Seligman, Dr. Michelle McQuaid, Professor Peggy Kern, Danielle Jacobs, Dr. Stewart I. Donaldson and Dr. Scott Donaldson to the science behind this platform. The PERMAH Wellbeing Survey is a living research instrument, and its continued scientific development sits at the heart of everything we ship.</p>
-    </div>
 
     <!-- Contact / CTA -->
     <div class="contact-card">
