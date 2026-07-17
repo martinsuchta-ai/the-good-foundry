@@ -572,7 +572,7 @@ var ADDONS = {
   },
   'ikigai': {
     label: 'Ikigai Module',
-    desc: 'Adds the Ikigai radar to the vault — what you love · what the world needs · what you can be paid for · what you are good at. Layered on top of PERMA+.',
+    desc: 'Adds the Ikigai radar to the vault — what you love · what the world needs · what you can be paid for · what you are good at. Layered on top of the wellbeing pillars.',
     appliesTo: ['WPA','WPU','WPV','WPS','WPL']
   },
   /* 2026-06-26 — Wellbeing Wearables Power-Up. Phase 1 + Phase 2
@@ -608,8 +608,8 @@ var EDITIONS = [
     code: 'WPA', tag: 'Workplace',
     label: 'Wellbeing Matters @ Work',
     audience: 'Adult workplaces · teams · leaders',
-    blurb: 'The flagship edition. Full PERMA+ measurement across Wellbeing, Psychosocial Hazards, Culture of Care, Civility, Economic Security, Spirituality, AI Revolution, Moral Injury and the new Quietly Cracking lens — surfacing high-functioning burnout before it shows up in turnover.',
-    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
+    blurb: 'The flagship edition. Full wellbeing measurement, inspired by PERMA(H), across Wellbeing, Psychosocial Hazards, Culture of Care, Civility, Economic Security, Spirituality, AI Revolution, Moral Injury and the new Quietly Cracking lens — surfacing high-functioning burnout before it shows up in turnover.',
+    sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
     addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup','offline-kiosk']
@@ -618,8 +618,8 @@ var EDITIONS = [
     code: 'WPU', tag: 'Higher education',
     label: 'Wellbeing Matters @ University',
     audience: 'Faculty · staff · postgraduates',
-    blurb: 'PERMA+ tuned for the rhythm of university life — semesters, research load, student-facing roles, tenure-track demands. Same evidence base as @ Work; academic-context language.',
-    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
+    blurb: 'Inspired by PERMA(H), tuned for the rhythm of university life — semesters, research load, student-facing roles, tenure-track demands. Same evidence base as @ Work; academic-context language.',
+    sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
     addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','kids-360','leadership-video','reporting-foundry','trends-reporting','ikigai','white-label','sso','datawarehouse','managed-setup']
@@ -628,8 +628,8 @@ var EDITIONS = [
     code: 'WPL', tag: 'Personal',
     label: 'Wellbeing Matters in Life',
     audience: 'Individuals · coaching clients · community',
-    blurb: 'PERMA+ stripped of the workplace lens. Focused on personal flourishing — wellbeing, self-compassion, hope, optimism, meaning. Used by coaches, therapists and community programs.',
-    sections: ['Wellbeing (PERMA+)', 'Self-Compassion', 'Hope &amp; Optimism', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
+    blurb: 'Inspired by PERMA(H), stripped of the workplace lens. Focused on personal flourishing — wellbeing, self-compassion, hope, optimism, meaning. Used by coaches, therapists and community programs.',
+    sections: ['Wellbeing', 'Self-Compassion', 'Hope &amp; Optimism', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
     addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','spirituality','moral-injury','kids-360','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup']
@@ -639,7 +639,7 @@ var EDITIONS = [
     label: 'Wellbeing Matters @ Veterinary Practice',
     audience: 'Vet clinics · animal hospitals · specialty practice',
     blurb: 'A profession-specific edition acknowledging the realities of veterinary practice — moral injury, compassion fatigue, exposure to euthanasia decisions, after-hours load. Profession-specific benchmarks.',
-    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Moral Injury', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
+    sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Moral Injury', 'Economic Security', 'Spirituality', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace', 'Video'],
     addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
@@ -648,8 +648,8 @@ var EDITIONS = [
     code: 'WPS', tag: 'Sport',
     label: 'Wellbeing Matters @ Sport',
     audience: 'Athletes · coaches · sporting orgs',
-    blurb: 'PERMA+ for elite and community sporting organisations. Sport-specific framing for performance, identity, transition and team dynamics.',
-    sections: ['Wellbeing (PERMA+)', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Self-Care', 'Quietly Cracking', 'Digital Wellbeing'],
+    blurb: 'Inspired by PERMA(H), for elite and community sporting organisations. Sport-specific framing for performance, identity, transition and team dynamics.',
+    sections: ['Wellbeing', 'Psychosocial Hazards', 'Culture of Care', 'Civility', 'Economic Security', 'Spirituality', 'AI Revolution', 'Moral Injury', 'Self-Care', 'Quietly Cracking', 'Digital Wellbeing'],
     sectionsNew: ['Quietly Cracking', 'Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'At my pace'],
     addons: ['coaching-foundry','wearables-sync','rewards-foundry','ai-seeding','coaching-videos','quietly-cracking','digital-wellbeing','moral-injury','spirituality','reporting-foundry','trends-reporting','ikigai','white-label','sso','managed-setup','offline-kiosk']
@@ -658,7 +658,7 @@ var EDITIONS = [
     code: 'WPK', tag: 'Kids',
     label: 'Wellbeing Matters @ School · Kids',
     audience: 'Primary-school students',
-    blurb: 'Age-appropriate PERMA+ for children. Visual face-scales, story-led prompts, playful runtime. Cohort insights anonymised by default.',
+    blurb: 'Age-appropriate wellbeing measurement, inspired by PERMA(H), for children. Visual face-scales, story-led prompts, playful runtime. Cohort insights anonymised by default.',
     sections: ['Wellbeing (PERMAH)', 'Self-Care', 'Digital Wellbeing'],
     sectionsNew: ['Digital Wellbeing'],
     modes: ['Faces', 'Pictures', 'Slider', 'Card'],
@@ -668,7 +668,7 @@ var EDITIONS = [
     code: 'WPY', tag: 'Youth',
     label: 'Wellbeing Matters @ School · Youth',
     audience: 'High-school &amp; senior students',
-    blurb: 'PERMA+ for adolescents. Maps friendship, identity, screen time, study load, meaning-making in adolescence.',
+    blurb: 'Inspired by PERMA(H), for adolescents. Maps friendship, identity, screen time, study load, meaning-making in adolescence.',
     sections: ['Wellbeing (PERMAH)', 'Self-Care', 'Digital Wellbeing', 'Ikigai (bonus)'],
     sectionsNew: ['Digital Wellbeing'],
     modes: ['Section by Section', 'Card', 'Chat', 'Faces', 'At my pace'],
